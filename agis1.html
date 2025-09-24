@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="agis.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>AGIS 01 </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+    {question: "What was the primary legal instrument that established AGIS?", options: ["Federal Capital Territory Act - Subsidiary Legislation No. 1 of 2004", "The National Land Use Act of 1978", "The Abuja Master Plan Declaration of 1999", "A Presidential Executive Order from 2005"], answer: "a"},
+{question: "What is the core mandate of AGIS regarding land records?", options: ["To computerize the administration of land records for the FCT", "To manually archive all paper-based land documents", "To solely handle land disputes in court", "To only manage land records for the Federal Capital City, excluding satellite towns"], answer: "a"},
+{question: "Which certificate is primarily prepared and issued by AGIS as evidence of land title?", options: ["Certificate of Occupancy (C of O)", "Deed of Assignment", "Survey Plan", "Land Purchase Receipt"], answer: "a"},
+{question: "What is a fundamental component of AGIS's land administration responsibility?", options: ["Maintaining a comprehensive digital cadastre", "Printing paper maps for all residents", "Constructing physical boundary fences", "Setting land prices for the open market"], answer: "a"},
+{question: "What type of data infrastructure is AGIS mandated to provide for the FCT?", options: ["A comprehensive, all-inclusive, state-of-the-art geospatial data infrastructure", "A basic digital filing system for text documents", "A public social media network for citizen engagement", "A hardware retail network for selling computers"], answer: "a"},
+{question: "Which of these is a key source of spatial data for AGIS?", options: ["Satellite imagery and aerial photographs", "Social media trends and citizen opinions", "Historical folklore and oral traditions", "Private developer's marketing brochures"], answer: "a"},
+{question: "What is a critical responsibility of AGIS in ensuring data usefulness?", options: ["Implementing rigorous quality control procedures for data accuracy", "Making all data available for free without verification", "Sharing data exclusively with international organizations", "Deleting old data every year to save storage space"], answer: "a"},
+{question: "How does AGIS support urban planning in Abuja?", options: ["By providing essential geographic information for evidence-based decisions", "By directly constructing roads and buildings", "By allocating the annual budget for infrastructure", "By enforcing zoning laws through a police unit"], answer: "a"},
+{question: "Which specific urban management program is overseen by AGIS?", options: ["Street naming and house numbering initiatives", "Traffic light installation and maintenance", "Public bus transportation systems", "Waste collection and disposal services"], answer: "a"},
+{question: "Which unit within AGIS provides strategic leadership for the entire organization?", options: ["The Office of the Director", "The Information Technology Unit", "The Legal Unit", "The Customer Service Unit"], answer: "a"},
+{question: "Which unit is considered the technical core of AGIS, managing spatial databases?", options: ["The Geographic Information Systems (GIS) Unit", "The Finance and Accounts Unit", "The Document Management System (DMS) Unit", "The Information & Customer Service Unit"], answer: "a"},
+{question: "What type of data does the Document Management System (DMS) Unit handle?", options: ["Textual and graphic data, including land records and scanned images", "Only financial transaction data", "Only employee payroll information", "Only public complaint forms"], answer: "a"},
+{question: "What is a primary impact of AGIS on governance in the FCT?", options: ["Reducing opportunities for corruption in land administration", "Increasing the number of manual land processing steps", "Transferring land ownership rights to traditional rulers", "Privatizing all land allocation processes"], answer: "a"},
+{question: "How has AGIS empowered citizens in land transactions?", options: ["By providing accessible information to verify land ownership and boundaries", "By giving away land for free to first-time owners", "By acting as a legal representative for citizens in court", "By banning all commercial land sales"], answer: "a"},
+{question: "What positive economic impact has AGIS facilitated?", options: ["Enhanced government revenue generation through efficient fee collection", "Decreasing the value of all land in the FCT", "Creating a monopoly for a single real estate company", "Abolishing all land-related taxes and fees"], answer: "a"},
+{question: "What key technology does AGIS leverage as the gold standard for its operations?", options: ["Esri ArcGIS software", "Blockchain cryptocurrency mining", "Social media analytics tools", "Manual drafting tables"], answer: "a"},
+{question: "What is a major challenge AGIS faces in a rapidly growing city like Abuja?", options: ["Maintaining up-to-date and accurate spatial data", "Finding enough paper to print all records", "Preventing all land disputes from ever occurring", "Slowing down the pace of urban development"], answer: "a"},
+{question: "Which emerging technology is AGIS exploring to improve security and transparency?", options: ["Blockchain technology for land transactions", "Virtual reality for gaming", "Cryptocurrency for paying staff salaries", "3D printing for building houses"], answer: "a"},
+{question: "What is a key strategic initiative for AGIS's future service expansion?", options: ["Extending services to cover all area councils and satellite towns", "Limiting services only to the central business district", "Closing all public counters and going fully online", "Transferring its core duties to the private sector"], answer: "a"},
+{question: "How is AGIS investing in its future operational capacity?", options: ["Through training and development programs for staff", "By reducing the number of technical staff hired", "By freezing all technology upgrades for five years", "By outsourcing all decision-making to consultants"], answer: "a"},
+{question: "What was a major characteristic of the land administration system in Abuja before the establishment of AGIS?", options: ["A fully digital and transparent system", "Manual processes leading to inefficiencies and duplication", "A system managed entirely by private companies", "A blockchain-based title registry"], answer: "b"},
+{question: "Which of the following is a key benefit of AGIS's computerized land title registration?", options: ["It has made land ownership completely free of charge", "It has significantly reduced land disputes and provided legal certainty", "It has transferred all land ownership to the federal government", "It has eliminated the need for any form of land documentation"], answer: "b"},
+{question: "What does AGIS's cadastral management function primarily ensure?", options: ["The construction of buildings on land parcels", "The accurate recording of property boundaries and ownership details", "The decoration of land title certificates", "The personal landscaping of all government land"], answer: "b"},
+{question: "What is the official scope of AGIS's geospatial data coverage?", options: ["Only the central business district of Abuja", "The entire Federal Capital Territory, including Area Councils and Satellite Towns", "Only lands owned by the federal government", "Exclusively rural areas outside the city center"], answer: "b"},
+{question: "How does AGIS primarily acquire its foundational spatial data?", options: ["Through crowdsourced opinions on social media", "From sources like satellite imagery, aerial photos, and ground surveys", "By copying maps from foreign countries", "By using only hand-drawn sketches from local residents"], answer: "b"},
+{question: "What is a critical outcome of AGIS's role in data quality assurance?", options: ["Data is updated only once every decade", "Stakeholders can make informed decisions based on reliable information", "All geographic data is kept secret from the public", "Data is automatically deleted after one year"], answer: "b"},
+{question: "In urban planning, how do planners primarily use AGIS's services?", options: ["To get loans for construction projects", "To visualize development scenarios and assess environmental impacts", "To personally purchase the best plots of land", "To avoid following any government regulations"], answer: "b"},
+{question: "What is a significant benefit of the street naming and house numbering system by AGIS?", options: ["It allows residents to avoid paying property taxes", "It facilitates navigation, emergency response, and service delivery", "It gives naming rights to the highest bidder", "It replaces the need for physical addresses with GPS coordinates only"], answer: "b"},
+{question: "Which unit in AGIS is directly responsible for managing the hardware and software infrastructure?", options: ["The Legal Unit", "The Information Technology Unit", "The Customer Service Unit", "The Finance and Accounts Unit"], answer: "b"},
+{question: "What is the primary function of the Information & Customer Service Unit?", options: ["To handle legal disputes over land", "To serve as the public interface and assist users with inquiries", "To manage the organization's payroll", "To conduct aerial surveys of the territory"], answer: "b"},
+{question: "A citizen finds an error in their land parcel boundary on the AGIS map. Which unit is most directly responsible for the accuracy of this data?", options: ["The Finance and Accounts Unit", "The Geographic Information Systems (GIS) Unit", "The Legal Unit", "The Office of the Director"], answer: "b"},
+{question: "How has AGIS impacted government revenue collection?", options: ["It has completely eliminated all land-related fees", "It has enhanced revenue generation through efficient collection of land-related taxes and fees", "It has redirected all revenue to a private bank account", "It has made revenue collection more complicated and prone to errors"], answer: "b"},
+{question: "What is a major technological tool used by AGIS for its enterprise operations?", options: ["Popular social media apps", "Manual typewriters and filing cabinets", "Industry-standard software platforms like Esri ArcGIS", "Open-source video editing software"], answer: "b"},
+{question: "Which of the following is a significant challenge AGIS faces due to Abuja's rapid growth?", options: ["A surplus of outdated and irrelevant data", "The need to continuously update spatial databases to reflect changes on the ground", "A complete lack of any historical maps or data", "Too many employees and a bloated budget"], answer: "b"},
+{question: "What specific skill set is crucial for AGIS to recruit and retain to maintain its operations?", options: ["Culinary arts and hospitality management", "Expertise in geographic information science, surveying, and computer science", "Expertise in automotive repair", "Expertise in international diplomacy"], answer: "b"},
+{question: "What is a key objective of AGIS's future plans for technology enhancement?", options: ["To revert entirely to paper-based mapping", "To integrate advanced technologies like blockchain for secure land transactions", "To stop using satellite imagery completely", "To sell its technology to other countries"], answer: "b"},
+{question: "What is the goal of AGIS's service expansion initiative?", options: ["To reduce its service area to only the city center", "To extend its services to cover all area councils and satellite towns within the FCT", "To focus only on commercial properties and ignore residential lands", "To close all its offices and operate only online"], answer: "b"},
+{question: "How is AGIS addressing its need for continuous technical capacity building?", options: ["By freezing all hiring and training programs", "By investing in training and development programs for its staff", "By relying solely on external consultants for all technical work", "By automating all jobs and reducing the workforce"], answer: "b"},
+{question: "A developer wants to verify the exact boundaries of a plot before purchase. What is the most reliable source of this information?", options: ["Asking the neighboring landowner", "The official cadastral maps and data provided by AGIS", "Relying on a hand-drawn map from a local vendor", "Using a personal GPS device without official data"], answer: "b"},
+{question: "What is a core principle that AGIS's implementation has brought to land administration?", options: ["Opacity and secrecy in all transactions", "Transparency and reduced opportunities for corruption", "The principle that all land should be free", "The elimination of all government oversight"], answer: "b"},
+{question: "What type of data does the Document Management System (DMS) Unit specifically handle?", options: ["Financial market predictions", "Employee performance reviews", "Textual and graphic data including land records, aerial photos, and scanned images", "Social media analytics for the FCT"], answer: "c"},
+{question: "If a land transaction requires verification of its legal standing and interpretation of land laws, which AGIS unit is responsible for handling this?", options: ["The GIS Unit", "The Customer Service Unit", "The Legal Unit", "The IT Unit"], answer: "c"},
+{question: "What approach should be taken when a colleague consistently fails to follow proper data validation procedures at AGIS?", options: ["Publicly shame them in a team meeting", "Ignore the problem and hope it resolves itself", "Politely discuss the importance of the procedures and offer to help them improve", "Immediately report them to the director without speaking to them first"], answer: "c"},
+{question: "Which technology is AGIS exploring to enhance the accuracy of its spatial data collection?", options: ["Blockchain for currency transactions", "Virtual reality for gaming", "Drone mapping and remote sensing technology", "Social media integration tools"], answer: "c"},
+{question: "What is the primary challenge AGIS faces regarding system integration?", options: ["Having too many employees", "Lack of physical office space", "Achieving interoperability with other government platforms and systems", "Using outdated paper maps"], answer: "c"},
+{question: "How does AGIS contribute to reducing revenue leakage for the government?", options: ["By eliminating all land-related fees", "By automating payment processes and ensuring proper accounting of land transactions", "By privatizing all land allocation processes", "By allowing cash payments without receipts"], answer: "c"},
+{question: "What is a significant constraint in maintaining AGIS's spatial database?", options: ["The database is too small for the FCT's needs", "Keeping data current in a rapidly urbanizing environment", "Lack of interest from the public", "Using only hand-drawn maps"], answer: "c"},
+{question: "Which of the following best describes AGIS's role in urban planning?", options: ["Directly constructing all infrastructure", "Providing the spatial information infrastructure for evidence-based decision making", "Setting property prices across the FCT", "Enforcing building codes with police powers"], answer: "c"},
+{question: "What is the correct procedure when noticing a factual inaccuracy in a land record being processed?", options: ["Ignore it and process the record as is", "Change the information without documentation", "Politely point out the inaccuracy and provide correct information with supporting evidence", "Immediately delete the entire record"], answer: "c"},
+{question: "Which unit would be responsible for maintaining the servers that host AGIS's digital land records?", options: ["The Legal Unit", "The Customer Service Unit", "The Information Technology Unit", "The Finance and Accounts Unit"], answer: "c"},
+{question: "What does AGIS's systematic addressing initiative (street naming and house numbering) help facilitate?", options: ["Faster internet connectivity", "Better restaurant reviews", "Improved emergency response and service delivery", "Higher property valuations automatically"], answer: "c"},
+{question: "How should AGIS handle the challenge of public awareness about its services?", options: ["Limit services to only those who already know about them", "Charge extra for information about available services", "Develop enhanced outreach and education programs", "Keep all services secret to avoid overwhelming demand"], answer: "c"},
+{question: "What type of technical expertise is most crucial for AGIS's GIS Unit?", options: ["Culinary arts", "Automotive repair", "Geographic information science and spatial analysis", "Fashion design"], answer: "c"},
+{question: "Which technology is considered the 'gold standard' for AGIS's enterprise operations?", options: ["Social media platforms", "Blockchain cryptocurrencies", "Esri ArcGIS software platform", "Video editing software"], answer: "c"},
+{question: "What is the appropriate response when a citizen is frustrated with complex land registration paperwork?", options: ["Tell them to come back another day", "Direct them to a different department immediately", "Patiently explain the process and provide clear guidance on requirements", "Ignore them and focus on other tasks"], answer: "c"},
+{question: "How has AGIS transformed the previous land administration system?", options: ["By making it more paper-based", "By introducing more bureaucratic steps", "By computerizing processes and reducing opportunities for corruption", "By eliminating all land ownership records"], answer: "c"},
+{question: "What is a key responsibility of AGIS in supporting the FCT's development?", options: ["Building houses for citizens", "Providing geographic information for infrastructure planning", "Setting interest rates for mortgages", "Operating public transportation systems"], answer: "c"},
+{question: "Which strategic initiative is AGIS pursuing to improve data security?", options: ["Sharing all data publicly without restrictions", "Using only paper records for sensitive information", "Exploring blockchain technology for land transactions", "Eliminating all security measures to improve access"], answer: "c"},
+{question: "What is the main purpose of AGIS's quality control procedures?", options: ["To make processes slower", "To ensure data accuracy and reliability for decision-making", "To increase paperwork for employees", "To limit public access to information"], answer: "c"},
+{question: "How does AGIS contribute to legal certainty in land ownership?", options: ["By eliminating all land documentation", "By making land ownership temporary", "By providing accurate and secure land title records", "By frequently changing land boundaries"], answer: "c"},
+{question: "What is a primary function of the Finance and Accounts Unit within AGIS?", options: ["Conducting aerial surveys", "Managing hardware infrastructure", "Handling legal disputes", "Managing revenue collection, budgeting, and financial reporting"], answer: "d"},
+{question: "Which of the following best describes a major challenge in AGIS's relationship with other government agencies?", options: ["Too many joint meetings", "Lack of interest in collaboration", "Achieving seamless data exchange and interoperability with other government systems", "Other agencies having more advanced technology"], answer: "d"},
+{question: "What approach should AGIS take when dealing with rapid urban development that outpaces data updates?", options: ["Ignore new developments until annual update cycle", "Freeze all urban development temporarily", "Delete outdated records to create space", "Implement continuous updating processes to maintain data currency"], answer: "d"},
+{question: "How does AGIS's work impact investment in the Federal Capital Territory?", options: ["By directly funding private projects", "By setting maximum investment caps", "By discouraging foreign investment", "By providing legal certainty to land ownership, creating a favorable investment environment"], answer: "d"},
+{question: "What is an appropriate response when encountering resistance from traditional land documentation systems?", options: ["Abandon digital efforts entirely", "Create a parallel paper-based system", "Ignore traditional systems completely", "Develop education programs showing benefits of digital system while respecting traditional knowledge"], answer: "d"},
+{question: "Which technological solution is AGIS exploring to address security concerns in land transactions?", options: ["Manual paper notarization", "Voice recognition systems", "Social media verification", "Blockchain technology for enhanced security and transparency"], answer: "d"},
+{question: "How should AGIS handle situations where spatial data conflicts with community knowledge?", options: ["Always prioritize digital data over community knowledge", "Dismiss community knowledge as unreliable", "Delete conflicting data points", "Verify through ground truthing and engage community in resolution process"], answer: "d"},
+{question: "What is a significant benefit of AGIS's automated revenue collection system?", options: ["Eliminating all land taxes", "Reducing revenue leakage and improving government funds for public services", "Allowing personal use of collected funds", "Making revenue collection completely anonymous"], answer: "d"},
+{question: "Which of the following represents a strategic future direction for AGIS service delivery?", options: ["Reducing service hours to part-time", "Limiting access to only government officials", "Charging prohibitive fees for basic services", "Expanding digital access and online service platforms"], answer: "d"},
+{question: "How does AGIS contribute to environmental management in the FCT?", options: ["By directly planting trees in urban areas", "By banning all construction projects", "By providing spatial data for environmental impact assessments", "By managing wildlife populations in the territory"], answer: "d"},
+{question: "What is the appropriate action when discovering a vulnerability in AGIS's data security system?", options: ["Ignore it unless exploited", "Share the vulnerability publicly immediately", "Use it for personal access to information", "Follow established protocols to report and address the vulnerability promptly"], answer: "d"},
+{question: "Which factor is crucial for AGIS's successful integration with other urban management systems?", options: ["Using the same brand of computers as other agencies", "Having office locations in the same building", "Developing standardized data formats and interoperability protocols", "Sharing social media accounts with other departments"], answer: "d"},
+{question: "How should AGIS handle the challenge of retaining technical staff with specialized skills?", options: ["Reduce technical requirements for positions", "Outsource all technical work internationally", "Offer competitive compensation and professional development opportunities", "Eliminate technical positions entirely"], answer: "d"},
+{question: "What is a key consideration in AGIS's public awareness campaign strategy?", options: ["Using only English language materials", "Targeting only wealthy landowners", "Creating materials accessible to diverse literacy levels and in multiple languages", "Limiting information to only those who visit their offices"], answer: "d"},
+{question: "How does AGIS's addressing system support urban management beyond navigation?", options: ["By providing free GPS devices to all residents", "By eliminating the need for property taxes", "By serving as framework for utility management, census data, and emergency services", "By allowing residents to choose their own house numbers"], answer: "d"},
+{question: "What approach should be taken when traditional land boundaries conflict with surveyed data?", options: ["Always favor traditional boundaries without verification", "Always dismiss traditional boundaries as invalid", "Ignore the conflict and create entirely new boundaries", "Investigate historical records, engage stakeholders, and seek equitable resolution based on evidence"], answer: "d"},
+{question: "How does AGIS ensure the long-term preservation of digital land records?", options: ["By printing all records on paper for backup", "By deleting old records to save space", "By relying on individual staff members to remember important data", "Through robust data backup, archiving systems, and digital preservation protocols"], answer: "d"},
+{question: "What is a critical ethical consideration for AGIS staff handling sensitive land ownership data?", options: ["Sharing interesting cases with friends and family", "Using data for personal investment decisions", "Maintaining strict confidentiality and preventing unauthorized access", "Selling data to interested third parties"], answer: "d"},
+{question: "How should AGIS measure the success of its services beyond revenue collection?", options: ["By counting the number of maps printed daily", "By measuring employee happiness alone", "Through metrics like reduced dispute cases, improved service delivery times, and increased public satisfaction", "By the number of social media followers gained"], answer: "d"},
+{question: "What is the ultimate goal of AGIS's transformation from manual to digital land administration?", options: ["To eliminate all human staff from the process", "To create the most expensive land system in Africa", "To make land administration completely free for everyone", "To create a transparent, efficient, and reliable system that supports sustainable urban development"], answer: "d"},
+{question: "What legislative instrument provides the statutory backing for AGIS operations?", options: ["Federal Capital Territory Act - Subsidiary Legislation No. 1 of 2004", "The Nigerian Urban and Regional Planning Act", "The Land Use Act of 1978", "The Federal Capital Development Authority Act"], answer: "a"},
+{question: "Which document serves as the primary evidence of land title issued by AGIS?", options: ["Certificate of Occupancy (C of O)", "Deed of Conveyance", "Survey Plan", "Land Purchase Agreement"], answer: "a"},
+{question: "What is the fundamental purpose of AGIS's digital cadastre management?", options: ["Maintaining accurate records of property boundaries and ownership", "Constructing physical perimeter walls", "Setting market prices for land", "Providing architectural design services"], answer: "a"},
+{question: "Which technology forms the core of AGIS's spatial data infrastructure?", options: ["Geographic Information Systems (GIS)", "Blockchain cryptocurrency", "Social media platforms", "Manual cartography tools"], answer: "a"},
+{question: "What is AGIS's primary role in urban planning support?", options: ["Providing essential geographic information for decision-making", "Directly constructing urban infrastructure", "Funding private development projects", "Setting residential building standards"], answer: "a"},
+{question: "Which unit provides strategic leadership for AGIS operations?", options: ["Office of the Director", "Information Technology Unit", "Customer Service Unit", "Legal Unit"], answer: "a"},
+{question: "What type of data does the GIS Unit primarily manage?", options: ["Spatial databases and geographic information", "Financial transaction records", "Employee payroll information", "Legal case files"], answer: "a"},
+{question: "How has AGIS primarily improved governance in land administration?", options: ["By reducing opportunities for corruption through transparency", "By eliminating all land registration fees", "By transferring land ownership to communities", "By allowing unlimited land ownership"], answer: "a"},
+{question: "What is a key economic impact of AGIS's efficient revenue collection?", options: ["Enhanced government revenue for public services", "Reduction in all land-related taxes", "Elimination of informal land markets", "Free land allocation to all citizens"], answer: "a"},
+{question: "Which software platform is considered industry standard for AGIS operations?", options: ["Esri ArcGIS", "Microsoft Office Suite", "Adobe Creative Cloud", "QuickBooks Accounting"], answer: "a"},
+{question: "What is the main challenge in maintaining spatial data in rapidly urbanizing Abuja?", options: ["Keeping data current with development changes", "Finding enough storage space for data", "Training staff to use basic computers", "Preventing all land disputes"], answer: "a"},
+{question: "Which emerging technology is AGIS exploring for enhanced security?", options: ["Blockchain for land transactions", "Virtual reality for public tours", "Cryptocurrency for payments", "3D printing for models"], answer: "a"},
+{question: "What is a key focus area for AGIS's service expansion?", options: ["Covering all area councils and satellite towns", "Limiting services to commercial properties", "Reducing public access hours", "Focusing only on digital services"], answer: "a"},
+{question: "How is AGIS addressing its technical capacity needs?", options: ["Through staff training and development programs", "By reducing technical requirements", "By outsourcing all technical work", "By hiring international staff only"], answer: "a"},
+{question: "What principle has AGIS introduced to land administration in FCT?", options: ["Transparency and efficiency in processes", "Complete land ownership by government", "Free land for political supporters", "Elimination of all land documentation"], answer: "a"},
+{question: "Which service directly supports emergency response in urban areas?", options: ["Street naming and house numbering system", "Free land allocation program", "Online payment platforms", "Public Wi-Fi infrastructure"], answer: "a"},
+{question: "What is the primary source of AGIS's spatial data collection?", options: ["Satellite imagery and aerial photographs", "Social media updates", "Community oral histories", "Newspaper property listings"], answer: "a"},
+{question: "How does AGIS ensure data reliability for decision-making?", options: ["Through rigorous quality control procedures", "By deleting old data regularly", "Through public voting on data accuracy", "By using only free data sources"], answer: "a"},
+{question: "What is AGIS's mandate regarding geographic data coverage?", options: ["Comprehensive coverage of the entire FCT", "Only urban center coverage", "Only government land coverage", "Only commercial property coverage"], answer: "a"},
+{question: "How does AGIS contribute to investment climate in Abuja?", options: ["By providing legal certainty to land ownership", "By offering free land to investors", "By guaranteeing investment returns", "By eliminating all regulations"], answer: "a"},
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

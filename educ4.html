@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Exam Simulation</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="educ.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>National Policy on Education {NPE 04}(100 Qs) </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+    
+    { 
+        question: "What is the PRIMARY benefit of university-industry partnerships?", 
+        options: ["Reduced tuition", "Curriculum relevance", "Shorter programs", "Automatic employment"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student fails multiple courses. What is the STANDARD academic consequence?", 
+        options: ["Automatic graduation", "Probation or withdrawal", "Fee reduction", "Course substitution"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which funding model is SUSTAINABLE for Nigerian universities?", 
+        options: ["Sole government funding", "Mixed public-private financing", "Exclusive student tuition", "International donations"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN purpose of the Academic Staff Union of Universities (ASUU)?", 
+        options: ["Student welfare", "Staff welfare and academic freedom", "University administration", "Government policy"], 
+        answer: "b" 
+    },
+    { 
+        question: "A university discovers research fraud. What is the FIRST appropriate action?", 
+        options: ["Media publicity", "Internal investigation", "Government notification", "Lawsuit filing"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which technology enhances research capabilities in tertiary institutions?", 
+        options: ["Digital libraries", "Social media", "Gaming consoles", "Cryptocurrency"], 
+        answer: "a" 
+    },
+    { 
+        question: "What is the PRIMARY challenge in technical teacher education?", 
+        options: ["Excess qualified applicants", "Inadequate practical training facilities", "Low student interest", "Government overfunding"], 
+        answer: "b" 
+    },
+    { 
+        question: "A graduate establishes a business from university research. This demonstrates:", 
+        options: ["Academic failure", "Research commercialization", "Policy violation", "Curriculum deficiency"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which qualification is HIGHEST in tertiary education?", 
+        options: ["Bachelor's degree", "Master's degree", "Doctorate", "Postgraduate diploma"], 
+        answer: "c" 
+    },
+    { 
+        question: "What is the MAIN purpose of institutional accreditation?", 
+        options: ["Financial profit", "Quality assurance", "Student recruitment", "International ranking"], 
+        answer: "b" 
+    },
+    { 
+        question: "A lecturer uses outdated teaching methods. What improves pedagogical skills?", 
+        options: ["Higher degree acquisition", "Continuous professional development", "Administrative promotion", "Research focus"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which strategy addresses graduate unemployment?", 
+        options: ["Extended programs", "Entrepreneurship education", "University closure", "Age limitation"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY role of Vice-Chancellors?", 
+        options: ["Teaching undergraduates", "Chief academic officer", "Student accommodation", "Government liaison"], 
+        answer: "b" 
+    },
+    { 
+        question: "A university partners with international institution. What is the MAIN benefit?", 
+        options: ["Tuition increase", "Knowledge exchange", "Student transfer", "Faculty reduction"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which factor is CRITICAL for research excellence?", 
+        options: ["Adequate funding", "Large classrooms", "Student population", "Sports facilities"], 
+        answer: "a" 
+    },
+    { 
+        question: "What is the STANDARD duration for bachelor's degrees in Nigerian universities?", 
+        options: ["2-3 years", "4-5 years", "6-7 years", "8-9 years"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student plagiarizes a term paper. What is the TYPICAL consequence?", 
+        options: ["Commendation", "Course failure", "Monetary reward", "Graduation acceleration"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which body conducts matriculation ceremonies?", 
+        options: ["University senate", "Student union", "Government", "Alumni association"], 
+        answer: "a" 
+    },
+    { 
+        question: "What is the ESSENTIAL requirement for university admission?", 
+        options: ["JAMB score", "Parental donation", "State origin", "Religious affiliation"], 
+        answer: "a" 
+    },
+    { 
+        question: "A rural student lacks reliable internet but wants to access university courses. Which ODL delivery method is MOST suitable?", 
+        options: ["Live video lectures", "Mobile learning apps", "Printed course materials", "Virtual reality classrooms"], 
+        answer: "c" 
+    },
+    { 
+        question: "Which technology is CRITICAL for effective e-learning in areas with unstable electricity?", 
+        options: ["High-powered servers", "Learning management systems", "Offline-capable devices", "4K video streaming"], 
+        answer: "c" 
+    },
+    { 
+        question: "A working mother needs flexible studies. Which ODL feature provides the GREATEST advantage?", 
+        options: ["Fixed class schedules", "Self-paced learning", "Compulsory attendance", "Physical textbooks"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of the National Open University of Nigeria (NOUN)?", 
+        options: ["Replacing traditional universities", "Providing flexible higher education", "Training teachers only", "Offering foreign degrees"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which component is ESSENTIAL for quality assurance in ODL programs?", 
+        options: ["Face-to-face final exams", "Regular tutor-student interaction", "Expensive course materials", "International accreditation"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student in a remote area completes an online course but needs certification. What is the MAIN challenge?", 
+        options: ["Identity verification", "Course content", "Internet speed", "Device quality"], 
+        answer: "a" 
+    },
+    { 
+        question: "What is the PRIMARY benefit of blended learning approaches?", 
+        options: ["Complete elimination of teachers", "Combining digital and physical instruction", "Reducing infrastructure costs", "Automatic certification"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which technology BEST supports collaborative learning in ODL?", 
+        options: ["Discussion forums", "Pre-recorded lectures", "Static PDFs", "Offline quizzes"], 
+        answer: "a" 
+    },
+    { 
+        question: "A visually impaired student enrolls in e-learning. What accommodation is MOST important?", 
+        options: ["Video content", "Screen reader compatibility", "Complex graphics", "Handwritten notes"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN challenge for ODL in Northern Nigeria?", 
+        options: ["Excessive funding", "Digital infrastructure gaps", "Overqualified students", "Curriculum surplus"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which feature distinguishes MOOCs from traditional ODL?", 
+        options: ["High tuition fees", "Mass enrollment capacity", "Physical textbooks", "Limited accessibility"], 
+        answer: "b" 
+    },
+    { 
+        question: "A farmer wants agricultural courses while working. Which ODL model fits BEST?", 
+        options: ["Synchronous webinars", "Radio-based instruction", "Residential programs", "Full-time university"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of learning management systems?", 
+        options: ["Replacing teachers", "Course delivery and tracking", "Generating revenue", "Social networking"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which strategy makes e-learning accessible to low-income students?", 
+        options: ["High-speed internet requirement", "Expensive devices", "Zero-rated educational content", "International payment"], 
+        answer: "c" 
+    },
+    { 
+        question: "A student struggles with self-discipline in ODL. What support is MOST effective?", 
+        options: ["Strict punishment", "Structured timelines and reminders", "Automatic failure", "Peer isolation"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the ESSENTIAL requirement for ODL tutors?", 
+        options: ["Physical presence", "Digital pedagogy skills", "Administrative roles", "Research publications"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which technology enables practical skill demonstration in e-learning?", 
+        options: ["Text-based manuals", "Simulation software", "Audio podcasts", "Printed worksheets"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN benefit of ODL during health emergencies?", 
+        options: ["Complete academic continuity", "Increased tuition revenue", "Reduced teacher workload", "Eliminating assessments"], 
+        answer: "a" 
+    },
+    { 
+        question: "A course uses automated essay scoring. What is the PRIMARY concern?", 
+        options: ["Technical infrastructure", "Lack of human feedback", "Internet access", "Device compatibility"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which ODL component addresses Nigeria's out-of-school youth challenge?", 
+        options: ["Flexible secondary equivalency", "Compulsory residential schools", "Traditional university expansion", "International scholarships"], 
+        answer: "a" 
+    },
+    { 
+        question: "What is the CRITICAL factor for successful mobile learning?", 
+        options: ["High-end smartphones", "Data-free content access", "Limited literacy requirements", "5G network coverage"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student in conflict-affected area needs education. Which ODL approach works BEST?", 
+        options: ["Fixed computer labs", "Radio instruction", "Virtual reality", "Printed materials"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of digital badges in e-learning?", 
+        options: ["Replacing degrees", "Certifying micro-skills", "Generating revenue", "Social recognition"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which technology BEST supports deaf students in online courses?", 
+        options: ["Audio podcasts", "Captioned videos", "Complex animations", "Text-heavy documents"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN challenge of e-assessment integrity?", 
+        options: ["Grading speed", "Proctoring limitations", "Content quality", "Platform cost"], 
+        answer: "b" 
+    },
+    { 
+        question: "A university wants to expand access. Which ODL model aligns with Nigerian policy?", 
+        options: ["Exclusive campus programs", "Dual-mode delivery", "International-only courses", "Postgraduate focus"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which infrastructure is MOST critical for national ODL implementation?", 
+        options: ["Fiber optic networks", "Learning content repositories", "Sports facilities", "Administrative offices"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the ESSENTIAL requirement for quality ODL content?", 
+        options: ["Cultural relevance", "International standards", "Commercial value", "Political alignment"], 
+        answer: "a" 
+    },
+    { 
+        question: "A student completes an online program but employers question its validity. How to address this?", 
+        options: ["Government accreditation", "Personal networking", "Additional certification", "Social media promotion"], 
+        answer: "a" 
+    },
+    { 
+        question: "Which strategy makes ODL accessible to nomadic communities?", 
+        options: ["Fixed study centers", "Mobile learning units", "Residential requirements", "High-tech devices"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY benefit of learning analytics in e-learning?", 
+        options: ["Replacing instructors", "Personalizing learning paths", "Reducing content", "Automating certification"], 
+        answer: "b" 
+    },
+    { 
+        question: "A course uses AI chatbots for student queries. What is the MAIN advantage?", 
+        options: ["24/7 support availability", "Eliminating tutors", "Reducing content", "Simplifying assessment"], 
+        answer: "a" 
+    },
+    { 
+        question: "Which ODL approach BEST supports practical skills acquisition?", 
+        options: ["Theoretical readings", "Virtual labs", "Audio lectures", "Text-based exams"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the CRITICAL success factor for ODL in teacher education?", 
+        options: ["Eliminating practicum", "Supervised teaching practice", "Theoretical focus", "Online-only assessment"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student with limited data accesses course materials. Which format is MOST efficient?", 
+        options: ["High-definition videos", "Data-compressed texts", "3D simulations", "Live webinars"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY challenge for ODL assessment in Nigeria?", 
+        options: ["Excessive funding", "Credible proctoring", "Content surplus", "Overqualified students"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which policy ensures ODL quality in Nigeria?", 
+        options: ["Unregulated expansion", "NUC accreditation", "Commercialization", "Foreign control"], 
+        answer: "b" 
+    },
+    { 
+        question: "A JSS graduate in Lagos wants to become an electrician. Which TVET pathway is MOST direct?", 
+        options: ["University engineering degree", "Technical college program", "Business administration course", "Arts secondary school"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of the National Skills Qualification Framework?", 
+        options: ["University admission", "Standardizing TVET certifications", "Teacher promotion", "School ranking"], 
+        answer: "b" 
+    },
+    { 
+        question: "A TVET instructor needs industry-relevant skills. What is the BEST approach?", 
+        options: ["Annual conferences", "Industry attachment programs", "Online courses only", "Research publications"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which challenge is MOST critical for TVET implementation in Nigeria?", 
+        options: ["Excess funding", "Industry-education misalignment", "Overqualified teachers", "Low student interest"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student completes National Technical Certificate. Which employment pathway exists?", 
+        options: ["Automatic government job", "Journeyman positions", "University professorship", "Medical practice"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the ESSENTIAL component of effective TVET workshops?", 
+        options: ["Theoretical textbooks", "Modern equipment", "Air conditioning", "Decorative art"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which TVET innovation addresses youth unemployment?", 
+        options: ["Extended programs", "Entrepreneurship integration", "Higher tuition", "Foreign certification"], 
+        answer: "b" 
+    },
+    { 
+        question: "A company complains about graduate skills gaps. What TVET improvement is NEEDED?", 
+        options: ["Curriculum standardization", "Industry curriculum input", "Reduced practical hours", "More examinations"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which body regulates TVET standards in Nigeria?", 
+        options: ["NUC", "NBTE", "NCCE", "JAMB"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY benefit of apprenticeship in TVET?", 
+        options: ["Reduced instructor workload", "Workplace skill application", "Theoretical knowledge", "Academic certification"], 
+        answer: "b" 
+    },
+    { 
+        question: "A TVET graduate wants to start a fashion business. Which support is MOST valuable?", 
+        options: ["Advanced degree", "Startup incubation", "Foreign travel", "Government appointment"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which teaching method is MOST effective for practical skills?", 
+        options: ["Lecture-based instruction", "Demonstration and practice", "Online quizzes", "Textbook reading"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN purpose of the Trade Test Certificate?", 
+        options: ["University admission", "Artistic recognition", "Skill proficiency validation", "Political appointment"], 
+        answer: "c" 
+    },
+    { 
+        question: "A TVET school lacks modern equipment. What solution aligns with policy?", 
+        options: ["Industry partnerships", "Program cancellation", "Theoretical focus", "Student fundraising"], 
+        answer: "a" 
+    },
+    { 
+        question: "Which factor is CRITICAL for TVET teacher qualification?", 
+        options: ["PhD degree", "Industry experience", "Political connection", "Foreign certification"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY challenge for female TVET enrollment?", 
+        options: ["Academic ability", "Gender stereotypes", "Excessive funding", "Curriculum quality"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student excels in welding but struggles with theory. Which assessment approach is FAIREST?", 
+        options: ["Theory examination only", "Practical demonstration", "Oral presentation", "Written assignment"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which strategy improves TVET's public perception?", 
+        options: ["Reducing standards", "Successful graduate showcase", "Eliminating exams", "Increasing fees"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN benefit of modular TVET programs?", 
+        options: ["Faster certification", "Stackable credentials", "Reduced costs", "Simplified teaching"], 
+        answer: "b" 
+    },
+    { 
+        question: "A TVET graduate with National Diploma wants advancement. Which pathway exists?", 
+        options: ["Higher National Diploma", "Automatic degree", "Medical school", "Legal practice"], 
+        answer: "a" 
+    },
+    { 
+        question: "Which technology enhances TVET delivery?", 
+        options: ["Virtual simulations", "Social media", "Cryptocurrency", "Gaming consoles"], 
+        answer: "a" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of industrial training in TVET?", 
+        options: ["Cheap labor", "Theory-practice integration", "Company promotion", "Teacher relief"], 
+        answer: "b" 
+    },
+    { 
+        question: "A community needs plumbing services. Which TVET approach addresses this?", 
+        options: ["Philosophy degree", "Plumbing skills training", "Advanced mathematics", "Literary analysis"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which funding model supports TVET sustainability?", 
+        options: ["Student fees only", "Government allocation only", "Industry investment", "International donations"], 
+        answer: "c" 
+    },
+    { 
+        question: "What is the ESSENTIAL requirement for TVET curriculum development?", 
+        options: ["Political consideration", "Labor market needs", "Teacher preferences", "Student demands"], 
+        answer: "b" 
+    },
+    { 
+        question: "A TVET school wants to improve relevance. Which partnership is MOST valuable?", 
+        options: ["Foreign university", "Local industries", "Primary schools", "Entertainment industry"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which certification is HIGHEST in TVET hierarchy?", 
+        options: ["Trade Test I", "Trade Test III", "National Diploma", "Advanced National Diploma"], 
+        answer: "d" 
+    },
+    { 
+        question: "What is the MAIN challenge for rural TVET implementation?", 
+        options: ["Excessive equipment", "Infrastructure gaps", "Overqualified students", "Curriculum surplus"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student wants to upgrade from National Certificate to National Diploma. What is REQUIRED?", 
+        options: ["Political connection", "Additional training", "Work experience", "Foreign travel"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which teaching resource is MOST important for automotive technology?", 
+        options: ["Library books", "Functional vehicles", "Online videos", "Theoretical manuals"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY benefit of competency-based TVET assessment?", 
+        options: ["Faster grading", "Skill mastery verification", "Reduced costs", "Simplified administration"], 
+        answer: "b" 
+    },
+    { 
+        question: "A TVET graduate faces equipment costs for startup. Which support is available?", 
+        options: ["Automatic loan", "Equipment leasing schemes", "Government donation", "International sponsorship"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which strategy addresses TVET stigma in Nigeria?", 
+        options: ["Hiding vocational aspects", "Academic streaming", "Career guidance awareness", "Reducing standards"], 
+        answer: "c" 
+    },
+    { 
+        question: "What is the MAIN purpose of the National Board for Technical Education?", 
+        options: ["University regulation", "TVET standard setting", "Primary education", "Teacher certification"], 
+        answer: "b" 
+    },
+    { 
+        question: "A company needs certified welders. Which TVET product meets this need?", 
+        options: ["University graduates", "Secondary leavers", "Apprentices without certification", "Trade Test certificate holders",], 
+        answer: "d" 
+    },
+    { 
+        question: "Which factor is CRITICAL for TVET workshop safety?", 
+        options: ["Safety protocols and equipment", "Aesthetic design", "Student numbers", "Teacher qualifications"], 
+        answer: "a" 
+    },
+    { 
+        question: "A teacher with NCE qualification wants to upgrade to bachelor's degree. Which program is SPECIFICALLY designed for this?", 
+        options: ["Postgraduate diploma", "Part-time degree program", "Degree through distance learning", "Bachelor of Education for NCE holders"], 
+        answer: "d" 
+    },
+    { 
+        question: "What is the PRIMARY role of the Teachers Registration Council of Nigeria (TRCN)?", 
+        options: ["Teacher recruitment", "Professional certification and licensing", "Salary payment", "School infrastructure development"], 
+        answer: "b" 
+    },
+    { 
+        question: "A newly employed teacher lacks classroom management skills. Which professional development approach is MOST effective?", 
+        options: ["Suspension", "Mentoring program", "Salary reduction", "Additional degree"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which qualification is MINIMALLY required to teach in Nigerian primary schools?", 
+        options: ["First School Leaving Certificate", "Senior Secondary Certificate", "National Certificate in Education", "Bachelor's Degree"], 
+        answer: "c" 
+    },
+    { 
+        question: "What is the MAIN purpose of the teaching practice component in teacher education?", 
+        options: ["Reduce university workload", "Provide free labor to schools", "Bridge theory-practice gap", "Increase student numbers"], 
+        answer: "c" 
+    },
+    { 
+        question: "A teacher consistently uses lecture method only. Which training need is MOST evident?", 
+        options: ["Content knowledge", "Subject specialization", "Research ability", "Pedagogical skills",], 
+        answer: "d" 
+    },
+    { 
+        question: "Which factor is CRITICAL for effective teacher professional development?", 
+        options: ["Relevance to classroom needs", "International travel", "Theoretical focus", "Administrative convenience"], 
+        answer: "a" 
+    },
+    { 
+        question: "What is the PRIMARY benefit of the Teachers' Continuous Professional Development framework?", 
+        options: ["Automatic promotion", "Improved teaching competence", "Higher salary", "Reduced workload"], 
+        answer: "b" 
+    },
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

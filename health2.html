@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="health.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Health 02 (100 Qs) </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "A nurse is preparing to administer a high-risk IV medication. A practical safety check is to:", options: ["Administer it quickly", "Double-check the patient's identity, drug, dose, and infusion rate with a colleague", "Ask the patient if it looks right", "Assume the pharmacy prepared it correctly"], answer: "b"},
+{question: "A CHEW is weighing an infant. A practical way to get an accurate weight is to:", options: ["Use a Salter scale and ensure the baby is naked and the scale is zeroed", "Weigh the mother and subtract her weight", "Hold the baby and subtract your weight", "Estimate by looking"], answer: "a"},
+{question: "A Laboratory Technician is staining a blood film for malaria. The practical way to ensure quality is to:", options: ["Use as much stain as possible", "Follow the exact staining protocol and use positive and negative control slides", "Guess the staining time", "Use expired stain"], answer: "b"},
+{question: "A Pharmacist is reconciling a patient's medications upon hospital admission. This is crucial to:", options: ["Waste time", "Increase the number of drugs they take", "Prevent omissions, duplications, or harmful interactions", "Make the list look longer"], answer: "c"},
+{question: "A Health Records Officer is implementing a new electronic system. A practical way to gain staff buy-in is to:", options: ["Force them to use it without training", "Threaten to fire those who don't use it", "Blame the old system constantly", "Provide comprehensive training and demonstrate how it will make their jobs easier"], answer: "d"},
+{question: "An Environmental Health Officer is responding to a chemical spill. Their practical first action is to:", options: ["Taste the chemical to identify it", "Secure the area and evacuate people to prevent exposure", "Start cleaning it up alone", "Wait for it to evaporate"], answer: "b"},
+{question: "A Physiotherapist is treating a patient with pain. A practical way to assess pain is to:", options: ["Assume they are exaggerating", "Ignore patient complaints of pain", "Use a simple pain scale (e.g., 0-10) and ask about its location and character", "Tell them to be strong"], answer: "c"},
+{question: "A Radiographer is dealing with a claustrophobic patient needing an MRI. A practical approach is to:", options: ["Trick them into the machine", "Explain the procedure thoroughly, offer a blindfold, and consider sedation if prescribed", "Tell them to (get over it)", "Cancel the scan entirely"], answer: "b"},
+{question: "A Health Administrator is preparing a budget proposal. A practical way to justify a request for new equipment is to:", options: ["Say the old one is ugly", "Threaten to resign", "Ask for the most expensive model available", "Present data on patient volume, current equipment downtime, and projected improved outcomes"], answer: "d"},
+{question: "A patient complains loudly about long waiting times. The health worker's practical response should be to:", options: ["Tell them to be quiet", "Acknowledge their frustration, apologize for the wait, and provide a realistic updated timeframe", "Ignore them", "Blame other patients"], answer: "b"},
+{question: "A health worker is planning to start a small private practice alongside their public job. To avoid conflict of interest, they must:", options: ["Use public resources for their private practice", "Refer all public patients to their private clinic", "Hide the private practice from their employer", "Ensure there is no overlap in hours and that the private practice is completely separate"], answer: "d"},
+{question: "A health worker is criticized publicly by a supervisor for a mistake. Their professional reaction should be to:", options: ["Argue back publicly", "Quit on the spot", "Spread rumors about the supervisor", "Listen, acknowledge the feedback, and discuss it privately later for clarification"], answer: "d"},
+{question: "A health worker finds a better way to organize the supply room. They should:", options: ["Reorganize it without telling anyone", "Complain about the old system but do nothing", "Demand a promotion for the idea", "Share the idea with their team and get buy-in before making changes"], answer: "d"},
+{question: "The core expectation for a public service health worker's use of social media is to:", options: ["Post pictures of interesting patient cases", "Vent about their job daily", "Become an influencer on health trends", "Maintain patient confidentiality and avoid bringing the service into disrepute"], answer: "d"},
+{question: "A health worker is expected to be a \"team player\" by:", options: ["Working in isolation", "Doing only their assigned tasks", "Taking credit for team successes", "Supporting colleagues, sharing knowledge, and communicating effectively"], answer: "d"},
+{question: "A practical example of accountability is a health worker who:", options: ["Hides their errors", "Blames the system for everything", "Claims success for others' work", "Takes responsibility for their actions and learns from mistakes"], answer: "d"},
+{question: "The expectation of continuous learning means a health worker should:", options: ["Rely only on past knowledge", "Wait to be forced to train", "Pretend to know everything", "Proactively attend trainings and stay updated on new guidelines"], answer: "d"},
+{question: "The expectation of \"customer service\" in healthcare means treating patients with:", options: ["Indifference", "Suspicion", "Preference based on wealth", "Respect, empathy, and responsiveness to their needs"], answer: "d"},
+{question: "A patient is referred from a PHC to a general hospital under the national referral policy. The PHC health worker's practical duty is to:", options: ["Give verbal directions to the patient", "Do nothing further", "Accompany the patient personally", "Provide a written referral letter summarizing the case and reason for referral"], answer: "d"},
+{question: "A health worker needs to check if a drug is approved for use in the public system. They should consult the:", options: ["Internet search engine", "Their personal preferences", "National Essential Medicines List", "A drug company representative"], answer: "d"},
+{question: "Under the National Health Act, a patient has the right to refuse treatment. A health worker's practical response to a refusal is to:", options: ["Force the treatment", "Discharge the patient immediately", "Scold the patient",  "Ensure the refusal is informed, document it thoroughly, and ensure the patient understands the consequences"], answer: "d"},
+{question: "A health worker wants to understand their entitlements regarding leave and allowances. They should refer to the:", options: ["Their colleagues' opinions", "The facility's gossip mill", "The National Health Act", "Public Service Rules (PSR)"], answer: "d"},
+{question: "A health worker is processing a procurement request for medical equipment. They must ensure adherence to:", options: ["Their personal preferences", "The cheapest option always", "The most expensive option always", "Public Procurement Act and the facility's financial regulations"], answer: "d"},
+{question: "The goal of Universal Health Coverage (UHC) influences a health worker's daily practice by encouraging them to focus on:", options: ["Treating only paying patients", "Working only in urban areas", "Specializing in rare diseases", "Equitable and accessible care for all, including vulnerable populations"], answer: "d"},
+{question: "A health worker suspects a child is being abused. The National Child Rights Act mandates them to:", options: ["Confront the parents immediately", "Ignore it as a family matter", "Pray for the child", "Report the suspicion to the designated child protection authority or social welfare"], answer: "d"},
+{question: "A patient wishes to see their own medical records. Under the principles of the National Health Act, the health worker should:", options: ["Refuse outright", "Charge a fee for access", "Give the original file to the patient", "Facilitate access as per the facility's policy, often with supervision to explain contents"], answer: "d"},
+{question: "A health worker is managing a patient with a notifiable disease. The practical step per national policy is to:", options: ["Complete the mandatory notification form and submit it to the LGA or state disease surveillance officer", "Keep it confidential to avoid stigma", "Treat the patient in isolation only", "Tell the patient's family first"], answer: "a"},
+{question: "A health worker is involved in a research project. They must first obtain:", options: ["Ethical approval from an accredited Health Research Ethics Committee", "Permission from their supervisor only", "Verbal consent from patients", "Funding from a drug company"], answer: "a"},
+{question: "The NHIS policy means a health worker should provide the same standard of care to:", options: ["All patients, regardless of their insurance status or ability to pay", "NHIS enrollees only", "Only fee-paying patients", "Only government officials"], answer: "a"},
+{question: "A practical way for a health worker to support the Primary Health Care (PHC) policy of preventive care is by:", options: ["Conducting regular health education sessions in the community", "Waiting for sick patients to arrive", "Only treating advanced diseases", "Opposing immunization"], answer: "a"},
+{question: "A health worker discovers a fraud involving NHIS funds. They are obligated to report it to:", options: ["The NHIS office or appropriate anti-corruption agency", "Their friend", "The media", "The person committing the fraud"], answer: "a"},
+{question: "The Public Service Rules outline disciplinary procedures. This means a health worker can be sanctioned for:", options: ["Specific offenses like absenteeism, negligence, or misconduct as defined in the rules", "Any reason a supervisor chooses", "Being unpopular", "Asking for a raise"], answer: "a"},
+{question: "A health worker is planning a community health intervention. To align with national priorities, they should consult:", options: ["The National Strategic Health Development Plan (NSHDP)", "Social media trends", "Their horoscope", "International plans only"], answer: "a"},
+{question: "A patient cannot afford a prescribed drug not on the Essential List. A practical action within the policy framework is to:", options: ["See if an alternative drug on the Essential List is suitable", "Tell them to find the money", "Give them samples indefinitely", "Prescribe a smaller, ineffective dose"], answer: "a"},
+{question: "A health worker is asked to participate in a national immunization campaign. Their role is defined by:", options: ["National policy and the campaign's operational manual", "Their personal decision", "Their shift schedule only", "The community leader"], answer: "a"},
+{question: "Under the Freedom of Information Act, a health worker might be required to:", options: ["Release non-confidential institutional information following official protocols", "Release any patient information requested", "Release their colleague's salary information", "Refuse all requests"], answer: "a"},
+{question: "A health worker wants to advocate for more nurses at their facility. A practical strategy aligned with policy is to:", options: ["Collect data on patient-nurse ratios and outcomes and present a proposal to management", "Organize a strike immediately", "Complain to patients", "Resign individually"], answer: "a"},
+{question: "The National Health Act stipulates that a portion of funding should be for Primary Health Care. This affects a health worker by:", options: ["Potentially improving the resources available at the PHC level where they work", "Guaranteeing their salary", "Taking money away from hospitals", "Funding overseas trips"], answer: "a"},
+{question: "A health worker is processing a claim for travel allowances. They must ensure it complies with:", options: ["The Public Service Rules and financial regulations on entitlement and documentation", "Their personal needs", "What their colleague received", "The amount they wish they had"], answer: "a"},
+{question: "A new national guideline for hypertension management is released. The health worker's responsibility is to:", options: ["Read, understand, and incorporate the new guidelines into their practice", "Ignore it and continue old practices", "Frame it and hang it on the wall", "Criticize it to patients"], answer: "a"},
+{question: "A health worker is involved in a sentinel event (a serious, preventable patient incident). Hospital policy likely requires:", options: ["A root cause analysis to prevent future occurrences", "Hiding the event", "Blaming a single individual", "Destroying records"], answer: "a"},
+{question: "The policy on infection prevention and control (IPC) requires health workers to:", options: ["Adhere to standard precautions with every patient", "Wear PPE only for surgery", "Reuse gloves to save money", "Wash hands only after visible contamination"], answer: "a"},
+{question: "A health worker is seconded to another department. The rules governing this move are found in the:", options: ["Their employment contract and the Public Service Rules", "Office gossip", "The National Health Act", "Their horoscope"], answer: "a"},
+{question: "A patient makes a complaint about their care. The facility's complaints policy should ensure the patient:", options: ["Receives a timely, fair, and transparent response", "Is ignored", "Is punished for complaining", "Is offered money to stay quiet"], answer: "a"},
+{question: "A health worker becomes aware of a potential conflict of interest. The ethical thing to do is to:", options: ["Declare it to their supervisor", "Hide it", "Exploit it for gain", "Accuse others of the same thing"], answer: "a"},
+{question: "The National Policy on Immunization dictates that a child should receive the BCG vaccine:", options: ["At birth or at first contact with health services", "At any time before age 5", "Only if the parents request it", "After other vaccines"], answer: "a"},
+{question: "A health worker wants to understand the legal framework around consent for minors. They should refer to:", options: ["The National Health Act and Child Rights Act", "Their personal beliefs", "The parents' wishes only", "International law"], answer: "a"},
+{question: "A practical implication of the National AIDS/STI Control Program policy is that a health worker should:", options: ["Offer routine HIV testing with counseling and ensure confidentiality", "Stigmatize PLHIV", "Refuse to treat PLHIV", "Tell the community who is infected"], answer: "a"},
+{question: "The National Blood Policy aims to ensure a safe blood supply. This affects a health worker by:", options: ["Providing guidelines for safe transfusion practices and encouraging voluntary donation", "Allowing them to pressure staff to donate", "Making blood easily available for sale", "Eliminating the need for blood tests"], answer: "a"},
+{question: "A health worker is managing a patient with a mental health condition. The Mental Health Act protects the patient's right to:", options: ["Receive care in the least restrictive environment possible", "Be chained to a bed", "Be hidden away at home", "Be denied employment"], answer: "a"},
+{question: "A health worker is asked to disclose patient information for a research study without consent. They should:", options: ["Refuse, citing confidentiality rules unless ethical approval for waiver of consent is obtained", "Disclose it", "Disclose only the names", "Ask the researcher to steal the files"], answer: "a"},
+{question: "The only functional oxygen concentrator in the pediatric ward malfunctions. A practical immediate action is to:", options: ["Use oxygen cylinders if available, manually bag a child in distress, and urgently call for biomedical repair", "Panic and tell parents there is no hope", "Transfer all children to another hospital immediately", "Pretend it is working"], answer: "a"},
+{question: "A health worker is assigned to a remote clinic with no doctor and a limited drug supply. A practical strategy is to:", options: ["Focus on preventive care, health education, and managing common illnesses within their scope using available tools", "Close the clinic", "Prescribe complex treatments anyway", "Blame the government constantly"], answer: "a"},
+{question: "The hospital's water supply is interrupted for 48 hours. The biggest practical challenge for infection control is:", options: ["Maintaining hand hygiene and sterilizing medical equipment", "Watering the garden", "Making tea for staff", "Washing staff cars"], answer: "a"},
+{question: "A health worker experiences \"brain drain\" firsthand as their last two trained colleagues leave for abroad. This creates a challenge of:", options: ["Increased workload, reduced mentorship, and potential for burnout for the remaining staff", "Having fewer people to socialize with", "More space in the call room", "Less competition for promotions"], answer: "a"},
+{question: "A community refuses to participate in a mosquito net distribution program, believing it causes infertility. This is a challenge of:", options: ["Cultural beliefs and misinformation hindering public health efforts", "Lack of nets", "Too many nets", "The nets being the wrong color"], answer: "a"},
+{question: "The laboratory reagent for running CD4 counts (for HIV monitoring) has been out of stock for 3 months. This challenge directly impacts patient care by:", options: ["Making it difficult to monitor patient health and decide when to start or change treatment", "Making the lab look messy", "Saving money on tests", "Allowing machines to rest"], answer: "a"},
+{question: "A health worker has 80 patients to see in a 6-hour shift. This high workload can lead to:", options: ["Detailed consultations for all", "Rushed consultations, diagnostic errors, and patient dissatisfaction", "Higher income", "More time for each patient"], answer: "b"},
+{question: "The electricity is unreliable, and the generator often fails. This poses a direct risk to patients:", options: ["Who are afraid of the dark", "On oxygen therapy or electronic monitors, and to vaccines in the cold chain", "Who want to watch TV", "In the waiting room"], answer: "b"},
+{question: "A health worker feels demoralized due to a lack of promotion opportunities and poor working conditions. This challenge can lead to:", options: ["Increased productivity", "Presenteeism (being at work but not fully functioning) and reduced quality of care", "More breaks", "Happier patients"], answer: "b"},
+{question: "The road to the health center is impassable during the rainy season. This challenge affects:", options: ["Staff's social life", "Patient access to care and delivery of supplies", "The beauty of the landscape", "Bird watching"], answer: "b"},
+{question: "A health worker is tasked with paper-based reporting that is duplicate and time-consuming. This \"weak health information system\" challenge means:", options: ["They have more paper to recycle", "Less time for patient care and data that may be inaccurate or unused for decision-making", "Better record-keeping", "More job security"], answer: "b"},
+{question: "There is a critical shortage of midwives in the maternity ward. This can result in:", options: ["A quieter workplace", "Inadequate supervision during labour, increased risk of complications, and maternal/neonatal mortality", "More personalized care", "Fewer shifts for existing staff"], answer: "b"},
+{question: "A patient needs a specific antibiotic that is not in stock, and the \"codeine cough syrup\" is the only thing available. This challenge of \"inadequate funding for essential drugs\" forces the health worker to:", options: ["Prescribe the cough syrup for the infection", "Make a difficult choice to refer the patient or try to find a suitable alternative that is available", "Tell the patient to use herbs", "Blame the patient for being sick"], answer: "b"},
+{question: "A health worker faces constant pressure from patients and families to prescribe antibiotics for viral infections. This challenge of \"irrational drug demand\" requires the health worker to:", options: ["Prescribe them to avoid conflict", "Spend time educating patients on why antibiotics are not needed, which is time-consuming", "Prescribe placebos", "Report the patients to the police"], answer: "b"},
+{question: "The hospital's incinerator for medical waste is broken, and waste is piling up. This practical challenge creates a risk of:", options: ["A ugly sight", "Needle-stick injuries, infection spread, and environmental pollution", "More work for cleaners", "A source of scrap metal"], answer: "b"},
+{question: "A health worker is assigned to a new department without any orientation or training. This lack of support can lead to:", options: ["Rapid independence", "Anxiety, errors, and unsafe practice", "A chance to create new rules", "Less responsibility"], answer: "b"},
+{question: "Tribal biases are affecting how some staff treat patients from certain communities. This challenge undermines the principle of:", options: ["Efficiency", "Equity and ethical care for all", "Speed", "Cost-saving"], answer: "b"},
+{question: "The ambulance has no fuel and the driver is unavailable. For a emergency referral, a health worker might practically have to:", options: ["Tell the patient to take a taxi", "Negotiate with local transport providers or use a personal vehicle in extreme situations", "Cancel the referral", "Ask the patient to walk"], answer: "b"},
+{question: "A health worker receives their salary irregularly, sometimes months late. This personal challenge can affect their work by causing:", options: ["Less need to go to the bank", "Significant stress and distraction, potentially affecting focus on patient care", "More sympathy for patients", "A simpler budget"], answer: "b"},
+{question: "The health management information system (HMIS) is down for a week. The practical workaround for reporting is to:", options: ["Wait for it to come back online", "Use paper forms and plan for a large data entry catch-up later, risking errors", "Stop seeing patients", "Make up the data"], answer: "b"},
+{question: "A senior colleague is resistant to new evidence-based practices and insists on old ways. This challenge to \"continuous learning\" requires the junior worker to:", options: ["Conform to the old ways", "Respectfully share new information and lead by example, but may face resistance", "Report them for being old", "Argue with them in front of patients"], answer: "b"},
+{question: "The phone network is poor, making it impossible to call for advice or confirm referrals. A practical solution is to:", options: ["Give up on communication", "Use a designated messenger or travel to the next point with network when necessary", "Stop accepting serious cases", "Use smoke signals"], answer: "b"},
+{question: "The hospital's laundry service is unreliable, leading to a shortage of clean linens. This poses a risk of:", options: ["Patients complaining about fashion", "Healthcare-associated infections", "Staff having to wear street clothes", "The need for more clotheslines"], answer: "b"},
+{question: "A health worker is tasked with achieving unrealistic targets set by management. This can lead to:", options: ["Healthy competition", "Data falsification or cutting corners to meet the targets", "Improved quality of care", "A sense of great accomplishment"], answer: "b"},
+{question: "There is no system for clinical supervision or feedback. This lack of professional development leads to:", options: ["Complete autonomy", "Stagnation, isolation, and repetition of errors", "More free time", "Less accountability"], answer: "b"},
+{question: "A patient with a highly contagious disease must be isolated, but the isolation room is already occupied. The practical challenge is to:", options: ["Place them in the general ward", "Improvise a temporary isolation space using screens and strict IPC measures", "Send them home", "Ask the other patient to leave"], answer: "b"},
+{question: "The community believes that a disease outbreak is a curse rather than a medical issue. This challenges the health worker to:", options: ["Agree with the community", "Respectfully integrate health education with an understanding of cultural beliefs to gain trust", "Force them to accept treatment", "Quit their job"], answer: "b"},
+{question: "The budget for community health outreach was cut. A practical way to continue some activities is to:", options: ["Charge community members", "Cancel all outreach", "Partner with local community-based organizations and volunteers", "Use personal savings"], answer: "c"},
+{question: "A health worker is threatened by a patient's relative who is unhappy with the outcome of care. This challenge of intimidation requires the worker to:", options: ["Engage in a physical fight", "Apologize for things not their fault", "Ensure their own safety, alert security, and report the incident to management", "Give the relative money"], answer: "c"},
+{question: "The difference between the advanced medical techniques learned in school and the reality of limited resources causes a health worker to feel a sense of:", options: ["Excitement", "Superiority", "Frustration and moral distress", "Indifference"], answer: "c"},
+{question: "The most draining aspect of the \"high workload\" challenge is often the:", options: ["Number of hours", "Paperwork", "Emotional burden of not being able to provide the quality of care you know each patient deserves", "Uniform color"], answer: "c"},
+{question: "During a routine farm visit, you notice several cows with bloody diarrhea and high fever. Your first practical action is to:", options: ["Recommend slaughtering the sick animals for meat", "Ignore it as a seasonal issue", "Quarantine the sick animals immediately, wear PPE, and report to veterinary authorities suspecting a disease like Foot and Mouth", "Admininate vitamins"], answer: "c"},
+{question: "A farmer asks you to deworm his sheep. To ensure correct dosage and avoid resistance, you must practically:", options: ["Guess the weight of the sheep", "Use the same dose for all animals", "Weigh a few animals to estimate the average weight of the flock for accurate dosing", "Use a dewormer meant for cattle"], answer: "c"},
+{question: "You are called to investigate sudden death in poultry. To perform a safe post-mortem, you should:", options: ["Perform it in the farmer's kitchen", "Use the same knife for cooking later", "Do it in a well-ventilated area away from other birds, wearing gloves, mask, and goggles", "Bury the bird without examination"], answer: "c"},
+{question: "A dog that bit a person has been tied up for observation. After 10 days, the dog is still healthy. This practically means:", options: ["The person who was bitten does not need rabies post-exposure prophylaxis", "The dog was never infectious", "The person who was bitten could have been shedding the rabies virus", "The person should start vaccination immediately"], answer: "a"},
+{question: "You are vaccinating cattle against Anthrax. A critical safety precaution is to:", options: ["Reuse needles to save cost", "Inject without cleaning the site", "Use a new needle for each animal to prevent spreading the disease", "Vaccinate in the rain"], answer: "c"},
+{question: "During meat inspection at an abattoir, you find the liver of a cow covered in white, thread-like worms. Your practical action is to:", options: ["Pass the carcass as safe", "Wash the liver and approve it", "Condemn the liver and inspect the rest of the carcass more carefully", "Charge the owner a fine"], answer: "c"},
+{question: "A farmer is complaining of a poor growth rate in his pigs. A practical first step is to:", options: ["Blame the breed of the pig", "Recommend selling all the pigs", "Inject them with antibiotics", "Examine the feed quality and storage, and check for internal parasites"], answer: "d"},
+{question: "You suspect Brucellosis in a herd of goats based on abortions. To protect yourself and others, you must advise the farmer to:", options: ["Drink the raw milk to build immunity", "Sell the milk at a discount", "Keep it a secret",  "Avoid consuming raw milk and wear gloves when assisting with births"], answer: "d"},
+{question: "You need to restrain a aggressive bull for treatment. The safest practical method is to:", options: ["Challenge the bull to a fight", "Use a rope alone", "Ask the farmer's wife to hold it", "Use a proper crush or restraint chute with the farmer's help"], answer: "d"},
+{question: "A community reports that dogs are killing their chickens. Your role in this public health issue is to:", options: ["Advise poisoning all dogs", "Ignore it as not a veterinary issue", "Buy them new chickens", "Educate on proper dog fencing and vaccination (e.g., against rabies)"], answer: "d"},
+{question: "You are planning a vaccination campaign against Newcastle disease in village poultry. A practical challenge is:", options: ["Lack of diseases to vaccinate against", "Too many volunteers", "The cost of the vaccine being too low",  "Catching and handling free-range birds safely and efficiently"], answer: "d"},
+{question: "During a drought, livestock are emaciated and dying. Your primary practical advice to farmers is likely focused on:", options: ["Vaccination", "Building new sheds", "Treating for internal parasites immediately", "Water and feed sourcing, and destocking"], answer: "d"},
+{question: "You are called to examine a horse with colic. A practical non-invasive test is to:", options: ["Perform surgery immediately", "Wait for it to die", "Feed it laxatives", "Listen to the gut sounds with a stethoscope"], answer: "d"},
+{question: "You diagnose mange in a group of calves. A practical treatment consideration is to:", options: ["Treat only the visibly affected calves", "Shave all the calves", "Use motor oil as a treatment", "Treat all in-contact animals as the infestation is highly contagious"], answer: "d"},
+{question: "A farmer wants to know if his pregnant cow is about to give birth. A practical sign of impending calving is:", options: ["The cow is eating more", "The cow is barking", "The farmer has a dream about it", "Relaxation of the tailhead ligaments and swelling of the vulva"], answer: "d"},
+{question: "You are investigating a fish kill in a pond. A practical environmental factor to check is:", options: ["The color of the sky", "The size of the fish", "The dissolved oxygen level in the water", "The farmer's feeding schedule"], answer: "c"},
+{question: "The concept of \"One Health\" is practically demonstrated when a veterinarian works with a doctor to investigate:", options: ["A human-only heart disease", "A broken leg in a horse", "An outbreak of a zoonotic disease like Avian Influenza or Rabies", "The price of milk"], answer: "c"},
+{question: "To control ticks on a farm, a practical integrated approach includes:", options: ["Spraying acaricides only", "Burning the pasture", "Regular acaricide application, pasture rotation, and possibly introducing tick-resistant breeds", "Asking the ticks to leave"], answer: "c"},
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

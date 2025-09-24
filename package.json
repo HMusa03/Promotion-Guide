@@ -1,0 +1,39 @@
+{
+  "name": "cbt_promotion_app",
+  "productName": "Promotion Guide",
+  "version": "1.0.3",
+  "description": "Your ultimate companion to ace promotion exams and secure career growth.",
+  "main": "main.js",
+  "build": {
+    "appId": "com.hmsolutionsltd.cbtpromotion",
+    "win": {
+      "target": "nsis",
+      "icon": "images/COA.ico",
+      "asar": true
+    },
+    "directories": {
+      "output": "dist"
+    },
+    "npmArgs": [
+      "--no-optional"
+    ]
+  },
+  "scripts": {
+    "start": "electron .",
+    "clean": "rimraf dist",
+    "dist": "electron-builder --win --x64",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [],
+  "author": "HM Solutions & Co.",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^26.6.10",
+    "electron-builder": "^26.0.12",
+    "rimraf": "^6.0.1"
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "electron-log": "^4.4.8"
+  }
+}

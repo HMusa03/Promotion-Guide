@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nigerian Public Service Rules - Comprehensive Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c6e49;
+            --secondary: #4c956c;
+            --accent: #fefee3;
+            --light: #f9f9f9;
+            --dark: #1d3557;
+            --text: #333333;
+            --gold: #d4af37;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 0;
+            margin: 0;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--gold);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,0 100,100" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        header img {
+            height: 60px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 40px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary);
+            position: relative;
+        }
+        
+        .intro h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .intro h2 i {
+            margin-right: 15px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .chapters-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .toc {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .toc h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .toc h3 i {
+            margin-right: 10px;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 20px;
+            transition: var(--transition);
+        }
+        
+        .toc li:before {
+            content: "•";
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-size: 1.4rem;
+            top: -5px;
+        }
+        
+        .toc a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+            display: block;
+            padding: 8px 0;
+            border-radius: 4px;
+            padding-left: 10px;
+        }
+        
+        .toc a:hover {
+            color: var(--primary);
+            background-color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .toc a.active {
+            color: var(--primary);
+            background-color: var(--accent);
+            font-weight: 600;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .chapter {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--secondary);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .chapter:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .chapter h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .chapter-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .file-container a {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .file-container a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 8px;
+            background: var(--light);
+            position: relative;
+        }
+        
+        .section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .section h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h3 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .content-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .content-box h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-box h4 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        ul {
+            padding-left: 30px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        li strong {
+            color: var(--primary);
+        }
+        
+        .note {
+            background-color: var(--accent);
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 3px solid var(--gold);
+        }
+        
+        .highlight {
+            background-color: var(--accent);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .conclusion-section {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 50px;
+            border-radius: 10px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .conclusion-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,100 100,0 100,100" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+            z-index: 0;
+        }
+        
+        .conclusion-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .conclusion-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+        }
+        
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto; /* Push the footer to the bottom */
+        }
+        footer .container {
+            margin-bottom: 10px;
+        }
+        footer a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+        }
+        footer a:hover {
+            color: #4CAF50;
+        }
+        footer p {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+        }
+        footer p:hover {
+            color: #4CAF50;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 900px) {
+            .chapters-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .toc {
+                position: static;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .intro, .chapter {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Nigerian Public Service Rules</h1>
+            <p class="subtitle">Comprehensive Guide for Public Servants</p>
+            <img src="images/COA.png" alt="Header Icon" style="height: 70px;" onclick="goToHome()">
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="intro">
+            <h2><i class="fas fa-landmark"></i>Introduction to the Public Service Rules</h2>
+            <p>The Nigerian Public Service Rules (PSR) constitute the principal regulatory framework governing the conduct, operations, and administration of the public service in Nigeria. These rules provide comprehensive guidelines for appointments, promotions, discipline, remuneration, and other conditions of service for public servants across all ministries, departments, and agencies (MDAs) of government.</p>
+
+            <p>First established in the colonial era and subsequently revised to reflect Nigeria's evolving governance needs, the Public Service Rules serve as the bedrock of administrative procedures in the civil service. They are designed to ensure <span class="highlight">efficiency</span>, <span class="highlight">accountability</span>, and <span class="highlight">meritocracy</span> in public service delivery while safeguarding the rights and welfare of public servants.</p>
+
+            <div class="content-box">
+                <h4><i class="fas fa-bullseye"></i>Purpose and Objectives</h4>
+                <ul>
+                    <li><strong>Standardization:</strong> Provide uniform rules and regulations for the administration of the public service nationwide.</li>
+                    <li><strong>Efficiency:</strong> Establish clear procedures for appointments, promotions, discipline, and other personnel matters.</li>
+                    <li><strong>Accountability:</strong> Define the rights, responsibilities, and code of conduct for public servants.</li>
+                    <li><strong>Fairness:</strong> Ensure equitable treatment of all public servants regardless of rank or position.</li>
+                    <li><strong>Transparency:</strong> Create clear guidelines for decision-making processes within the service.</li>
+                    <li><strong>Discipline:</strong> Provide mechanisms for maintaining order and discipline in the service.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3><i class="fas fa-globe-africa"></i>Scope and Application</h3>
+                <p>The Public Service Rules apply to all public servants in the federal civil service, including:</p>
+                <ul>
+                    <li>All ministries and extra-ministerial departments</li>
+                    <li>Statutory corporations and government-owned companies</li>
+                    <li>Staff of the legislative and judicial branches</li>
+                    <li>All public servants employed by the federal government</li>
+                </ul>
+                <p>State governments typically adapt these rules for their own civil services with necessary modifications.</p>
+            </div>
+
+            <div class="section">
+                <h3><i class="fas fa-balance-scale"></i>Guiding Principles</h3>
+                <p>The Public Service Rules are founded on several key principles:</p>
+                <ul>
+                    <li><strong>Meritocracy:</strong> Appointments and promotions based on qualification and performance</li>
+                    <li><strong>Due Process:</strong> Strict adherence to established procedures in all personnel matters</li>
+                    <li><strong>Impartiality:</strong> Fair treatment of all public servants without favoritism or discrimination</li>
+                    <li><strong>Professionalism:</strong> Maintenance of high ethical standards in service delivery</li>
+                    <li><strong>Public Interest:</strong> Primacy of national interest in all official decisions and actions</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3><i class="fas fa-sync-alt"></i>Recent Reforms</h3>
+                <p>The Public Service Rules have undergone several revisions to reflect contemporary realities and reform initiatives, including:</p>
+                <ul>
+                    <li>Strengthening of performance management systems</li>
+                    <li>Enhanced provisions for discipline and anti-corruption measures</li>
+                    <li>Modernization of leave and welfare provisions</li>
+                    <li>Integration of technology in service delivery</li>
+                    <li>Streamlining of appointment and promotion procedures</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="chapters-container">
+            <div class="toc">
+                <h3><i class="fas fa-bookmark"></i>Table of Contents</h3>
+                <ul>
+                    <li><a href="#chapter1" class="active">Chapter 1: General Introduction</a></li>
+                    <li><a href="#chapter2">Chapter 2: Appointments and Leaving the Service</a></li>
+                    <li><a href="#chapter3">Chapter 3: Discipline</a></li>
+                    <li><a href="#chapter4">Chapter 4: Emoluments and Increments</a></li>
+                    <li><a href="#chapter5">Chapter 5: Leave of Absence</a></li>
+                    <li><a href="#chapter6">Chapter 6: Passages and Transport Entitlements</a></li>
+                    <li><a href="#chapter7">Chapter 7: Medical and Dental Procedures</a></li>
+                    <li><a href="#chapter8">Chapter 8: Free Medical Services</a></li>
+                    <li><a href="#chapter9">Chapter 9: Occupational Health Services</a></li>
+                    <li><a href="#chapter10">Chapter 10: Petitions and Appeals</a></li>
+                    <li><a href="#chapter11">Chapter 11: Reward for Outstanding Work</a></li>
+                    <li><a href="#chapter12">Chapter 12: Training and Development</a></li>
+                    <li><a href="#chapter13">Chapter 13: Examinations</a></li>
+                    <li><a href="#chapter14">Chapter 14: Records and Returns</a></li>
+                    <li><a href="#chapter15">Chapter 15: Conduct and Ethics</a></li>
+                    <li><a href="#chapter16">Chapter 16: Miscellaneous Provisions</a></li>
+                    <li><a href="#chapter17">Chapter 17: Interpretations and Definitions</a></li>
+                </ul>
+            </div>
+
+            <div class="chapters">
+                <!-- Chapter 1 -->
+                <div id="chapter1" class="chapter">
+                    <h2><span class="chapter-number">1</span>General Introduction</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-info-circle"></i>Overview</h3>
+                        <p>This chapter provides the foundational framework for the Public Service Rules, outlining their purpose, scope, and application across all government ministries, departments, and agencies.</p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-key"></i>Key Provisions</h3>
+                        <ul>
+                            <li><strong>Definition of the public service:</strong> Comprehensive explanation of what constitutes the Nigerian public service, including all federal ministries, departments, and agencies.</li>
+                            <li><strong>Objectives of the rules:</strong> Establishing standards for efficiency, accountability, and professionalism in public service operations.</li>
+                            <li><strong>Application scope:</strong> Clarification of which personnel and institutions are governed by these rules.</li>
+                            <li><strong>Authority and interpretation:</strong> Designation of authorities responsible for interpreting and enforcing the rules.</li>
+                            <li><strong>Relationship with other regulations:</strong> Explanation of how these rules interact with other government policies and legislation.</li>
+                        </ul>
+                    </div>
+                    <div class="note">
+                        <p><strong>Important Note:</strong> The rules in this chapter establish the legal basis for all subsequent provisions and should be read in conjunction with the Constitution of the Federal Republic of Nigeria and other relevant statutes governing public service administration.</p>
+                    </div>
+                </div>
+
+                <!-- Chapter 2 -->
+                <div id="chapter2" class="chapter">
+                    <h2><span class="chapter-number">2</span>Appointments and Leaving the Service</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-user-plus"></i>Types of Appointments</h3>
+                        <ul>
+                            <li><strong>Permanent and pensionable:</strong> Regular employment with retirement benefits, subject to satisfactory performance.</li>
+                            <li><strong>Temporary appointments:</strong> Fixed-term positions for specific projects or temporary needs.</li>
+                            <li><strong>Contract appointments:</strong> Specialized roles with defined terms and conditions outside regular employment structures.</li>
+                            <li><strong>Secondment and transfer:</strong> Movement of staff between government agencies or to international organizations.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-list"></i>Recruitment Procedures</h3>
+                        <ul>
+                            <li><strong>Advertisement of vacancies:</strong> Mandatory public announcement of all open positions through official channels.</li>
+                            <li><strong>Application procedures:</strong> Standardized process for submitting applications and required documentation.</li>
+                            <li><strong>Screening and selection:</strong> Transparent evaluation of candidates based on merit and qualifications.</li>
+                            <li><strong>Approval and appointment letters:</strong> Formal documentation of employment terms and conditions.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-user-minus"></i>Leaving the Service</h3>
+                        <ul>
+                            <li><strong>Retirement:</strong> Procedures for voluntary and mandatory retirement at statutory ages.</li>
+                            <li><strong>Resignation:</strong> Proper process for voluntary departure from service.</li>
+                            <li><strong>Termination and dismissal:</strong> Conditions and procedures for involuntary separation due to misconduct or poor performance.</li>
+                            <li><strong>Death in service:</strong> Protocols for handling benefits and entitlements when an officer dies while employed.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 3 -->
+                <div id="chapter3" class="chapter">
+                    <h2><span class="chapter-number">3</span>Discipline</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>Disciplinary Procedures</h3>
+                        <ul>
+                            <li><strong>Minor offenses:</strong> Procedures for addressing less serious misconduct through verbal or written warnings.</li>
+                            <li><strong>Major offenses:</strong> Formal processes for serious violations including investigations and hearings.</li>
+                            <li><strong>Disciplinary committees:</strong> Composition and authority of committees responsible for adjudicating cases.</li>
+                            <li><strong>Penalties and sanctions:</strong> Range of disciplinary actions from reprimand to dismissal.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-exclamation-triangle"></i>Common Offenses</h3>
+                        <ul>
+                            <li><strong>Absenteeism and lateness:</strong> Unexcused absence or habitual tardiness without authorization.</li>
+                            <li><strong>Misconduct and negligence:</strong> Failure to perform duties or violation of established codes of conduct.</li>
+                            <li><strong>Corruption and financial malpractice:</strong> Abuse of office for personal gain or financial impropriety.</li>
+                            <li><strong>Insubordination:</strong> Willful refusal to obey lawful instructions from superiors.</li>
+                        </ul>
+                    </div>
+                    <div class="note">
+                        <h4><i class="fas fa-balance-scale"></i>Due Process</h4>
+                        <p>All disciplinary actions must follow due process, including the right to fair hearing and representation. No public servant shall be punished without being given opportunity to defend themselves.</p>
+                    </div>
+                </div>
+
+                <!-- Chapter 4 -->
+                <div id="chapter4" class="chapter">
+                    <h2><span class="chapter-number">4</span>Emoluments and Increments</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-money-bill-wave"></i>Salary Structure</h3>
+                        <ul>
+                            <li><strong>Salary scales:</strong> Graded pay structure based on position classification and experience.</li>
+                            <li><strong>Allowances and benefits:</strong> Additional compensation for housing, transportation, and other specific needs.</li>
+                            <li><strong>Deductions and taxes:</strong> Mandatory withholdings for taxes, pensions, and other statutory requirements.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-line"></i>Increments and Promotions</h3>
+                        <ul>
+                            <li><strong>Annual increments:</strong> Automatic salary increases based on satisfactory performance.</li>
+                            <li><strong>Promotion criteria:</strong> Merit-based advancement through competitive processes.</li>
+                            <li><strong>Notional promotions:</strong> Advancement in rank without immediate salary increase.</li>
+                            <li><strong>Acting appointments:</strong> Temporary assignment to higher responsibilities.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-piggy-bank"></i>Pension and Gratuity</h3>
+                        <ul>
+                            <li><strong>Pension calculation:</strong> Formula based on years of service and final salary.</li>
+                            <li><strong>Gratuity payments:</strong> Lump-sum retirement benefits.</li>
+                            <li><strong>Death benefits:</strong> Compensation for families of deceased officers.</li>
+                            <li><strong>Pension administration:</strong> Procedures for managing and disbursing retirement benefits.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 5 -->
+                <div id="chapter5" class="chapter">
+                    <h2><span class="chapter-number">5</span>Leave of Absence</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-umbrella-beach"></i>Types of Leave</h3>
+                        <ul>
+                            <li><strong>Annual leave:</strong> 21-30 working days per year based on length of service.</li>
+                            <li><strong>Sick leave:</strong> Up to 90 days with full pay, requiring medical certification.</li>
+                            <li><strong>Maternity leave:</strong> 12 weeks with full pay for female officers.</li>
+                            <li><strong>Paternity leave:</strong> 10 working days for new fathers.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-signature"></i>Leave Administration</h3>
+                        <ul>
+                            <li><strong>Application procedures:</strong> Formal request through proper channels.</li>
+                            <li><strong>Approval authorities:</strong> Designated officers responsible for granting leave.</li>
+                            <li><strong>Leave accumulation:</strong> Limitations on carrying forward unused leave days.</li>
+                            <li><strong>Recall from leave:</strong> Procedures for emergency recall to duty.</li>
+                        </ul>
+                    </div>
+                    <div class="note">
+                        <h4><i class="fas fa-exclamation-circle"></i>Important Note</h4>
+                        <p>All leave applications must be properly documented and approved before commencement. Medical certificates must be obtained from government-approved hospitals for sick leave exceeding three days.</p>
+                    </div>
+                </div>
+
+                <!-- Chapter 6 -->
+                <div id="chapter6" class="chapter">
+                    <h2><span class="chapter-number">6</span>Passages and Transport Entitlements</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-car"></i>Travel Entitlements</h3>
+                        <ul>
+                            <li><strong>Local travel:</strong> Mileage claims and per diem rates for official journeys.</li>
+                            <li><strong>International travel:</strong> Airfare classes and daily subsistence allowances.</li>
+                            <li><strong>Transportation of effects:</strong> Allowances for relocation due to transfer.</li>
+                            <li><strong>Vehicle loans:</strong> Schemes for purchasing official vehicles.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i>Claims Procedures</h3>
+                        <ul>
+                            <li><strong>Documentation:</strong> Required receipts and travel documents.</li>
+                            <li><strong>Approval processes:</strong> Authorization for travel warrants and advances.</li>
+                            <li><strong>Reimbursement timelines:</strong> Processing periods for travel expense claims.</li>
+                            <li><strong>Audit requirements:</strong> Verification processes for travel expenses.</li>
+                        </ul>
+                    </div>
+                    <div class="note">
+                        <h4><i class="fas fa-coins"></i>Economy Principle</h4>
+                        <p>All official travel must follow the most economical routes and accommodation options. First-class travel is prohibited except for specified senior officials.</p>
+                    </div>
+                </div>
+
+                <!-- Chapter 7 -->
+                <div id="chapter7" class="chapter">
+                    <h2><span class="chapter-number">7</span>Medical and Dental Procedures</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-heartbeat"></i>Medical Care Provisions</h3>
+                        <ul>
+                            <li><strong>Access to facilities:</strong> Designated government hospitals for public servants.</li>
+                            <li><strong>Referral procedures:</strong> Process for accessing specialized care.</li>
+                            <li><strong>Overseas treatment:</strong> Approval requirements for medical care abroad.</li>
+                            <li><strong>Dental and optical care:</strong> Coverage limits and approval processes.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-medical"></i>Administrative Procedures</h3>
+                        <ul>
+                            <li><strong>Pre-employment medicals:</strong> Mandatory health checks before appointment.</li>
+                            <li><strong>Periodic examinations:</strong> Regular health assessments for certain positions.</li>
+                            <li><strong>Medical boards:</strong> Constitution and authority for fitness assessments.</li>
+                            <li><strong>Confidentiality:</strong> Protection of medical records and information.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 8 -->
+                <div id="chapter8" class="chapter">
+                    <h2><span class="chapter-number">8</span>Free Medical Services</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-hospital-user"></i>Eligibility and Coverage</h3>
+                        <ul>
+                            <li><strong>Entitled officers:</strong> Permanent staff and specified contract staff.</li>
+                            <li><strong>Dependent coverage:</strong> Spouses and children under 18 years.</li>
+                            <li><strong>Service scope:</strong> Outpatient, inpatient, and emergency care.</li>
+                            <li><strong>Exclusions:</strong> Cosmetic procedures and experimental treatments.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Implementation Guidelines</h3>
+                        <ul>
+                            <li><strong>Registration:</strong> Enrollment with designated hospitals.</li>
+                            <li><strong>Medical ID cards:</strong> Issuance and renewal procedures.</li>
+                            <li><strong>Private care reimbursement:</strong> Claims process when government facilities are unavailable.</li>
+                            <li><strong>Co-payments:</strong> Required contributions for certain services.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 9 -->
+                <div id="chapter9" class="chapter">
+                    <h2><span class="chapter-number">9</span>Occupational Health Services</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-briefcase-medical"></i>Workplace Health Provisions</h3>
+                        <ul>
+                            <li><strong>Safety standards:</strong> Compliance with OSHA regulations.</li>
+                            <li><strong>Pre-employment medicals:</strong> Fitness assessments for job placement.</li>
+                            <li><strong>Work-related injuries:</strong> Compensation and rehabilitation.</li>
+                            <li><strong>Health promotion:</strong> Wellness programs and preventive care.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-shield-virus"></i>Preventive Measures</h3>
+                        <ul>
+                            <li><strong>Ergonomic assessments:</strong> Workplace modifications for health and safety.</li>
+                            <li><strong>Immunization programs:</strong> Vaccinations for high-risk positions.</li>
+                            <li><strong>Mental health support:</strong> Counseling services and stress management.</li>
+                            <li><strong>Health risk assessments:</strong> Regular evaluations of workplace hazards.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 10 -->
+                <div id="chapter10" class="chapter">
+                    <h2><span class="chapter-number">10</span>Petitions and Appeals</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-file-contract"></i>Grievance Procedures</h3>
+                        <ul>
+                            <li><strong>Grounds for petitions:</strong> Unfair treatment, wrongful decisions, etc.</li>
+                            <li><strong>Submission channels:</strong> Proper hierarchy for filing complaints.</li>
+                            <li><strong>Format requirements:</strong> Formal structure for petitions.</li>
+                            <li><strong>Time limits:</strong> Deadlines for submitting grievances.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>Appeals Process</h3>
+                        <ul>
+                            <li><strong>Hierarchy:</strong> Sequential levels for appeals (immediate supervisor to Civil Service Commission).</li>
+                            <li><strong>Committees:</i> Composition of appeal panels.</li>
+                            <li><strong>Hearings:</strong> Procedures for presenting cases.</li>
+                            <li><strong>Implementation:</strong> Enforcement of appeal decisions.</li>
+                        </ul>
+                    </div>
+                    <div class="note">
+                        <h4><i class="fas fa-exclamation-triangle"></i>Administrative Remedies</h4>
+                        <p>Officers must exhaust all administrative appeal channels before seeking judicial intervention. Frivolous appeals may result in disciplinary action.</p>
+                    </div>
+                </div>
+
+                <!-- Chapter 11 -->
+                <div id="chapter11" class="chapter">
+                    <h2><span class="chapter-number">11</span>Reward for Outstanding Work</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-medal"></i>Recognition Systems</h3>
+                        <ul>
+                            <li><strong>Merit awards:</strong> Annual honors for exceptional performance.</li>
+                            <li><strong>Accelerated promotion:</strong> Advancement based on extraordinary contributions.</li>
+                            <li><strong>Special increments:</strong> Salary increases for outstanding achievements.</li>
+                            <li><strong>National honors:</strong> Nominations for national recognition.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-check"></i>Nomination and Selection</h3>
+                        <ul>
+                            <li><strong>Eligibility criteria:</strong> Minimum service requirements and performance standards.</li>
+                            <li><strong>Nomination process:</strong> Submission through proper channels.</li>
+                            <li><strong>Screening committees:</strong> Independent evaluation of nominations.</li>
+                            <li><strong>Approval authorities:</strong> Designated officials for final approval.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 12 -->
+                <div id="chapter12" class="chapter">
+                    <h2><span class="chapter-number">12</span>Training and Development</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-graduation-cap"></i>Capacity Building Framework</h3>
+                        <ul>
+                            <li><strong>Induction programs:</strong> Orientation for new entrants.</li>
+                            <li><strong>Mandatory training:</strong> Required programs for all staff.</li>
+                            <li><strong>Specialized development:</strong> Skills enhancement for technical roles.</li>
+                            <li><strong>Leadership programs:</strong> Preparation for senior positions.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-tasks"></i>Administration of Training</h3>
+                        <ul>
+                            <li><strong>Needs assessment:</strong> Identification of skill gaps.</li>
+                            <li><strong>Approval processes:</strong> Authorization for training participation.</li>
+                            <li><strong>Funding:</strong> Budget allocations for staff development.</li>
+                            <li><strong>Evaluation:</strong> Assessment of training effectiveness.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 13 -->
+                <div id="chapter13" class="chapter">
+                    <h2><span class="chapter-number">13</span>Examinations</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-file-alt"></i>Professional Examinations</h3>
+                        <ul>
+                            <li><strong>Approved qualifications:</strong> Recognized professional certifications.</li>
+                            <li><strong>Examination leave:</strong> Time off for test preparation and sitting.</li>
+                            <li><strong>Financial assistance:</strong> Support for examination fees.</li>
+                            <li><strong>Recognition:</strong> Salary adjustments for additional qualifications.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>Promotional Examinations</h3>
+                        <ul>
+                            <li><strong>Mandatory tests:</strong> Required examinations for advancement.</li>
+                            <li><strong>Syllabus:</strong> Official examination content outlines.</li>
+                            <li><strong>Administration:</strong> Secure procedures for test administration.</li>
+                            <li><strong>Appeals:</strong> Process for challenging examination results.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 14 -->
+                <div id="chapter14" class="chapter">
+                    <h2><span class="chapter-number">14</span>Records and Returns</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-folder"></i>Personnel Records Management</h3>
+                        <ul>
+                            <li><strong>Establishment of files:</strong> Creation of comprehensive personnel records.</li>
+                            <li><strong>Confidentiality:</strong> Protection of sensitive personal information.</li>
+                            <li><strong>Access rights:</strong> Designated officers authorized to view files.</li>
+                            <li><strong>Retention schedules:</strong> Time periods for maintaining records.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-pie"></i>Statistical Returns</h3>
+                        <ul>
+                            <li><strong>Monthly reports:</strong> Updates on appointments, promotions, and separations.</li>
+                            <li><strong>Annual statistics:</strong> Comprehensive workforce data.</li>
+                            <li><strong>Manpower planning:</strong> Data requirements for strategic planning.</li>
+                            <li><strong>Verification:</strong> Audit processes for data accuracy.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 15 -->
+                <div id="chapter15" class="chapter">
+                    <h2><span class="chapter-number">15</span>Conduct and Ethics</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-handshake"></i>Code of Conduct</h3>
+                        <ul>
+                            <li><strong>Behavior standards:</strong> Professional decorum and integrity.</li>
+                            <li><strong>Conflict of interest:</strong> Disclosure requirements and restrictions.</li>
+                            <li><strong>Gift policies:</strong> Limitations on accepting benefits.</li>
+                            <li><strong>Political activities:</strong> Restrictions on partisan involvement.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-scale-balanced"></i>Ethical Standards</h3>
+                        <ul>
+                            <li><strong>Asset declaration:</strong> Mandatory submission to Code of Conduct Bureau.</li>
+                            <li><strong>Outside employment:</strong> Approval requirements for secondary jobs.</li>
+                            <li><strong>Resource use:</strong> Proper utilization of government assets.</li>
+                            <li><strong>Whistleblower protection:</strong> Safeguards for reporting misconduct.</li>
+                        </ul>
+                    </div>
+                    <div class="note">
+                        <h4><i class="fas fa-file-signature"></i>Integrity Pledge</h4>
+                        <p>All public servants must subscribe to the Integrity Pledge upon appointment and reaffirm it annually. Violations may result in dismissal.</p>
+                    </div>
+                </div>
+
+                <!-- Chapter 16 -->
+                <div id="chapter16" class="chapter">
+                    <h2><span class="chapter-number">16</span>Miscellaneous Provisions</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-exclamation-circle"></i>Special Situations</h3>
+                        <ul>
+                            <li><strong>Missing officers:</strong> Procedures after prolonged unexplained absence.</li>
+                            <li><strong>Mental incapacity:</strong> Processes for officers declared mentally unfit.</li>
+                            <li><strong>Criminal conviction:</strong> Administrative actions following legal judgments.</li>
+                            <li><strong>Hostage situations:</strong> Support for officers taken captive.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-cogs"></i>General Administration</h3>
+                        <ul>
+                            <li><strong>Regulation-making power:</strong> Authority to establish supplementary rules.</li>
+                            <li><strong>Delegation:</strong> Assignment of responsibilities to subordinate officers.</li>
+                            <li><strong>Amendments:</strong> Procedures for updating the rules.</li>
+                            <li><strong>Repeal:</strong> Superseding of previous regulations.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 17 -->
+                <div id="chapter17" class="chapter">
+                    <h2><span class="chapter-number">17</span>Interpretations and Definitions</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Definitions</h3>
+                        <ul>
+                            <li><strong>Official terminology:</strong> Standardized meanings of terms used throughout the rules.</li>
+                            <li><strong>Abbreviations:</strong> Explanation of acronyms and shortened forms.</li>
+                            <li><strong>Technical terms:</strong> Clarification of specialized language.</li>
+                            <li><strong>Legislative references:</strong> Connections to relevant statutes.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>Interpretation Principles</h3>
+                        <ul>
+                            <li><strong>Rules of construction:</strong> Guidelines for interpreting ambiguous language.</li>
+                            <li><strong>Conflict resolution:</strong> Hierarchy when rules contradict other laws.</li>
+                            <li><strong>Commencement dates:</strong> Effective dates for new provisions.</li>
+                            <li><strong>Preservation of provisions:</strong> Severability of rules if portions are invalidated.</li>
+                        </ul>
+                    </div>
+                    <div class="note">
+                        <h4><i class="fas fa-gavel"></i>Final Authority</h4>
+                        <p>The Head of the Civil Service of the Federation is the final authority on rule interpretation. All interpretations must align with the rules' objectives and spirit.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <div class="content-section">
+                    <div class="file-container">
+                        <p><a href="PSR.html"><strong>Simulate CBT</strong></a></p>
+                    </div>
+                </div>
+
+        <!-- Conclusion Section -->
+        <div class="conclusion-section">
+            <div class="conclusion-content">
+                <h2>Conclusion</h2>
+                <p>The Nigerian Public Service Rules represent a comprehensive framework designed to ensure the effective and efficient operation of the civil service. By providing clear guidelines on all aspects of public service administration, the rules help maintain order, discipline, and professionalism in the service.</p>
+                
+                <p>These rules balance the rights of public servants with their responsibilities to the nation. They establish mechanisms for fair treatment, due process, and professional development while demanding high standards of integrity and performance.</p>
+                
+                <p>All public servants are expected to familiarize themselves with these rules and adhere to their provisions in the discharge of their official duties. The successful implementation of these rules requires commitment from both leadership and staff at all levels to uphold the principles of service, integrity, and national development.</p>
+                
+                <p>As Nigeria continues to develop and face new governance challenges, these rules provide a stable foundation for public administration while allowing for necessary adaptations through established amendment procedures.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 HM Solutions & Co. All rights reserved.</p>
+        </div>
+        <div>
+            <a href="https://web.facebook.com/HMTelecoms" target="_blank">Facebook</a>
+            <a href="https://x.com/HMusa3" target="_blank">Twitter</a>
+            <a href="https://www.instagram.com/hmtelecoms0/" target="_blank">Instagram</a>
+            <a href="https://wa.me/+2348053579779" target="_blank">WhatsApp</a>
+            <a href="https://www.linkedin.com/in/hussaini-musa-68614283/" target="_blank">LinkedIn</a>
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <script>
+        function goToHome() {
+    window.location.href = "cbtexam.html"; // Redirect to the home page
+}
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                // Remove active class from all TOC links
+                document.querySelectorAll('.toc a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Scroll to target
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+                
+                // Update URL
+                history.pushState(null, null, targetId);
+            });
+        });
+
+        // Highlight current chapter in TOC while scrolling
+        window.addEventListener('scroll', function() {
+            const chapters = document.querySelectorAll('.chapter');
+            const tocLinks = document.querySelectorAll('.toc a');
+            let currentChapter = '';
+            
+            chapters.forEach(chapter => {
+                const chapterTop = chapter.offsetTop;
+                const chapterHeight = chapter.clientHeight;
+                
+                if (window.scrollY >= (chapterTop - 150) && 
+                    window.scrollY < (chapterTop + chapterHeight - 150)) {
+                    currentChapter = '#' + chapter.getAttribute('id');
+                }
+            });
+            
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentChapter) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Show/hide back to top button
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 500) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        // Set active TOC link based on URL hash on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash) {
+                const activeLink = document.querySelector(`.toc a[href="${window.location.hash}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+            
+            // Back to top functionality
+            document.querySelector('.back-to-top').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

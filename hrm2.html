@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="common_services.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Human Resources Management 02 (100 Qs)</h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "Discrimination experiences in the Chilean public service correlated with what?", options: ["Higher promotion rates", "Lower job satisfaction and trust", "Increased performance metrics", "Higher salary levels"], answer: "b"},
+            {question: "The evolving legal landscape for DEI requires public HR professionals to do what?", options: ["Ignore legal requirements", "Navigate carefully between ethical commitments and legal requirements", "Eliminate all DEI programs", "Focus only on compliance"], answer: "b"},
+            {question: "Institutional resistance to HRM reforms often prioritizes what over innovation?", options: ["Stability", "Change", "Technology", "Diversity"], answer: "a"},
+            {question: "What remains a significant barrier to implementing HRM reforms in many jurisdictions?", options: ["Lack of legal frameworks", "Entrenched bureaucratic cultures", "Too much funding", "Overqualified staff"], answer: "b"},
+            {question: "Which factor is NOT cited as contributing to talent retention problems?", options: ["Limited advancement opportunities", "Higher salary scales than private sector", "Aging workforce", "Lengthy hiring processes"], answer: "b"},
+            {question: "What does the technological gap prevent HR professionals from doing effectively?", options: ["Manual data entry", "Leveraging data analytics for strategic decision-making", "Writing job descriptions", "Conforming to regulations"], answer: "b"},
+            {question: "The political environment affecting DEI efforts includes what?", options: ["Unanimous support for all DEI initiatives", "A wave of new state laws constraining DEI", "Federal mandates requiring specific quotas", "Lack of any legal frameworks"], answer: "b"},
+            {question: "Resistance to change in public sector HRM manifests as what?", options: ["Skepticism toward new management approaches", "Enthusiasm for all innovations", "Rapid adoption of new technologies", "Overfunding of reform initiatives"], answer: "a"},
+            {question: "What complicates the replacement of retiring experienced workers?", options: ["Younger generations' perception of public sector as unattractive", "Too many qualified applicants", "Overly simplified jobs", "Lack of retirement benefits"], answer: "a"},
+            {question: "Legacy HR systems typically have what characteristic?", options: ["Advanced AI capabilities", "Cloud-based infrastructure", "Siloed structure with limited integration", "Mobile-first design"], answer: "c"},
+            {question: "What did the NEOGOV study reveal about AI adoption in government agencies?", options: ["Most agencies had fully implemented AI", "Most agencies lacked both AI use and documented policies", "AI was being used but without effect", "Private sector was lagging behind public sector in AI use"], answer: "b"},
+            {question: "Which statement about discrimination in the Chilean public service is accurate?", options: ["It was experienced equally across all demographic groups", "It was more common among senior executives", "It was more common among women and marginalized groups", "No discrimination was reported"], answer: "c"},
+            {question: "The Muldrow v. City of St. Louis ruling potentially affects DEI programs by what?", options: ["Making it harder to prove discrimination", "Making it easier to challenge programs as discriminatory", "Mandating all organizations have DEI offices", "Eliminating all discrimination lawsuits"], answer: "b"},
+            {question: "Historical legacies in public administration often contribute to what?", options: ["Rapid innovation", "Resistance to HRM reforms", "Automatic adoption of best practices", "Overfunding of HR departments"], answer: "b"},
+            {question: "What does bureaucratic inertia in public sector organizations typically maintain?", options: ["Constant change", "Traditional procedures and resistance to innovation", "Automatic budget increases", "Continuous technological upgrades"], answer: "b"},
+            {question: "Which factor accelerated public sector workforce changes beyond predictions?", options: ["The COVID-19 pandemic", "Stable economic conditions", "Decreased healthcare costs", "Increased job security"], answer: "a"},
+            {question: "What is a consequence of outdated HR systems in public service?", options: ["Improved employee satisfaction", "Enhanced data security", "Higher administrative costs and inefficiency", "Faster decision-making processes"], answer: "c"},
+            {question: "Why might younger generations find public sector employment less attractive?", options: ["Perception of better innovation and advancement in private sector", "Higher salaries in public sector", "More flexible work arrangements in government", "Better technology in public sector"], answer: "a"},
+            {question: "What does institutional resistance to change often protect?", options: ["New ideas", "Existing power structures and comfortable routines", "Diversity initiatives", "Technological advancement"], answer: "b"},
+            {question: "The combination of an aging workforce and recruitment challenges creates what?", options: ["Capacity gaps in essential services", "Budget surpluses", "Reduced need for training", "Simplified HR processes"], answer: "a"},
+            {question: "What is a key strategy for public sector organizations to address technological gaps in HRM?", options: ["Investing in integrated, cloud-based HR solutions", "Maintaining legacy systems indefinitely", "Eliminating all technology use", "Reducing the HR budget"], answer: "a"},
+            {question: "How did the City of Memphis improve its police hiring process?", options: ["By increasing in-person requirements", "By moving the process online and eliminating in-person applications", "By reducing salary offers", "By eliminating background checks"], answer: "b"},
+            {question: "What does responsible adoption of AI in public service HRM involve?", options: ["Ignoring ethical considerations", "Careful attention to ethical considerations and transparency", "Implementing AI without staff training", "Using AI to replace all human decision-making"], answer: "b"},
+            {question: "What is data-driven workforce planning primarily based on?", options: ["Guesswork and intuition", "Robust data analysis and prediction of future needs", "Political preferences", "Seniority-based projections"], answer: "b"},
+            {question: "What system has California implemented to predict leadership readiness?", options: ["A manual review process", "An automated system predicting when younger workers will be ready for leadership", "A lottery system for promotions", "A political appointment system"], answer: "b"},
+            {question: "How are savvy HR leaders recalibrating their DEI approaches amid political challenges?", options: ["By abandoning all DEI efforts", "By tying DEI efforts to measurable business outcomes", "By hiding their DEI programs", "By reducing diversity hiring"], answer: "b"},
+            {question: "What did research in Chile find about trust levels in public service organizations?", options: ["Trust was highest in senior management", "There was a trust deficit between staff and senior management", "No trust issues existed", "Only external stakeholders were distrustful"], answer: "b"},
+            {question: "What was ranked as the top HR priority for 2025 in surveys?", options: ["Reducing workforce size", "Leadership development", "Eliminating training programs", "Cutting benefits"], answer: "b"},
+            {question: "Effective leadership development programs in public service should combine what elements?", options: ["Only technical knowledge", "Only interpersonal skills", "Technical knowledge, interpersonal skills, and conceptual abilities", "Only theoretical concepts"], answer: "c"},
+            {question: "What does modernizing HR technology help reduce?", options: ["Employee salaries", "Administrative burdens and improve data accuracy", "Workforce diversity", "Compliance requirements"], answer: "b"},
+            {question: "AI-powered tools in HR can help with all of the following EXCEPT?", options: ["Identifying skills gaps", "Making completely autonomous hiring decisions without oversight", "Matching candidate skills with positions", "Drafting performance reviews"], answer: "b"},
+            {question: "Workforce planning requires balancing multiple considerations including:", options: ["Only budgetary constraints", "Only service delivery requirements", "Budgetary constraints, service delivery, and diversity objectives", "Only political preferences"], answer: "c"},
+            {question: "What is a benefit of data-driven approaches to workforce planning?", options: ["They eliminate the need for HR professionals", "They enable proactive rather than reactive human capital management", "They guarantee budget increases", "They simplify political processes"], answer: "b"},
+            {question: "How can organizations address the trust deficit identified in Chilean public service?", options: ["By reducing communication", "By implementing regular pulse surveys and recognition programs", "By eliminating senior management positions", "By reducing transparency"], answer: "b"},
+            {question: "Why is leadership development particularly critical in the public sector context?", options: ["Leaders need to navigate complex political environments", "Leadership is less important in public service", "Public sector leaders face simpler challenges", "Leadership development is cheaper in public sector"], answer: "a"},
+            {question: "What does the 'responsible adoption of AI' require for successful implementation?", options: ["Ignoring ethical concerns", "Careful change management processes", "Eliminating human oversight", "Reducing transparency"], answer: "b"},
+            {question: "What can integrated HR solutions replace to improve efficiency?", options: ["All employees", "Legacy systems that hinder operations", "Compliance requirements", "Diversity goals"], answer: "b"},
+            {question: "What type of career development plans can AI-powered tools help produce?", options: ["Generic, one-size-fits-all plans", "Personalized career development plans", "Plans only for senior executives", "Plans that ignore employee skills"], answer: "b"},
+            {question: "Competency frameworks in workforce planning should be aligned with what?", options: ["Political agendas", "Organizational objectives", "Personal manager preferences", "External market trends only"], answer: "b"},
+            {question: "What does effective succession planning help organizations achieve?", options: ["Sudden leadership gaps", "Smooth leadership transitions", "Increased bureaucratic complexity", "Reduced employee engagement"], answer: "b"},
+            {question: "What is a key element of rebuilding trust in public service organizations?", options: ["Creating opportunities for meaningful two-way communication", "Reduring transparency", "Limiting employee feedback", "Eliminating recognition programs"], answer: "a"},
+            {question: "What aspects should public service leadership development emphasize?", options: ["Only technical skills", "Only theoretical knowledge", "Avoiding public accountability", "Collaborative governance and ethical decision-making"], answer: "d"},
+            {question: "What is a benefit of cloud-based HR solutions over legacy systems?", options: ["They are more expensive to maintain", "They require more manual data entry", "They are less secure", "They provide better automation and analytics capabilities"], answer: "d"},
+            {question: "How can AI improve the quality of HR decisions?", options: ["By eliminating human judgment completely", "By reducing transparency", "By prioritizing speed over accuracy", "By enhancing objectivity when properly designed"], answer: "d"},
+            {question: "What is the purpose of conducting skills gap analyses in workforce planning?", options: ["To justify budget cuts", "To eliminate training programs", "To maintain status quo", "To build future capabilities through recruitment and development"], answer: "d"},
+            {question: "Organizations that invest systematically in leadership development are better equipped to do what?", options: ["Resist all change", "Maintain bureaucratic inertia", "Reduce employee numbers", "Navigate disruption and sustain performance"], answer: "d"},
+            {question: "What do recognition programs that celebrate employee contributions help improve?", options: ["Only senior management morale", "Budget deficits", "Political relationships", "Employee engagement and organizational culture"], answer: "d"},
+            {question: "Why must public service leadership programs include ethical decision-making?", options: ["Because ethics are unimportant in public service", "To eliminate transparency", "To reduce compliance requirements", "To emphasize public accountability and proper governance"], answer: "d"},
+            {question: "What does strategic investment in HR technology help address?", options: ["Only budgetary constraints", "Political interference", "Excessive innovation", "Technological gaps that hinder efficiency"], answer: "d"},
+            {question: "What is necessary to ensure staff acceptance of AI implementations?", options: ["Forcing adoption without training", "Hiding the use of AI", "Reducing staff involvement", "Careful change management processes"], answer: "d"},
+            {question: "What do predictive analytics help HR professionals forecast?", options: ["Next year's budget", "Political election results", "Stock market performance", "Future staffing needs based on trends"], answer: "d"},
+            {question: "What does embedding accountability into leadership structures help achieve?", options: ["Reducing responsibility", "Increasing bureaucratic layers", "More measurable DEI outcomes", "Eliminating performance reviews"], answer: "d"},
+            {question: "What did the trust deficit in Chilean public service reveal about senior management?", options: ["They were trusted more than direct managers", "There was no difference in trust levels", "Trust was not measured", "They were less trusted than direct managers"], answer: "d"},
+            {question: "What type of learning is important for leadership development at all levels?", options: ["Theoretical learning only", "Learning only from mistakes", "Avoiding new experiences", "Experiential learning"], answer: "d"},
+            {question: "What can modern HR information systems streamline?", options: ["Only recruitment processes", "Only payroll processing", "Only retirement calculations", "Processes from recruitment to performance management"], answer: "d"},
+            {question: "What is a risk of AI implementation that requires careful attention?", options: ["Improved efficiency", "Reduced costs", "Faster processing", "Ethical considerations and transparency requirements"], answer: "d"},
+            {question: "What does proactive workforce planning enhance?", options: ["Organizational resilience and capacity", "Bureaucratic complexity", "Political interference", "Employee turnover"], answer: "a"},
+            {question: "How can organizations embed DEI accountability effectively?", options: ["By tying it to leadership structures and measurable outcomes", "By making it optional for managers", "By eliminating metrics", "By reducing transparency"], answer: "a"},
+            {question: "What does rebuilding trust between leadership and staff require?", options: ["Less communication", "More secretive decision-making", "Meaningful two-way communication opportunities", "Eliminating surveys"], answer: "c"},
+            {question: "What should public service leadership development programs specifically address?", options: ["Only private sector management techniques", "Only theoretical concepts", "The unique challenges and values of public service", "Avoiding collaborative approaches"], answer: "c"},
+            {question: "What is the ultimate goal of modernizing HR technology and processes?", options: ["To eliminate human resources departments", "To increase paperwork", "To improve efficiency and strategic decision-making", "To reduce transparency"], answer: "c"},
+            {question: "What does 'future-proofing' public service HRM primarily require according to the conclusion?", options: ["Resistance to all change", "Elimination of all technology", "Strategic coherence, agility, and human-centered design", "Focus solely on past practices"], answer: "c"},
+            {question: "The path forward for public service HRM involves balancing which multiple priorities?", options: ["Embracing technology while maintaining human judgment", "Pursuing efficiency while preserving public service values", "Adapting to changing environments while maintaining equity commitments", "All of the above"], answer: "d"},
+            {question: "What role must HR professionals fulfill to successfully navigate future challenges?", options: ["Only administrators", "Only compliance officers", "Strategic partners, change agents, and stewards of organizational culture", "Only payroll processors"], answer: "c"},
+            {question: "Effective HRM in public service requires developing approaches that recognize what?", options: ["Only private sector practices", "That public and private sectors are identical", "The unique purposes, constraints, and opportunities of governmental organizations", "That technology can replace all human judgment"], answer: "c"},
+            {question: "What does building a merit-based, diverse public sector workforce contribute to beyond organizational success?", options: ["Higher profits for private contractors", "Reduced need for transparency", "The broader health of democratic governance and public trust", "Elimination of political oversight"], answer: "c"},
+            {question: "Research demonstrates that an engaged workforce is more likely to do what?", options: ["Demand higher salaries", "Resist all changes", "Deliver high-quality services to the public", "Focus only on personal goals"], answer: "c"},
+            {question: "The conclusion emphasizes that HRM represents what for creating public value in the 21st century?", options: ["A peripheral administrative function", "An unnecessary expense", "A central capability", "A political tool"], answer: "c"},
+            {question: "What must be balanced when embracing technological innovation according to the conclusion?", options: ["Speed and cost", "Political preferences", "Maintaining human judgment and ethical oversight", "Private sector imitation"], answer: "c"},
+            {question: "What values must be preserved while pursuing efficiency in public service HRM?", options: ["Foundational values of public service", "Values of corporate shareholders", "Values of political parties", "Values of external consultants"], answer: "a"},
+            {question: "The conclusion suggests that distinctive approaches to public service HRM should avoid what?", options: ["Simply implementing private sector best practices without adaptation", "All innovative practices", "Any compliance with regulations", "All technology adoption"], answer: "a"},
+            {question: "What is necessary for HRM to contribute to both organizational success and democratic health?", options: ["Building merit-based, diverse, and capable workforces", "Reducing transparency", "Eliminating public accountability", "Focusing only on administrative tasks"], answer: "a"},
+            {question: "According to the conclusion, what type of approach is needed for the overlapping challenges ahead?", options: ["Rigid and inflexible", "Strategic coherence and agile", "Isolated and departmentalized", "Reactive and crisis-driven"], answer: "b"},
+            {question: "The conclusion states that HR professionals must function as all of the following EXCEPT?", options: ["Strategic partners", "Change agents", "Stewards of organizational culture", "Isolated administrators"], answer: "d"},
+            {question: "What does the 'human-centered design' aspect of future-proofing emphasize?", options: ["Technology over people", "The importance of human elements in HR systems and processes", "Eliminating human judgment", "Automating all decisions"], answer: "b"},
+            {question: "Why is the balanced approach described in the conclusion particularly challenging?", options: ["It requires maintaining multiple competing priorities simultaneously", "It only focuses on one priority at a time", "It eliminates all tensions", "It simplifies decision-making"], answer: "a"},
+            {question: "What does the conclusion identify as a key requirement for maintaining ethical oversight?", options: ["Ignoring ethical concerns for efficiency", "Maintaining human judgment in technological adoption", "Eliminating ethics committees", "Reducing transparency"], answer: "b"},
+            {question: "The health of democratic governance is linked to what aspect of public service?", options: ["The size of the government budget", "The quality and trustworthiness of the public sector workforce", "The number of laws passed", "The political party in power"], answer: "b"},
+            {question: "What does research show about the relationship between employee engagement and service quality?", options: ["No relationship exists", "Engaged workers deliver higher-quality services", "Disengaged workers provide better service", "Engagement only affects productivity"], answer: "b"},
+            {question: "In the 21st century context, HRM is essential for what broader goal?", options: ["Creating public value", "Reducing government size", "Eliminating public services", "Increasing political patronage"], answer: "a"},
+            {question: "What must be balanced with efficiency pursuits according to the conclusion?", options: ["Foundational values of public service", "Private sector profit motives", "Political campaign goals", "International trade agreements"], answer: "a"},
+            {question: "The conclusion suggests that successful adaptation to changing environments requires maintaining what?", options: ["Commitment to equity and inclusion", "Resistance to all change", "Strict adherence to outdated practices", "Isolation from global trends"], answer: "a"},
+            {question: "What distinguishes effective public service HRM from merely implementing private sector practices?", options: ["Recognition of government's unique context and purposes", "Higher salary budgets", "More advanced technology", "Larger staff sizes"], answer: "a"},
+            {question: "According to the conclusion, what is the relationship between HRM and public trust?", options: ["No relationship exists", "HRM practices significantly influence public trust in government", "Public trust is only affected by political leaders", "HRM decreases public trust"], answer: "b"},
+            {question: "What does the 'strategic coherence' requirement imply for HRM approaches?", options: ["Fragmented, inconsistent initiatives", "Aligned and coordinated strategies", "Random implementation of ideas", "Isolated departmental actions"], answer: "b"},
+            {question: "The agile approach recommended for future challenges emphasizes what?", options: ["Rigidity and inflexibility", "Adaptability and responsiveness", "Resistance to change", "Strict adherence to plans"], answer: "b"},
+            {question: "What does the conclusion identify as a central capability rather than a peripheral function?", options: ["Marketing", "Public relations", "Human Resource Management", "Political lobbying"], answer: "c"},
+            {question: "Building public trust in governmental institutions is achieved through what kind of HRM practices?", options: ["Opaque and secretive", "Transparent and merit-based", "Politically motivated", "Favoritism-based"], answer: "b"},
+            {question: "The conclusion emphasizes that distinctive approaches to public service HRM should be based on what?", options: ["Blind adoption of private sector models", "Recognition of governmental uniqueness", "International standards only", "Political preferences"], answer: "b"},
+            {question: "What does the human-centered design approach prioritize in HR systems?", options: ["Technological complexity", "Human needs and experiences", "Cost reduction above all", "Standardization without flexibility"], answer: "b"},
+            {question: "According to the conclusion, what kind of workforce is essential for both organizational success and democratic health?", options: ["Politically connected", "Merit-based and capable", "Inexperienced and low-cost", "Temporary and contractual"], answer: "b"},
+            {question: "The balanced approach described in the conclusion requires HR professionals to be what?", options: ["Only technically skilled", "Multi-dimensional in their capabilities and perspectives", "Focused only on compliance", "Resistant to all new ideas"], answer: "b"},
+            {question: "What does the conclusion suggest about the relationship between HRM and public value creation?", options: ["No relationship exists", "HRM is central to public value creation", "HRM hinders value creation", "Only political leaders create public value"], answer: "b"},
+            {question: "Why must public service HRM approaches be distinctive from private sector practices?", options: ["Because governmental organizations have different purposes and constraints", "Because public sector employees are less skilled", "Because private sector practices never work", "Because public sector has bigger budgets"], answer: "a"},
+            {question: "What does the conclusion identify as necessary for navigating disruption and sustaining performance?", options: ["Systematic investment in leadership development", "Reducing training budgets", "Eliminating all changes", "Focusing only on short-term goals"], answer: "a"},
+            {question: "The 'stewards of organizational culture' role involves protecting what?", options: ["Only existing traditions", "The values and capabilities that support public service mission", "Political interests", "Departmental silos"], answer: "b"},
+            {question: "According to the conclusion, what is the ultimate measure of successful public service HRM?", options: ["Creation of public value and maintenance of public trust", "Reduction of workforce size", "Increase in managerial power", "Elimination of all regulations"], answer: "a"},
+            {question: "What does the conclusion recommend for addressing overlapping future challenges?", options: ["A single simple solution", "An integrated approach balancing multiple priorities", "Avoiding all challenges", "Focusing on one priority at a time"], answer: "b"},
+            {question: "The change agent role requires HR professionals to do what?", options: ["Maintain status quo", "Lead and facilitate organizational transformation", "Resist all changes", "Follow others' initiatives"], answer: "b"},
+            {question: "What does the strategic partner role involve for HR professionals?", options: ["Working in isolation", "Aligning human capital with organizational goals", "Focusing only on administrative tasks", "Avoiding strategic discussions"], answer: "b"},
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

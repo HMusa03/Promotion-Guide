@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Exam Simulation</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="educ.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>National Policy on Education (100 Qs) </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+    
+    { 
+        question: "A farmer needs pest management knowledge. Which extension method is MOST effective?", 
+        options: ["Academic journal subscription", "Farmers field school", "University degree program", "International conference"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY challenge in nomadic education?", 
+        options: ["Lack of interest", "Constant mobility", "Excessive funding", "Advanced curriculum"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which non-formal approach BEST preserves indigenous knowledge?", 
+        options: ["Western university curriculum", "Apprenticeship with elders", "Online Wikipedia", "Corporate training"], 
+        answer: "b" 
+    },
+    { 
+        question: "A community has high HIV prevalence. Which mass education strategy reduces transmission?", 
+        options: ["Religious fasting", "Comprehensive awareness campaigns", "International travel bans", "School closure"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the BEST non-formal pathway for a dropout to obtain SSCE equivalent?", 
+        options: ["Private candidate examination", "University admission", "Political connection", "Corporate employment"], 
+        answer: "a" 
+    },
+    { 
+        question: "Which factor is CRITICAL for effective adult literacy programs?", 
+        options: ["Age-appropriate pedagogy", "Child-centered methods", "Competitive examinations", "Foreign language instruction"], 
+        answer: "a" 
+    },
+    { 
+        question: "A displaced population needs emergency education. Which approach aligns with mass education principles?", 
+        options: ["Formal school curriculum", "Accelerated learning programs", "University scholarships", "Vocational certification"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which non-formal education component specifically targets economic empowerment?", 
+        options: ["Philosophy debates", "Microenterprise training", "Advanced mathematics", "Literary analysis"], 
+        answer: "b" 
+    },
+    { 
+        question: "A rural community lacks electricity. Which mass media tool remains functional?", 
+        options: ["Television", "Internet", "Newspapers", "Battery-powered radios"], 
+        answer: "d" 
+    },
+    { 
+        question: "What is the MAIN purpose of community learning centers?", 
+        options: ["University preparation", "Lifelong learning access", "Political campaigning", "Religious conversion"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which strategy BEST integrates out-of-school youth into formal education?", 
+        options: ["Age-appropriate placement", "Automatic university admission", "Direct employment", "Military conscription"], 
+        answer: "a" 
+    },
+    { 
+        question: "A 40-year-old banker in Lagos wants to switch to data science. Which lifelong learning option is MOST flexible?", 
+        options: ["Full-time university degree", "Traditional apprenticeship", "Online certification program", "Government employment scheme"], 
+        answer: "c" 
+    },
+    { 
+        question: "A retired teacher in Kano wants to contribute to education. Which program facilitates knowledge sharing?", 
+        options: ["Senior citizen discount program", "Adult literacy volunteer initiative", "Youth sports coaching", "Political campaign"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which characteristic BEST defines lifelong learning?", 
+        options: ["Age-limited education", "Degree-focused programs", "Continuous skill development", "Government-mandated training"], 
+        answer: "c" 
+    },
+    { 
+        question: "A factory worker needs digital skills for automation. Which approach aligns with lifelong learning?", 
+        options: ["Early retirement package", "Weekend digital literacy workshop", "Job termination", "Union protest"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY benefit of Recognition of Prior Learning (RPL) for adults?", 
+        options: ["University degree equivalence", "Formal certification of existing skills", "Government pension increase", "International travel privileges"], 
+        answer: "b" 
+    },
+    { 
+        question: "A 50-year-old farmer wants modern techniques. Which delivery method is MOST accessible?", 
+        options: ["PhD in Agriculture", "Mobile extension service", "International conference", "Academic journal subscription"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which strategy BEST promotes learning culture in organizations?", 
+        options: ["Threatening job termination", "Offering learning time during work", "Reducing salaries for non-learners", "Mandatory retirement at 50"], 
+        answer: "b" 
+    },
+    { 
+        question: "A mid-career professional needs leadership skills. Which lifelong learning option is MOST effective?", 
+        options: ["Secondary school repetition", "Executive education program", "Youth leadership camp", "Online gaming community"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN challenge for adult learners?", 
+        options: ["Excessive free time", "Family/work commitments", "Government subsidies", "Overqualified instructors"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which technology BEST supports lifelong learning in remote areas?", 
+        options: ["Virtual reality labs", "Mobile learning apps", "Supercomputers", "3D printers"], 
+        answer: "b" 
+    },
+    { 
+        question: "A community wants seniors to preserve indigenous knowledge. Which approach works BEST?", 
+        options: ["Academic research papers", "Intergenerational storytelling", "Youth-only workshops", "Foreign documentaries"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of community learning centers?", 
+        options: ["Political campaigning", "Religious conversion", "Lifelong learning access", "Commercial business"], 
+        answer: "c" 
+    },
+    { 
+        question: "A 35-year-old wants to complete secondary education. Which flexible pathway exists?", 
+        options: ["Private WASSCE candidate", "Automatic university admission", "Presidential pardon", "Military service"], 
+        answer: "a" 
+    },
+    { 
+        question: "Which component is ESSENTIAL for effective adult pedagogy?", 
+        options: ["Child-centered methods", "Experience-based learning", "Competitive examinations", "Physical punishment"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN advantage of micro-credentials in lifelong learning?", 
+        options: ["Guaranteed government employment", "Targeted skill certification", "Automatic degree equivalence", "International passport eligibility"], 
+        answer: "b" 
+    },
+    { 
+        question: "A displaced person needs marketable skills. Which program aligns with lifelong learning?", 
+        options: ["Permanent camp residency", "Accelerated vocational training", "University scholarship", "Repatriation program"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which funding model BEST supports lifelong learning?", 
+        options: ["Exclusive corporate sponsorship", "Learner-paid only", "Mixed public-private support", "International charity dependence"], 
+        answer: "c" 
+    },
+    { 
+        question: "A corporation wants to upskill employees. Which approach is MOST sustainable?", 
+        options: ["Mass layoffs", "Continuous professional development", "Age-based retirement", "Salary reduction"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY target of National Open University programs?", 
+        options: ["Preschool children", "Traditional university students", "Working adults", "Government officials"], 
+        answer: "c" 
+    },
+    { 
+        question: "A grandmother wants digital skills to connect with family. Which center provides appropriate training?", 
+        options: ["Youth coding bootcamp", "Senior digital literacy hub", "University computer lab", "Corporate IT department"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which method BEST facilitates learning transfer to workplace?", 
+        options: ["Theoretical lectures", "On-the-job application", "Abstract examinations", "Foreign language study"], 
+        answer: "b" 
+    },
+    { 
+        question: "A 45-year-old artisan wants business skills. Which non-formal option fits?", 
+        options: ["MBA program", "Microenterprise workshop", "Doctoral dissertation", "Secondary school repetition"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN purpose of lifelong learning policies?", 
+        options: ["Restricting adult education", "Promoting continuous development", "Preserving traditional jobs", "Reducing university enrollment"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which technology platform BEST enables self-paced learning?", 
+        options: ["Massive Open Online Courses", "Printed newspapers", "Television dramas", "Radio call-in shows"], 
+        answer: "a" 
+    },
+    { 
+        question: "A community needs financial literacy. Which approach is MOST inclusive?", 
+        options: ["Wall Street investment seminar", "Local language money management", "University economics degree", "Corporate accounting"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the BEST strategy for motivating adult learners?", 
+        options: ["Threatening job loss", "Relevance to personal goals", "Competitive ranking", "Public humiliation"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which recognition system values skills regardless of acquisition method?", 
+        options: ["Age-based promotion", "RPL framework", "Family connections", "Political affiliation"], 
+        answer: "b" 
+    },
+    { 
+        question: "A factory automates, displacing workers. Which lifelong learning approach is MOST appropriate?", 
+        options: ["Unemployment benefits", "Reskilling programs", "Early retirement", "Labor union protests"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY benefit of learning communities for seniors?", 
+        options: ["Income generation", "Social isolation", "Cognitive engagement", "Political influence"], 
+        answer: "c" 
+    },
+    { 
+        question: "Which delivery method accommodates shift workers?", 
+        options: ["Fixed daytime lectures", "Evening/weekend classes", "9-5 training programs", "Compulsory residential"], 
+        answer: "b" 
+    },
+    { 
+        question: "A farmer wants climate adaptation knowledge. Which lifelong learning source is MOST reliable?", 
+        options: ["Social media rumors", "Agricultural extension service", "Foreign television", "Corporate advertisements"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the ESSENTIAL requirement for adult learning facilitators?", 
+        options: ["PhD in subject matter", "Understanding adult psychology", "Military background", "Political connections"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which strategy BEST addresses Nigeria's skills gap?", 
+        options: ["Restricting education access", "Lifelong upskilling initiatives", "Foreign worker importation", "Automated workforce reduction"], 
+        answer: "b" 
+    },
+    { 
+        question: "A 55-year-old wants to learn photography. Which community resource helps?", 
+        options: ["University admission office", "Senior learning center", "Primary school", "Government tax agency"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN outcome of effective lifelong learning?", 
+        options: ["Reduced innovation", "Personal and professional growth", "Increased dependency", "Cultural stagnation"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student with visual impairment joins a mainstream class. Which accommodation is MOST essential?", 
+        options: ["Reduced curriculum content", "Braille materials and tactile resources", "Oral examinations only", "Separate classroom"], 
+        answer: "b" 
+    },
+    { 
+        question: "A teacher notices a student struggling with social interactions and repetitive behaviors. Which professional should be consulted FIRST?", 
+        options: ["School principal", "Educational psychologist", "Physical therapist", "Speech therapist"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which principle BEST defines inclusive education in Nigeria?", 
+        options: ["Separate special schools", "Mainstreaming with support", "Home schooling only", "Religious institutions"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student with physical disability can't access the science lab. What is REQUIRED by policy?", 
+        options: ["Exemption from science", "Ramp installation", "Virtual experiments", "Personal assistant"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of an Individualized Education Plan (IEP)?", 
+        options: ["Simplify teacher workload", "Standardize curriculum", "Tailor learning to specific needs", "Reduce school funding"], 
+        answer: "c" 
+    },
+    { 
+        question: "A dyslexic student struggles with reading comprehension. Which accommodation is MOST effective?", 
+        options: ["Grade retention", "Oral assessments", "Extra homework", "Longer school hours"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which resource is CRITICAL for hearing-impaired students?", 
+        options: ["Large print books", "Sign language interpreters", "Braille devices", "Wheelchair ramps"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school lacks special needs expertise. What is the BEST immediate solution?", 
+        options: ["Reject special needs students", "Teacher training workshops", "Parental homeschooling", "Charity donations"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which law mandates inclusive education in Nigeria?", 
+        options: ["Companies Act", "Discrimination Against Persons Act", "Tax Regulation", "Banking Reform"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student with ADHD has focus challenges. Which classroom strategy works BEST?", 
+        options: ["Longer lectures", "Frequent breaks", "Silent reading", "Group punishments"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN purpose of early intervention programs?", 
+        options: ["Cost reduction", "Minimizing potential disabilities", "Parental convenience", "Teacher training"], 
+        answer: "b" 
+    },
+    { 
+        question: "A teacher modifies assessment methods for special needs students. This demonstrates:", 
+        options: ["Curriculum dilution", "Reasonable accommodation", "Favoritism", "Academic fraud"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which professional develops mobility training for visually impaired students?", 
+        options: ["Educational psychologist", "Orientation specialist", "Speech therapist", "Subject teacher"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school building lacks accessibility features. What government body ensures compliance?", 
+        options: ["Central Bank", "National Assembly", "National Commission for Persons with Disabilities", "Petroleum Ministry"], 
+        answer: "c" 
+    },
+    { 
+        question: "Which technology BEST supports students with learning disabilities?", 
+        options: ["Text-to-speech software", "Virtual reality games", "Social media", "Cryptocurrency apps"], 
+        answer: "a" 
+    },
+    { 
+        question: "A student with autism excels in mathematics. Which approach maximizes potential?", 
+        options: ["Ignoring special needs", "Strengths-based programming", "Social skills only", "Arts curriculum"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the ESSENTIAL component of teacher training for inclusion?", 
+        options: ["Subject specialization", "Differentiated instruction", "Examination techniques", "Administrative skills"], 
+        answer: "b" 
+    },
+    { 
+        question: "A parent refuses special services for their child. How should schools respond?", 
+        options: ["Enforce services", "Respect parental rights", "Report to police", "Withdraw all support"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which strategy promotes social inclusion in classrooms?", 
+        options: ["Separate play areas", "Peer support systems", "Extended isolation", "Academic streaming"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student uses a wheelchair. Which infrastructure modification is MOST important?", 
+        options: ["Decorative painting", "Ramps and accessible toilets", "Expensive computers", "Sports stadium"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY role of special education teachers in inclusive settings?", 
+        options: ["Replacing subject teachers", "Supporting diverse learners", "Administrative duties", "Fundraising"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student with Down syndrome joins JSS1. What is the FIRST step?", 
+        options: ["Develop IEP", "Reduce curriculum", "Assign personal nurse", "Isolate from peers"], 
+        answer: "a" 
+    },
+    { 
+        question: "Which assessment approach is FAIREST for special needs students?", 
+        options: ["Standardized testing", "Alternative assessments", "Oral exams only", "No assessments"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school lacks funding for assistive devices. What is the BEST solution?", 
+        options: ["Ignore needs", "Community partnerships", "Increase fees", "Cancel classes"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN benefit of inclusive education for typical students?", 
+        options: ["Faster academic progress", "Developing empathy", "Reduced competition", "Simplified curriculum"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student with cerebral palsy needs writing accommodations. Which is MOST appropriate?", 
+        options: ["Oral responses", "Scribe assistance", "Grade reduction", "Assignment exemption"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which government agency oversees special needs education standards?", 
+        options: ["NUC", "UBEC", "NCCE", "NCDC"], 
+        answer: "b" 
+    },
+    { 
+        question: "A teacher suspects undiagnosed learning disability. What is the FIRST step?", 
+        options: ["Parent conference", "Class suspension", "Medical report", "Curriculum change"], 
+        answer: "a" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of resource rooms in inclusive schools?", 
+        options: ["Permanent placement", "Targeted support sessions", "Teacher lounges", "Storage areas"], 
+        answer: "b" 
+    },
+    { 
+        question: "A deaf student joins a mainstream class. Which accommodation is LEAST effective?", 
+        options: ["Front-row seating", "Sign language interpreter", "Note-taking assistance", "Ignoring communication needs"], 
+        answer: "d" 
+    },
+    { 
+        question: "Which strategy BEST supports students with emotional/behavioral disorders?", 
+        options: ["Punitive measures", "Consistent positive reinforcement", "Public shaming", "Academic exclusion"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the ESSENTIAL qualification for sign language interpreters?", 
+        options: ["Teaching certificate", "Proficiency certification", "University degree", "Political appointment"], 
+        answer: "b" 
+    },
+    { 
+        question: "A student with intellectual disability learns slowly. Which approach aligns with inclusion?", 
+        options: ["Automatic promotion", "Multi-year repetition", "Individualized pacing", "Early graduation"], 
+        answer: "c" 
+    },
+    { 
+        question: "Which component is CRITICAL for transition planning in special education?", 
+        options: ["Parental wealth", "Post-school opportunities", "Teacher preferences", "School facilities"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school implements universal design for learning. What does this achieve?", 
+        options: ["Specialized curriculum", "Multiple access methods", "Higher fees", "Selective admission"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN benefit of early identification of special needs?", 
+        options: ["Cost reduction", "Timely intervention", "Teacher convenience", "School ranking"], 
+        answer: "b" 
+    },
+    { 
+        question: "A polytechnic graduate with Higher National Diploma wants to pursue a Master's degree. What is typically REQUIRED?", 
+        options: ["Direct admission", "Postgraduate diploma", "Another bachelor's degree", "Senatorial recommendation"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which body is responsible for accrediting academic programs in Nigerian universities?", 
+        options: ["NUC", "JAMB", "NCCE", "NBTE"], 
+        answer: "a" 
+    },
+    { 
+        question: "A university student faces sexual harassment from a lecturer. What is the FIRST appropriate action?", 
+        options: ["Social media exposure", "Formal complaint to anti-harassment committee", "Class boycott", "Family confrontation"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of the Tertiary Education Trust Fund (TETFund)?", 
+        options: ["Student loan provision", "Infrastructure development", "Lecturer salary payment", "International scholarship"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which qualification is awarded by Colleges of Education?", 
+        options: ["Bachelor of Science", "Higher National Diploma", "Nigeria Certificate in Education", "National Diploma"], 
+        answer: "c" 
+    },
+    { 
+        question: "A university wants to introduce a new engineering program. What is REQUIRED before admitting students?", 
+        options: ["Senate approval", "NUC accreditation", "Student referendum", "State government permission"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN difference between universities and polytechnics in Nigeria?", 
+        options: ["Student age requirements", "Duration of programs", "Focus on theoretical vs technical knowledge", "Tuition fees"], 
+        answer: "c" 
+    },
+    { 
+        question: "A final-year student needs industrial experience. Which program facilitates this?", 
+        options: ["NYSC", "SIWES", "N-Power", "JAMB"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which challenge is MOST critical in Nigerian tertiary education?", 
+        options: ["Excess funding", "Inadequate infrastructure", "Low student enrollment", "Oversupply of lecturers"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY role of university senates?", 
+        options: ["Financial management", "Academic decision-making", "Student discipline", "Staff recruitment"], 
+        answer: "b" 
+    },
+    { 
+        question: "A PhD candidate must demonstrate original contribution through:", 
+        options: ["Coursework completion", "Thesis defense", "Teaching experience", "Community service"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which innovation addresses access to tertiary education?", 
+        options: ["Increased tuition", "Open and distance learning", "Entrance exam elimination", "Automatic admission"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN purpose of the National Youth Service Corps (NYSC)?", 
+        options: ["Military training", "National integration", "Political recruitment", "Labor export"], 
+        answer: "b" 
+    },
+    { 
+        question: "A lecturer publishes research without proper attribution. This violates:", 
+        options: ["University dress code", "Academic integrity", "Administrative policy", "Student rights"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which factor is MOST important for university ranking?", 
+        options: ["Campus size", "Research output", "Student population", "Sports facilities"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the ESSENTIAL requirement for professorial promotion?", 
+        options: ["Years of service", "Research publications", "Administrative role", "Political connection"], 
+        answer: "b" 
+    },
+    { 
+        question: "A polytechnic graduate wants to convert HND to bachelor's equivalent. Which program facilitates this?", 
+        options: ["Remedial studies", "Top-up programs", "JAMB regularization", "NYSC exemption"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which body regulates technical education at tertiary level?", 
+        options: ["NUC", "NBTE", "NCCE", "TRCN"], 
+        answer: "b" 
+    },
+
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

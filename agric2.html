@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="agric.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Agric 02</h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "What is the primary goal of the regulatory framework enforced by agricultural staff?", options: ["To create unnecessary bureaucracy for farmers", "To protect the industry, consumers, and the environment", "To increase the price of agricultural products", "To reduce the number of farming activities"], answer: "b"},
+{question: "The certification of seeds and fertilizers is done to:", options: ["Make them more expensive", "Protect farmers from counterfeit and substandard products", "Limit their availability", "Export all quality products"], answer: "b"},
+{question: "Sanitary and Phytosanitary (SPS) measures are enforced to protect:", options: ["Government revenue", "Consumer health and meet international trade standards", "The interests of large corporations only", "Local markets from any competition"], answer: "b"},
+{question: "A plant protection officer's core duty involves:", options: ["Watering public gardens", "Enforcing quarantine to prevent foreign pest entry", "Designing garden landscapes", "Selling pesticides directly"], answer: "b"},
+{question: "A veterinarian in public service is crucial for:", options: ["Only treating pets in cities", "Implementing vaccination programs and controlling disease outbreaks like avian flu", "Running private clinics", "Inspecting restaurants for hygiene"], answer: "b"},
+{question: "The main purpose of border quarantine inspection is to:", options: ["Delay trade for no reason", "Prevent the establishment of foreign pests and diseases", "Collect bribes from importers", "Promote the use of local pests"], answer: "b"},
+{question: "Environmental protection duties include promoting:", options: ["Indiscriminate use of pesticides", "Conservation agriculture like no-till farming", "Deforestation for more land", "Over-extraction of groundwater"], answer: "b"},
+{question: "Regulating water use for irrigation aims to:", options: ["Deplete all aquifers quickly", "Ensure efficient use and prevent water resource depletion", "Make water unavailable for drinking", "Flood neighboring fields"], answer: "b"},
+{question: "A 'biosecurity' measure on a farm could include:", options: ["Allowing unlimited visitor access", "Footbaths and controlled access points to prevent disease spread", "Sharing equipment with infected farms without cleaning", "Ignoring sick animals"], answer: "b"},
+{question: "What does enforcing food safety standards typically involve?", options: ["Checking pesticide residue levels on produce", "Setting prices for consumers", "Choosing which crops farmers should grow", "Building roads to farms"], answer: "a"},
+{question: "The term 'phytosanitary' specifically relates to:", options: ["Animal health", "Plant health", "Soil minerals", "Water purity"], answer: "b"},
+{question: "A regulatory officer finding a counterfeit pesticide should:", options: ["Sell it at a discount", "Seize it and prevent its distribution to protect farmers", "Use it on government farms", "Ignore it"], answer: "b"},
+{question: "Promoting climate-smart agriculture is part of the role because it helps farmers:", options: ["Ignore weather patterns", "Adapt to climate change and build resilience", "Continue using outdated methods", "Complain about the weather"], answer: "b"},
+{question: "Monitoring for disease outbreaks involves:", options: ["Waiting for farmers to report problems", "Active surveillance and quick response to incidents like foot-and-mouth disease", "Only reading about diseases online", "Treating sick wild animals"], answer: "b"},
+{question: "A core principle of sustainable resource management is:", options: ["Maximizing short-term yield at any cost", "Balancing current needs with preserving resources for future generations", "Using all available land immediately", "Ignoring environmental impact"], answer: "b"},
+{question: "Which action is a key part of environmental conservation?", options: ["Promoting soil erosion", "Advocating for agroforestry and cover cropping", "Encouraging wetland drainage", "Burning crop residues openly"], answer: "b"},
+{question: "The 'containment measures' enacted during a disease outbreak aim to:", options: ["Spread the disease further", "Limit the geographical spread and eradicate the disease", "Hide the outbreak from the public", "Export infected animals"], answer: "b"},
+{question: "Quality assurance for animal feed ensures:", options: ["That it is the most expensive", "The safety and nutritional value for livestock", "That only one company produces it", "It is imported from specific countries"], answer: "b"},
+{question: "A public service veterinarian might be called to investigate:", options: ["A crime in the city", "An unusual mortality rate on a poultry farm", "A traffic accident", "A building construction site"], answer: "b"},
+{question: "Regulating the import of planting material is vital to prevent:", options: ["Increased crop diversity", "The introduction of new weeds and pathogens", "Farmers from accessing new varieties", "Any international trade"], answer: "b"},
+{question: "The enforcement of standards helps Nigerian agricultural products to:", options: ["Be banned globally", "Gain access to international markets by meeting quality requirements", "Remain only in local markets", "Be sold more cheaply than others"], answer: "b"},
+{question: "Which practice would an officer promoting sustainability MOST likely discourage?", options: ["Crop rotation", "The indiscriminate slash-and-burn agriculture", "Integrated Pest Management", "Water harvesting"], answer: "b"},
+{question: "A quarantine order is a legal tool used to:", options: ["Punish farmers", "Isolate and treat affected areas to prevent disease spread", "Generate revenue for the government", "Stop all farming activities"], answer: "b"},
+{question: "The term 'maximum residue limit (MRL)' refers to the:", options: ["Amount of soil in a sample", "Legally tolerated level of pesticide residue on food", "Number of seeds per packet", "Weight of a animal carcass"], answer: "b"},
+{question: "An officer advising on water resource management would promote:", options: ["Flood irrigation in water-scarce regions", "Drip irrigation to conserve water", "Using drinking water for irrigation only", "Draining rivers completely"], answer: "b"},
+{question: "What is the first step in responding to a reported pest outbreak?", options: ["Confirming the identity of the pest and assessing the extent of infestation", "Issuing a press statement", "Spraying all surrounding farms immediately", "Evacuating nearby villages"], answer: "a"},
+{question: "The primary benefit of enforcing animal welfare regulations is:", options: ["Ensuring humane treatment and often improving productivity and food safety", "Increasing production costs", "Making farming more difficult", "Allowing any treatment of animals"], answer: "a"},
+{question: "A regulation on packaging standards aims to:", options: ["Ensure food reaches consumers in a safe and wholesome condition", "Make packages unattractive", "Increase the use of plastic", "Standardize the size of all farms"], answer: "a"},
+{question: "Promoting the use of approved pesticides involves ensuring they are:", options: ["Effective against the target pest and have minimal environmental impact", "The cheapest available", "Applied in the highest possible doses", "Used for all pests regardless of type"], answer: "a"},
+{question: "The concept of 'traceability' in food safety refers to the ability to:", options: ["Track a food product from farm to consumer to address safety issues", "Guess where food came from", "Hide the origin of products", "Increase the price based on origin"], answer: "a"},
+{question: "An officer working on environmental protection would likely support:", options: ["Creating buffer zones near waterways to prevent chemical runoff", "Converting all forests to farmland", "Dumping agricultural waste in rivers", "Removing all trees from landscapes"], answer: "a"},
+{question: "The registration process for a new pesticide requires proving it is:", options: ["Effective and safe for its intended use under local conditions", "Inexpensive to make", "Popular in other countries", "Available in large quantities"], answer: "a"},
+{question: "A major consequence of FAILING to enforce phytosanitary regulations could be:", options: ["The devastation of local crops by an introduced foreign pest", "Higher farmer profits", "More variety in local ecosystems", "Decreased paperwork for officials"], answer: "a"},
+{question: "The 'precautionary principle' in regulation sometimes means:", options: ["Taking action to prevent potential harm even without full scientific certainty", "Taking no action until proven safe", "Always allowing new technologies immediately", "Banning all new technologies"], answer: "a"},
+{question: "What is the primary focus of applied research in public agricultural institutions?", options: ["Solving immediate, practical problems faced by farmers", "Theoretical concepts with no immediate use", "Studying ancient farming history", "Designing urban infrastructure"], answer: "a"},
+{question: "Which activity is a core responsibility of a research scientist in a public institution?", options: ["Developing new high-yielding, disease-resistant crop varieties", "Distributing loans to farmers", "Driving extension officers to fields", "Setting market prices for produce"], answer: "a"},
+{question: "Long-term strategic research addresses future challenges such as:", options: ["Climate resilience and breeding crops for higher temperatures", "Next year's weather", "Historical crop yields", "Current market prices"], answer: "a"},
+{question: "Research into alternative production systems like hydroponics is important for:", options: ["Exploring urban and space-constrained agriculture solutions", "Eliminating traditional farming", "Making farming more expensive", "Reducing food quality"], answer: "a"},
+{question: "The main goal of crop improvement research is to develop varieties that are:", options: ["High-yielding, nutrient-dense, and disease-resistant", "Less nutritious", "More difficult to grow", "Only suitable for export"], answer: "a"},
+{question: "A soil scientist in a research role would typically be involved in:", options: ["Studying soil composition and developing tailored fertilization strategies", "Selling fertilizers directly", "Drilling for oil", "Building construction foundations"], answer: "a"},
+{question: "Research on renewable energy in agriculture might explore:", options: ["Integrating solar power and bioenergy into farming operations", "Using more diesel generators", "Powering cities with farm waste", "Eliminating energy use on farms"], answer: "a"},
+{question: "The key difference between applied and basic research is that applied research aims for:", options: ["Practical application and solving specific problems", "Knowledge for its own sake", "More complex scientific papers", "Discoveries with no real-world use"], answer: "a"},
+{question: "A major output of livestock improvement research is:", options: ["Improved animal genetics and husbandry practices for better production", "New brands of animal feed", "Designs for barns", "Marketing plans for meat"], answer: "a"},
+{question: "Research into 'climate-smart agriculture' is designed to help farmers:", options: ["Adapt to and mitigate the effects of climate change", "Ignore climate change", "Change the weather", "Move to different countries"], answer: "a"},
+{question: "The development of a drought-resistant maize variety is an example of:", options: ["Applied research addressing a critical farmer challenge", "A failed experiment", "A policy change", "An extension activity"], answer: "a"},
+{question: "What is a primary source of funding for most public agricultural research?", options: ["The government and public funds", "Private corporations only", "Farmers' personal donations", "International lotteries"], answer: "a"},
+{question: "Collaboration in research often occurs with:", options: ["Universities, international agencies, and private sector partners", "Only other government departments", "No one, research is done in isolation", "Only local farmers"], answer: "a"},
+{question: "The process of testing a new crop variety typically includes:", options: ["Rigorous field trials to assess performance under local conditions", "Immediate release to all farmers", "Selling it before testing", "Asking for opinions online"], answer: "a"},
+{question: "Research into post-harvest technologies aims to:", options: ["Reduce spoilage and improve storage methods", "Increase food losses", "Make harvesting slower", "Complicate processing"], answer: "a"},
+{question: "A 'germplasm' collection is a vital resource for researchers because it contains:", options: ["Genetic material for breeding new plant varieties", "Soil samples", "Animal fossils", "Farming tools"], answer: "a"},
+
+{question: "The ultimate goal of most agricultural research is to:", options: ["Publish papers in journals", "Keep researchers employed", "Increase productivity, sustainability, and farmer incomes", "Make farming more traditional"], answer: "c"},
+{question: "Which field would a researcher working on integrated pest management (IPM) be involved in?", options: ["Developing chemical pesticides only", "Promoting pest infestations", "Creating sustainable strategies that minimize pesticide use", "Studying pest anatomy only"], answer: "c"},
+{question: "Research on water-efficient irrigation systems contributes to:", options: ["Wasting more water", "Flooding fields", "Conserving water resources in agriculture", "Increasing water costs"], answer: "c"},
+{question: "The findings from agricultural research are most effectively passed to farmers through:", options: ["Scientific journals only", "Social media rumors", "The extension system and demonstration plots", "Keeping them secret"], answer: "c"},
+{question: "Participatory research approaches involve:", options: ["Researchers working alone", "Telling farmers what to do", "Engaging farmers directly in the research process", "Ignoring local knowledge"], answer: "c"},
+{question: "Economic research in agriculture might focus on:", options: ["The stock market", "Setting fixed prices", "Analyzing the profitability and market potential of new technologies", "Studying ancient economies"], answer: "c"},
+{question: "A research breakthrough in nitrogen-fixing crops could reduce the need for:", options: ["Water", "Sunlight", "Synthetic fertilizer inputs", "Tractors"], answer: "c"},
+{question: "Research institutions maintain 'control' samples in experiments to:", options: ["Have extra specimens", "Sell later", "Provide a baseline for comparing results", "Make the experiment look more complex"], answer: "c"},
+{question: "The development of biofortified crops (e.g., vitamin-A enriched sweet potato) is aimed at:", options: ["Improving cosmetic appearance", "Making crops taste worse", "Addressing human malnutrition and improving health", "Increasing shelf life"], answer: "c"},
+{question: "Long-term research is often riskier than applied research because it:", options: ["Is guaranteed to fail", "Has no clear objectives", "Explores new ideas with uncertain outcomes but high potential impact", "Is cheaper to conduct"], answer: "c"},
+{question: "Research into agroecology focuses on:", options: ["Industrial farming only", "Eliminating all insects", "Designing farming systems that work with natural ecosystems", "Using only synthetic inputs"], answer: "c"},
+{question: "A researcher collecting data on soil moisture levels over a decade is likely studying:", options: ["Short-term weather", "Daily rainfall", "Long-term climate change impacts and adaptation strategies", "Insect populations"], answer: "c"},
+{question: "The validation of a new farming technology involves ensuring it is:", options: ["Expensive and complex", "Only usable by experts", "Effective, economically viable, and socially acceptable for farmers", "Protected by patent only"], answer: "c"},
+{question: "Research on digital agriculture (e.g., drones, sensors) explores how to:", options: ["Replace all farmers", "Make farming more guesswork", "Increase efficiency and precision in farming operations", "Complicate simple tasks"], answer: "c"},
+{question: "A core ethical principle in agricultural research is to:", options: ["Test anything on anyone", "Get results at any cost", "Ensure the safety and well-being of all subjects and the environment", "Ignore potential consequences"], answer: "c"},
+{question: "Research contributes to national food security by:", options: ["Creating dependency on imports", "Studying foreign crops only", "Developing technologies that boost and stabilize domestic production", "Reducing the number of farms"], answer: "c"},
+{question: "The term 'value addition' research could involve developing:", options: ["Heavier raw products", "Ways to make products less appealing", "New methods for processing and packaging to increase profitability", "More expensive raw materials"], answer: "c"},
+{question: "What is a primary administrative duty of agricultural staff beyond technical work?", options: ["Harvesting crops", "Driving tractors", "Designing, implementing, and monitoring government agricultural projects", "Pruning trees"], answer: "c"},
+{question: "Accurate agricultural statistics are fundamental for:", options: ["Filling archives", "Entering data competitions", "Informing policy decisions and market predictions", "Writing fiction novels"], answer: "c"},
+{question: "A key administrative task is conducting agricultural censuses to gather data on:", options: ["Farmer's favorite colors", "The number of birds in the sky", "Production levels, land use, and farmer demographics", "Soil taste"], answer: "c"},
+{question: "Stakeholder engagement for agricultural staff involves collaborating with:", options: ["Only other government staff", "No one", "Farmers' associations, private agribusiness, NGOs, and international partners", "Only foreign governments"], answer: "c"},
+{question: "In disaster management, agricultural staff are pivotal for:", options: ["Ignoring the event", "Organizing parties", "Assessing agricultural damage and designing farmer recovery programs", "Writing about the disaster in a diary"], answer: "c"},
+{question: "Effective program management ensures projects are completed:", options: ["Over budget and late", "Without any planning", "On time, within budget, and achieve their objectives", "In a different country"], answer: "c"},
+{question: "Maintaining databases of production data is crucial for:", options: ["Increasing server storage costs", "Hiding information from the public", "Providing reliable information for planning and forecasting", "Training for IT staff only"], answer: "c"},
+{question: "An example of a stakeholder an agricultural officer might engage with is:", options: ["A local farmers' cooperative", "A celebrity chef in another country", "A car manufacturer", "A music band"], answer: "a"},
+{question: "The first step in managing an emergency like a flood is often:", options: ["Waiting for instructions from abroad", "Blaming farmers", "Closing the office", "Quickly assessing the damage to crops and livestock"], answer: "d"},
+{question: "Administrative staff in an agricultural ministry support the technical staff by:", options: ["Doing their farming for them", "Driving them to work", "Cooking their meals", "Handling logistics, finance, and communications for programs"], answer: "d"},
+{question: "The primary purpose of monitoring a project's progress is to:", options: ["Create extra work", "Ignore the results", "Spend the budget quickly", "Ensure it stays on track to meet its goals and make adjustments if needed"], answer: "d"},
+{question: "Data on market prices collected by the ministry helps farmers with:", options: ["Choosing what to wear", "Gossiping", "Predicting the weather", "Making informed decisions about what to plant and when to sell"], answer: "d"},
+{question: "A 'cross-cutting' responsibility means it:", options: ["Involves cutting crops", "Is only for managers", "Is unimportant", "Applies across various technical areas and programs"], answer: "d"},
+{question: "When designing a relief program after a drought, the administrative priority is to:", options: ["Delay assistance", "Give aid to everyone regardless of need", "Sell the relief materials", "Efficiently target and distribute resources like seeds to affected farmers"], answer: "d"},
+{question: "Collaboration with international partners (e.g., FAO) can help with:", options: ["Getting free vacations", "Avoiding local work", "Changing the national language", "Accessing additional funding, expertise, and global best practices"], answer: "d"},
+{question: "A key part of managing a program's budget is:", options: ["Spending it all on day one", "Hiding the budget", "Giving it to farmers directly", "Tracking expenses to ensure funds are used appropriately and effectively"], answer: "d"},
+{question: "The data from a national agricultural survey is used to:", options: ["Decorate reports", "Set electricity tariffs", "Plan city road networks", "Understand the state of the sector and guide national investment"], answer: "d"},
+{question: "Building a partnership with a private seed company can help to:", options: ["Give the company a monopoly", "Increase government bureaucracy", "Put extension officers out of work", "Improve the availability and quality of seeds for farmers"], answer: "d"},
+{question: "In the context of emergency response, 'relief materials' often refer to:", options: ["Movies and games", "Luxury items", "Office stationery", "Essential inputs like seeds, feed, and tools to help farmers restart"], answer: "d"},
+{question: "Administrative efficiency in a ministry is important because it:", options: ["Creates more paperwork", "Slows down all work", "Is only for show", "Ensures resources reach intended beneficiaries and programs are effective"], answer: "d"},
+{question: "A report on the outcomes of a training program for farmers is an example of:", options: ["Program monitoring and evaluation", "A personal diary entry", "A news article", "A work of fiction"], answer: "a"},
+{question: "The main goal of stakeholder engagement is to:", options: ["Talk to as many people as possible", "Create conflict", "Keep everyone busy", "Foster collaboration and leverage different strengths for sector development"], answer: "d"},
+{question: "Accurate record-keeping of project beneficiaries is crucial to:", options: ["Invade privacy", "Sell the information", "Fill up filing cabinets", "Ensure transparency and that support reaches the right people"], answer: "d"},
+{question: "An administrative officer might be responsible for:", options: ["Planting a demonstration plot", "Diagnosing plant diseases", "Repairing a tractor", "Drafting a memorandum of understanding (MoU) with a development partner"], answer: "d"},
+{question: "The 'cross-cutting' theme of gender mainstreaming in programs ensures:", options: ["Only men are considered", "Women are excluded", "Programs are delayed", "The needs and roles of both women and men in agriculture are addressed"], answer: "d"},
+{question: "Managing the logistics for a nationwide fertilizer distribution program is a complex:", options: ["Simple errand", "Job for extension officers only", "Task for veterinarians", "Administrative task requiring careful planning and execution"], answer: "d"},
+{question: "Data integrity is important in collection to ensure information is:", options: ["Always positive", "Easy to fabricate", "Only used internally", "Accurate, consistent, and reliable for decision-making"], answer: "d"},
+{question: "A successful partnership with an NGO might result in:", options: ["The government doing nothing", "A competition for resources", "The NGO taking over the ministry", "Complementary efforts, like the NGO providing training while government provides inputs"], answer: "d"},
+{question: "The administrative process of 'procurement' involves:", options: ["Giving away items for free", "Stealing resources", "Ignoring quality", "Acquiring goods and services (like seeds or vehicles) following regulations"], answer: "d"},
+{question: "After a project ends, a final evaluation is conducted to:", options: ["Forget about it", "Blame staff", "Destroy all records", "Learn lessons and improve future interventions"], answer: "d"},
+{question: "Coordinating with the national meteorological agency is an example of inter-agency collaboration to:", options: ["Get weather reports for a picnic", "Start a new agency", "Control the weather", "Provide farmers with crucial weather forecasts and advisories"], answer: "d"},
+{question: "The primary purpose of maintaining a project's financial records is for:", options: ["Hiding money", "Increasing personal wealth", "Confusing everyone", "Accountability and auditing to ensure proper use of public funds"], answer: "d"},
+{question: "The effective management of administrative tasks ultimately supports the:", options: ["Failure of technical goals", "Isolation of departments", "Increase in paperwork", "Successful achievement of the ministry's technical and strategic objectives"], answer: "d"}
+
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

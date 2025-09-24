@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Exam Simulation</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="FRRs.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Financial Regulations Rules {FRRs} (100 Qs) </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+  {
+    question: "Which of these is NOT a reason for declaring stores unserviceable?",
+    options: ["Natural deterioration", "Misuse by staff", "Normal wear and tear", "Political instability"],
+    answer: "d"
+  },
+  {
+    question: "Store losses due to theft should be reported to?",
+    options: ["National Assembly", "President", "Police and internal authorities", "Contractor"],
+    answer: "c"
+  },
+  {
+    question: "Items declared unserviceable may be disposed of by?",
+    options: ["Open auction, destruction, or conversion to scrap", "Direct transfer to private companies", "Gift to staff", "Burning by store officer"],
+    answer: "a"
+  },
+  {
+    question: "The ultimate goal of tracking store losses is to?",
+    options: ["Reduce procurement costs", "Punish officers", "Maintain control and accountability", "Train storekeepers"],
+    answer: "c"
+  },
+  {
+    question: "Board of Survey recommendations on store losses must be?",
+    options: ["Verbal", "Discarded", "Submitted in writing for appropriate action", "Filed and ignored"],
+    answer: "c"
+  },
+  {
+    question: "The Stock Verification Unit is primarily responsible for?",
+    options: ["Payroll computation", "Ensuring accuracy of stock records", "Managing procurement contracts", "Approving staff transfers"],
+    answer: "b"
+  },
+  {
+    question: "Stock verification is carried out to detect?",
+    options: ["Promotion delays", "Political interference", "Theft, fraud, and mismanagement", "Inflation of salaries"],
+    answer: "c"
+  },
+  {
+    question: "One major function of the Stock Verification Unit is to?",
+    options: ["Produce new office supplies", "Verify and report stock discrepancies", "Write office memos", "Pay contractors"],
+    answer: "b"
+  },
+  {
+    question: "Which officer is expected to cooperate fully with the Stock Verification Unit?",
+    options: ["Director of Finance", "Store officer", "Procurement officer", "Receptionist"],
+    answer: "b"
+  },
+  {
+    question: "A major tool used by the verification unit is the?",
+    options: ["Invoice", "Cashbook", "Store ledger", "Audit memo"],
+    answer: "c"
+  },
+  {
+    question: "Verification activities must be conducted?",
+    options: ["Weekly", "Secretly", "Regularly and without prior notice", "Only during audits"],
+    answer: "c"
+  },
+  {
+    question: "When discrepancies are found, the unit must?",
+    options: ["Ignore them", "Report and recommend necessary action", "Hide the records", "Suspend all activities"],
+    answer: "b"
+  },
+  {
+    question: "Stock verification promotes?",
+    options: ["Budget inflation", "Transparency and accountability", "Outsourcing", "Private warehousing"],
+    answer: "b"
+  },
+  {
+    question: "Which of the following is NOT a role of the Stock Verification Unit?",
+    options: ["Recommending disposal of unserviceable stores", "Maintaining payroll records", "Detecting fraudulent practices", "Ensuring records tally with physical stock"],
+    answer: "b"
+  },
+  {
+    question: "The reports from the verification unit are submitted to?",
+    options: ["Contractors", "Auditor-General", "Store clerks", "Finance officer"],
+    answer: "b"
+  },
+  {
+    question: "Verification exercises help to reduce?",
+    options: ["Service delivery", "Cases of missing or duplicated items", "Training allowances", "Staff workload"],
+    answer: "b"
+  },
+  {
+    question: "What should be the attitude of store officers during verification?",
+    options: ["Non-cooperative", "Fully supportive", "Defensive", "Secretive"],
+    answer: "b"
+  },
+  {
+    question: "Stock verification results must be?",
+    options: ["Classified", "Destroyed after review", "Properly documented", "Kept in personal safes"],
+    answer: "c"
+  },
+  {
+    question: "The effectiveness of the Stock Verification Unit depends largely on?",
+    options: ["Contractor loyalty", "Staff allowances", "Adequate training and support", "Political backing"],
+    answer: "c"
+  },
+  {
+    question: "Which type of stock should be covered in verification?",
+    options: ["Only consumables", "All government-owned stores", "Only office furniture", "Food items only"],
+    answer: "b"
+  },
+  {
+    question: "Which of the following regulates public procurement in Nigeria?",
+    options: ["Central Bank Act", "Procurement Act 2007", "Revenue Act", "Stock Verification Code"],
+    answer: "b"
+  },
+  {
+    question: "One of the key principles of public procurement is?",
+    options: ["Favoritism", "Transparency", "Secrecy", "Exclusivity"],
+    answer: "b"
+  },
+  {
+    question: "What is the purpose of the Due Process mechanism in procurement?",
+    options: ["To slow down approvals", "To encourage corruption", "To ensure compliance with rules", "To favor contractors"],
+    answer: "c"
+  },
+  {
+    question: "Before awarding a contract, a procuring entity must ensure?",
+    options: ["The contractor is a political party member", "Availability of funds", "Only foreign firms apply", "There is no bidding"],
+    answer: "b"
+  },
+  {
+    question: "Which office ensures that procurement processes comply with regulations?",
+    options: ["The Legal Unit", "The Procurement Planning Committee", "The Internal Audit", "The Anti-Corruption Unit"],
+    answer: "b"
+  },
+  {
+    question: "Open competitive bidding must be?",
+    options: ["Done by secret ballot", "Advertised publicly", "Limited to internal staff", "Invited by phone"],
+    answer: "b"
+  },
+  {
+    question: "All public procurement activities must be backed by?",
+    options: ["Executive order", "Approval from a senator", "Budgetary provision", "Verbal agreement"],
+    answer: "c"
+  },
+  {
+    question: "Procurement plans should be prepared?",
+    options: ["Every month", "Annually", "Only during emergencies", "After project execution"],
+    answer: "b"
+  },
+  {
+    question: "Bid evaluation criteria must be?",
+    options: ["Secret and flexible", "Clearly stated in advance", "Developed after award", "Discussed verbally"],
+    answer: "b"
+  },
+  {
+    question: "Which of the following is NOT a procurement method?",
+    options: ["Direct procurement", "Selective tendering", "Lottery bidding", "Open competitive bidding"],
+    answer: "c"
+  },
+  {
+    question: "Contracts are awarded to suppliers who?",
+    options: ["Have government contacts", "Offer the lowest price regardless of quality", "Meet all technical and financial requirements", "Belong to the same region as the agency head"],
+    answer: "c"
+  },
+  {
+    question: "The role of the Tenders Board is to?",
+    options: ["Monitor staff discipline", "Award contracts above a certain threshold", "Verify payment vouchers", "Hire security personnel"],
+    answer: "b"
+  },
+  {
+    question: "A contractor who fails to deliver may be subjected to?",
+    options: ["Award of another contract", "Legal sanctions and penalties", "Public commendation", "Automatic promotion"],
+    answer: "b"
+  },
+  {
+    question: "Procurement records must be kept for how long?",
+    options: ["1 year", "5 years", "10 years", "Until the officer retires"],
+    answer: "b"
+  },
+  {
+    question: "Which of the following is a red flag in public procurement?",
+    options: ["Clear documentation", "Multiple bidding options", "Lack of competition", "Transparent award process"],
+    answer: "c"
+  },
+  {
+    question: "Which of the following is considered a miscellaneous receipt?",
+    options: ["Contract payment", "Payment for license renewal", "Pension allowance", "Salary advance"],
+    answer: "b"
+  },
+  {
+    question: "Donations made to government establishments should be?",
+    options: ["Shared among staff", "Returned to donor", "Properly receipted and accounted for", "Transferred to the donor's account"],
+    answer: "c"
+  },
+  {
+    question: "Any officer who receives a gift related to their official duties must?",
+    options: ["Keep it privately", "Declare it in writing", "Sell it and report profit", "Refuse it silently"],
+    answer: "b"
+  },
+  {
+    question: "Proceeds from the sale of government assets must be?",
+    options: ["Shared with senior officers", "Used for personal welfare", "Paid into government account", "Deposited with the auctioneer"],
+    answer: "c"
+  },
+  {
+    question: "Government property found to be obsolete should be?",
+    options: ["Donated immediately", "Disposed of through approved procedures", "Abandoned in store", "Given to a politician"],
+    answer: "b"
+  },
+  {
+    question: "Which body may grant approval for disposal of government vehicles?",
+    options: ["Office of the Auditor-General", "Procurement Unit", "Ministerial Tenders Board", "National Assembly"],
+    answer: "c"
+  },
+  {
+    question: "An unclaimed security document found in a government office must be?",
+    options: ["Kept by the finder", "Burned", "Submitted to the appropriate authority", "Shared among staff"],
+    answer: "c"
+  },
+  {
+    question: "Which of these items is not classified under miscellaneous government revenue?",
+    options: ["Court fines", "License fees", "Staff salaries", "Sale of forms"],
+    answer: "c"
+  },
+  {
+    question: "Losses of public funds not reported can lead to?",
+    options: ["Promotion of officer", "Disciplinary action", "Praise by supervisors", "Automatic replacement of funds"],
+    answer: "b"
+  },
+  {
+    question: "All government publications for sale must be?",
+    options: ["Free for staff", "Distributed without record", "Properly priced and recorded", "Shared with friends"],
+    answer: "c"
+  },
+  {
+    question: "Public officers are discouraged from?",
+    options: ["Observing financial rules", "Engaging in unauthorized business", "Following due process", "Writing reports"],
+    answer: "b"
+  },
+  {
+    question: "Funds realized from public functions must be?",
+    options: ["Privately shared", "Remitted to government account", "Kept in petty cash", "Used for gifts to staff"],
+    answer: "b"
+  },
+  {
+    question: "Government logos and emblems must be used?",
+    options: ["For personal branding", "Without restriction", "Only for official purposes", "For business advertising"],
+    answer: "c"
+  },
+  {
+    question: "Loss of official documents must be reported to?",
+    options: ["A family member", "A trusted friend", "The appropriate authority", "The media"],
+    answer: "c"
+  },
+  {
+    question: "Where a regulation is silent on an issue, the responsible officer should?",
+    options: ["Guess the best action", "Act based on seniority", "Seek written directive from superiors", "Ignore the matter"],
+    answer: "c"
+  },
+  {
+    question: "What is the primary purpose of codifying financial offences?",
+    options: ["To increase revenue", "To justify financial errors", "To ensure clarity and enforceability of sanctions", "To create employment"],
+    answer: "c"
+  },
+  {
+    question: "An officer who fails to account for collected revenue may face which of the following?",
+    options: ["Commendation", "Promotion", "Disciplinary action", "Pension increase"],
+    answer: "c"
+  },
+  {
+    question: "Unauthorized spending of government funds is classified as?",
+    options: ["An innovation", "A financial offence", "A minor error", "A routine action"],
+    answer: "b"
+  },
+  {
+    question: "Negligence in keeping accounting records can lead to?",
+    options: ["Job rotation", "Transfer to another office", "Sanctions", "Cash reward"],
+    answer: "c"
+  },
+  {
+    question: "Which of the following is NOT an offence under the codified financial regulations?",
+    options: ["Misappropriation", "Forgery", "Regular auditing", "Embezzlement"],
+    answer: "c"
+  },
+  {
+    question: "Sanctions for financial offences are meant to?",
+    options: ["Punish the public", "Encourage laziness", "Serve as deterrence", "Support embezzlement"],
+    answer: "c"
+  },
+  {
+    question: "What is the appropriate action when a financial offence is discovered?",
+    options: ["Report to a newspaper", "Notify the nearest police post", "Report to the appropriate authority promptly", "Ignore it"],
+    answer: "c"
+  },
+  {
+    question: "Fabrication of accounting records is an offence punishable by?",
+    options: ["Suspension or dismissal", "Leave bonus", "Training approval", "Apology letter"],
+    answer: "a"
+  },
+  {
+    question: "One of the reasons for codifying sanctions is to?",
+    options: ["Favor senior staff", "Confuse offenders", "Ensure uniformity in penalties", "Delay investigations"],
+    answer: "c"
+  },
+  {
+    question: "Tampering with government records is classified as?",
+    options: ["A mistake", "Gross misconduct", "A service error", "Good initiative"],
+    answer: "b"
+  },
+  {
+    question: "What is the implication of non-disclosure of financial irregularities?",
+    options: ["Better performance", "Increased salary", "Complicity in the offence", "Commendation"],
+    answer: "c"
+  },
+  {
+    question: "Repeated violations of financial rules attract?",
+    options: ["Leniency", "Award nomination", "Harsher sanctions", "Ignore by authority"],
+    answer: "c"
+  },
+  {
+    question: "Diversion of public funds is a breach of?",
+    options: ["Normal routine", "Public service conduct", "Disciplinary code", "Account audit process"],
+    answer: "b"
+  },
+  {
+    question: "Forgery in government accounts is punishable under?",
+    options: ["Tax laws", "Public procurement law", "Financial Regulations", "Customary law"],
+    answer: "c"
+  },
+  {
+    question: "Which of the following supports enforcement of sanctions?",
+    options: ["Supervisory negligence", "Timely investigation and reporting", "Delays in detection", "Exempting senior officers"],
+    answer: "b"
+  },
+  {
+    question: "Which of the following is a key requirement for the financial operations of parastatals?",
+    options: ["Political affiliation", "Strict adherence to approved budgets", "Public popularity", "International partnerships"],
+    answer: "b"
+  },
+  {
+    question: "Parastatals are expected to prepare their annual budgets based on?",
+    options: ["Previous year’s revenue alone", "National development plans and priorities", "Staff preferences", "Foreign donor expectations"],
+    answer: "b"
+  },
+  {
+    question: "The governing board of a parastatal is primarily responsible for?",
+    options: ["Awarding contracts to relatives", "Overseeing administrative functions only", "Ensuring compliance with financial guidelines", "Organizing social events"],
+    answer: "c"
+  },
+  {
+    question: "Internal audit units in parastatals help in?",
+    options: ["Approving personal loans", "Suppressing financial records", "Ensuring financial accountability", "Reducing employee salaries"],
+    answer: "c"
+  },
+  {
+    question: "Which of these should parastatals maintain for proper record-keeping?",
+    options: ["Secret accounts", "Manual payroll lists", "Up-to-date books of accounts", "Gift registers"],
+    answer: "c"
+  },
+  {
+    question: "External audits of parastatals are usually conducted by?",
+    options: ["The media", "The EFCC", "Auditor-General for the Federation", "Private contractors"],
+    answer: "c"
+  },
+  {
+    question: "The financial year for government parastatals ends on?",
+    options: ["January 1st", "June 30th", "September 30th", "December 31st"],
+    answer: "d"
+  },
+  {
+    question: "One of the major financial responsibilities of parastatals is to?",
+    options: ["Invest in cryptocurrencies", "Finance foreign campaigns", "Ensure value for money in expenditure", "Maintain secrecy in transactions"],
+    answer: "c"
+  },
+  {
+    question: "Parastatals should submit their annual financial statements not later than?",
+    options: ["30th September", "31st March", "1st December", "15th August"],
+    answer: "b"
+  },
+  {
+    question: "All parastatals must maintain a ... account for government funds.",
+    options: ["Private", "Fixed deposit", "Special project", "Treasury Single Account (TSA)"],
+    answer: "d"
+  },
+  {
+    question: "Who approves the financial regulations for parastatals?",
+    options: ["The General Manager", "The Board Chairman", "The Federal Executive Council", "The Permanent Secretary"],
+    answer: "c"
+  },
+  {
+    question: "A violation of financial guidelines in a parastatal can result in?",
+    options: ["Warning only", "Promotion suspension", "Sanctions and disciplinary action", "Exemption from service"],
+    answer: "c"
+  },
+  {
+    question: "Monthly financial reports in parastatals must be submitted to?",
+    options: ["The Board of Directors only", "Ministry of Finance", "The Central Bank", "The Internal Revenue Service"],
+    answer: "b"
+  },
+  {
+    question: "Proper procurement in parastatals must follow which regulations?",
+    options: ["Staff preference policy", "Presidential directives", "Public Procurement Act", "Company's handbook"],
+    answer: "c"
+  },
+  {
+    question: "All financial transactions by parastatals must be supported by?",
+    options: ["Verbal approvals", "Receipts and vouchers", "Text messages", "Political endorsements"],
+    answer: "b"
+  },
+  { question: "What is the primary objective of financial regulations in the FCT Civil Service?", "options": ["To eliminate financial audits", "To enhance public sector accountability", "To reduce government spending", "To promote private sector investment"], answer: "b" },
+    { question: "Which body is responsible for overseeing financial regulations in the FCT Civil Service?", "options": ["Public Procurement Bureau", "Federal Ministry of Finance", "Civil Service Commission", "Office of the Auditor General"], answer: "d" },
+    { question: "What is the purpose of the Public Finance Management Act?", "options": ["To manage public sector wages", "To regulate budgetary processes", "To oversee procurement activities", "To eliminate financial records"], answer: "b" },
+    { question: "How often must financial audits be conducted in the FCT Civil Service?", "options": ["Monthly", "Quarterly", "Biannually", "Annually"], answer: "d" },
+    { question: "What is required for financial transactions in the FCT Civil Service?", "options": ["Informal agreements", "Verbal approvals", "Personal guarantees", "Written contracts"], answer: "d" },
+    { question: "Which regulation governs the procurement process within the FCT Civil Service?", "options": ["Civil Service Act", "Financial Regulations Manual", "Public Procurement Act", "Budget Management Act"], answer: "c" },
+    { question: "What is the role of the Internal Audit Unit in the FCT Civil Service?", "options": ["To manage external audits", "To handle public complaints", "To conduct financial reviews and ensure compliance", "To oversee payroll processing"], answer: "c" },
+    { question: "What should be included in a budget proposal for the FCT Civil Service?", "options": ["Projected revenues and expenditures", "Personal expenses", "General estimates", "Informal funding requests"], answer: "a" },
+    { question: "What is the significance of timely financial reporting in the FCT Civil Service?", "options": ["To avoid penalties", "To ensure transparency and accountability", "To reduce staff workloads", "To increase government spending"], answer: "b" },
+    { question: "What action should be taken if a financial irregularity is detected in the FCT Civil Service?", "options": ["Conceal it", "Report to the relevant authorities", "Discuss it informally", "Ignore it"], answer: "b" },
+    { question: "Who is responsible for approving financial expenditures in the FCT Civil Service?", "options": ["The Governor", "Department heads", "The Accountant General", "All civil servants"], answer: "c" },
+    { question: "What does the term 'budgetary control' refer to in the FCT Civil Service?", "options": ["Monitoring and regulating expenditures against the budget", "Increasing budget allocations", "Ignoring financial plans", "Eliminating budget deficits"], answer: "a" },
+    { question: "Which document is essential for ensuring compliance with financial regulations?", "options": ["Service Charter", "Employee Handbook", "Financial Regulations Manual", "Procurement Guidelines"], answer: "c" },
+    { question: "What is the primary focus of financial management training for civil servants?", "options": ["To enhance marketing skills", "To promote investment strategies", "To improve personal finance skills", "To understand and implement financial regulations"], answer: "d" },
+    { question: "What is the consequence of non-compliance with financial regulations in the FCT Civil Service?", "options": ["Enhanced reputation", "Increased funding", "Disciplinary actions and penalties", "Promotion opportunities"], answer: "c" },
+    { question: "How should financial records be maintained in the FCT Civil Service?", "options": ["In a secure and accessible manner", "In a casual and informal way", "Only when required", "Only for audits"], answer: "a" },
+    { question: "What is a key principle of financial regulations in the FCT Civil Service?", "options": ["Transparency", "Secrecy", "Inefficiency", "Disregard for rules"], answer: "a" },
+    { question: "Which of the following is a component of financial accountability?", "options": ["Maximizing personal gains", "Avoiding audits", "Responsibility for financial outcomes", "Ignoring budgetary constraints"], answer: "c" },
+    { question: "What is the purpose of the procurement process in financial regulations?", "options": ["To ensure fair and transparent acquisition of goods and services", "To increase personal profits", "To limit competition", "To reduce the quality of goods"], answer: "a" },
+    { question: "What should be done with unused budget allocations at the end of the fiscal year?", "options": ["Return to the general fund", "Reallocate to personal accounts", "Ignore them", "Carry over to the next fiscal year with approval"], answer: "d" },     
+
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

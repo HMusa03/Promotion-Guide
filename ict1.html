@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="common_services.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Information Communication and Technology (ICT 01) (100 Qs)</h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "What is the primary role of ICT units in modern public service according to the introduction?", options: ["Technical support functions", "Strategic enablers of digital transformation", "Cost reduction centers", "Administrative paperwork automation"], answer: "b"},
+            {question: "The COVID-19 pandemic highlighted the importance of ICT units in supporting:", options: ["In-person service delivery", "Remote service delivery during crises", "Reduced government transparency", "Traditional bureaucratic processes"], answer: "b"},
+            {question: "ICT units in public service have evolved from basic technical support to become:", options: ["Revenue generation centers", "Strategic enablers of digital transformation", "Policy-making bodies", "Independent regulatory agencies"], answer: "b"},
+            {question: "What fundamental relationship has been altered by the digitization of public services?", options: ["Government-private sector partnerships", "Citizen-government relationship", "International diplomatic relations", "Inter-departmental competition"], answer: "b"},
+            {question: "ICT units aim to balance technological innovation with:", options: ["Budget reduction", "Inclusive service delivery", "Employee reduction", "Centralized control"], answer: "b"},
+            {question: "The progressive digitization of public services has primarily reduced:", options: ["Government transparency", "Administrative burdens and bureaucratic inefficiencies", "Citizen engagement", "Service quality"], answer: "b"},
+            {question: "What is a key challenge ICT units face in the digital era?", options: ["Eliminating all human staff", "Ensuring digital advancements benefit all segments of society", "Reducing internet access nationwide", "Creating more bureaucratic layers"], answer: "b"},
+            {question: "Modern ICT units position themselves as essential components of:", options: ["Traditional hierarchical structures", "Modern governance structures", "Independent technical organizations", "Private sector partnerships"], answer: "b"},
+            {question: "ICT units are dedicated to creating more responsive, efficient, and _____ public services.", options: ["Profit-oriented", "Citizen-centric", "Technologically complex", "Globally competitive"], answer: "b"},
+            {question: "The digital transformation of public services requires ICT units to adapt to:", options: ["Traditional paper-based systems", "Emerging technologies and evolving citizen expectations", "Fixed operational procedures", "Isolated departmental needs"], answer: "b"},
+            {question: "ICT units serve as the technological backbone that enables governments to enhance:", options: ["Political campaigns", "Service delivery and operational efficiency", "International trade agreements", "Military operations"], answer: "b"},
+            {question: "What did the COVID-19 pandemic accelerate in public service?", options: ["Paper-based filing systems", "Digital transformation", "In-person meetings", "Traditional communication methods"], answer: "b"},
+            {question: "ICT units work to foster greater:", options: ["Bureaucratic complexity", "Transparency and accountability", "Departmental isolation", "Manual processes"], answer: "b"},
+            {question: "A key objective for ICT units is creating services that are:", options: ["Technologically advanced regardless of cost", "Citizen-centric and responsive", "Complex and specialized", "Available only to urban populations"], answer: "b"},
+            {question: "The digitization of public services has fundamentally altered the relationship between:", options: ["Government and private companies", "Citizens and their governments", "Different government departments", "National and local authorities"], answer: "b"},
+            {question: "ICT units must ensure digital advancements benefit all segments of society regardless of:", options: ["Political affiliation", "Geographical location, socioeconomic status, or digital literacy", "Age and gender only", "Employment status"], answer: "b"},
+            {question: "What has become increasingly important for extending service reach to rural areas?", options: ["Paper-based applications", "Mobile applications", "In-person office visits", "Traditional mail services"], answer: "b"},
+            {question: "ICT units aim to reduce which of the following through digital transformation?", options: ["Government transparency", "Administrative burdens and bureaucratic inefficiencies", "Citizen participation", "Service availability"], answer: "b"},
+            {question: "The strategic importance of ICT units is reflected in their:", options: ["Separation from main government operations", "Elevated positioning within organizational hierarchy", "Isolation from citizen engagement", "Focus on technical-only functions"], answer: "b"},
+            {question: "Modern ICT units are conceptualized as:", options: ["Technical support functions", "Strategic partners in public service innovation", "Cost centers", "Administrative overhead"], answer: "b"},
+            {question: "What do ICT units need to balance with technological innovation?", options: ["Budget constraints", "Inclusive service delivery", "Employee preferences", "Traditional methods"], answer: "b"},
+            {question: "The transformation led by ICT units has created new channels for:", options: ["Revenue generation", "Citizen-government interaction", "International diplomacy", "Departmental competition"], answer: "b"},
+            {question: "ICT units support digital transformation across:", options: ["Selected government functions", "All government functions", "Only citizen-facing services", "Only internal operations"], answer: "b"},
+            {question: "What type of services are ICT units dedicated to creating?", options: ["Complex and specialized services", "Responsive, efficient, and citizen-centric services", "Profit-driven services", "Globally-focused services"], answer: "b"},
+            {question: "The technological backbone of modern governance is provided by:", options: ["Private sector companies", "ICT units", "International organizations", "Traditional bureaucratic systems"], answer: "b"},
+            {question: "Which theoretical framework challenges the notion that ICTs primarily reduce bureaucratic structures?", options: ["New Public Management", "E-bureaucracy model", "Traditional bureaucracy", "Digital isolationism"], answer: "a"},
+            {question: "According to the e-bureaucracy model, ICTs enhance public service delivery by:", options: ["Supporting procedural logic through digital means", "Eliminating all bureaucratic procedures", "Reducing government transparency", "Creating completely flat organizations"], answer: "a"},
+            {question: "Digital era governance emphasizes technology-driven transformation through all EXCEPT:", options: ["Needs-based holism", "Reintegration", "Departmental silos", "Digitalization"], answer: "c"},
+            {question: "The concept of 'functional simplification and closure' suggests that ICTs enable organizations to:", options: ["Manage complexity by establishing clear protocols", "Expand bureaucratic complexity", "Reduce technological investment", "Eliminate all formal procedures"], answer: "a"},
+            {question: "Which theorist is associated with the e-bureaucratic form concept?", options: ["Cordella", "Dunleavy", "Weber", "Taylor"], answer: "a"},
+            {question: "The e-bureaucracy model argues that ICTs make bureaucratic organizations more valuable for:", options: ["Public service delivery", "Private sector partnerships", "Political campaigns", "International relations"], answer: "a"},
+            {question: "Digital era governance positions ICT units as:", options: ["Catalysts for organizational change", "Technical support functions", "Administrative overhead", "Cost centers"], answer: "a"},
+            {question: "The theoretical perspective that ICTs should be conceptualized as strategic partners rather than technical support comes from:", options: ["New Public Management ideology", "Traditional management theory", "E-bureaucracy and digital era governance frameworks", "Classical economic theory"], answer: "c"},
+            {question: "What does the functional simplification concept achieve through ICT implementation?", options: ["Reduced ambiguity and improved efficiency", "Increased ambiguity in processes", "Greater bureaucratic layers", "More complex decision-making"], answer: "a"},
+            {question: "Which component is NOT part of digital era governance?", options: ["Needs-based holism", "Reintegration", "Departmental isolation", "Digitalization"], answer: "c"},
+            {question: "The e-bureaucracy model proposes that ICTs support:", options: ["Procedural efficiency and fundamental coordination", "Elimination of all procedures", "Complete organizational autonomy", "Reduced government services"], answer: "a"},
+            {question: "According to theoretical foundations, ICT units have the capacity to reshape:", options: ["Organizational structures and service delivery models", "Only technical processes", "Only citizen engagement methods", "Only data management systems"], answer: "a"},
+            {question: "Which theory argues against the organizational configurations prescribed by New Public Management?", options: ["E-bureaucracy model", "Traditional bureaucracy", "Classical management theory", "Scientific management"], answer: "a"},
+            {question: "The digital era governance paradigm emphasizes:", options: ["Technology-driven transformation", "Technology-resistant processes", "Paper-based systems", "Traditional hierarchical structures"], answer: "a"},
+            {question: "Functional simplification through ICTs helps in:", options: ["Establishing clear protocols and standardizing processes", "Creating more complex protocols", "Increasing administrative burdens", "Reducing organizational coordination"], answer: "a"},
+            {question: "The e-bureaucratic form follows bureaucratic procedural logic but uses ICTs to sustain:", options: ["Procedural efficiency", "Traditional paper systems", "Departmental isolation", "Manual processes"], answer: "a"},
+            {question: "Which theoretical approach suggests ICT units should be strategic partners in innovation?", options: ["E-bureaucracy perspective", "Traditional management theory", "Classical economics", "Scientific management"], answer: "a"},
+            {question: "Digital era governance includes needs-based holism, which focuses on:", options: ["Integrated citizen-centered services", "Department-specific solutions", "Isolated technical solutions", "Traditional service delivery"], answer: "a"},
+            {question: "The theoretical frameworks collectively suggest that ICT implementation should focus on:", options: ["Reshaping organizational structures and service models", "Technical specifications only", "Maintaining traditional methods", "Reducing citizen interaction"], answer: "a"},
+            {question: "What does the reintegration component of digital era governance involve?", options: ["Bringing together separate functions into cohesive services", "Creating more departmental silos", "Isolving technical functions", "Reducing service options"], answer: "a"},
+            {question: "The e-bureaucracy model maintains that ICTs enhance which aspect of bureaucratic organizations?", options: ["Coordination and control functions", "Rigidity and isolation", "Departmental competition", "Service reduction"], answer: "a"},
+            {question: "Which concept describes how ICTs help manage organizational complexity?", options: ["Functional simplification and closure", "Functional expansion", "Procedural complexity", "Bureaucratic enlargement"], answer: "a"},
+            {question: "The theoretical foundations position ICT units as capable of driving:", options: ["Organizational change and innovation", "Technical maintenance only", "Traditional paperwork processes", "Isolated departmental solutions"], answer: "a"},
+            {question: "Digital era governance emphasizes digitalization as a means to:", options: ["Transform public service delivery", "Preserve traditional methods", "Reduce technological adoption", "Limit citizen access"], answer: "a"},
+            {question: "The e-bureaucracy model argues that ICTs support fundamental:", options: ["Coordination and control functions", "Departmental isolation", "Service reduction", "Traditional paperwork systems"], answer: "a"},
+            {question: "Which organizational structure for ICT units organizes personnel by specialized functions such as networking and software development?", options: ["Divisional Structure", "Functional Structure", "Matrix Structure", "Independent Service Line Structure"], answer: "b"},
+            {question: "What is a primary disadvantage of the divisional structure for ICT units?", options: ["Limited cross-functional collaboration", "Resource duplication and inconsistent standards", "Complex reporting relationships", "Lack of specialization"], answer: "b"},
+            {question: "Which structure combines functional and divisional approaches, allowing specialists to report to both functional and divisional managers?", options: ["Functional Structure", "Divisional Structure", "Matrix Structure", "Hybrid Structure"], answer: "c"},
+            {question: "In which structure does ICT operate as an autonomous unit with its own governance and leadership?", options: ["Functional Structure", "Divisional Structure", "Matrix Structure", "Independent Service Line Structure"], answer: "d"},
+            {question: "Which structure is most suitable for public organizations with multiple distinct service lines?", options: ["Functional Structure", "Divisional Structure", "Matrix Structure", "Centralized Structure"], answer: "b"},
+            {question: "What is a key advantage of the functional structure for ICT units?", options: ["Customization to divisional needs", "Deep specialization and clear career paths", "Efficient resource sharing", "Quick adaptation to changing needs"], answer: "b"},
+            {question: "Which structure is ideal for public organizations with multiple ongoing projects?", options: ["Functional Structure", "Divisional Structure", "Matrix Structure", "Independent Structure"], answer: "c"},
+            {question: "What challenge is associated with the matrix structure?", options: ["Departmental silos", "Resource duplication", "Complex reporting and potential role confusion", "Limited flexibility"], answer: "c"},
+            {question: "Which structure requires strong coordination mechanisms to ensure alignment with organizational goals?", options: ["Functional Structure", "Divisional Structure", "Independent Service Line Structure", "Centralized Structure"], answer: "c"},
+            {question: "What is the growing trend in positioning ICT units within government hierarchies?", options: ["Placing under finance departments", "Establishing as separate departments reporting to top leadership", "Keeping as technical support units", "Placing under administration departments"], answer: "b"},
+            {question: "Which structure promotes resource sharing and cross-functional learning?", options: ["Functional Structure", "Divisional Structure", "Matrix Structure", "Traditional Structure"], answer: "c"},
+            {question: "What does the elevated positioning of ICT units reflect?", options: ["Their technical complexity", "Their strategic importance in achieving governmental objectives", "Their large budgets", "Their number of staff"], answer: "b"},
+            {question: "Which structure is best for large public institutions with standardized service needs?", options: ["Divisional Structure", "Functional Structure", "Matrix Structure", "Independent Structure"], answer: "b"},
+            {question: "What is a characteristic of effective ICT governance frameworks?", options: ["Clear accountability structures", "Flexible reporting standards", "Minimal stakeholder engagement", "Informal decision-making processes"], answer: "a"},
+            {question: "Which structure typically creates dedicated IT teams for specific divisions or agencies?", options: ["Functional Structure", "Divisional Structure", "Matrix Structure", "Centralized Structure"], answer: "b"},
+            {question: "What does ICT governance ensure regarding technology investments?", options: ["They minimize staff requirements", "They align with strategic objectives", "They use the latest technologies", "They reduce citizen interaction"], answer: "b"},
+            {question: "Which structure can lead to departmental silos despite enabling deep specialization?", options: ["Divisional Structure", "Functional Structure", "Matrix Structure", "Hybrid Structure"], answer: "b"},
+            {question: "What is an advantage of the independent service line structure?", options: ["Standardized processes across organization", "Deep specialization", "Autonomy and flexibility", "Clear career paths"], answer: "c"},
+            {question: "Which structure is most appropriate for municipal governments and local authorities?", options: ["Functional Structure", "Divisional Structure", "Independent Service Line Structure", "Matrix Structure"], answer: "c"},
+            {question: "What does the organizational placement of ICT units significantly influence?", options: ["Their budget size", "Their effectiveness and strategic impact", "Their number of staff", "Their technical capabilities"], answer: "b"},
+            {question: "Which structure enables customization to specific divisional requirements?", options: ["Functional Structure", "Divisional Structure", "Centralized Structure", "Standardized Structure"], answer: "b"},
+            {question: "What is included in effective ICT governance?", options: ["Standardized processes for decision-making", "Informal policy development", "Limited performance measurement", "Minimal risk management"], answer: "a"},
+            {question: "Which structure is characterized by specialized teams operating within each functional area?", options: ["Divisional Structure", "Functional Structure", "Matrix Structure", "Independent Structure"], answer: "b"},
+            {question: "What historical placement of ICT units is changing in many governmental organizations?", options: ["Reporting directly to top leadership", "Under finance or administration departments", "As independent agencies", "Within operational departments"], answer: "b"},
+            {question: "Which structure provides the greatest autonomy for ICT units?", options: ["Functional Structure", "Divisional Structure", "Matrix Structure", "Independent Service Line Structure"], answer: "d"},
+            {question: "What does the G2C (Government-to-Citizen) services dimension focus on?", options: ["Internal government operations", "Creating user-friendly digital interfaces for citizen interactions", "International government relations", "Private sector partnerships"], answer: "b"},
+            {question: "Which feature is important for digital platforms to accommodate users with varying digital literacy?", options: ["Complex navigation", "Multi-lingual support and intuitive designs", "Technical jargon", "Advanced features only"], answer: "b"},
+            {question: "What has become particularly important for extending service reach to rural and remote areas?", options: ["Paper-based forms", "Mobile applications", "In-person offices", "Traditional mail"], answer: "b"},
+            {question: "Modern ICT units are responsible for managing enormous volumes of:", options: ["Physical documents", "Government assets", "Data generated through governmental operations", "Employee records"], answer: "c"},
+            {question: "What do Business Intelligence (BI) teams within ICT departments analyze?", options: ["Employee performance", "Data to help government agencies make better decisions", "Political trends", "International markets"], answer: "c"},
+            {question: "A fundamental responsibility of ICT units is establishing and maintaining:", options: ["Political relationships", "Legal frameworks", "Technological infrastructure", "Financial systems"], answer: "c"},
+            {question: "Who designs, builds, supports, and maintains digital networks in ICT units?", options: ["System administrators", "Security administrators", "Network administrators", "Data analysts"], answer: "c"},
+            {question: "What do system administrators ensure in ICT services?", options: ["Financial accountability", "Political compliance", "Continuous optimal performance of IT services", "Legal requirements"], answer: "c"},
+            {question: "As governments digitize services, what has become a critical function of ICT units?", options: ["Public relations", "Policy development", "Cybersecurity", "International coordination"], answer: "c"},
+            {question: "What do security administrators develop in addition to installing security solutions?", options: ["New software applications", "Financial reports", "Security policies and training documents", "Political strategies"], answer: "c"},
+            {question: "Which principle helps protect sensitive information through data minimization?", options: ["Data maximization", "Data duplication", "Data minimization principles", "Data isolation"], answer: "c"},
+            {question: "What do ICT units develop to ensure resilience of critical public services during disruptions?", options: ["New revenue streams", "Political campaigns", "Disaster recovery and business continuity plans", "International partnerships"], answer: "c"},
+            {question: "Mobile applications for rural access often incorporate what type of functionality?", options: ["Online-only features", "High-bandwidth requirements", "Offline functionality", "Complex interfaces"], answer: "c"},
+            {question: "Advanced analytics capabilities enable what type of modeling for service demand?", options: ["Predictive modeling", "Historical modeling", "Theoretical modeling", "Financial modeling"], answer: "a"},
+            {question: "What frameworks do ICT units implement for secure data sharing between agencies?", options: ["Financial frameworks", "Political frameworks", "Legal frameworks",  "Robust data governance frameworks"], answer: "d"},
+            {question: "Hybrid infrastructure models combine on-premise systems with what?", options: ["Traditional paper systems", "Private sector systems", "Cloud services", "International systems"], answer: "d"},
+            {question: "What does data governance ensure regarding data quality?", options: ["Data quantity", "Data complexity", "Data isolation", "Data quality and integrity"], answer: "d"},
+            {question: "Comprehensive security frameworks include end-to-end encryption and what else?", options: ["Simple passwords", "No authentication", "Public access", "Multi-factor authentication"], answer: "d"},
+            {question: "ICT units must continuously update their protective measures against what?", options: ["Political changes", "Budget cuts", "Staff changes", "Evolving cyber threats"], answer: "d"},
+            {question: "Personalized dashboards in digital platforms help accommodate users with:", options: ["Advanced technical skills only", "Government employees only", "Urban populations only", "Varying levels of digital literacy"], answer: "d"},
+            {question: "What do integrated online portals serve as for government services?", options: ["Multiple access points", "Employee-only access", "Limited-time access", "Single-window access points"], answer: "d"},
+            {question: "Business Intelligence teams help optimize what through data analysis?", options: ["Political strategies", "International relations", "Staff reductions", "Resource optimization"], answer: "d"},
+            {question: "Infrastructure responsibilities extend to ensuring what between disparate systems?", options: ["Separation", "Competition", "Isolation", "Interoperability"], answer: "d"},
+            {question: "What type of authentication is part of comprehensive security frameworks?", options: ["Single-factor authentication", "No authentication", "Public authentication", "Multi-factor authentication"], answer: "d"},
+            {question: "ICT units develop mechanisms for secure data sharing while maintaining:", options: ["Data duplication", "Public access", "Data manipulation", "Privacy protections"], answer: "d"}
+
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

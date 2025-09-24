@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            padding-bottom: 60px; /* Add padding to prevent footer overlap */
+            background-image: url('images/CBT_003.jpeg');
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #003366;
+            color: white;
+        }
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .slide-out-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #003366;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+        .slide-out-menu a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+        .slide-out-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+       
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .introduction {
+            margin-bottom: 20px;
+        }
+
+        .introduction h2 {
+            font-size: 24px;
+            color: #004080;
+            margin-bottom: 10px;
+        }
+
+        .introduction p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .sections {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .section {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 8px;
+            width: 10%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .section:hover {
+            background-color: #003366;
+        }
+
+    /* Mobile Compatibility Additions */
+    @media (max-width: 768px) {
+        header {
+            padding: 15px;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        header img {
+            height: 60px;
+        }
+
+        nav {
+            flex-wrap: wrap;
+            padding: 5px;
+        }
+
+        nav a {
+            padding: 8px 12px;
+            margin: 5px;
+            font-size: 16px;
+            flex: 1 1 45%;
+            text-align: center;
+        }
+
+        .container {
+            width: 95%;
+            margin: 15px auto;
+            padding: 15px;
+        }
+
+        .sections {
+            flex-direction: column;
+        }
+
+        .section {
+            width: 100%;
+            margin: 8px 0;
+            padding: 15px;
+        }
+
+        .introduction h2 {
+            font-size: 20px;
+        }
+
+        .introduction p {
+            font-size: 16px;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        header h1 {
+            font-size: 20px;
+        }
+
+        nav a {
+            flex: 1 1 100%;
+            margin: 3px 0;
+        }
+
+        .section h3 {
+            font-size: 18px;
+        }
+
+        .section p {
+            font-size: 14px;
+        }
+    }
+
+    /* Touch optimization */
+    a, .section {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Prevent horizontal overflow */
+    body {
+        overflow-x: hidden;
+    }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 25px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="menu-icon" onclick="openMenu()">&#9776;</div>
+        <div class="header-title">Promotion Guide</div>
+        <img src="images/COA.png" alt="Header Icon" style="height: 70px;" onclick="goToHome()">
+    </header>
+
+    <!-- Slide-out menu -->
+    <div id="slideOutMenu" class="slide-out-menu">
+        <span class="close-btn" onclick="closeMenu()">&times;</span>
+        <a href="coming_soon.html">Health & Human Services</a>
+    </div>
+
+<main class="container">
+    <section class="introduction">
+        <h2>Welcome to <strong>Promotion Guide,</strong> a CBT Promotion Exam Training Platform</h2>
+        <p>These are all CBT questions on the cadres under Health & Human Services for study. They are 100 questions each for easy assessibilty</p>
+    </section>
+
+    <section class="sections">
+        <div class="section" onclick="window.location.href='health1.html'">
+            <h3>Health 001</h3>
+    </div>
+     <div class="section" onclick="window.location.href='health2.html'">
+            <h3>Health 002</h3>
+        </div>
+        <div class="section" onclick="window.location.href='health3.html'">
+            <h3>Health 003</h3>
+    </div>
+     <div class="section" onclick="window.location.href='health4.html'">
+            <h3>Health 004</h3>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 HM Solutions & CO | All Rights Reserved</p>
+</footer>
+<script>
+function goToHome() {
+    window.location.href = "cbtexam.html"; // Redirect to the home page
+}
+function openMenu() {
+            document.getElementById("slideOutMenu").style.width = "250px";
+        }
+
+        function closeMenu() {
+            document.getElementById("slideOutMenu").style.width = "0";
+        }
+</script>
+
+</body>
+</html>

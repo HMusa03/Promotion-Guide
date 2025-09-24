@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civil Service Rules Overview</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #005bb5;
+            margin: 0;
+            padding: 0;
+            background-image: url('images/CBT_003.jpeg'); /* Add a CBT-related background image */
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+            display: flex;
+            flex-direction: column; /* Make the body a flex container */
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #003366;
+            color: white;
+        }
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .slide-out-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #003366;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+        .slide-out-menu a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+        .slide-out-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            flex-grow: 1; /* Allow the content to grow and push the footer down */
+        }
+        .content-section {
+            margin-bottom: 20px;
+            justify-content: left
+        }
+        .content-section h2 {
+            color: #003366;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .content-section p {
+            font-size: 18px;
+            color: #333;
+        }
+        .content-section ul {
+            font-size: 18px;
+            color: #333;
+            margin-left: 20px;
+        }
+        .content-section a {
+            color: #004080;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .content-section a:hover {
+            text-decoration: underline;
+        }
+        .file-container {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .file-container h3 {
+            color: #004080;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .file-container p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .file-container a {
+            display: inline-block;
+            background-color: #004080;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .file-container a:hover {
+            background-color: #003366;
+        }
+
+    .pdf-container {
+        display: flex;
+        height: 80vh;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .thumbnail-list {
+        width: 200px;
+        overflow-y: auto;
+        background: #f5f5f5;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .pdf-viewer {
+        flex: 1;
+        overflow-y: auto;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .thumbnail {
+        width: 100%;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .thumbnail:hover {
+        border-color: #004080;
+    }
+
+    .thumbnail.active {
+        border-color: #004080;
+        opacity: 0.8;
+    }
+        
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto; /* Push the footer to the bottom */
+        }
+        footer .container {
+            margin-bottom: 10px;
+        }
+        footer a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+        }
+        footer a:hover {
+            color: #4CAF50;
+        }
+        footer p {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #003366;
+        }
+        footer p:hover {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="menu-icon" onclick="openMenu()">&#9776;</div>
+        <div class="header-title">Public Service Rules (PSR)</div>
+        <img src="images/COA.png" alt="Header Icon" style="height: 70px;" onclick="goToHome()"> <!-- Replace with your icon -->
+    </header>
+    
+    <!-- Slide-out menu -->
+    <div id="slideOutMenu" class="slide-out-menu">
+        <span class="close-btn" onclick="closeMenu()">&times;</span>
+        <a href="PSR.html">Login to take the Exam</a>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <h2>Introduction:</h2>
+            <p>
+                The <strong>2021 Federal Public Service Rules (PSR)</strong> serve as the primary regulatory framework for the administration and management of the Nigerian Public Service. These rules establish the guidelines governing the conduct, rights, responsibilities, and procedures for civil servants in federal ministries, departments, and agencies (MDAs).
+            <p>
+                The <strong>PSR</strong> applies to all federal public officers, including those in <strong>core civil service, paramilitary agencies, and public corporations,</strong> unless otherwise stated. The rules are periodically reviewed to reflect emerging administrative trends, technological advancements, and global best practices.
+            </p>
+            <p>
+                The <strong>2021 revision</strong> came as a response to challenges in governance and administration, ensuring that public service processes align with modern realities, particularly in <strong>recruitment, discipline, career progression, rewards, and digital transformation.</strong>
+            </p>
+        </div>
+            <div class="content-section">
+            <h2>
+                Chapter-by-Chapter Summary
+            </h2>
+            <h3>Chapter 1: General Introduction</h3>
+            <ul>
+                <li>Establishes the authority and scope of the <strong>PSR.</strong></li>
+                <li>Defines categories of public officers affected by the rules.</li>
+                <li>Clarifies the process for periodic reviews and amendments of the <strong>PSR.</strong></li>
+                <li>Introduces the concept of digital record-keeping for improved efficiency in service administration.</li>
+            </ul>
+            <h3>Chapter 2: Appointments and Leaving the Service</h3>
+            <ul>
+                <li>Details procedures for <strong>recruitment, confirmation, promotion, and termination</strong> of employment.</li>
+                <li>Defines eligibility criteria for various positions and the conditions for appointments on <strong>contract, probation, or transfer of service.</strong></li>
+                <li>Specifies age limits and tenure requirements for retirement, voluntary exit, and mandatory disengagement.</li>
+                <li>Introduces provisions for employment of specialized personnel on contract, provided such expertise is unavailable within the civil service.</li>
+            </ul>
+            <h3>Chapter 3: Discipline</h3>
+            <ul>
+                <li>Outlines the code of conduct for public servants, specifying <strong>acceptable behavior, ethical standards, and prohibited activities.</strong></li>
+                <li>Defines disciplinary actions, including <strong>warnings, suspensions, demotions, and dismissals</strong> for infractions such as <strong>corruption, negligence, absenteeism, and insubordination.</strong></li>
+                <li>Introduces <strong>administrative tribunals</strong> for handling serious disciplinary cases and ensuring fair hearings.</li>
+                <li>Strengthens penalties for offenses like <strong>sexual harassment, fraud, abuse of office, and unauthorized disclosure of official secrets.</strong></li>
+            </ul>
+            <h3>Chapter 4: Emoluments and Increments</h3>
+            <ul>
+                <li>Specifies <string>salary structures, allowances, and bonuses</string> based on rank and position.</li>
+                <li>Provides guidelines for periodic salary increments based on performance, years of service, and promotions.</li>
+                <li>Clarifies entitlement to benefits such as <strong>housing, transport, meal subsidies, and hazard allowances.</strong></li>
+            </ul>
+            <h3>Chapter 5: Leave of Absence</h3>
+            <ul>
+                <li>Defines different types of leave, including:</li>
+                    <ul>
+                    <li><strong>Annual leave</strong> (mandatory and regulated based on years of service).</li>
+                    <li><strong>Sick leave</strong> (with medical certification).</li>
+                    <li><strong>Maternity and paternity leave</strong> (with extended provisions for nursing mothers).</li>
+                    <li><strong>Study leave</strong> (with or without pay, based on service requirements).</li>
+                    <li><strong>Casual leave</strong> (short-term leave for emergencies or personal matters).</li>
+                </ul>
+                    <li>Clarifies the process for leave approval, extension, and deferral.</li>
+            </ul>
+            <h3>Chapter 6: Passages and Transport Entitlements</h3>
+            <ul>
+                <li>Provides guidelines for official travel arrangements, including <strong>domestic and international postings.</strong></li>
+                <li>Specifies transportation allowances, relocation benefits, and reimbursement processes.</li>
+                <li>Defines conditions under which public officers are entitled to official vehicles and travel benefits.</li>
+            </ul>
+            <h3>Chapter 7: Medical and Dental Procedures</h3>
+            <ul>
+                <li>Defines healthcare entitlements for public servants, including access to <strong>government-approved hospitals and health insurance schemes.</strong></li>
+                <li>Stipulates the categories of treatments covered under government-sponsored medical care.</li>
+                <li>Addresses the process for medical evacuations in cases requiring advanced healthcare services.</li>
+            </ul>
+            <h3>Chapter 8: Free Medical Services</h3>
+            <ul>
+                <li>Identifies officers eligible for <strong>fully covered medical treatments</strong> under government policies.</li> 
+                <li>Specifies medical conditions and treatments not covered under free services.</li>
+                <li>Introduces provisions for workplace health programs to ensure employee well-being.</li>
+            </ul>
+            <h3>Chapter 9: Ocupational Health Services</h3>
+            <ul>
+                <li>Establishes workplace safety policies, ensuring <strong>a healthy work environment, accident prevention, and hazard control measures.</strong></li>
+                <li>Provides guidelines for handling workplace injuries, compensation claims, and medical leave due to occupational hazards.</li>
+            </ul>
+            <h3>Chapter 10: Petitions and Appeals</h3>
+            <ul>
+                <li>Outlines procedures for public servants to seek redress against <strong>wrongful dismissal, unfair treatment, or administrative injustice.</strong></li>
+                <li>Defines the steps involved in submitting formal complaints and escalation channels up to the <strong>Public Service Commission.</strong></li>
+                <li>Ensures protection for whistleblowers reporting unethical practices within government agencies.</li>
+            </ul>
+            <h3>Chapter 11: Reward for Outstanding Work</h3>
+            <ul>
+                <li>
+                    Establishes incentive schemes to <strong>motivate high-performing officers</strong> through:
+                    <ul>
+                        <li>Promotions based on merit.</li>
+                        <li>Financial rewards and commendations.</li>
+                        <li>Recognition awards for <strong>innovation and exceptional service delivery.</strong></li>
+                    </ul>
+                </li>
+            </ul>
+            <h3>Chapter 12: Training and Development</h3>
+            <ul>
+                <li>Highlights the importance of <strong>continuous professional development</strong> for career progression.</li>
+                <li>Encourages public servants to participate in <strong>workshops, seminars, and government-sponsored training programs.</strong></li>
+                <li>Establishes criteria for sponsoring officers for <strong>higher education and specialized courses.</strong></li>
+            </ul>
+            <h3>Chapter 13: Examinations</h3>
+            <ul>
+                <li>Details the mandatory civil service examinations required for promotions and professional growth.</li>
+                <li>Introduces <strong>computer-based testing (CBT)</strong> for efficiency and transparency in assessment processes.</li>
+            </ul>
+            <h3>Chapter 14: Records and Returns</h3>
+            <ul>
+                <li>Specifies procedures for maintaining and updating <strong>staff records, service files, and performance evaluations.</strong></li>
+                <li>Emphasizes the transition from paper-based documentation to <strong>digital record management systems.</strong></li>
+            </ul>
+            <h3>Chapter 15: Conduct and Ethics</h3>
+            <ul>
+                <li>Reinforces ethical principles such as <strong>integrity, accountability, impartiality, and patriotism.</strong></li>
+                <li>Prohibits engagement in <strong>political activities, conflict of interest, and misuse of government resources.</strong></li>
+                <li>Encourages transparency in procurement, budgeting, and public financial management.</li>
+            </ul>
+            <h3>Chapter 16: Miscellaneous Provisions</h3>
+            <ul>
+                <li>Covers additional administrative matters not addressed in previous chapters.</li>
+                <li>Provides guidance on <strong>inter-agency collaborations, public service restructuring, and technological innovations.</strong></li>
+            </ul>
+            <h3>Chapter 17: Interpretations and Definitions</h3>
+            <ul>
+                <li>Defines key terms and phrases used throughout the <strong>PSR</strong> for uniform application across government agencies.</li>
+            </ul>
+        </div>
+        <div class="content-section">
+            <h2>Overview of Civil Service Rules in FCT</h2>
+            <p>
+                The Nigerian civil service is the backbone of government administration in the Federal Capital Territory (FCT), influencing everything from policy implementation and service delivery to infrastructural development and public accountability. In the FCT as in the rest of Nigeria the civil service is composed of career bureaucrats and a smaller number of political appointees who work within various ministries, departments, and agencies. These civil servants ensure that government policies, such as those governing education, health, transportation, and urban development, are translated into on-the-ground programs that directly affect the lives of FCT residents.</p>
+            </p>
+            <p>Below is an explicit, integrated overview of how the civil service affects the FCT:
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2>1. Institutional Structure and Administration</h2>
+            <h3>i. FCT Administration and Its Secretariats</h3>
+            <p>
+                In 2004 the Ministry of the Federal Capital Territory (MFCT) was replaced by the Federal Capital Territory Administration (FCTA). The FCTA is headed by a minister (appointed by the president) and a permanent secretary (a career civil servant), with various secretariats managing key portfolios such as education, transport, health, agriculture, and social development. These secretariats—and the agencies and boards they oversee—are staffed predominantly by civil servants recruited through national processes and, in many cases, regulated by the Federal Civil Service Commission (FCSC) of Nigeria. The FCTA’s organizational structure is designed to ensure that public services (e.g. municipal management via the Abuja Metropolitan Management Council) are delivered efficiently throughout the capital.
+            </p>
+            
+            <h3>ii. Recruitment, Appointments, and Promotions</h3>
+            <p>
+                At the national level, the Federal Civil Service Commission (Nigeria) oversees recruitment, appointments, transfers, promotions, and disciplinary actions for federal civil servants. In the FCT, these functions directly impact the quality and composition of the workforce managing critical sectors. Reforms and studies have identified challenges—such as reliance on informal recruitment channels, pressures arising from a long military era legacy, and the effects of the federal character principle—that affect not only overall recruitment in Nigeria but also the FCT. These issues may lead to staffing inefficiencies or the appointment of individuals based on informal networks rather than strict merit criteria.
+            </p>
+            <h2>2. Impact on Service Delivery and Policy Implementation</h2>
+            <h3>i. Translating Policy into Practice</h3>
+            <p>
+                Civil servants in the FCT are charged with implementing government policies that have wide-ranging implications. For example, recent initiatives announced by the FCT Education Secretariat include the upward review of school feeding funds, renovation of school facilities, and the upgrading of civil service grade levels for principals in select schools. These measures are implemented by civil servants who manage budgets, oversee construction projects, and supervise day-to-day operations. The efficiency and accountability of these civil servants ensure that policy objectives—such as improved learning environments and enhanced infrastructural services—are met.
+            </p>
+            <h3>ii. Data Management and Monitoring</h3>
+            <p>
+                Modern public administration increasingly depends on data for planning and evaluation. The National Education Management Information System (NEMIS) and other similar frameworks are integral to the civil service. In the FCT, civil servants collect, manage, and report data on key performance indicators from schools, health centers, and other public facilities. This information not only guides decision-making but also helps in monitoring service delivery and maintaining transparency and accountability at all levels of government.
+            </p>
+            <h2>3. Reforms, Challenges, and the Way Forward</h2>
+            <h3>i. National Reforms and Their Local Effects</h3>
+            <p>
+                Over the decades, Nigerian civil service reforms have aimed to bolster merit-based recruitment, promote accountability, and enhance service delivery. Reforms initiated during military and democratic eras—such as the civil service reform decrees of the 1980s and subsequent reviews by panels and commissions—have reshaped the administrative landscape. In the FCT, these reforms translate into more standardized procedures for recruitment, clearer promotion pathways, and better disciplinary mechanisms, all intended to create a professional and efficient bureaucracy that meets the specific needs of the capital territory.
+            </p>
+            <h3>ii. Persistent Challenges</h3>
+            <p>
+                Despite reform efforts, the FCT civil service faces several persistent challenges:
+            </p>
+           <ul>
+                <li><strong>Recruitment and Retention: </strong> <br> Informal recruitment practices and excessive reliance on personal connections continue to affect the quality of new appointments. These issues are compounded by the legacy of past military eras and the federal character principle, sometimes undermining merit-based selection.</li>
+                <p><li><strong>Political Interference:</strong> <br> While the system is designed to be apolitical, political pressures occasionally influence appointments and promotions, leading to inefficiencies and occasional demotivation among career civil servants.</li></p>
+                <p><li><strong>Resource Constraints and Training:</strong> <br> Although there is a recognized need for ongoing capacity building—especially in areas such as modern data management and IT—the available training and remuneration are sometimes seen as insufficient. This can hamper the ability of FCT agencies to compete for and retain highly qualified professionals.</li></p>
+            </ul>
+            <h3>iii. Enhanced Professionalism and Career Advancement</h3>
+            <p>
+                To improve efficiency and accountability in the FCT civil service, several strategies are recommended:
+            </p>
+            <ul>
+                <p><li><strong>Strengthening Merit-Based Recruitment: </strong> <br> Enhanced transparency in recruitment processes and increased reliance on formal channels (e.g., advertisements and professional organizations) can ensure that the most qualified candidates are selected.</li></p>
+                <p><li><strong>Capacity Building and Modernization:</strong> <br> Investing in regular training programs, particularly in IT and data management, will empower civil servants to use modern tools in planning and service delivery.</li></p>
+                <p><li><strong>Enhanced Coordination:</strong> <br> Given the overlapping functions among various agencies (FCTA, FCSC, and others), better inter-agency coordination can reduce bureaucracy and improve overall administrative responsiveness.</li></p>
+                <p><li><strong>Improved Remuneration and Career Development:</strong> <br> Addressing pay disparities and providing clearer promotion pathways can help retain talent and motivate civil servants to perform at their best.</li></p>
+            </ul>
+        </div>
+        <div class="content-section">
+            <h2>Conclusion</h2>
+            <p>
+                <strong>The 2021 Federal Public Service Rules (PSR)</strong> play a vital role in strengthening the efficiency, accountability, and professionalism of the Nigerian public sector. These updated rules introduce <strong>modern governance principles, digital transformation, and stricter disciplinary measures</strong> to enhance service delivery.
+            </p>
+            <p>
+                By adhering to the provisions outlined in the PSR, public officers can ensure ethical administration, career advancement, and improved citizen engagement. The document remains a cornerstone for achieving a <strong>transparent, responsive, and performance-driven civil service in Nigeria.</strong>
+            </p>
+            <p>
+                In the Federal Capital Territory, the civil service is a critical instrument of governance and development. It not only executes policies formulated at the national level but also directly influences the quality of public services—from education and infrastructure to health and municipal management. While reforms have been implemented over the years to foster a merit-based, accountable, and modern civil service, challenges remain. Persistent issues such as informal recruitment practices, political interference, and inadequate capacity building continue to affect the system. Addressing these challenges through enhanced transparency, modern training, and better coordination is essential for the FCT civil service to meet the growing demands of an evolving urban environment and to contribute effectively to national development.
+            </p>
+            <p>
+                This explicit synthesis draws on multiple sources that detail civil service structures, recruitment challenges, reform histories, and current initiatives in the FCT and across Nigeria.
+            </p>
+        </div>
+
+        <p>
+            <strong>Find below some files in PDF, TXT as well Audio format containing sample Promotion Exam Revision questions and answer for study. You will also find sample CBT questions and answers that you can study. When you are done studying, you can go ahead take the test.</strong>
+
+        </p>
+
+<!-- Modified PDF Container Section -->
+<div class="content-section">
+    <h2>Study Materials</h2>
+    <div class="pdf-container">
+        
+        <!-- Main PDF Viewer -->
+        <div class="pdf-viewer">
+            <embed id="mainPdfViewer" src="STUDY MATERIALS/PSR.pdf" 
+                   type="application/pdf" width="100%" height="100%">
+        </div>
+    </div>
+    <div class="pdf-container">
+        
+        <!-- Main PDF Viewer -->
+        <div class="pdf-viewer">
+            <embed id="mainPdfViewer" src="STUDY MATERIALS/CIVIL_SERVICE_RULES.pdf" 
+                   type="application/pdf" width="100%" height="100%">
+        </div>
+    </div>
+    <div class="pdf-container">
+        
+        <!-- Main PDF Viewer -->
+        <div class="pdf-viewer">
+            <embed id="mainPdfViewer" src="STUDY MATERIALS/CIVIL_SERVICE_RULES CBT.pdf" 
+                   type="application/pdf" width="100%" height="100%">
+        </div>
+    </div>
+</div>
+        <!-- Audio Files Container -->
+        <div class="content-section">
+            <h2>Reach-out to the developer</h2>
+            <div class="file-container">
+                <p>
+                    <strong>Drop a message below</strong>
+                </p>
+                <p><a href="https://wa.me/+2348053579779" target="_blank">Click Me!</a></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 HM Solutions LTD. All rights reserved.</p>
+        </div>
+        <div>
+            <a href="https://web.facebook.com/HMTelecoms" target="_blank">Facebook</a>
+            <a href="https://x.com/HMusa3" target="_blank">Twitter</a>
+            <a href="https://www.instagram.com/hmtelecoms0/" target="_blank">Instagram</a>
+            <a href="https://wa.me/+2348053579779" target="_blank">WhatsApp</a>
+            <a href="https://www.linkedin.com/in/hussaini-musa-68614283/" target="_blank">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script>
+        function goToHome() {
+            window.location.href = "home.html"; // Redirect to the home page
+        }
+
+        function openMenu() {
+            document.getElementById("slideOutMenu").style.width = "250px";
+        }
+
+        function closeMenu() {
+            document.getElementById("slideOutMenu").style.width = "0";
+        }
+
+        // Add this JavaScript
+    function loadPDF(index) {
+        const pdfs = [
+            "STUDY MATERIALS/CIVIL_SERVICE_RULES.pdf",
+            "STUDY MATERIALS/CIVIL_SERVICE_RULES_CBT.pdf"
+        ];
+        
+        // Update main viewer
+        document.getElementById('mainPdfViewer').src = pdfs[index];
+        
+        // Update thumbnail styling
+        document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+            i === index ? 
+                thumb.classList.add('active') :
+                thumb.classList.remove('active');
+        });
+    }
+
+    // Synchronize scroll positions
+    const thumbnailContainer = document.getElementById('thumbnailContainer');
+    const pdfViewer = document.querySelector('.pdf-viewer');
+
+    thumbnailContainer.addEventListener('scroll', () => {
+        pdfViewer.scrollTop = thumbnailContainer.scrollTop;
+    });
+
+    pdfViewer.addEventListener('scroll', () => {
+        thumbnailContainer.scrollTop = pdfViewer.scrollTop;
+    });
+
+    // Initialize first PDF
+    loadPDF(0);
+    </script>
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Promotion Exam</title>
+    <link rel="icon" type="image/png" href="images/fcta_cbt_icon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            
+        }
+
+        header img {
+            height: 100px;            
+        }
+
+        nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+/* Score Pop-up Styles */
+.score-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 500px;
+    padding: 30px;
+    background: #f0faff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    z-index: 1000;
+    text-align: center;
+    border: 3px solid #004080;
+    animation: popIn 0.3s ease-out;
+}
+
+.score-popup h2 {
+    color: #004080;
+    font-size: 28px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.score-popup p {
+    font-size: 20px;
+    margin: 15px 0;
+    color: #333;
+    font-weight: 600;
+}
+
+.score-popup .percentage {
+    font-size: 42px;
+    font-weight: 800;
+    color: #004080;
+    margin: 20px 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.score-popup .result-message {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.pass {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 2px solid #2e7d32;
+}
+
+.fail {
+    background: #ffebee;
+    color: #c62828;
+    border: 2px solid #c62828;
+}
+
+#close-popup {
+    background: #004080;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+#close-popup:hover {
+    background: #003366;
+    transform: scale(1.05);
+}
+
+/* Animation */
+@keyframes popIn {
+    from {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+
+.failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="images/FCTA _LOGO.jpg" alt="Logo" id="logo">
+        <nav><a href="home.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Common Services (100 Qs)</h1>
+        <h3 id="timer">Time Remaining: 50:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="container">
+        <div id="question-container" class="question">
+            <p id="question-text"></p>
+            <div id="options-container"></div>
+        </div>
+    
+        <div class="navigation-buttons">
+            <button id="previous-button" onclick="previousQuestion()">Previous</button>
+            <button id="next-button" onclick="nextQuestion()">Next</button>
+            <button id="submit-button" onclick="submitExam()">Finish/Submit</button>
+        </div>
+    
+        <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+    </div>
+    
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Correct Answers: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Incorrect Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2025 HM Solutions LTD | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+        { question: "What is the primary role of Common Services in the FCT Civil Service?", "options": ["Revenue collection", "Administrative and support services", "Public relations", "Law enforcement"], answer: "b" },
+        { question: "Which department handles recruitment and promotions in the FCT Civil Service?", "options": ["Public Relations Unit", "Procurement Unit", "Human Resources Department", "Health Secretariat"], answer: "c" },
+        { question: "What is the purpose of training and development in the civil service?", "options": ["To replace unqualified employees", "To increase staff numbers", "To reduce salaries", "To improve staff productivity and service delivery"], answer: "d" },
+        { question: "Which system is used to manage government salaries and personnel records?", "options": ["IPPIS", "TSA", "BVN", "ICT"], answer: "a" },
+        { question: "How does e-governance improve service delivery in the civil service?", "options": ["By increasing paperwork", "By ensuring efficiency and transparency", "By creating more manual processes", "By limiting access to information"], answer: "b" },
+        { question: "What is a key function of the Procurement Unit under Common Services?", "options": ["Managing government contracts and purchases", "Handling public complaints", "Organizing staff training", "Collecting taxes"], answer: "a" },
+        { question: "Why is prompt salary payment important in the civil service?", "options": ["To reduce government spending", "To encourage early retirement", "To ensure staff motivation and productivity", "To limit recruitment"], answer: "c" },
+        { question: "What is a major challenge faced by Common Services in the FCT Civil Service?", "options": ["Overstaffing", "Political interference", "Excess funding", "Too many training programs"], answer: "b" },
+        { question: "What is the function of facility management under Common Services?", "options": ["Managing government infrastructure and maintenance recruitment", "Conducting staff", "Promoting tourism", "Organizing payroll payments"], answer: "a" },
+        { question: "What is a major benefit of digital record-keeping in civil service?", "options": ["Increased paperwork", "Higher error rates", "Slower processing times", "Improved accessibility and efficiency"], answer: "d" },
+        { question: "What document provides guidelines for the operations of Common Services?", "options": ["Procurement Act", "Civil Service Handbook", "Nigerian Constitution", "FCTA Administrative Guidelines"], answer: "b" },
+        { question: "What does the ICT Unit under Common Services oversee?", "options": ["Infrastructure development", "Payroll processing", "Digital transformation and e-governance", "Tax assessment"], answer: "c" },
+        { question: "What is the purpose of the Staff Audit exercise?", "options": ["To verify and update workforce data", "To reduce government workers", "To increase salaries", "To recruit new staff"], answer: "a" },
+        { question: "What is the impact of automation in administrative processes?", "options": ["Reducing manual errors and improving efficiency", "Increasing bureaucracy", "Slowing down service delivery", "Eliminating all jobs"], answer: "a" },
+        { question: "What role does Common Services play in policy implementation?", "options": ["By drafting laws", "By handling", "By supporting staff training and regulatory enforcement procurement alone", "By hiring private contractors"], answer: "c" },
+        { question: "What is the main purpose of payroll audits?", "options": ["To remove senior officers", "To prevent payroll fraud and verify staff records", "To increase salaries", "To reduce work hours"], answer: "b" },
+        { question: "Why is a code of conduct important in the civil service?", "options": ["To increase salary structures", "To promote favoritism", "To reduce workload", "To ensure ethical and professional behavior among staff"], answer: "d" },
+        { question: "What role does the Public Service Commission play in civil service employment?", "options": ["Conducting elections", "Running government hospitals", "Recruiting and promoting staff", "Collecting tax revenue"], answer: "c" },
+        { question: "What is the major function of the Employee Welfare Unit?", "options": ["Ensuring staff well-being and benefits", "Tax collection", "Reducing government spending", "Promoting businesses"], answer: "a" },
+        { question: "What is the main purpose of Common Services in the civil service?", "options": ["To improve efficiency and coordination in government operations", "To increase the number of civil servants", "To promote tourism", "To replace manual labor with AI"], answer: "a" },
+        { question: "What is the primary goal of Common Services in the FCT Civil Service?", "options": ["To regulate the private sector", "To conduct elections", "To manage administrative and support functions", "To handle law enforcement"], answer: "c" },
+        { question: "Which unit under Common Services is responsible for staff welfare?", "options": ["Public Relations Unit", "Human Resources Department", "Procurement Unit", "Facility Management Unit"], answer: "b" },
+        { question: "What is the main purpose of pension deductions from salaries?", "options": ["To reduce government spending", "To increase tax revenue", "To fund government projects", "To ensure financial security after retirement"], answer: "d" },
+        { question: "How does training benefit civil servants?", "options": ["Increases their workload", "Reduces salary payments", "Enhances skills and improves efficiency", "Prevents job promotions"], answer: "c" },
+        { question: "What is the role of payroll management under Common Services?", "options": ["Processing staff salaries and allowances", "Conducting recruitment", "Handling tax collection", "Organizing training programs"], answer: "a" },
+        { question: "Which department is responsible for staff disciplinary actions?", "options": ["Public Service Commission", "Human Resources Department", "Procurement Unit", "ICT Unit"], answer: "b" },
+        { question: "What is a key challenge faced by Common Services in FCT Civil Service?", "options": ["Too much funding from the government", "Excessive foreign investment", "Lack of interest in public service", "Overdependence on manual records"], answer: "d" },
+        { question: "Why is digital transformation important in the civil service?", "options": ["Slows down operations", "Increases bureaucracy", "Reduces employment opportunities", "Reduces paperwork and enhances service delivery"], answer: "d" },
+        { question: "What is the purpose of performance appraisal in civil service?", "options": ["To identify training needs and promote efficiency", "To increase salaries for all staff", "To eliminate low-performing workers", "To limit job promotions"], answer: "a" },
+        { question: "How does Common Services ensure compliance with civil service rules?", "options": ["Increasing staff salaries automatically", "Ignoring employee behavior", "Conducting audits and staff monitoring", "Allowing staff to set their own work schedules"], answer: "c" },
+        { question: "What is a major responsibility of the Procurement Unit?", "options": ["Recruiting civil servants", "Ensuring proper procurement processes for government contracts", "Managing payroll activities", "Conducting facility repairs"], answer: "b" },
+        { question: "Why is pension administration important in the civil service?", "options": ["To reduce employee salaries", "To increase tax collection", "To support retired employees financially", "To limit recruitment"], answer: "c" },
+        { question: "What does staff verification exercise help to achieve?", "options": ["Identifies ghost workers and eliminates payroll fraud", "Reduces staff salaries", "Expands government workforce", "Increases paperwork"], answer: "a" },
+        { question: "Which unit under Common Services is responsible for vehicle maintenance?", "options": ["Payroll Department", "Procurement Unit", "ICT Unit", "Transport Unit"], answer: "d" },
+        { question: "How does Common Services contribute to policy implementation?", "options": ["By increasing the number of civil servants", "By drafting laws directly", "Through proper execution of administrative functions", "By replacing manual processes with AI"], answer: "c" },
+        { question: "What is the function of the Records Management Unit?", "options": ["Managing and maintaining staff records", "Handling staff promotions", "Conducting financial audits", "Supervising procurement processes"], answer: "a" },
+        { question: "Why is workplace ethics important in the civil service?", "options": ["Promotes professionalism and accountability", "Increases job complexity", "Eliminates employee training programs", "Encourages favoritism"], answer: "a" },
+        { question: "What is the main objective of performance evaluation?", "options": ["To force early retirement", "To assess employees’ work efficiency and determine promotions", "To increase salaries for everyone", "To discourage professional growth"], answer: "b" },
+        { question: "How does Common Services help in capacity building?", "options": ["By avoiding technology use", "By reducing the workforce", "By limiting promotions", "By organizing staff training and development programs"], answer: "d" },
+        { question: "What is the key purpose of Common Services in public administration?", "options": ["To eliminate civil service jobs", "To reduce government budgets", "To ensure efficiency, accountability, and workforce management", "To increase private-sector employment"], answer: "c" },
+        { question: "What is the role of the Facility Management Unit under Common Services?", "options": ["Overseeing government buildings and infrastructure maintenance", "Managing recruitment processes", "Conducting performance evaluations", "Handling pension disbursements"], answer: "a" },
+        { question: "How does the ICT Unit improve efficiency in civil service?", "options": ["By automating processes and improving digital records management", "By replacing all civil servants with machines", "By stopping the use of technology", "By slowing down workflow"], answer: "a" },
+        { question: "What is the key benefit of the biometric attendance system in civil service?", "options": ["Reduces government expenditure", "Prevents absenteeism and ghost workers", "Increases staff salaries", "Eliminates job recruitment"], answer: "b" },
+        { question: "What does the Procurement Unit do in the FCT Civil Service?", "options": ["Manages public complaints", "Ensures transparent purchasing of goods and services", "Conducts staff promotions", "Handles media relations"], answer: "b" },
+        { question: "What is a primary function of the Legal Unit under Common Services?", "options": ["Manages financial transactions", "Conducts recruitment processes", "Provides legal advice and ensures compliance with regulations", "Organizes staff training"], answer: "c" },
+        { question: "How does proper records management benefit the civil service?", "options": ["Leads to poor data storage", "Slows down decision-making", "Increases paperwork unnecessarily", "Ensures quick retrieval of information and reduces errors"], answer: "d" },
+        { question: "What does payroll fraud refer to?", "options": ["The illegal manipulation of salary payments", "A legitimate salary increase", "Fair promotion based on performance", "Official budget allocations"], answer: "a" },
+        { question: "What is the significance of e-government services in civil service?", "options": ["Reduces public service effectiveness", "Replaces civil servants", "Increases corruption in government", "Enhances transparency and accessibility of services"], answer: "d" },
+        { question: "How does performance monitoring improve productivity in civil service?", "options": ["By tracking staff efficiency and identifying areas for improvement", "By reducing employee wages", "By discouraging hard work", "By limiting career progression"], answer: "a" },
+        { question: "What is the role of the Public Relations Unit under Common Services?", "options": ["Manages staff recruitment", "Handles communication and public engagement for government agencies", "Conducts internal audits", "Organizes procurement activities"], answer: "b" },
+        { question: "What is a major challenge in implementing digital services in civil service?", "options": ["Low cost of internet services", "Too many skilled workers", "High literacy levels among staff", "Inadequate ICT infrastructure and resistance to change"], answer: "d" },
+        { question: "What is the major goal of employee performance evaluation?", "options": ["To force retirement", "To increase employee workload", "To assess efficiency and recommend improvements", "To discourage staff promotions"], answer: "c" },
+        { question: "How does training impact employee effectiveness in civil service?", "options": ["Limits employee knowledge", "Reduces government funding", "Encourages job redundancy", "Improves skills and enhances service delivery"], answer: "d" },
+        { question: "What is the main function of Common Services in FCTA?", "options": ["Overseeing electoral processes", "Regulating trade and investment", "Tax collection", "Administrative support and workforce management"], answer: "d" },
+        { question: "How does payroll automation improve salary management?", "options": ["Reduces errors and enhances timely salary payments", "Increases corruption in the system", "Eliminates all human involvement", "Reduces salaries across all departments"], answer: "a" },
+        { question: "Why is pension administration essential for retired civil servants?", "options": ["Reduces workforce engagement", "Increases government revenue", "Provides financial security and ensures their well-being", "Prevents employees from working longer"], answer: "c" },
+        { question: "What is the purpose of conducting a staff verification exercise?", "options": ["To recruit more civil servants unnecessarily", "To increase salaries for all workers", "To encourage absenteeism", "To identify ghost workers and prevent fraud"], answer: "d" },
+        { question: "What is a major role of the Security Unit under Common Services?", "options": ["Manages pension funds", "Handles staff promotions", "Conducts public audits", "Ensures safety and security of government offices and properties"], answer: "d" },
+        { question: "How does the transportation unit contribute to Common Services?", "options": ["Oversees financial management", "Conducts staff training", "Maintains government vehicles and ensures transportation logistics", "Manages ICT infrastructure"], answer: "c" },
+        { question: "What is one way Common Services ensures a productive civil service workforce?", "options": ["Through staff training, welfare, and performance monitoring", "By reducing staff salaries", "By limiting job promotions", "By ignoring workplace discipline"], answer: "a" },
+        { question: "What is the primary role of the Pension Administration Unit in the FCT Civil Service?", "options": ["Managing retirement benefits and pension payments", "Hiring new employees", "Overseeing tax collection", "Conducting public relations"], answer: "a" },
+        { question: "How does employee welfare contribute to service efficiency?", "options": ["Increases absenteeism", "Enhances motivation and productivity", "Reduces work output", "Discourages workplace performance"], answer: "b" },
+        { question: "What is the function of the Audit Unit under Common Services?", "options": ["Conducting staff recruitment", "Ensuring financial accountability and compliance", "Managing transportation services", "Handling customer complaints"], answer: "b" },
+        { question: "What is a key responsibility of the Legal Unit in Common Services?", "options": ["Conducting employment verification", "Managing payroll and pension", "Overseeing tourism development", "Providing legal guidance and ensuring regulatory compliance"], answer: "d" },
+        { question: "How does ICT improve data management in civil service?", "options": ["Eliminates the need for administrative personnel", "Increases manual record-keeping", "Discourages digitalization of government services", "Facilitates secure storage, retrieval, and processing of information"], answer: "d" },
+        { question: "Why is staff performance appraisal necessary?", "options": ["Increases employment restrictions", "Ensures automatic salary deductions", "Helps in evaluating efficiency and recommending promotions", "Prevents civil servants from being recognized for their work"], answer: "c" },
+        { question: "What is the main benefit of a well-structured payroll system?", "options": ["Encourages salary delays", "Reduces job opportunities", "Ensures timely and accurate salary payments", "Increases financial mismanagement"], answer: "c" },
+        { question: "Which unit is responsible for maintaining government office facilities?", "options": ["Legal Unit", "Facility Management Unit", "ICT Department", "Recruitment Department"], answer: "b" },
+        { question: "What is the impact of proper training on civil service efficiency?", "options": ["Improves staff competence and service delivery", "Reduces workforce engagement", "Encourages poor performance", "Eliminates job opportunities"], answer: "a" },
+        { question: "How does the government ensure transparency in procurement?", "options": ["By reducing tender opportunities", "By increasing bureaucracy", "By discouraging public accountability", "By implementing due process and oversight mechanisms"], answer: "d" },
+        { question: "What is the function of the Public Complaints Unit in Common Services?", "options": ["Managing ICT operations", "Overseeing pension disbursement", "Handling grievances and feedback from civil servants and the public", "Conducting internal staff recruitment"], answer: "c" },
+        { question: "Why is record-keeping important in the civil service?", "options": ["Increases paperwork without benefits", "Ensures efficient data retrieval and decision-making", "Slows down administrative processes", "Encourages data loss"], answer: "b" },
+        { question: "What is one major role of the Common Services Secretariat?", "options": ["Coordination and support of government workforce operations", "Managing public transportation services", "Overseeing electoral processes", "Regulating private sector employment"], answer: "a" },
+        { question: "What is a key feature of an effective payroll system?", "options": ["Lack of proper documentation", "Delays in salary processing", "Accuracy and transparency in salary disbursement", "Encouragement of payroll fraud"], answer: "c" },
+        { question: "How does pension administration benefit retired civil servants?", "options": ["Increases the likelihood of unpaid benefits", "Reduces access to healthcare", "Provides financial security and sustains their livelihood", "Restricts access to post-retirement support"], answer: "c" },
+        { question: "What does biometric verification help prevent in the civil service?", "options": ["Ghost workers and fraudulent salary payments", "Increase in staff benefits", "Faster recruitment of new employees", "Removal of disciplinary measures"], answer: "a" },
+        { question: "What is the importance of workplace discipline in civil service?", "options": ["Reduces staff morale", "Encourages absenteeism", "Promotes inefficiency in service delivery", "Ensures professionalism and compliance with service rules"], answer: "d" },
+        { question: "What is a key advantage of automation in civil service operations?", "options": ["Reduces manual errors and speeds up processes", "Increases paperwork", "Eliminates the need for professional training", "Slows down administrative tasks"], answer: "a" },
+        { question: "How does proper maintenance of government facilities improve service delivery?", "options": ["Discourages workforce productivity", "Leads to higher operational costs", "Ensures a conducive working environment for civil servants", "Encourages neglect of government properties"], answer: "c" },
+        { question: "What is the benefit of using an e-governance system?", "options": ["Encourages lack of accountability", "Reduces government efficiency", "Increases transparency and accessibility of public services", "Makes service delivery more difficult"], answer: "c" },
+        { question: "What is the primary purpose of staff verification exercises in the FCT Civil Service?", "options": ["To eliminate ghost workers and ensure payroll accuracy", "To delay salary payments", "To discourage staff recruitment", "To promote political appointments"], answer: "a" },
+        { question: "Which agency is responsible for enforcing civil service rules and regulations?", "options": ["National Union of Teachers", "Public Service Commission", "National Transport Agency", "Private Sector Secretariat"], answer: "b" },
+        { question: "What is the significance of performance evaluation in the civil service?", "options": ["Encourages favoritism", "Reduces productivity among workers", "Prevents promotions", "Helps in identifying areas of improvement and rewarding excellence"], answer: "d" },
+        { question: "What department oversees the implementation of employee code of conduct?", "options": ["Works and Housing Department", "Transport Department", "Human Resources Department", "Revenue Collection Unit"], answer: "c" },
+        { question: "What is the primary objective of the Staff Welfare Unit?", "options": ["To enhance employee well-being and job satisfaction", "To delay promotions", "To reduce salaries", "To promote inefficiency in service delivery"], answer: "a" },
+        { question: "Which of the following is a core function of Common Services?", "options": ["Managing private businesses", "Overseeing military operations", "Providing administrative and human resource support", "Running political campaigns"], answer: "c" },
+        { question: "How does the Common Services Secretariat improve efficiency in public service delivery?", "options": ["By discouraging training for civil servants", "By reducing government working hours", "By increasing bureaucratic processes", "By ensuring proper coordination, human resource management, and ICT integration"], answer: "d" },
+        { question: "What is the primary role of the Legal Unit in the civil service?", "options": ["Providing legal guidance and ensuring adherence to laws and policies", "Managing salary payments", "Conducting staff verification", "Handling transportation services"], answer: "a" },
+        { question: "What is the purpose of a disciplinary committee in the civil service?", "options": ["To promote favoritism in promotions", "To ensure compliance with ethical and professional standards", "To encourage lateness and absenteeism", "To prevent career growth"], answer: "b" },
+        { question: "How does capacity-building training benefit civil servants?", "options": ["Enhances knowledge, skills, and overall productivity", "Reduces efficiency in service delivery", "Prevents career progression", "Increases cases of misconduct"], answer: "a" },
+        { question: "Why is pension fund management important for retirees?", "options": ["Discourages retirement savings", "Reduces accessibility to funds", "Ensures financial security and timely payment of benefits", "Promotes irregular payment of benefits"], answer: "c" },
+        { question: "What is one major challenge of human resource management in the civil service?", "options": ["Addressing employee grievances and performance issues", "Reducing opportunities for career development", "Encouraging job insecurity", "Discouraging compliance with civil service rules"], answer: "a" },
+        { question: "How does the integration of ICT improve payroll management?", "options": ["Increases delays in salary payment", "Reduces errors and enhances efficiency in salary processing", "Complicates payroll calculations", "Makes payment records less accessible"], answer: "b" },
+        { question: "Why is it important for civil servants to undergo periodic training?", "options": ["To update their skills and adapt to changing policies", "To discourage workplace innovation", "To reduce government expenditures on human resources", "To slow down service delivery"], answer: "a" },
+        { question: "What does the Staff Records Unit primarily handle?", "options": ["Supervising public works projects", "Conducting public audits", "Managing state-owned businesses", "Documentation and management of employee records"], answer: "d" },
+        { question: "What is the role of the Procurement Unit in Common Services?", "options": ["Managing political appointments", "Overseeing staff recruitment", "Regulating private-sector businesses", "Ensuring proper acquisition of government goods and services"], answer: "d" },
+        { question: "What is a key feature of a transparent procurement process?", "options": ["Restricting access to procurement information", "Lack of public oversight", "Competitive bidding and accountability", "Encouraging favoritism in awarding contracts"], answer: "c" },
+        { question: "How does digital record-keeping enhance civil service operations?", "options": ["Ensures quick retrieval and security of information", "Reduces data accuracy", "Increases paperwork", "Limits accessibility to government documents"], answer: "a" },
+        { question: "What does the Employee Relations Unit focus on?", "options": ["Handling tourism affairs", "Managing disputes, labor relations, and staff grievances", "Managing tax collection", "Overseeing infrastructural projects"], answer: "b" },
+        { question: "Why is a structured appraisal system important in civil service?", "options": ["Encourages bias in promotions", "Reduces motivation among employees", "Discourages professional growth", "Encourages performance-based promotions and rewards"], answer: "d" }
+
+]
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 3000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+}
+
+    function startTimer() {
+        timer = setInterval(() => {
+            if (timeRemaining > 0) {
+                timeRemaining--;
+                const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+                const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+                document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+            } else {
+                clearInterval(timer);
+                submitExam();
+            }
+        }, 1000);
+    }
+
+    function nextQuestion() {
+        checkAnswer();
+        if (currentQuestion < questions.length - 1) {
+            currentQuestion++;
+            displayQuestion(currentQuestion);
+        } else {
+            alert("You are on the last question.");
+        }
+    }
+
+    function previousQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            displayQuestion(currentQuestion);
+        } else {
+            alert("You are on the first question.");
+        }
+    }
+
+    function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+    }
+}
+
+function nextQuestion() {
+        checkAnswer();
+        if (currentQuestion < questions.length - 1) {
+            currentQuestion++;
+            displayQuestion(currentQuestion);
+        } else {
+            alert("You are on the last question.");
+        }
+    }
+
+    function previousQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            displayQuestion(currentQuestion);
+        } else {
+            alert("You are on the first question.");
+        }
+    }
+
+    function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+    window.onload = function() {
+        displayQuestion(currentQuestion);
+        startTimer();
+    };
+</script>
+
+</body>
+</html>

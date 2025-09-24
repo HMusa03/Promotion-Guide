@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civil Service Rules Overview</title>
+    <link rel="icon" type="image/png" href="images/fcta_cbt_icon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #005bb5;
+            margin: 0;
+            padding: 0;
+            background-image: url('images/CBT_003.jpeg'); /* Add a CBT-related background image */
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh; /* Ensure the body takes at least the full viewport height */
+            display: flex;
+            flex-direction: column; /* Make the body a flex container */
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #003366;
+            color: white;
+        }
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .slide-out-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #003366;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+        .slide-out-menu a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+        .slide-out-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            flex-grow: 1; /* Allow the content to grow and push the footer down */
+        }
+        .content-section {
+            margin-bottom: 20px;
+            justify-content: left
+        }
+        .content-section h2 {
+            color: #003366;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .content-section p {
+            font-size: 18px;
+            color: #333;
+        }
+        .content-section ul {
+            font-size: 18px;
+            color: #333;
+            margin-left: 20px;
+        }
+        .content-section a {
+            color: #004080;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .content-section a:hover {
+            text-decoration: underline;
+        }
+        .file-container {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .file-container h3 {
+            color: #004080;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .file-container p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .file-container a {
+            display: inline-block;
+            background-color: #004080;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .file-container a:hover {
+            background-color: #003366;
+        }
+
+    .pdf-container {
+        display: flex;
+        height: 80vh;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .thumbnail-list {
+        width: 200px;
+        overflow-y: auto;
+        background: #f5f5f5;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .pdf-viewer {
+        flex: 1;
+        overflow-y: auto;
+        background: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .thumbnail {
+        width: 100%;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .thumbnail:hover {
+        border-color: #004080;
+    }
+
+    .thumbnail.active {
+        border-color: #004080;
+        opacity: 0.8;
+    }
+        
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto; /* Push the footer to the bottom */
+        }
+        footer .container {
+            margin-bottom: 10px;
+        }
+        footer a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+        }
+        footer a:hover {
+            color: #4CAF50;
+        }
+        footer p {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #003366;
+        }
+        footer p:hover {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="menu-icon" onclick="openMenu()">&#9776;</div>
+        <div class="header-title">Common Services Secretariat</div>
+        <img src="images/FCTA _LOGO.jpg" alt="Header Icon" style="height: 70px;" onclick="goToHome()"> <!-- Replace with your icon -->
+    </header>
+    
+    <!-- Slide-out menu -->
+    <div id="slideOutMenu" class="slide-out-menu">
+        <span class="close-btn" onclick="closeMenu()">&times;</span>
+        <a href="common_services.html">Login to take the Exam</a>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <h2>Introduction:</h2>
+            <p>
+                The <strong>Common Services Secretariat</strong> is a critical component of the <strong> Civil Service</strong>, playing a vital role in ensuring the smooth operation of administrative and support functions across various departments and agencies under the <strong>Federal Capital Territory Administration (FCTA)</strong>. It serves as a backbone for the civil service by providing essential services that enhance efficiency, workforce management, and general administrative coordination.</p>
+            </p>
+        <h2>Key Functions of the Common Services Secretariat:
+        </h2>
+        <h3>1. Human Resource Management & Development</h3>
+        <ul>
+            <li>Oversees recruitment, promotions, and career progression of civil servants.</li>
+            <p><li>Manages staff training, capacity building, and professional development programs.</li></p>
+            <p><li>Ensures compliance with civil service rules and ethical standards.</li></p>
+        </ul>
+        <h3>2. General Administration & Support Services</h3>
+        <ul>
+            <li>Handles procurement, logistics, and office maintenance.</li>
+            <p><li>Provides administrative support to all departments under the FCTA.</li></p>
+            <p><li>Ensures the effective implementation of policies for efficient governance.</li></p>
+        </ul>
+        <h3>3. Legal & Regulatory Services</h3>
+        <ul>
+            <li>Offers legal advisory services to various FCT departments and agencies.</li>
+            <p><li>Ensures that civil service operations align with government policies and regulations.</li></p>
+            <p><li>Handles disciplinary cases and enforcement of civil service guidelines.</li></p>
+        </ul>
+        <h3>4. ICT & Digital Transformation</h3>
+        <ul>
+            <li>Manages ICT infrastructure for the FCT Civil Service.</li>
+            <p><li>Drives e-governance initiatives to improve service delivery.</li></p>
+            <p><li>Enhances digital record-keeping and automation of administrative processes.</li></p>
+        </ul>
+        <h3>5. Financial & Pension Administration</h3>
+        <ul>
+            <li>Oversees payroll processing and financial management for civil servants.</li>
+            <p><li>Manages pension schemes and gratuity payments for retired officers.</li></p>
+            <p><li>Ensures compliance with government financial policies and auditing standards.</li></p>
+        </ul>
+        <h3>6. Staff Welfare & Industrial Relations</h3>
+        <ul>
+            <li>Coordinates staff welfare programs, including health insurance and housing.</li>
+            <p><li>Mediates labor disputes and fosters a harmonious work environment.</li></p>
+            <p><li>Engages with unions and staff associations to address workers' concerns.</li></p>
+        </ul>
+    </div>
+        <div class="content-section">
+            <h2>Importance of Common Services Secretariat:</h2>
+            <ul>
+                <li><strong>Efficiency & Coordination: </strong> <br> Ensures that all departments function smoothly with adequate administrative support.</li>
+                <p><li><strong>Policy Implementation:</strong> <br> Enforces government policies related to civil service operations.</li></p>
+                <p><li><strong>Workforce Productivity:</strong> <br> Enhances staff performance through training and professional development.</li></p>
+                <p><li><strong>Digital Innovation::</strong> <br> Facilitates ICT-driven solutions for improved governance and service delivery.</li></p>
+                <p><li><strong>Sustainability:</strong> <br> Manages financial and human resources effectively to maintain a functional civil service.</li></p>
+            </ul>
+            <div class="content-section">
+                <h2>Conclusion</h2>
+            <p>
+                In summary, the Common Services Secretariat in the FCT Civil Service is the administrative engine that ensures the seamless functioning of the FCTA. By handling human resources, legal services, ICT, financial management, and general administration, it plays a crucial role in the overall efficiency and effectiveness of public service delivery in the Federal Capital Territory.
+            </p>
+        </div>
+   
+        <p>
+            <strong>Find below some files in PDF, TXT as well Audio format containing sample Promotion Exam Revision questions and answer for study. You will also find sample CBT questions and answers that you can study. When you are done studying, you can go ahead take the test.</strong>
+
+        </p>
+
+<!-- Modified PDF Container Section -->
+<div class="content-section">
+    <h2>Study Materials</h2>
+    <div class="pdf-container">
+        <!-- Thumbnail List -->
+        <!-- Main PDF Viewer -->
+        <div class="pdf-viewer">
+            <embed id="mainPdfViewer" src="STUDY MATERIALS/COMMON_SERVICES.pdf" 
+                   type="application/pdf" width="100%" height="100%">
+        </div>
+    </div>
+    <div class="pdf-container">
+        
+        <!-- Main PDF Viewer -->
+        <div class="pdf-viewer">
+            <embed id="mainPdfViewer" src="STUDY MATERIALS/COMMON_SERVICES_CBT.pdf" 
+                   type="application/pdf" width="100%" height="100%">
+        </div>
+    </div>
+</div>
+        <!-- Audio Files Container -->
+        <div class="content-section">
+            <h2>Reach-out to the developer</h2>
+            <div class="file-container">
+                <p>
+                    <strong>Drop a message below</strong>
+                </p>
+                <p><a href="https://wa.me/+2348053579779" target="_blank">Click Me!</a></p>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 HM Solutions LTD. All rights reserved.</p>
+        </div>
+        <div>
+            <a href="https://web.facebook.com/HMTelecoms" target="_blank">Facebook</a>
+            <a href="https://x.com/HMusa3" target="_blank">Twitter</a>
+            <a href="https://www.instagram.com/hmtelecoms0/" target="_blank">Instagram</a>
+            <a href="https://wa.me/+2348053579779" target="_blank">WhatsApp</a>
+            <a href="https://www.linkedin.com/in/hussaini-musa-68614283/" target="_blank">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script>
+        function goToHome() {
+            window.location.href = "home.html"; // Redirect to the home page
+        }
+
+        function openMenu() {
+            document.getElementById("slideOutMenu").style.width = "250px";
+        }
+
+        function closeMenu() {
+            document.getElementById("slideOutMenu").style.width = "0";
+        }
+
+        // Add this JavaScript
+    function loadPDF(index) {
+        const pdfs = [
+            "STUDY MATERIALS/CIVIL_SERVICE_RULES.pdf",
+            "STUDY MATERIALS/CIVIL_SERVICE_RULES_CBT.pdf"
+        ];
+        
+        // Update main viewer
+        document.getElementById('mainPdfViewer').src = pdfs[index];
+        
+        // Update thumbnail styling
+        document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+            i === index ? 
+                thumb.classList.add('active') :
+                thumb.classList.remove('active');
+        });
+    }
+
+    // Synchronize scroll positions
+    const thumbnailContainer = document.getElementById('thumbnailContainer');
+    const pdfViewer = document.querySelector('.pdf-viewer');
+
+    thumbnailContainer.addEventListener('scroll', () => {
+        pdfViewer.scrollTop = thumbnailContainer.scrollTop;
+    });
+
+    pdfViewer.addEventListener('scroll', () => {
+        thumbnailContainer.scrollTop = pdfViewer.scrollTop;
+    });
+
+    // Initialize first PDF
+    loadPDF(0);
+    </script>
+</body>
+</html>

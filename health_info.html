@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nigerian National Policy on Education (NPE) - Comprehensive Framework</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        :root {
+            --primary: #1e4d2b;
+            --secondary: #2e7d32;
+            --accent: #fefee3;
+            --light: #f9f9f9;
+            --dark: #1d3557;
+            --text: #333333;
+            --highlight: #ffd700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f8f9fa;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .flag-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .flag-stripe {
+            width: 25px;
+            height: 60px;
+        }
+        
+        .flag-green {
+            background-color: #008751;
+        }
+        
+        .flag-white {
+            background-color: #ffffff;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 40px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
+            position: relative;
+        }
+        
+        .intro h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .chapters-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .toc {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .toc h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .toc li:before {
+            content: "•";
+            color: var(--secondary);
+            position: absolute;
+            left: 10px;
+            font-size: 1.4rem;
+            top: -5px;
+        }
+        
+        .toc a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .toc a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .chapter {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--secondary);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chapter:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .chapter h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .chapter-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .file-container a {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .file-container a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .section {
+            margin: 25px 0;
+        }
+        
+        .section h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .content-box {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #eaeaea;
+        }
+        
+        .content-box h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 14;
+        }
+        h4 {
+            color: green;
+            margin-bottom: 10px;
+
+        }
+        
+        ul {
+            padding-left: 30px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        li:before {
+            content: "•";
+            color: var(--secondary);
+            position: absolute;
+            left: -20px;
+            font-size: 1.2rem;
+        }
+        
+        .highlight {
+            background-color: var(--accent);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .note {
+            background-color: var(--accent);
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 3px solid var(--gold);
+        }
+        
+        .key-points {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .key-point {
+            flex: 1 1 300px;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--light);
+        }
+        
+        tr:hover {
+            background-color: var(--accent);
+        }
+        
+        .conclusion {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 50px;
+            border-radius: 10px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .conclusion h2 {
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .conclusion h2:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--dark);
+            color: white;
+            margin-top: 50px;
+        }
+        
+        .chapter-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            opacity: 0.1;
+            font-size: 5rem;
+            color: var(--primary);
+            z-index: 0;
+        }
+        
+        @media (max-width: 900px) {
+            .chapters-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .toc {
+                position: static;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .chapter {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .intro {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .scroll-top.show {
+            opacity: 1;
+        }
+        
+        /* Chapter progress indicator */
+        .chapter-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: var(--secondary);
+            z-index: 1000;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="chapter-progress"></div>
+    
+    <header>
+        <h1>General Papers</h1>
+        <p class="subtitle">Comprehensive Framework for General Papers</p>
+        <img src="images/COA.png" alt="Header Icon" style="height: 70px;" onclick="goToHome()">
+    </header>
+
+    <div class="container">
+        <section class="intro">
+            <h2>Introduction to General Papers</h2>
+            <p>In the Nigerian public service system, promotion is not simply a reward for years of service; it is fundamentally a tool for enhancing efficiency, professionalism, and ethical leadership in governance. Among the core components of the promotion assessment process is the General Papers section, which plays a critical role in determining an officer’s preparedness for greater responsibilities. Unlike technical or professional papers that test field-specific knowledge, the General Papers examine a candidate’s broad intellectual capacity, awareness of national and global issues, and ability to apply knowledge to real-life administrative and policy-related challenges.</p>
+            <p>The purpose of General Papers goes beyond academic testing. It is rooted in the understanding that public servants, especially those ascending to leadership and managerial positions, must not only possess technical expertise in their field of specialization but also have a wide-ranging awareness of issues that affect society and governance as a whole. This awareness empowers them to take holistic decisions that align with the needs of the citizens and the goals of the government. For instance, a civil servant in the Ministry of Education must understand not only educational policies but also how political, economic, environmental, and technological trends influence education delivery and public sector reforms.</p>
+            <p>The coverage of General Papers is deliberately broad. It typically includes current affairs (both domestic and international), history and geography of Nigeria, socio-economic trends, public service values and ethics, national policies and reforms, constitutional provisions, and even basic knowledge of international organizations and diplomacy. This wide scope ensures that candidates remain well-rounded professionals rather than narrowly focused specialists. The questions may assess knowledge of important national events (e.g., recent constitutional amendments, newly signed laws, national budget priorities, and major government programs) or international developments (e.g., global trade trends, climate change initiatives, African Union decisions, or United Nations resolutions) that could affect Nigeria's domestic policy.</p>
+            <p>Furthermore, General Papers are also designed to measure critical thinking, adaptability, and awareness of emerging issues. The world is increasingly interconnected, and civil servants must understand global trends such as technological innovation, digital governance, environmental sustainability, and economic globalization. For example, knowledge of how Artificial Intelligence (AI) is reshaping administrative efficiency, or how global oil price fluctuations impact Nigeria’s economy, is highly relevant for a public officer. Thus, General Papers promote the idea that effective governance requires not only technical know-how but also informed global citizenship.</p>
+            <p>Additionally, General Papers reflect the pluralistic and diverse nature of Nigeria. Nigeria is a multi-ethnic, multi-religious, and multicultural society. A competent public servant should understand the cultural, historical, and political realities of the country to effectively serve all citizens without bias. For example, knowledge of Nigeria’s federal structure, constitutional provisions for federal character, and historical events like amalgamation, independence, and civil war helps officers appreciate the country’s diversity and fragility. This understanding fosters inclusive and participatory governance, which is central to national stability.</p>
+            <p>Finally, the role of General Papers in promotions underscores the link between knowledge and leadership. As civil servants move up the ladder, they transition from task-based roles to policy and decision-making roles. These require broad judgment, negotiation, diplomacy, and foresight. General Papers are designed to filter candidates who are prepared for such responsibilities by assessing their understanding of the big picture. It ensures that only officers who demonstrate a comprehensive grasp of social, political, and economic realities are entrusted with leadership roles.</p>
+            <p>In summary, the General Papers section is not an ancillary aspect of promotion exams but a cornerstone of building a competent and forward-thinking civil service. It reflects the service’s expectation that officers must be well-informed leaders, ethical decision-makers, and lifelong learners capable of driving Nigeria’s development agenda. This broad-based knowledge enhances their ability to respond to complex challenges, align with government policies, and serve the Nigerian people effectively. The introduction of General Papers into the promotion exam framework ensures that promotions are merit-driven, knowledge-based, and aligned with the overall vision of a reformed, efficient, and citizen-centered public service.</p>
+            <div class="content-box">
+                <h4>Background and Rationale</h4>
+                <p>One of the central rationales for including General Papers in the promotion exam is the demand for ethical and socially responsible leadership in the public service. Corruption, inefficiency, and poor service delivery have historically plagued Nigeria’s civil service. The General Papers help to combat these challenges by reinforcing awareness of public service rules, financial regulations, code of conduct, and the role of civil servants in nation-building. For instance, questions on ethics and values can test an officer’s understanding of impartiality, accountability, and transparency in decision-making—qualities that are indispensable for public officers in higher responsibilities.</p>
+            </div>
+
+            <div class="section">
+                <h3>Policy Objectives</h3>
+                <ul>
+                    <li>Promotes <strong>broad knowledge base</strong> and <strong>improved decision making</strong></li>
+                    <li>Fosters development of <strong>critical thinking</strong>, <strong>innovation</strong>, and <strong>lifelong learning</strong>.</li>
+                    <li>Fosters <strong>enhanced analytical</strong> and <strong>critical thinking skills</strong>.</li>
+                    <li>Strengthens <strong>Promotion</strong> and <strong>career advancement</strong></li>
+                    <li>Enhances <strong>improved communication</strong> and  <strong>public relations</strong>.</li>
+                    <li>Ensures<strong>awareness of policies, laws</strong>, and <strong>reforms</strong>.</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="chapters-container">
+            <div class="toc">
+                <h3><i class="fas fa-book"></i> Table of Contents</h3>
+                <ul>
+                    <li><a href="#chapter1">Chapter 1: Federal Civil Service Strategy and Implementation Plan 2021-2025 (FCSSIP-25)</a></li>
+                    <li><a href="#chapter2">Chapter 2: Digital Literacy for Nigerian Civil/Public Servants</a></li>
+                </ul>
+            </div>
+            <div class="chapters">
+                <!-- Chapter 1 -->
+                <div class="chapter" id="chapter1">
+                    <i class="fas fa-brain chapter-icon"></i>
+                    <h2><span class="chapter-number">1</span>Federal Civil Service Strategy and Implementation Plan 2021-2025 (FCSSIP-25)</h2>
+                    <p>The Federal Civil Service Strategy and Implementation Plan 2021-2025 (FCSSIP-25) is a comprehensive reform initiative aimed at transforming Nigeria's Federal Civil Service into a more efficient, effective, and service-oriented institution.</p>
+                    <p>FCT Minister Nyesom Wike has introduced a leadership program targeting officers on Grade Levels 10 to 14. This initiative aims to improve service delivery and ensure effective succession planning within the civil service. The program plans to train at least 100 officers annually through a rigorous selection process, including computer-based tests and interviews. FCTA Head of Civil Service, Grace Adayilo, described the program as a milestone in public service reform, aligning with the Federal Civil Service Strategy and Implementation Plan (FCSSIP).</p>
+                    <p><strong>The plan is structured around six key areas or pillars:</strong></p>
+                    <div class="section">
+                        <h3><i class="fas fa-bullseye"></i>The Six Pillars or Key Areas of FCSSIP-25:</h3>
+                        <p>The Nigerian philosophy of education is based on the integration of the individual into a sound and effective citizen through the inculcation of national consciousness and national unity.</p>
+                        <div class="content-box">
+                            <h4>Fundamental Principles:</h4>
+                            <ul>
+                                <li>Performance management.</li>
+                                <li>Integrated Personnel and Payroll Information System (IPPIS) – Human Resource.</li>
+                                <li>Innovation.</li>
+                                <li>Digitization: Content Services.</li>
+                                <li>Capacity building and Leadership management.</li>
+                                <li>Enhanced Value Proposition for Civil Servants( Also referred to as Staff Welfare and Conditions of Service).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>The objectives of FCSSIP-25 include:</h3>
+                        <ul>
+                            <li>Attaining the vision of a "New Civil Service of Our Dreams.</li>
+                            <li>Enhancing staff competencies and skills.</li>
+                            <li>Improving productivity and human resource administration.</li>
+                            <li>Establishing a result-based performance and meritocratic environment.</li>
+                            <li>Providing a clear career path and value proposition for civil servants.</li>
+                            <li>Fostering a more innovative service culture.</li>
+                            <li>Creating a value-driven and digitally transformed civil service.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>FCSSIP-25 Core Values:</h3>
+                        <ul>
+                            <li><strong>Integrity:</strong> Upholding ethical standards and public interest.</li>
+                            <li><strong>Accountability & Transparency:</strong> Ensuring that actions are open to scrutiny and that officials are responsible for their performance.</li>
+                            <li><strong>Professionalism:</strong> Emphasizing competence, continuous learning, and merit-based practices.</li>
+                            <li><strong>Innovation:</strong> Encouraging creative solutions and the use of modern technologies.</li>
+                            <li><strong>Service Excellence:</strong> Focusing on delivering quality, responsive services to the public.</li>
+                            <li><strong>Meritocracy:</strong> Promoting advancement based on performance and qualifications.</li>
+                            <li><strong>Loyalty:</strong> Officers expected to demonstrate loyalty to their superiors and respect to hierarchy.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>FCSSIP-25 Core Values:</h3>
+                        <ul>
+                            <li>FCSSIP-25 Catalytic Enablers for the effective implementation.</li>
+                            <li>Strong Political Will and Leadership.</li>
+                            <li>Effective Governance Structures.</li>
+                            <li>Robust Digital Infrastructure.</li>
+                            <li>Modern Technology Platforms.</li>
+                            <li>Capacity Building and Human Resource Development.</li>
+                            <li>Adequate Funding and Resource Mobilization.</li>
+                            <li>Stakeholder Engagement and Inter‑Agency Collaboration.</li>
+                            <li>Inclusive Participation.</li>
+                            <li>Supportive Legal and Regulatory Frameworks.</li>
+                            <li>Monitoring, Evaluation, and Continuous Improvement.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>FCSSIP-25 Tools and Frameworks that guarantee the effective implementation of the plan:</h3>
+                        <h4>1. LEAD‑P (Leadership Enhancement and Development Programme):</h4>
+                        <p>Purpose:</p>
+                        <ul>
+                            <li>To identify and nurture high‑potential civil servants.</li>
+                            <li>Enhance leadership competencies through structured training, mentorship, and practical exposure.</li>
+                        </ul>
+                        <h4>2. IPPIS (Integrated Personnel and Payroll Information System):</h4>
+                        <p>Purpose:</p>
+                        <ul>
+                            <li>To modernize HR processes by centralizing and automating personnel and payroll data.</li>
+                            <li>Enhance transparency and eliminate inefficiencies such as ghost workers. This plan is designed to elapse by December,  2025. It is to gulp whooping #20.6 Billion.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>Funding Sources:</h3>
+                        <ul>
+                            <li>Federal Government through annual budgetary allocations.</li>
+                            <li>Organised Private Sector.</li>
+                            <li>Development Partners ( World Bank Group, International Agencies).</li>
+                            <li>Civil Society Organisations (CSOs).</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>Implementation Process and Mechanisms:</h3>
+                        <ul>
+                            <li>Strategic Planning.</li>
+                            <li>Policy Formulation.</li>
+                            <li>Coordination and Collaboration.</li>
+                            <li>Monitoring and Evaluation.</li>
+                        </ul>
+                    </div>
+                    <div class="note">
+                        <h4><i class="fas fa-coins"></i>Attention:</h4>
+                        <p>FCSSIP‑25 is a holistic reform initiative aimed at modernizing Nigeria’s civil service through digital transformation, enhanced leadership development, robust performance management, improved welfare, innovation, and efficient HR management.</p>
+                        <p>Its success depends on a combination of well‑defined pillars, strong governance structures, catalytic enablers, and the active engagement of all stakeholders. The tools and frameworks (LEAD‑P, SMAT‑P, IPPIS, etc.) are in-built mechanisms to ensuring that the plan’s objectives are met, thereby delivering an efficient, transparent, and future‑ready public service.</p>
+                    </div>
+                </div>
+                <!-- Chapter 2 -->
+                <div class="chapter" id="chapter2">
+                    <i class="fas fa-brain chapter-icon"></i>
+                    <h2><span class="chapter-number">2</span>Digital Literacy for Nigerian Civil/Public Servants</h2>
+                    <p>Digital literacy is no longer a luxury — it is a necessity for every worker in today’s service-driven economy. For Nigerian civil and public servants preparing for promotion, understanding digital literacy is essential, as it enhances efficiency, accountability, and alignment with global best practices.</p>
+                    <div class="section">
+                        <h3><i class="fas fa-bullseye"></i>1. Meaning of Digital Literacy</h3>
+                        <p>Digital literacy is the ability to effectively and responsibly use digital tools, technologies, and platforms to access, manage, evaluate, create, and communicate information.</p>
+                        <p>In Nigeria’s public service, this translates to being able to use computers, smartphones, government databases, and online platforms to carry out official duties.</p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>2. Importance of Digital Literacy in Nigeria’s Public Service</h3>
+                        <ul>
+                            <li><strong>Improves Efficiency:</strong> Digital tools reduce delays in file processing, payroll management, and communication.</li>
+                            <li><strong>Transparency & Accountability:</strong> E-payment systems (like TSA, IPPIS, REMITA) reduce fraud and ensure traceable transactions.</li>
+                            <li><strong>Service Delivery:</strong> Citizens now expect faster and technology-driven service.</li>
+                            <li><strong>Global Relevance:</strong> Digital literacy helps Nigeria’s workforce remain competitive in a fast-changing digital economy.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>3. Nigerian Government Initiatives Supporting Digital Literacy</h3>
+                        <ul>
+                            <li>National Digital Economy Policy & Strategy (NDEPS 2020–2030): Roadmap for digital transformation.</li>
+                            <li>NITDA (National Information Technology Development Agency): Provides ICT policies and capacity-building.</li>
+                            <li>Digital Bridge Institute (DBI): Offers ICT training for public servants.</li>
+                            <li>CBT Exams by Federal and FCT Civil Service Commission: A sign that digital literacy is now mandatory for promotions.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>4. Key Digital Literacy Skills for Promotion Candidates</h3>
+                        <ul>
+                            <li><strong>Computer Appreciation:</strong> Basic use of MS Word, Excel, PowerPoint, and email.</li>
+                            <li><strong>Online Communication:</strong> Effective use of Zoom, Teams, WhatsApp, and official email.</li>
+                            <li><strong>Digital Security:</strong> Password protection, avoiding phishing scams, and protecting official data.</li>
+                            <li><strong>Information Management:</strong> Using databases, online portals, and record-keeping systems.</li>
+                            <li><strong>E-Government Platforms:</strong> Knowledge of TSA, IPPIS, GIFMIS, and Remita.</li>
+                            <li><strong>CBT Exam Familiarity:</strong> Navigating computer-based testing systems confidently.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>5. Digital Etiquette for Nigerian Public Servants</h3>
+                        <ul>
+                            <li>Use official emails and channels for government communication.</li>
+                            <li>Avoid spreading fake news or unverified information online.</li>
+                            <li>Respect data privacy and confidentiality of citizens’ records.</li>
+                            <li>Be professional when using WhatsApp, Telegram, or other social platforms for work.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>6. Challenges of Digital Literacy in Nigeria</h3>
+                        <ul>
+                            <li><strong>Poor Infrastructure:</strong> Erratic power supply and low internet penetration in rural areas.</li>
+                            <li><strong>Digital Divide:</strong> Younger officers adapt faster than older ones.</li>
+                            <li><strong>Cost of Devices/Data:</strong> Many civil servants struggle to afford quality devices and internet.</li>
+                            <li><strong>Resistance to Change:</strong> Some staff still prefer manual over digital methods.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i>7. Way Forward for Nigerian Civil Servants</h3>
+                        <ul>
+                            <li>Continuous Training: Attend workshops and ICT courses (NITDA, DBI, private institutions).</li>
+                            <li>Self-Development: Learn through YouTube, online courses, and free apps.</li>
+                            <li>Peer-to-Peer Learning: Share knowledge within your department.</li>
+                            <li>Government Support: Advocacy for better ICT infrastructure and digital inclusion.</li>
+                        </ul>
+                    </div>
+                    <div class="note">
+                        <h4><i class="fas fa-coins"></i>✅ Exam Tip:</h4>
+                        <p>In promotion exams, questions on digital literacy often test your knowledge of government ICT initiatives (IPPIS, TSA, GIFMIS), your ability to use basic applications, and your awareness of Nigeria’s digital policies.</p>
+                        <p>👉 In summary, digital literacy is not just about passing exams but about equipping Nigerian civil servants to deliver efficient, transparent, and technology-driven public service.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="content-section">
+                    <div class="file-container">
+                        <p><a href="general_paper.html"><strong>Simulate CBT</strong></a></p>
+                    </div>
+                </div>
+        <section class="conclusion">
+            <h2>Conclusion</h2>
+            <p>General Papers in the Public Service promotion examination is a deliberate and strategic decision aimed at producing a crop of civil servants who are well-equipped for the challenges of modern governance. Its significance cannot be overstated because it reflects the understanding that technical proficiency alone does not make an effective public servant. True leadership within the civil service requires a broader understanding of society, governance, ethics, and global trends.</p>
+            <p>In reviewing the role of General Papers, it is evident that the section serves as a holistic capacity assessment tool. It ensures that those entrusted with higher responsibilities have the intellectual breadth and moral depth required for complex decision-making. Nigeria’s development challenges are multi-faceted—ranging from insecurity and unemployment to economic diversification and digital transformation. Addressing these issues requires leaders who can think critically and understand interconnections between politics, economics, culture, and technology. This is precisely what the General Papers seek to nurture.</p>
+            <p>Ultimately, the General Papers are not merely an exam requirement; they are a strategic investment in leadership development for Nigeria’s future. Through this section, promotions become a tool for selecting officers who can rise above parochial interests, embrace national ideals, and contribute meaningfully to the socio-economic transformation of Nigeria. In the evolving landscape of governance, only a well-informed, ethically grounded, and globally aware public servant can drive sustainable national development. The General Papers ensure that such officers are identified, tested, and promoted to positions where they can make the greatest impact.</p>
+        </section>
+    </div>
+
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function goToHome() {
+    window.location.href = "cbtexam.html"; // Redirect to the home page
+        }
+
+        // Scroll to top functionality
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+            
+            // Update chapter progress indicator
+            const scrollPosition = window.pageYOffset;
+            const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercentage = (scrollPosition / pageHeight) * 100;
+            document.querySelector('.chapter-progress').style.width = `${scrollPercentage}%`;
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+
+            });
+        });
+        
+        // Highlight current chapter in TOC
+        window.addEventListener('scroll', () => {
+            const chapters = document.querySelectorAll('.chapter');
+            let currentChapterId = '';
+            
+            chapters.forEach(chapter => {
+                const chapterTop = chapter.offsetTop;
+                if (window.scrollY >= chapterTop - 150) {
+                    currentChapterId = chapter.id;
+                }
+            });
+            
+            document.querySelectorAll('.toc a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentChapterId}`) {
+                    link.classList.add('active');
+                    link.style.fontWeight = '600';
+                    link.style.color = 'var(--secondary)';
+                } else {
+                    link.style.fontWeight = 'normal';
+                    link.style.color = '';
+                }
+            });
+        });
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add animation delays to chapters
+            const chapters = document.querySelectorAll('.chapter');
+            chapters.forEach((chapter, index) => {
+                chapter.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>

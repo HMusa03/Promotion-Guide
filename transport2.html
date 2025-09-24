@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="transport.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Transport 02</h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+{question: "Which administrative function supports the human resource needs of FCTA transport agencies?", options: ["HR officers managing staffing", "Vehicle inspection teams", "Traffic enforcement units", "Policy development committees"], answer: "a"},
+{question: "What is the primary focus of workforce development in FCTA transport services?", options: ["Keeping staff current with emerging transportation technologies", "Increasing revenue collection", "Expanding political influence", "Reducing staff numbers"], answer: "a"},
+{question: "Which function ensures that institutional knowledge is preserved as experienced staff retire?", options: ["Succession planning", "Vehicle maintenance", "Revenue collection", "Public awareness campaigns"], answer: "a"},
+{question: "What type of training do administrative staff coordinate for transportation professionals?", options: ["Programs on intelligent transportation systems", "Basic driving skills", "Political lobbying", "International diplomacy"], answer: "a"},
+{question: "Which administrative function is responsible for developing and maintaining technology systems for transport operations?", options: ["Vehicle Inspection", "HR Management", "Information Technology systems development", "Financial Auditing"], answer: "c"},
+{question: "What type of management systems support automation in transport services?", options: ["Personnel Management Systems", "Traffic Control Systems", "Information Technology systems", "Financial Management Systems"], answer: "c"},
+{question: "Which staff are responsible for data management across transport agencies?", options: ["Bus Drivers", "Traffic Enforcement Officers", "IT staff managing data systems", "Vehicle Inspectors"], answer: "c"},
+{question: "What elements are involved in financial management for transport services?", options: ["Only budget preparation", "Only expenditure monitoring", "Only financial reporting", "Budget development, expenditure monitoring, financial reporting, and resource allocation decisions"], answer: "d"},
+{question: "Which responsibilities are included in procurement management?", options: ["Only vendor selection", "Only tender processing", "Only contract administration", "Vendor management, tender processes, contract administration, and technical specifications compliance"], answer: "d"},
+{question: "What functions do transport staff perform in regulatory services?", options: ["Only license issuance", "Only permit processing", "Only documentation management", "License issuance, permit processing, documentation management, and regulatory compliance enforcement"], answer: "d"},
+{question: "Which aspects are covered in workforce development for transport staff?", options: ["Only technical training", "Only safety education", "Only policy updates", "Technical training, emerging technology education, safety updates, and professional development"], answer: "d"},
+{question: "What components are essential in asset management systems?", options: ["Only condition assessments", "Only performance history", "Only treatment options", "Condition data collection, performance analysis, treatment options evaluation, and maintenance strategy development"], answer: "d"},
+{question: "What do IT systems support in transport decision-making processes?", options: ["Political Decisions", "Staff Recruitment", "Data-driven decision making", "Vehicle Purchases"], answer: "c"},
+{question: "Which function implements technology solutions across transport operations?", options: ["Road Maintenance", "License Issuance", "Technology implementation", "Fee Collection"], answer: "c"},
+{question: "What type of proficiency must staff develop with new digital systems?", options: ["Political Proficiency", "Technical proficiency with new systems", "Mechanical Proficiency", "Financial Proficiency"], answer: "c"},
+{question: "Which staff are included in the Federal Transit Administration's definition of transit-related employees?", options: ["HR officers managing staffing at transit agencies", "Only bus drivers", "Only policy makers", "Only vehicle mechanics"], answer: "a"},
+{question: "What is the main responsibility of administrative staff in workforce development?", options: ["Coordinating training programs for professional development", "Enforcing traffic regulations", "Conducting vehicle inspections", "Collecting transportation fees"], answer: "a"},
+{question: "Which administrative function focuses on attracting and retaining qualified staff?", options: ["Human resource management", "Vehicle registration", "Road safety enforcement", "Infrastructure maintenance"], answer: "a"},
+{question: "What do administrative staff develop to ensure critical roles can be filled?", options: ["Succession plans", "New revenue streams", "Traffic management systems", "Vehicle inspection protocols"], answer: "a"},
+{question: "Which skill is essential for administrative staff in HR management?", options: ["Understanding diverse skills needed in transportation", "Vehicle repair expertise", "Road construction knowledge", "Traffic enforcement techniques"], answer: "a"},
+{question: "What is the primary responsibility of transport staff in financial management roles?", options: ["Traffic enforcement", "Resource allocation and budgeting", "Vehicle inspection", "Public awareness campaigns"], answer: "b"},
+{question: "Which function involves managing procurement processes for transportation goods and services?", options: ["Driver testing", "Financial management responsibilities", "Road safety education", "Traffic control"], answer: "b"},
+{question: "What must financial management staff develop that aligns strategic priorities with resources?", options: ["Traffic management plans", "Budgets that align priorities with resources", "Vehicle inspection protocols", "Driver training programs"], answer: "b"},
+{question: "Which aspect requires transport staff to ensure compliance with transparency requirements?", options: ["Vehicle registration", "Procurement activities", "Driver licensing", "Road construction"], answer: "b"},
+{question: "What do financial management staff monitor to ensure fiscal discipline?", options: ["Traffic patterns", "Expenditures and financial compliance", "Vehicle performance", "Staff attendance"], answer: "b"},
+{question: "Which function involves managing processes for acquiring capital investments?", options: ["License issuance", "Procurement function for goods and services", "Vehicle inspection", "Public consultations"], answer: "b"},
+{question: "What must procurement staff balance between procedural compliance and operational effectiveness?", options: ["Political interests", "Technical specifications and value for money", "Public opinions", "Staff preferences"], answer: "b"},
+{question: "Which knowledge is essential for staff handling procurement in transportation?", options: ["International relations", "Public sector procurement rules and technical knowledge", "Vehicle mechanics", "Political science"], answer: "b"},
+{question: "What do financial management staff prepare for oversight bodies?", options: ["Traffic reports", "Financial reports and budget documents", "Vehicle inspection records", "Staff performance evaluations"], answer: "b"},
+{question: "Which function supports all other transport functions by providing necessary resources?", options: ["Traffic enforcement", "Procurement and resource management", "Driver testing", "Public awareness"], answer: "b"},
+{question: "Which systems have transformed licensing functions in recent years?", options: ["Manual Recording Systems", "Political Systems", "Computer-based testing systems", "Mechanical Systems"], answer: "c"},
+{question: "What must staff maintain while adopting new technological systems?", options: ["Traditional Methods", "Process integrity and accuracy", "Political Connections", "Manual Records"], answer: "c"},
+{question: "Which department handles the digital transformation of record keeping?", options: ["Vehicle Inspection", "Traffic Management", "Information Technology", "Public Relations"], answer: "c"},
+{question: "What do automated payment systems reduce in revenue collection?", options: ["Transparency", "Manual handling of cash", "Accountability", "Revenue Amounts"], answer: "c"},
+{question: "Which systems require staff to develop new technical competencies?", options: ["Traditional Paper Systems", "Digital record keeping systems", "Manual Inspection Systems", "Verbal Communication Systems"], answer: "c"},
+{question: "What aspect of licensing has been transformed by technology implementation?", options: ["License Design", "Testing and record keeping processes", "Fee Structures", "Application Requirements"], answer: "c"},
+{question: "Which staff ensure the integrity of digital licensing processes?", options: ["Policy Makers", "Transportation IT professionals", "Bus Operators", "Road Maintenance Crews"], answer: "c"},
+{question: "What is the primary goal of investing in transportation professionals' development?", options: ["Long-term capacity building of FCTA agencies", "Immediate revenue generation", "Political gains", "International recognition"], answer: "a"},
+{question: "Which administrative function handles recruitment for transportation positions?", options: ["Human resource management", "Vehicle inspection", "License issuance", "Fee collection"], answer: "a"},
+{question: "What do administrative staff manage to ensure qualified staff availability?", options: ["Workforce planning and development", "Traffic flow patterns", "Vehicle maintenance schedules", "Revenue distribution"], answer: "a"},
+{question: "Which area requires administrative staff to coordinate training on emerging trends?", options: ["Workforce development function", "Vehicle inspection", "Road construction", "Fee collection"], answer: "a"},
+{question: "What type of knowledge do administrative staff focus on preserving?", options: ["Institutional knowledge through succession planning", "Vehicle repair techniques", "Road construction methods", "Revenue patterns"], answer: "a"},
+{question: "What is the primary goal of incident investigation in transport safety management?", options: ["To assign blame to operators", "To increase regulatory fees", "To identify systemic improvements for prevention", "To generate public reports"], answer: "c"},
+{question: "Which skills are required for transport staff in policy implementation roles?", options: ["Only technical knowledge", "Only organizational skills", "Only communication abilities", "Organizational skills, coordination abilities, stakeholder engagement, and technical knowledge"], answer: "d"},
+{question: "What functions are involved in public transport operations management?", options: ["Only bus driving", "Only schedule management", "Only fare collection", "Route planning, scheduling, vehicle maintenance, customer service, and performance monitoring"], answer: "d"},
+{question: "Which aspects are covered in road safety education programs?", options: ["Only school programs", "Only driver education", "Only public awareness campaigns", "Programs for different demographics, educational interventions, effectiveness measurement, and media engagement"], answer: "d"},
+{question: "What responsibilities fall under transport infrastructure maintenance?", options: ["Only road repairs", "Only bridge maintenance", "Only traffic system upkeep", "Developing maintenance schedules, conducting condition assessments, prioritizing interventions, and resource allocation"], answer: "d"},
+{question: "Which functions are part of incident response and investigation?", options: ["Only emergency coordination", "Only data collection", "Only temporary traffic management", "Emergency coordination, traffic management, data collection, and analysis for improvements"], answer: "d"},
+{question: "Which system requires specialized training in asset management principles and tools?", options: ["Financial management systems", "Personnel scheduling systems", "Asset management systems", "Public communication systems"], answer: "c"},
+{question: "What do transport staff analyze during incident investigations to determine contributing factors?", options: ["Political affiliations", "Staff seniority", "Evidence and contributing factors", "Budget allocations"], answer: "c"},
+{question: "Which function involves revising regulations and updating training programs based on incident findings?", options: ["Vehicle registration", "Revenue collection", "Knowledge management implementation", "Public relations"], answer: "c"},
+{question: "What type of approach do maintenance management systems bring to preservation decisions?", options: ["Political approach", "Traditional approach", "Data-driven approach", "Cost-cutting approach"], answer: "c"},
+{question: "Which administrative responsibility involves performance evaluation?", options: ["Human resource management", "Traffic enforcement", "Vehicle registration", "Infrastructure development"], answer: "a"},
+{question: "What do administrative staff develop to address future staffing needs?", options: ["Career development programs", "New traffic regulations", "Vehicle inspection protocols", "Revenue enhancement strategies"], answer: "a"},
+{question: "Which function ensures transportation agencies can fulfill their missions effectively?", options: ["Investing in professional development", "Increasing enforcement actions", "Expanding fee structures", "Reducing public services"], answer: "a"},
+{question: "What must administrative staff understand to support transportation agencies?", options: ["Diverse skills needed across transport functions", "Vehicle mechanical systems", "Road construction techniques", "Political negotiation strategies"], answer: "a"},
+{question: "Which administrative activity focuses on keeping staff updated with industry changes?", options: ["Continuous training programs", "Revenue collection", "Vehicle inspection", "License issuance"], answer: "a"},
+{question: "What is the ultimate goal of human resource management in transport agencies?", options: ["Maintaining capable transportation workforce", "Maximizing fee collection", "Expanding political influence", "Reducing staff benefits"], answer: "a"},
+{question: "What must procurement staff ensure about acquired goods and services?", options: ["Political acceptability", "Technical specifications and operational needs", "Public popularity", "Lowest cost regardless of quality"], answer: "b"},
+{question: "Which responsibility involves managing vendor relationships and tender processes?", options: ["Vehicle inspection", "Procurement management function", "Driver licensing", "Road maintenance"], answer: "b"},
+{question: "What do financial management staff need to understand about transportation needs?", options: ["Political aspects", "Technical requirements and financial regulations", "Public opinions", "International standards"], answer: "b"},
+{question: "Which function requires expertise in government financial regulations?", options: ["Traffic management", "Financial management and budgeting", "Vehicle registration", "Driver testing"], answer: "b"},
+{question: "What do procurement processes involve for transportation equipment?", options: ["Political approval", "Technical specifications and competitive bidding", "Public voting", "Staff preferences"], answer: "b"},
+{question: "What is the primary focus of transport staff beyond mere regulatory enforcement?", options: ["Revenue generation", "Creating integrated transportation networks", "Political achievements", "International recognition"], answer: "b"},
+{question: "Which skill is essential for transport staff when managing paratransit services?", options: ["Legal expertise", "Analytical capabilities and diplomatic skills", "Mechanical knowledge", "Financial accounting"], answer: "b"},
+{question: "What must transport staff balance when regulating informal transport providers?", options: ["Political interests", "Regulatory standards with accessibility needs", "Staff preferences", "International standards"], answer: "b"},
+{question: "Which approach do transport staff take toward stakeholder engagement?", options: ["Avoidance", "Ongoing engagement with operator associations", "Confrontation", "Delegation"], answer: "b"},
+{question: "What do transport staff collect and analyze regarding paratransit operations?", options: ["Political opinions", "Operational data for policy decisions", "Personal information", "Financial records"], answer: "b"},
+{question: "Which staff ensure that procurement achieves value for money?", options: ["Traffic officers", "Financial and procurement staff", "Vehicle inspectors", "Bus drivers"], answer: "b"},
+{question: "What must financial management staff make decisions about across competing priorities?", options: ["Traffic flow", "Resource allocation and priority funding", "Vehicle purchases", "Staff promotions"], answer: "b"},
+{question: "Which function involves monitoring expenditures against budgets?", options: ["License issuance", "Financial management and control", "Road construction", "Public awareness"], answer: "b"},
+{question: "What do procurement staff manage from initiation to completion?", options: ["Traffic patterns", "Tender processes and contract administration", "Vehicle performance", "Driver behavior"], answer: "b"},
+{question: "Which responsibility requires balancing technical needs with financial constraints?", options: ["Vehicle inspection", "Budget development and procurement", "Driver testing", "Public relations"], answer: "b"},
+{question: "What do modern IT systems help prevent in documentation processes?", options: ["Technology Adoption", "Manual Work", "Revenue leakage and errors", "Public Engagement"], answer: "c"},
+{question: "Which function requires balancing technical updates with process integrity?", options: ["Vehicle Inspection", "Driver Testing", "Digital system implementation", "Road Construction"], answer: "c"},
+{question: "What elements must transport staff coordinate during infrastructure development projects?", options: ["Only construction activities", "Only utility relocation", "Only community engagement", "Land acquisition, environmental assessments, regulatory approvals, and stakeholder coordination"], answer: "d"},
+{question: "Which functions are part of safety compliance and enforcement activities?", options: ["Only vehicle inspections", "Only standards enforcement", "Only incident investigation", "Conducting inspections, enforcing standards, investigating incidents, and implementing improvements"], answer: "d"},
+{question: "What responsibilities do administrative staff handle in support of transport operations?", options: ["Only recruitment", "Only budgeting", "Only procurement", "HR management, financial control, procurement, and IT support"], answer: "d"},
+{question: "Which challenges do FCTA transport staff face in their daily operations?", options: ["Only funding constraints", "Only technological changes", "Only urbanization issues", "Rapid urbanization, technological disruption, funding limitations, and political dimensions"], answer: "d"},
+{question: "What emerging trends are shaping the future of transportation in the FCT?", options: ["Only digitalization", "Only sustainability requirements", "Only changing mobility patterns", "Digitalization, sustainability imperatives, changing mobility patterns, and smart city technologies"], answer: "d"},
+{question: "What type of systems support the automation of payment processes?", options: ["Manual Accounting Systems", "Automated payment systems", "Verbal Notification Systems", "Paper-based Systems"], answer: "c"},
+{question: "Which technical area requires staff to maintain accuracy during digital transition?", options: ["Vehicle Maintenance", "Record keeping integrity", "Road Design", "Traffic Control"], answer: "c"},
+{question: "What do transport staff manage in computer-based testing systems?", options: ["Political Content", "Examination administration and results", "Vehicle Specifications", "Road Designs"], answer: "c"},
+{question: "Which systems have reduced manual cash handling in many facilities?", options: ["Traditional Banking Systems", "Automation of payment systems", "Manual Accounting", "Verbal Payment Systems"], answer: "c"},
+{question: "What must staff ensure about government revenues during digital transformation?", options: ["Political Approval", "Proper accounting and receipt", "Public Announcement", "International Review"], answer: "c"},
+{question: "Which staff members typically receive advanced training in root cause analysis techniques?", options: ["Bus drivers", "Administrative assistants", "Safety investigation specialists", "Front desk attendants"], answer: "c"},
+{question: "What must transport staff ensure about lessons learned from transportation incidents?", options: ["They are publicly disclosed", "They are used for staff discipline", "They are incorporated into broader safety practices", "They are reported to international bodies"], answer: "c"},
+{question: "Which function involves optimizing resource allocation and monitoring performance indicators?", options: ["Vehicle inspection", "Driver testing", "Operations management support", "Policy development"], answer: "c"},
+{question: "What do maintenance management systems help prioritize?", options: ["Political initiatives", "Public events", "Maintenance interventions", "Staff promotions"], answer: "c"},
+{question: "Which technical area requires methodical evidence collection and analysis?", options: ["Vehicle cleaning", "Fee collection", "Incident investigation", "License printing"], answer: "c"},
+{question: "Which function requires mediating disputes between operators and passengers?", options: ["Vehicle inspection", "Paratransit management and regulation", "License issuance", "Road construction"], answer: "b"},
+{question: "What must transport staff ensure about paratransit services?", options: ["They remain expensive", "They complement formal mass transit systems", "They operate 24/7", "They use only new vehicles"], answer: "b"},
+{question: "Which aspect requires understanding both local dynamics and international practices?", options: ["Vehicle maintenance", "Policy development work", "Fee collection", "Driver testing"], answer: "b"},
+{question: "What do transport staff develop through consultations with community groups?", options: ["Political campaigns", "Broad support for transportation policies", "Revenue streams", "Enforcement strategies"], answer: "b"},
+{question: "Which skill is crucial for navigating contentious issues in paratransit sector?", options: ["Mechanical skills", "Diplomatic skills and conflict resolution", "Accounting skills", "Technical drafting"], answer: "b"},
+{question: "Which of the following are considered transportation professionals according to the Federal Transit Administration's definition?", options: ["Only bus drivers and vehicle operators", "Only traffic enforcement officers", "Only policy makers and planners", "Those involved in any aspect of public transit operation including oversight and support functions"], answer: "d"},
+{question: "What aspects must transport staff consider when developing sustainable transportation policies?", options: ["Only current population needs", "Only infrastructure requirements", "Only budgetary constraints", "Rapid urbanization, environmental concerns, and technological disruptions"], answer: "d"},
+{question: "Which functions are included in the traffic management responsibilities of transport staff?", options: ["Only traffic law enforcement", "Only vehicle inspection", "Only incident response", "Monitoring compliance, implementing traffic plans, and coordinating with emergency services"], answer: "d"},
+{question: "What components are essential in mass transit service delivery according to AUMTCO's operations?", options: ["Only vehicle maintenance", "Only route planning", "Only customer service", "Route planning, scheduling, vehicle maintenance, and customer service"], answer: "d"},
+{question: "Which responsibilities fall under vehicle administration and regulatory services?", options: ["Only vehicle registration", "Only driver testing", "Only revenue collection", "Processing applications, conducting inspections, issuing documents, and revenue management"], answer: "d"},
+
+
+
+
+        ];
+        
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nigerian National Policy on Education (NPE) - Comprehensive Framework</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        :root {
+            --primary: #1e4d2b;
+            --secondary: #2e7d32;
+            --accent: #fefee3;
+            --light: #f9f9f9;
+            --dark: #1d3557;
+            --text: #333333;
+            --highlight: #ffd700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f8f9fa;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .flag-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .flag-stripe {
+            width: 25px;
+            height: 60px;
+        }
+        
+        .flag-green {
+            background-color: #008751;
+        }
+        
+        .flag-white {
+            background-color: #ffffff;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 40px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary);
+            position: relative;
+        }
+        
+        .intro h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .chapters-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .toc {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .toc h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .toc li:before {
+            content: "•";
+            color: var(--secondary);
+            position: absolute;
+            left: 10px;
+            font-size: 1.4rem;
+            top: -5px;
+        }
+        
+        .toc a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .toc a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .chapter {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--secondary);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chapter:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .chapter h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .chapter-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .file-container a {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .file-container a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .section {
+            margin: 25px 0;
+        }
+        
+        .section h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .content-box {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #eaeaea;
+        }
+        
+        .content-box h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        ul {
+            padding-left: 30px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        li:before {
+            content: "•";
+            color: var(--secondary);
+            position: absolute;
+            left: -20px;
+            font-size: 1.2rem;
+        }
+        
+        .highlight {
+            background-color: var(--accent);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .key-points {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .key-point {
+            flex: 1 1 300px;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--light);
+        }
+        
+        tr:hover {
+            background-color: var(--accent);
+        }
+        
+        .conclusion {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 50px;
+            border-radius: 10px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .conclusion h2 {
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .conclusion h2:after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--dark);
+            color: white;
+            margin-top: 50px;
+        }
+        
+        .chapter-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            opacity: 0.1;
+            font-size: 5rem;
+            color: var(--primary);
+            z-index: 0;
+        }
+        
+        @media (max-width: 900px) {
+            .chapters-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .toc {
+                position: static;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .chapter {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .intro {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .scroll-top.show {
+            opacity: 1;
+        }
+        
+        /* Chapter progress indicator */
+        .chapter-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: var(--secondary);
+            z-index: 1000;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="chapter-progress"></div>
+    
+    <header>
+        <h1>Nigerian National Policy on Education (NPE)</h1>
+        <p class="subtitle">2021 Edition - Comprehensive Framework for Educational Development</p>
+        <img src="images/COA.png" alt="Header Icon" style="height: 70px;" onclick="goToHome()">
+    </header>
+
+    <div class="container">
+        <section class="intro">
+            <h2>Introduction to the Nigerian National Policy on Education</h2>
+            <p>The National Policy on Education (NPE) is a dynamic and strategic blueprint designed to shape the direction, philosophy, structure, content, and administration of education in Nigeria. Since independence in 1960, the Nigerian education system has undergone numerous reforms, reflecting the aspirations of a rapidly developing society. The 2021 edition of the NPE builds upon previous versions (1977, 1981, 1998, 2004, 2013) and incorporates significant developments in global education, digital learning, inclusiveness, and the changing socio‑economic realities of the 21st century.</p>
+
+            <p>Education is universally acknowledged as a powerful instrument for national development, social integration, economic transformation, and individual empowerment. It plays a crucial role in building human capital, promoting innovation, reducing poverty, and enhancing national competitiveness. The policy reaffirms the constitutional provision that <span class="highlight">education is a right</span> of every Nigerian citizen and a <span class="highlight">public good</span> that must be adequately funded, regulated, and made accessible to all, regardless of gender, disability, location, or socio‑economic background.</p>
+
+            <div class="content-box">
+                <h4>Background and Rationale</h4>
+                <ul>
+                    <li><strong>Global Commitments:</strong> Nigeria, as a signatory to the Sustainable Development Goals (SDGs), especially Goal 4 (inclusive and equitable quality education), must realign its education policy to meet global standards and targets by 2030.</li>
+                    <li><strong>Technological Disruption:</strong> The COVID‑19 pandemic highlighted the need for e‑learning, blended modalities, and robust ICT integration across all educational levels.</li>
+                    <li><strong>Demographic Pressure:</strong> With one of the world's largest youth populations, Nigeria must address access, equity, and quality for a growing cohort of learners.</li>
+                    <li><strong>Insecurity and Conflict:</strong> Rising instability—insurgency, banditry, kidnapping—has disrupted schooling, especially in the North‑East and North‑West, necessitating safe learning spaces and psychosocial resilience strategies.</li>
+                    <li><strong>Skills Mismatch:</strong> Employers continue to report a gap between graduate competencies and labour market needs; the policy emphasizes TVET, entrepreneurship, and digital literacy to close this divide.</li>
+                    <li><strong>Out‑of‑School Children:</strong> Nigeria still struggles with a high proportion of children out of school; the policy focuses on strategies for enrollment, retention, and completion for all school‑age children.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Policy Objectives</h3>
+                <ul>
+                    <li>Promote <strong>inclusive, equitable, and quality education</strong> at all levels.</li>
+                    <li>Foster development of <strong>critical thinking</strong>, <strong>innovation</strong>, and <strong>lifelong learning</strong>.</li>
+                    <li>Encourage <strong>functional education</strong> that equips learners with skills for self‑reliance and productivity.</li>
+                    <li>Strengthen <strong>teacher education</strong> and professional development to improve learning outcomes.</li>
+                    <li>Enhance <strong>education governance</strong>, data‑driven decision‑making, and accountability.</li>
+                    <li>Ensure education contributes meaningfully to <strong>national integration</strong>, <strong>sustainable development</strong>, and <strong>global competitiveness</strong>.</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Guiding Philosophy</h3>
+                <p>The policy is anchored on Nigeria's philosophy of education as a tool for:</p>
+                <ul>
+                    <li>Building a <strong>free, just, and democratic society</strong></li>
+                    <li>Developing a <strong>united, strong, and self‑reliant nation</strong></li>
+                    <li>Cultivating a <strong>great and dynamic economy</strong></li>
+                    <li>Promoting a <strong>land full of opportunities</strong> for all citizens</li>
+                </ul>
+                <p>To achieve this, education must be made <span class="highlight">qualitative</span>, <span class="highlight">accessible</span>, <span class="highlight">affordable</span>, <span class="highlight">adaptable</span>, and <span class="highlight">accountable</span>.</p>
+            </div>
+        </section>
+
+        <div class="chapters-container">
+            <div class="toc">
+                <h3><i class="fas fa-book"></i> Table of Contents</h3>
+                <ul>
+                    <li><a href="#chapter1">Chapter 1: Philosophy and Goals of Education</a></li>
+                    <li><a href="#chapter2">Chapter 2: Structure of Education System</a></li>
+                    <li><a href="#chapter3">Chapter 3: Early Childhood Care & Development</a></li>
+                    <li><a href="#chapter4">Chapter 4: Basic Education</a></li>
+                    <li><a href="#chapter5">Chapter 5: Post-Basic Education & Career Dev.</a></li>
+                    <li><a href="#chapter6">Chapter 6: Mass and Non-Formal Education</a></li>
+                    <li><a href="#chapter7">Chapter 7: Adult and Lifelong Learning</a></li>
+                    <li><a href="#chapter8">Chapter 8: Special Needs Education</a></li>
+                    <li><a href="#chapter9">Chapter 9: Tertiary Education</a></li>
+                    <li><a href="#chapter10">Chapter 10: Open, Distance and E-learning</a></li>
+                    <li><a href="#chapter11">Chapter 11: Technical & Vocational Education</a></li>
+                    <li><a href="#chapter12">Chapter 12: Teacher Education</a></li>
+                    <li><a href="#chapter13">Chapter 13: Language Policy</a></li>
+                    <li><a href="#chapter14">Chapter 14: Educational Services</a></li>
+                    <li><a href="#chapter15">Chapter 15: Planning, Administration & Inspection</a></li>
+                    <li><a href="#chapter16">Chapter 16: Financing & Resource Mobilization</a></li>
+                    </ul>
+            </div>
+            <div class="chapters">
+                <!-- Chapter 1 -->
+                <div class="chapter" id="chapter1">
+                    <i class="fas fa-brain chapter-icon"></i>
+                    <h2><span class="chapter-number">1</span> Philosophy and Goals of Education in Nigeria</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-bullseye"></i> Core Philosophy</h3>
+                        <p>The Nigerian philosophy of education is based on the integration of the individual into a sound and effective citizen through the inculcation of national consciousness and national unity.</p>
+                        <div class="content-box">
+                            <h4>Fundamental Principles:</h4>
+                            <ul>
+                                <li>Education as an instrument for national development</li>
+                                <li>Education for fostering national unity</li>
+                                <li>Education as a means of developing individual talents</li>
+                                <li>Education for promoting social, cultural, and economic progress</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3><i class="fas fa-flag"></i> Goals of Nigerian Education</h3>
+                        <ul>
+                            <li>The inculcation of national consciousness and national unity</li>
+                            <li>The inculcation of the right type of values and attitudes for the survival of the individual and Nigerian society</li>
+                            <li>The training of the mind in the understanding of the world around</li>
+                            <li>The acquisition of appropriate skills and the development of mental, physical, and social abilities</li>
+                            <li>Promoting respect for the dignity of labor and fostering technological progress</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 2 -->
+                <div class="chapter" id="chapter2">
+                    <i class="fas fa-sitemap chapter-icon"></i>
+                    <h2><span class="chapter-number">2</span> The Structure of the Nigerian Education System</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-layer-group"></i> Education System Framework</h3>
+                        <p>The Nigerian education system is structured into different levels to ensure a comprehensive and progressive learning pathway for all citizens.</p>
+                        
+                        <div class="key-points">
+                            <div class="key-point">
+                                <h4>Formal Education Structure</h4>
+                                <ul>
+                                    <li>Early Childhood Care & Development Education (ECCDE) - 3 years</li>
+                                    <li>Basic Education (9 years): 
+                                        <ul>
+                                            <li>Lower Basic (Primary 1-3)</li>
+                                            <li>Middle Basic (Primary 4-6)</li>
+                                            <li>Upper Basic (JSS 1-3)</li>
+                                        </ul>
+                                    </li>
+                                    <li>Senior Secondary Education (3 years)</li>
+                                    <li>Tertiary Education (Universities, Polytechnics, Colleges of Education)</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="key-point">
+                                <h4>Non-formal Education</h4>
+                                <ul>
+                                    <li>Adult literacy programs</li>
+                                    <li>Vocational training centers</li>
+                                    <li>Distance learning programs</li>
+                                    <li>Skill acquisition initiatives</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3><i class="fas fa-chart-line"></i> Educational Progression</h3>
+                        <p>The Nigerian education system allows for multiple pathways to accommodate diverse learner needs:</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Level</th>
+                                    <th>Duration</th>
+                                    <th>Entry Age</th>
+                                    <th>Certification</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Early Childhood</td>
+                                    <td>3 years</td>
+                                    <td>3-5 years</td>
+                                    <td>School Readiness</td>
+                                </tr>
+                                <tr>
+                                    <td>Basic Education</td>
+                                    <td>9 years</td>
+                                    <td>6-14 years</td>
+                                    <td>Basic Education Certificate</td>
+                                </tr>
+                                <tr>
+                                    <td>Senior Secondary</td>
+                                    <td>3 years</td>
+                                    <td>15-17 years</td>
+                                    <td>SSCE, NECO, NABTEB</td>
+                                </tr>
+                                <tr>
+                                    <td>Tertiary Education</td>
+                                    <td>2-6 years</td>
+                                    <td>18+ years</td>
+                                    <td>Certificates, Diplomas, Degrees</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Chapter 3 -->
+                <div class="chapter" id="chapter3">
+                    <i class="fas fa-child chapter-icon"></i>
+                    <h2><span class="chapter-number">3</span> Early Childhood Care and Development Education (ECCDE)</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-seedling"></i> Foundation of Learning</h3>
+                        <p>ECCDE focuses on the holistic development of children aged 0-5 years, recognizing this period as critical for cognitive, social, emotional, and physical development.</p>
+                        
+                        <div class="content-box">
+                            <h4>Key Components of ECCDE:</h4>
+                            <ul>
+                                <li>Health, nutrition, and hygiene services</li>
+                                <li>Cognitive stimulation and early learning</li>
+                                <li>Social and emotional development</li>
+                                <li>Parent and caregiver education</li>
+                                <li>Protection and safety measures</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3><i class="fas fa-school"></i> Implementation Framework</h3>
+                        <p>The policy outlines comprehensive guidelines for ECCDE implementation:</p>
+                        <ul>
+                            <li>Establishment of standardized early childhood centers</li>
+                            <li>Development of age-appropriate curriculum and learning materials</li>
+                            <li>Training and certification of early childhood educators</li>
+                            <li>Integration of health and nutrition services</li>
+                            <li>Community involvement in early childhood programs</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 4 -->
+                <div class="chapter" id="chapter4">
+                    <i class="fas fa-book-open chapter-icon"></i>
+                    <h2><span class="chapter-number">4</span> Basic Education</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-universal-access"></i> Universal Basic Education (UBE)</h3>
+                        <p>Basic Education encompasses 9 years of continuous, free, and compulsory education for every Nigerian child, consisting of 6 years of primary education and 3 years of junior secondary education.</p>
+                        
+                        <div class="content-box">
+                            <h4>UBE Program Objectives:</h4>
+                            <ul>
+                                <li>Ensure unfettered access to 9 years of formal education</li>
+                                <li>Provide free and compulsory Universal Basic Education</li>
+                                <li>Reduce drastically the incidence of drop-out</li>
+                                <li>Cater for the learning needs of young persons through appropriate forms of complementary approaches</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3><i class="fas fa-graduation-cap"></i> Curriculum Framework</h3>
+                        <p>The Basic Education curriculum is designed to be broad-based, relevant, and responsive to individual and societal needs.</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Level</th>
+                                    <th>Focus Areas</th>
+                                    <th>Key Skills</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Lower Basic (P1-P3)</td>
+                                    <td>Literacy, numeracy, life skills</td>
+                                    <td>Basic reading, writing, arithmetic</td>
+                                </tr>
+                                <tr>
+                                    <td>Middle Basic (P4-P6)</td>
+                                    <td>Core subjects, creative arts</td>
+                                    <td>Critical thinking, problem-solving</td>
+                                </tr>
+                                <tr>
+                                    <td>Upper Basic (JSS1-JSS3)</td>
+                                    <td>Pre-vocational, technology studies</td>
+                                    <td>Technical skills, digital literacy</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Chapter 5 -->
+                <div class="chapter" id="chapter5">
+                    <i class="fas fa-briefcase chapter-icon"></i>
+                    <h2><span class="chapter-number">5</span> Post-Basic Education and Career Development (PBECD)</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-user-graduate"></i> Senior Secondary Education</h3>
+                        <p>Post-basic education comprises 3 years of senior secondary education designed to prepare students for higher education and the world of work.</p>
+                        
+                        <div class="content-box">
+                            <h4>Streams in Senior Secondary:</h4>
+                            <ul>
+                                <li><strong>Academic Stream:</strong> Prepares students for university education</li>
+                                <li><strong>Technical Stream:</strong> Focuses on technical and vocational skills</li>
+                                <li><strong>Business Stream:</strong> Develops business and entrepreneurial skills</li>
+                                <li><strong>Vocational Stream:</strong> Provides specific vocational training</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3><i class="fas fa-road"></i> Career Development Framework</h3>
+                        <p>The policy establishes a comprehensive career development system to guide students in making informed career choices:</p>
+                        <ul>
+                            <li>Career counseling and guidance services in all secondary schools</li>
+                            <li>Work experience programs and industry attachments</li>
+                            <li>Entrepreneurship education and training</li>
+                            <li>Career resource centers and digital platforms</li>
+                            <li>Partnerships with industries and professional bodies</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Additional chapters would follow the same pattern -->
+                <!-- Chapter 6 -->
+                <div class="chapter" id="chapter6">
+                    <i class="fas fa-users chapter-icon"></i>
+                    <h2><span class="chapter-number">6</span> Mass and Non-Formal Education</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-chalkboard-teacher"></i> Alternative Learning Pathways</h3>
+                        <p>This chapter addresses educational needs of out-of-school children, youth, and adults through flexible learning approaches.</p>
+                        <ul>
+                            <li>Adult literacy and numeracy programs</li>
+                            <li>Vocational and skill acquisition training</li>
+                            <li>Continuing education centers</li>
+                            <li>Community learning initiatives</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 7 -->
+                <div class="chapter" id="chapter7">
+                    <i class="fas fa-book-reader chapter-icon"></i>
+                    <h2><span class="chapter-number">7</span> Adult and Lifelong Learning</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-infinity"></i> Continuous Learning Framework</h3>
+                        <p>Promoting continuous learning opportunities for all citizens beyond formal education years.</p>
+                        <ul>
+                            <li>Workplace learning programs</li>
+                            <li>Community education centers</li>
+                            <li>Digital learning platforms</li>
+                            <li>Recognition of prior learning</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 8 -->
+                <div class="chapter" id="chapter8">
+                    <i class="fas fa-wheelchair chapter-icon"></i>
+                    <h2><span class="chapter-number">8</span> Special Needs Education</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-universal-access"></i> Inclusive Education Framework</h3>
+                        <p>Ensuring equitable access to quality education for persons with special needs.</p>
+                        <ul>
+                            <li>Inclusive education policies</li>
+                            <li>Specialized learning resources</li>
+                            <li>Teacher training for special education</li>
+                            <li>Accessible infrastructure</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 9 -->
+                <div class="chapter" id="chapter9">
+                    <i class="fas fa-university chapter-icon"></i>
+                    <h2><span class="chapter-number">9</span> Tertiary Education</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-graduation-cap"></i> Higher Education Framework</h3>
+                        <p>Policy guidelines for universities, polytechnics, and colleges of education.</p>
+                        <ul>
+                            <li>Quality assurance mechanisms</li>
+                            <li>Research and innovation funding</li>
+                            <li>Curriculum relevance to national needs</li>
+                            <li>Staff development programs</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 10 -->
+                <div class="chapter" id="chapter10">
+                    <i class="fas fa-laptop chapter-icon"></i>
+                    <h2><span class="chapter-number">10</span> Open, Distance and E-learning</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-globe"></i> Digital Education Framework</h3>
+                        <p>Expanding access through technology-enabled learning.</p>
+                        <ul>
+                            <li>National Open University framework</li>
+                            <li>Digital learning infrastructure</li>
+                            <li>Quality standards for online education</li>
+                            <li>Digital literacy programs</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 11 -->
+                <div class="chapter" id="chapter11">
+                    <i class="fas fa-tools chapter-icon"></i>
+                    <h2><span class="chapter-number">11</span> Technical and Vocational Education and Training (TVET)</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-cogs"></i> Skills Development Framework</h3>
+                        <p>Strengthening technical education for economic development.</p>
+                        <ul>
+                            <li>Industry-aligned curriculum</li>
+                            <li>Modern training facilities</li>
+                            <li>Apprenticeship programs</li>
+                            <li>Entrepreneurship integration</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 12 -->
+                <div class="chapter" id="chapter12">
+                    <i class="fas fa-chalkboard-teacher chapter-icon"></i>
+                    <h2><span class="chapter-number">12</span> Teacher Education</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-user-tie"></i> Professional Development Framework</h3>
+                        <p>Enhancing teacher quality and professional standards.</p>
+                        <ul>
+                            <li>Teacher certification requirements</li>
+                            <li>Continuous professional development</li>
+                            <li>Teacher motivation and welfare</li>
+                            <li>Educational leadership programs</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 13 -->
+                <div class="chapter" id="chapter13">
+                    <i class="fas fa-language chapter-icon"></i>
+                    <h2><span class="chapter-number">13</span> Language Policy</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-comments"></i> Multilingual Education Framework</h3>
+                        <p>Promoting language development and communication skills.</p>
+                        <ul>
+                            <li>Mother tongue instruction policy</li>
+                            <li>Official language proficiency</li>
+                            <li>Foreign language acquisition</li>
+                            <li>Sign language development</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 14 -->
+                <div class="chapter" id="chapter14">
+                    <i class="fas fa-hands-helping chapter-icon"></i>
+                    <h2><span class="chapter-number">14</span> Educational Services</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-concierge-bell"></i> Support Services Framework</h3>
+                        <p>Comprehensive support services for effective learning.</p>
+                        <ul>
+                            <li>Guidance and counseling services</li>
+                            <li>Library and resource centers</li>
+                            <li>Health and nutrition programs</li>
+                            <li>Special education services</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 15 -->
+                <div class="chapter" id="chapter15">
+                    <i class="fas fa-tasks chapter-icon"></i>
+                    <h2><span class="chapter-number">15</span> Planning, Administration, Supervision and Inspection</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-list"></i> Education Management Framework</h3>
+                        <p>Effective governance and quality assurance mechanisms.</p>
+                        <ul>
+                            <li>Education sector planning</li>
+                            <li>School administration guidelines</li>
+                            <li>Supervision and inspection protocols</li>
+                            <li>Performance monitoring systems</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Chapter 16 -->
+                <div class="chapter" id="chapter16">
+                    <i class="fas fa-hand-holding-usd chapter-icon"></i>
+                    <h2><span class="chapter-number">16</span> Financing, Partnerships and Resource Mobilization</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-pie"></i> Sustainable Funding Framework</h3>
+                        <p>Ensuring adequate and sustainable funding for education.</p>
+                        <ul>
+                            <li>Government funding commitments</li>
+                            <li>Public-private partnerships</li>
+                            <li>International donor coordination</li>
+                            <li>Community resource mobilization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+                <div class="content-section">
+                    <div class="file-container">
+                        <p><a href="educ.html"><strong>Simulate CBT</strong></a></p>
+                    </div>
+                </div>
+        <section class="conclusion">
+            <h2>Conclusion</h2>
+            <p>The 2021 National Policy on Education reflects Nigeria's present realities and future aspirations. It provides a clear framework for curriculum reform, teacher development, infrastructure investment, and education financing. All stakeholders—including government, educators, parents, learners, communities, and partners—must unite to translate policy objectives into tangible actions that empower citizens and propel national development.</p>
+            <p>This comprehensive policy document represents a significant milestone in Nigeria's educational journey, offering a roadmap for transforming the education sector to meet the demands of the 21st century while preserving the cultural heritage and values that define the Nigerian identity.</p>
+        </section>
+    </div>
+
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function goToHome() {
+    window.location.href = "cbtexam.html"; // Redirect to the home page
+        }
+
+        // Scroll to top functionality
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+            
+            // Update chapter progress indicator
+            const scrollPosition = window.pageYOffset;
+            const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercentage = (scrollPosition / pageHeight) * 100;
+            document.querySelector('.chapter-progress').style.width = `${scrollPercentage}%`;
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+
+            });
+        });
+        
+        // Highlight current chapter in TOC
+        window.addEventListener('scroll', () => {
+            const chapters = document.querySelectorAll('.chapter');
+            let currentChapterId = '';
+            
+            chapters.forEach(chapter => {
+                const chapterTop = chapter.offsetTop;
+                if (window.scrollY >= chapterTop - 150) {
+                    currentChapterId = chapter.id;
+                }
+            });
+            
+            document.querySelectorAll('.toc a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentChapterId}`) {
+                    link.classList.add('active');
+                    link.style.fontWeight = '600';
+                    link.style.color = 'var(--secondary)';
+                } else {
+                    link.style.fontWeight = 'normal';
+                    link.style.color = '';
+                }
+            });
+        });
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add animation delays to chapters
+            const chapters = document.querySelectorAll('.chapter');
+            chapters.forEach((chapter, index) => {
+                chapter.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>

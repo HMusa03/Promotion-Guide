@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="common_services.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Account 01 </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+    {question: "When assisting an MDA with budget preparation, what is the first critical step an accountant must take to ensure compliance?", options: ["Begin drafting expenditure estimates based on last year's figures", "Review and adhere to the guidelines in the Budget Call Circular", "Seek approval from the National Assembly", "Immediately allocate funds to all departments"], answer: "b"},
+    {question: "A budget officer is pressured to inflate revenue projections to make the budget appear more favorable. What does the Financial Regulation say about this?", options: ["It is acceptable if the Minister approves it", "Estimates must reflect realism and prudence; misleading estimates are misconduct", "Inflation is only a problem for expenditure, not revenue", "There are no specific rules on revenue projections"], answer: "b"},
+    {question: "What is the primary purpose of expenditure forecasting in the budgetary process?", options: ["To guarantee all requested funds are allocated", "To predict the necessary spending to achieve government objectives for the year", "To eliminate the need for supplementary budgets", "To maximize departmental spending before the year ends"], answer: "b"},
+    {question: "During budget defense, a committee questions a large allocation to a particular project. What is the accountant's best course of action?", options: ["Defend the allocation aggressively without providing details", "Provide detailed justification based on costed work plans and objectives", "Withdraw the budget entirely", "Blame the request on another department"], answer: "b"},
+    {question: "Which of the following is a sign of a poorly prepared budget?", options: ["It is based on a zero-based budgeting approach", "It is strictly aligned with the government's policy priorities", "It has significant variances between projected and actual figures every year", "It includes a contingency fund for emergencies"], answer: "c"},
+    {question: "The Ministry of Finance issues a new guideline mid-year affecting budget implementation. What should the accountant do?", options: ["Ignore it as the budget was already approved", "Continue with the original plan to avoid confusion", "Study the new guideline and initiate a virement or supplementary budget process if needed", "Complain to the head of service about the change"], answer: "c"},
+    {question: "What is the key principle behind 'virement' as allowed by Financial Regulations?", options: ["To allow unlimited transfer of funds between votes to maximize flexibility", "To enable the transfer of funds from a rich vote to a poor one without authorization", "To permit the transfer of savings from one sub-head to another within the same vote, subject to approval", "To hide overspending in one area by moving money from another"], answer: "c"},
+    {question: "An accountant notices a recurring trend of underutilization of funds in a specific vote. How should this inform the next budget cycle?", options: ["Increase the allocation for that vote to encourage spending", "Maintain the same allocation for consistency", "Reduce the allocation and reallocate the funds to votes with proven need", "Ignore the trend as it is not important"], answer: "c"},
+    {question: "Which document provides the legal authority for government spending?", options: ["The approved budget", "A warrant issued by the Minister of Finance", "A directive from the President", "A request from the accounting officer"], answer: "b"},
+    {question: "The concept of 'budgetary control' primarily refers to:", options: ["Preventing any department from spending its allocation", "Ensuring actual spending conforms to the approved budget", "Giving the accountant sole power over all finances", "Allowing departments to spend as they see fit"], answer: "b"},
+    {question: "What is the main risk of not involving line departments in the budget preparation process?", options: ["The budget will be completed too quickly", "The budget may not accurately reflect the department's actual needs and operational plans", "It violates the Public Procurement Act", "It automatically leads to a surplus"], answer: "b"},
+    {question: "A supplementary budget becomes necessary when:", options: ["There is savings in one vote", "There are unforeseen and urgent expenditures not provided for in the approved budget", "The financial year is about to end", "A new accountant is posted to the ministry"], answer: "b"},
+    {question: "Which body is primarily responsible for the oversight of the budget at the national level?", options: ["The Judiciary", "The National Assembly", "The Ministry of Foreign Affairs", "The Central Bank of Nigeria"], answer: "b"},
+    {question: "The 'Budget Call Circular' is issued by:", options: ["The Accountant-General of the Federation", "The Budget Office of the Federation", "The Head of Service", "The Auditor-General"], answer: "b"},
+    {question: "An accountant is asked to backdate a budget document. What is the ethical response?", options: ["Comply to maintain good relations with superiors", "Refuse, as it constitutes falsification of official records and is misconduct", "Agree if promised a promotion", "Do it but keep a personal record as evidence"], answer: "b"},
+    {question: "What is the core principle of Treasury Single Account (TSA) management?", options: ["To create multiple accounts for different revenue sources for easy tracking", "To consolidate all government revenue into a single account at the Central Bank for better control", "To allow MDAs autonomy over their bank accounts and funds", "To invest all government funds in the stock market"], answer: "b"},
+    {question: "An accountant discovers a large sum of money has been left in a dormant MDA bank account instead of being swept to the TSA. What is the immediate action?", options: ["Initiate immediate transfer to the TSA and report the lapse", "Use the funds to offset pending overhead costs", "Ignore it as the money is still government money", "Notify the bank to convert it to a fixed deposit"], answer: "a"},
+    {question: "What is the primary purpose of an imprest account?", options: ["To serve as a long-term investment fund for the MDA", "To hold the personal savings of the accounting officer", "To facilitate petty cash transactions for minor day-to-day expenses", "To bypass TSA requirements for operational flexibility"], answer: "c"},
+    {question: "Before replenishing an imprest account, what must the accountant ensure?", options: ["That the cashier is a personal friend", "That previous advances have been retired with proper receipts and vouchers", "That the Minister has given verbal approval", "That the financial year has ended"], answer: "b"},
+    {question: "A warrant is best described as:", options: ["A document authorizing the arrest of a defaulting officer", "An authority issued by the Minister of Finance to enable withdrawal of funds from the CRF", "A guarantee from the bank for a loan", "A contract for procurement of goods"], answer: "b"},
+    {question: "What is a key risk of poor cash flow management in an MDA?", options: ["Inability to pay salaries and meet obligations, leading to service disruption", "Having too much money in the account", "Automatic rollover of funds to the next year", "Increased attention from the National Assembly"], answer: "a"},
+    {question: "The term 'Consolidated Revenue Fund' (CRF) refers to:", options: ["A fund for consolidated debts", "The main account where all government revenue is paid into", "A special fund for presidential projects", "The pension fund for civil servants"], answer: "b"},
+    {question: "Diversion of funds for a purpose other than what was approved is a violation of:", options: ["Only the Public Service Rules", "Only the Financial Regulations", "Both Financial Regulations and Public Service Rules", "No specific regulation, if the money is spent on government work"], answer: "c"},
+    {question: "What is the correct procedure for managing internally generated revenue (IGR)?", options: ["It can be used at source by the MDA without any remittance", "It must be fully collected, receipted, and remitted to the CRF, then accessed through a warrant", "It is the personal property of the head of the agency", "50% can be retained for staff welfare"], answer: "b"},
+    {question: "An officer requests a cash advance for a project that is not in the approved budget. What should the accountant do?", options: ["Process the advance immediately to avoid delaying the project", "Request for the project to be included in the supplementary budget first before processing any advance", "Give the advance from another vote's allocation", "Ask the officer to use personal funds and get reimbursed later"], answer: "b"},
+    {question: "The Financial Regulations forbid unauthorized borrowing. This means an MDA:", options: ["Can never borrow under any circumstance", "Can borrow from commercial banks with the accountant's approval", "Can only borrow with specific authorization from the Minister of Finance", "Can borrow from other MDAs informally"], answer: "c"},
+    {question: "What is the main accountability mechanism for an imprest holder?", options: ["Regular verbal updates to the accountant", "Timely retirement of advances with supporting documents", "A promise to pay back eventually", "A written undertaking from a superior officer"], answer: "b"},
+    {question: "A delay in remitting revenue collections to the designated bank account constitutes:", options: ["Good cash management", "A breach of Financial Regulations", "A common practice with no consequences", "The bank's responsibility, not the accountant's"], answer: "b"},
+    {question: "Which of these is a key objective of the TSA policy?", options: ["To eliminate ghost workers", "To promote transparency and prevent mismanagement of government cash", "To reduce the number of banks in Nigeria", "To speed up the procurement process"], answer: "b"},
+    {question: "An accountant is pressured to use funds from a capital vote to pay for a lavish end-of-year party. How should they respond?", options: ["Comply since it is for staff morale", "Refuse, as it is an improper and unauthorized use of capital funds", "Seek approval from the entire staff", "Use the funds but classify it as office maintenance"], answer: "b"},
+    {question: "What is the first action an accountant must take when government revenue is collected?", options: ["Issue an official government receipt immediately", "Keep the cash in a safe until the end of the week", "Use it to settle petty expenses", "Deposit it in a personal account for safekeeping"], answer: "a"},
+    {question: "The daily task of matching cashbook entries with receipt book counterfoils is known as:", options: ["Auditing", "Reconciliation", "Authorization", "Expenditure control"], answer: "b"},
+    {question: "A revenue collector returns from a field assignment with a shortage in the cash collected. What is the immediate implication for the accountant?", options: ["Ignore it as it is a common occurrence", "The accountant is personally liable to make up the shortfall", "Initiate an investigation and hold the collector responsible for the loss", "Write it off as bad debt"], answer: "c"},
+    {question: "Financial Regulation 234 states that all revenue collected must be lodged into the bank:", options: ["Within 24 hours of collection", "By the end of the week", "When the accountant remembers to do it", "Only when a large amount has been accumulated"], answer: "a"},
+    {question: "What is the primary purpose of pre-numbered government receipts?", options: ["To make the receipt book look official", "To facilitate accountability and prevent fraud", "To save cost on printing", "To allow collectors to issue receipts from memory"], answer: "b"},
+    {question: "The 'Consolidated Revenue Fund' is fed by:", options: ["Loans from international donors", "All revenue collected by government agencies", "Only oil and gas revenue", "Fines from courts only"], answer: "b"},
+    {question: "A member of the public pays for a government service but is not issued a receipt. This is a breach of:", options: ["Only the citizen's rights", "Financial Regulations and a potential act of corruption", "Procurement guidelines", "The constitution, but with no financial implication"], answer: "b"},
+    {question: "Who is ultimately responsible for ensuring all revenue due to the government is collected and accounted for?", options: ["The security guard at the gate", "The Minister", "The Accounting Officer of the MDA", "The external auditors"], answer: "c"},
+    {question: "What does the term 'revenue leakage' mean?", options: ["Revenue evaporating from the account", "Loss of revenue due to inefficiency, corruption, or weak controls", "Water dripping on financial documents", "Legal tax exemptions"], answer: "b"},
+    {question: "Which of the following is NOT a standard source of government revenue?", options: ["Taxes", "Fines", "Grants", "Unauthorized sale of government assets"], answer: "d"},
+    {question: "If a revenue collector falls sick and cannot remit collections for two days, what is the proper procedure?", options: ["The money should be kept at his home until he recovers", "He should hand over the money and receipts to a superior officer for immediate remittance", "The money should be spent on his medical bills", "It should be locked in his desk drawer"], answer: "b"},
+    {question: "The cashbook is a:", options: ["Book of original entry for all cash transactions", "Summary of annual expenditure", "Record of employee salaries", "List of government assets"], answer: "a"},
+    {question: "A bank reconciliation statement is prepared to:", options: ["Identify errors or discrepancies between the cashbook and bank statement", "Apply for a bank loan", "Impress the auditor-general", "Close the bank account"], answer: "a"},
+    {question: "Using unissued receipt books from previous years is:", options: ["An acceptable practice to save paper", "A prohibited practice that weakens control", "Encouraged by Financial Regulations", "Only allowed with written permission from the President"], answer: "b"},
+    {question: "The best way to prevent theft of revenue is through:", options: ["Hiring family members as collectors", "A strong system of internal control including segregation of duties", "Allowing one person to handle cash, receipts, and recording", "Paying collectors a very low salary"], answer: "b"},
+    {question: "Before any payment is made, what document must be prepared and certified by the accountant?", options: ["A payment voucher", "A newspaper publication", "A letter from the beneficiary", "A verbal instruction from the CEO"], answer: "a"},
+    {question: "The 'Approval' column on a payment voucher must be signed by:", options: ["The junior clerk who processed the invoice", "An officer with the requisite authority to incur the expenditure", "The beneficiary of the payment", "The security officer"], answer: "b"},
+    {question: "What is the key principle of 'budgetary control' in expenditure?", options: ["Spend as fast as possible before the year ends", "Ensure no expenditure is incurred without a budgetary provision", "Allow departments to overspend their budget if the activity is important", "Ignore the budget once it is approved"], answer: "b"},
+    {question: "A request for payment lacks supporting documents like an invoice. What should the accountant do?", options: ["Process the payment to avoid delaying the supplier", "Reject the voucher and request for complete documentation", "Make a photocopy of another voucher to support it", "Call the supplier for verbal confirmation"], answer: "b"},
+    {question: "What does the term 'virement' allow?", options: ["Unlimited transfer of funds between votes", "The transfer of funds from one financial year to another", "The transfer of savings within the same vote to another sub-head, subject to approval", "The creation of a new budget line without approval"], answer: "c"},
+    {question: "Spending above the approved budget without proper authority is classified as:", options: ["Innovative financial management", "An overspend that will be regularized later", "Financial indiscipline and a breach of FR and PSR", "A common practice with no consequences"], answer: "c"},
+    {question: "Which of these expenditures would likely be considered 'unauthorized'?", options: ["Payment for approved travel", "Payment for stationary based on a raised voucher", "Payment for a personal gift to a visiting dignitary", "Payment of salaries"], answer: "c"},
+    {question: "The primary purpose of pre-payment audit is to:", options: ["Slow down the payment process", "Ensure the payment is legal, accurate, and supported by documents before it is made", "Audit the beneficiary's bank account", "Duplicate the work of external auditors"], answer: "b"},
+    {question: "A supplier submits an invoice that appears inflated compared to market rates. What should the accountant do?", options: ["Pay it immediately to maintain the relationship", "Query the invoice and request for a detailed breakdown or justification", "Reduce the amount arbitrarily and pay", "Ignore the invoice"], answer: "b"},
+    {question: "What is a 'commitment' in public expenditure?", options: ["A promise to marry a colleague", "An obligation to pay for goods or services once a contract is awarded or an order is placed", "A legal document for arrest", "A type of government bond"], answer: "b"},
+    {question: "The concept of 'economy' in expenditure requires that:", options: ["The government should never spend money", "Inputs are acquired at the lowest possible cost without compromising quality", "The cheapest option is always chosen, regardless of quality", "Only local suppliers are used"], answer: "b"},
+    {question: "Who has the ultimate authority to incur expenditure on behalf of the government?", options: ["Any civil servant", "The Accounting Officer", "The cleaner", "The external auditor"], answer: "b"},
+    {question: "A payment voucher should NOT be passed for payment if it:", options: ["Is properly approved", "Has all supporting documents attached", "Is for an activity not provided for in the approved budget", "Is for the amount of N10,000"], answer: "c"},
+    {question: "What is the role of the 'Due Process' office in expenditure control?", options: ["To ensure all procurements comply with the Public Procurement Act", "To process payments faster", "To approve all travel requests", "To manage staff payroll"], answer: "a"},
+    {question: "The term 'expenditure ceiling' refers to:", options: ["The roof of the finance building", "The maximum amount allocated to a vote or sub-head in the budget", "A recommendation that can be easily exceeded", "The limit on the number of staff"], answer: "b"},
+    {question: "What is the primary goal of the Integrated Payroll and Personnel Information System (IPPIS)?", options: ["To complicate salary administration", "To eliminate ghost workers and ensure payroll integrity", "To reduce the number of accounting staff", "To allow employees set their own salaries"], answer: "b"},
+    {question: "A new employee reports to the accounts unit for documentation. What is the FIRST critical step before adding them to the payroll?", options: ["Get a verbal confirmation from the HR unit", "Request for their bank account details", "Verify their appointment letter and confirmation from the establishment unit", "Add them immediately to avoid delay in payment"], answer: "c"},
+    {question: "Which of the following is a statutory deduction from an employee's salary?", options: ["Contribution to the staff Christmas party", "Payment for office lunch", "Pay-As-You-Earn (PAYE) Tax", "A voluntary loan repayment"], answer: "c"},
+    {question: "An employee complains that their tax deduction seems too high. Who is primarily responsible for addressing this?", options: ["The Federal Inland Revenue Service (FIRS)", "The employee's spouse", "The office messenger", "The security guard"], answer: "a"},
+    {question: "What does the term 'payroll fraud' primarily refer to?", options: ["Paying salaries on time", "Inclusion of fictitious names ('ghost workers') or manipulation of data to receive unearned pay", "Using a computer to process payroll", "Deducting taxes"], answer: "b"},
+    {question: "The Pension Reform Act mandates contributions to:", options: ["A personal savings account", "The Consolidated Revenue Fund", "The National Pension Commission (PENCOM) approved Pension Fund Administrator (PFA)", "The Minister's discretionary fund"], answer: "c"},
+    {question: "An officer is promoted with effect from January, but the payroll unit is notified in March. What should be done regarding the arrears?", options: ["Forget about the arrears to avoid work", "Pay the salary difference from January to March as a lump sum", "Ignore the promotion until the next financial year", "Ask the officer to forfeit the arrears"], answer: "b"},
+    {question: "Who is responsible for authorizing variations in pay (e.g., promotions, advances)?", options: ["The payroll officer alone", "The established human resources or administrative unit", "The individual employee", "The external auditor"], answer: "b"},
+    {question: "A 'stop order' on an employee's salary is usually issued to:", options: ["Increase their pay", "Prevent them from traveling", "Recover a debt owed to the government or for a third-party deduction like a cooperative society", "Punish them for lateness"], answer: "c"},
+    {question: "What is the key internal control in payroll administration?", options: ["Having one person handle everything from hiring to payment", "Segregation of duties between personnel who hire, those who maintain records, and those who process payments", "Allowing department heads to pay staff in cash", "Destroying payroll records after payment"], answer: "b"},
+    {question: "The National Housing Fund (NHF) deduction is:", options: ["A voluntary savings scheme", "A statutory deduction of 2.5% of basic salary for employees in the public and private sectors", "A tax on property", "Deducted only from directors"], answer: "b"},
+    {question: "When an employee retires, the final step for the accountant in payroll is to:", options: ["Immediately delete them from the payroll", "Process their pension benefits and gratuity as calculated by the PFA", "Ask them to return their identity card", "Stop speaking to them"], answer: "b"},
+    {question: "A payroll officer notices two employees with identical bank account numbers. This could indicate:", options: ["A common bank", "Potential payroll fraud with one account receiving multiple salaries", "A mistake by the bank", "That the employees are twins"], answer: "b"},
+    {question: "The 'net pay' on a pay slip refers to:", options: ["The amount before deductions", "The gross salary", "The take-home amount after all deductions", "The annual salary"], answer: "c"},
+    {question: "What is the ethical thing to do if a payroll officer accidentally overpays an employee?", options: ["Ignore it and hope no one notices", "Inform the employee and arrange for the recovery of the overpayment", "Blame the employee for the error", "Change the payroll records to hide the mistake"], answer: "b"},
+    {question: "Financial Regulation 101 states that 'Every officer is responsible for the proper custody of public funds under his care.' This emphasizes:", options: ["Collective responsibility", "Personal accountability", "The role of the security guard", "That only cashiers are responsible"], answer: "b"},
+    {question: "The primary purpose of preparing monthly financial returns is to:", options: ["Keep the accountant busy", "Provide timely information for management decision-making and ensure transparency", "Satisfy the hunger of the Auditor-General", "Replace the annual report"], answer: "b"},
+    {question: "The 'Appropriation Account' is prepared to show:", options: ["How much was appropriated from other countries", "A comparison of the budget approved by the legislature against the actual expenditure", "The personal assets of the accountant", "Salaries of permanent secretaries"], answer: "b"},
+    {question: "Who is legally mandated to audit the government's financial statements?", options: ["The Minister of Finance", "The Accountant-General of the Federation", "The Auditor-General for the Federation", "The President"], answer: "c"},
+    {question: "A 'Statement of Assets and Liabilities' provides a snapshot of the government's:", options: ["Political standing", "Financial position at a point in time", "Employee satisfaction", "Plans for the next year"], answer: "b"},
+    {question: "Failure to submit annual financial statements to the Auditor-General within the stipulated time frame is a breach of:", options: ["Office etiquette", "The Constitution and the Financial Regulations", "A minor rule with no penalty", "International law"], answer: "b"},
+    {question: "The concept of 'accountability' in public finance means that officers must:", options: ["Be able to count well", "Give a satisfactory record of the funds and assets entrusted to them", "Account only for revenue, not expenditure", "Only account to their immediate family"], answer: "b"},
+    {question: "What is the main difference between internal and external reporting?", options: ["Internal reports are for management; external reports are for oversight bodies like the legislature and public", "Internal reports are secret; external reports are for sale", "There is no difference", "External reports are more detailed than internal reports"], answer: "a"},
+    {question: "The 'Financial Statement' of an MDA typically includes:", options: ["A list of all employees", "An income and expenditure account and a balance sheet", "Minutes of staff meetings", "The menu for the canteen"], answer: "b"},
+    {question: "What is the role of the Accountant-General of the Federation in financial reporting?", options: ["To prepare the budget for the entire country", "To consolidate the accounts of all MDAs and produce the government's annual financial statements", "To pay all civil servants", "To audit all MDAs"], answer: "b"},
+    {question: "A significant variance between budgeted and actual figures in a report should be:", options: ["Hidden to avoid embarrassment", "Explained with notes detailing the reasons for the variance", "Ignored as it is common", "Blamed on another department"], answer: "b"},
+    {question: "The principle of 'materiality' in reporting means that:", options: ["All errors must be corrected regardless of size", "Only information that could influence users' decisions needs to be disclosed", "Reports should be printed on high-quality material", "Physical assets are more important than cash"], answer: "b"},
+    {question: "Who are the primary users of government's general-purpose financial reports?", options: ["Foreign investors only", "The public, legislators, and oversight agencies", "Only the President", "Other MDAs"], answer: "b"},
+    {question: "The 'Notes to the Accounts' in a financial report are used to:", options: ["Send personal messages", "Provide additional details and explanations for the numbers in the main statements", "Fill up empty space", "List the names of all accountants"], answer: "b"},
+    {question: "An accountant discovers an error in a report that was submitted last quarter. The correct action is to:", options: ["Wait for the auditor to find it", "Correct the error in the next quarter's report and disclose the prior period adjustment", "Destroy all copies of the old report", "Deny any knowledge of the error"], answer: "b"},
+    {question: "Segregation of duties is a key internal control principle. It means:", options: ["One person should handle all aspects of a transaction to ensure efficiency", "No single person should initiate, authorize, record, and custody a transaction alone", "Duties should be segregated based on gender", "Only senior staff should handle cash"], answer: "b"},
+    {question: "What is the purpose of an 'internal audit' unit?", options: ["To replace the external auditor", "To provide an independent, objective assurance and consulting activity designed to add value and improve an organization's operations", "To spy on other staff for management", "To process payment vouchers"], answer: "b"},
+    {question: "A weak internal control system increases the risk of:", options: ["Having too many staff", "Fraud, errors, and misappropriation of assets", "Completing work too quickly", "Over-compliance with regulations"], answer: "b"},
+    {question: "Before making a payment, which three-way match is a crucial control check?", options: ["Matching the employee's name, rank, and file number", "Matching the purchase order, the goods received note, and the supplier's invoice", "Matching the voucher color with the department's color", "Matching the day of the week with the type of expenditure"], answer: "b"},
+    {question: "What is an 'imprest'?", options: ["A type of audit", "A fixed cash advance given to a cashier for petty expenses", "A government revenue account", "A contract agreement"], answer: "b"},
+    {question: "The requirement for sequential numbering of receipts and vouchers is a control to:", options: ["Use up all paper in order", "Prevent theft and ensure all transactions are recorded", "Make the documents look neat", "Satisfy the stationary store officer"], answer: "b"},
+    {question: "Regular and surprise cash counts of the imprest balance are performed to:", options: ["Harass the cashier", "Verify that the physical cash on hand matches the recorded balance", "Train new accountants", "Find extra money for lunch"], answer: "b"},
+    {question: "Authorization thresholds refer to:", options: ["The number of authors in the ministry", "The monetary limits within which different levels of staff can approve expenditures", "The height of the authorization officer", "The time it takes to get approval"], answer: "b"},
+    {question: "What does 'compliance' mean in the context of internal control?", options: ["Following the orders of the most senior person", "Adhering to laws, regulations, policies, and procedures", "Complying with colleagues' requests for favors", "Agreeing with the external auditor's every opinion"], answer: "b"},
+    {question: "A control environment is best described as:", options: ["The air conditioning in the office", "The overall attitude, awareness, and actions of management regarding internal controls", "The physical security of the building", "The landscaping outside the office"], answer: "b"},
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

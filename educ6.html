@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Exam Simulation</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="educ.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>National Policy on Education {NPE 06}(100 Qs) </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+    { 
+        question: "A new secondary school is being established in a rural community. Which planning principle should guide the location decision?", 
+        options: ["Proximity to government offices", "Accessibility for target population", "Availability of luxury amenities", "Political considerations"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school principal notices declining teacher performance. Which administrative action is MOST appropriate initially?", 
+        options: ["Immediate dismissal", "Performance improvement plan", "Salary reduction", "Public criticism"], 
+        answer: "b" 
+    },
+    { 
+        question: "During an inspection, a school is found to have inadequate sanitation facilities. What is the inspector's PRIMARY responsibility?", 
+        options: ["Immediate closure order", "Recommendation for improvement", "Personal funding of facilities", "Ignoring the deficiency"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which planning approach BEST ensures educational resources reach marginalized communities?", 
+        options: ["Equal distribution", "Equity-based allocation", "Urban-focused planning", "Political patronage"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school's academic performance has declined for three consecutive terms. Which supervisory action is MOST effective?", 
+        options: ["Teacher replacement", "Comprehensive needs assessment", "Student punishment", "Curriculum reduction"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of educational planning in Nigeria?", 
+        options: ["Political advancement", "Efficient resource utilization", "International recognition", "Personal enrichment"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which administrative function is CRITICAL for effective school management?", 
+        options: ["Record keeping", "Social events", "Political connections", "Personal favors"], 
+        answer: "a" 
+    },
+    { 
+        question: "During supervision, a teacher is using outdated methods. What is the MOST appropriate response?", 
+        options: ["Public humiliation", "Professional development recommendation", "Immediate suspension", "Salary deduction"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which factor is MOST important in educational infrastructure planning?", 
+        options: ["Aesthetic design", "Functional suitability", "Political visibility", "Cost minimization"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school faces frequent community conflicts. Which administrative skill is MOST needed?", 
+        options: ["Financial management", "Conflict resolution", "Curriculum development", "Examination coordination"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN purpose of school inspection?", 
+        options: ["Punishing underperformers", "Quality assurance", "Generating revenue", "Political oversight"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which planning strategy BEST addresses teacher distribution disparities?", 
+        options: ["Voluntary postings", "Incentive-based deployment", "Forced assignments", "Urban concentration"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school lacks implementation of curriculum reforms. Which supervisory approach is MOST effective?", 
+        options: ["Threatening closure", "Supportive monitoring", "Ignoring non-compliance", "Public shaming"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which administrative record is ESSENTIAL for educational planning?", 
+        options: ["Student enrollment data", "Teacher personal diaries", "Parent opinions", "Community gossip"], 
+        answer: "a" 
+    },
+    { 
+        question: "During inspection, a school shows excellent innovation but poor exam results. How should this be evaluated?", 
+        options: ["Focus only on exam results", "Balanced assessment of multiple indicators", "Ignore exam results completely", "Recommend immediate closure"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which planning principle ensures educational continuity during emergencies?", 
+        options: ["Reactive response", "Contingency planning", "Ad hoc decisions", "External dependence"], 
+        answer: "b" 
+    },
+    { 
+        question: "A principal needs to improve stakeholder engagement. Which administrative strategy works BEST?", 
+        options: ["Autocratic decision-making", "Participatory governance", "Secret meetings", "External imposition"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY role of education managers in policy implementation?", 
+        options: ["Personal interpretation", "Faithful execution", "Selective application", "Complete avoidance"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which supervision technique BEST improves teaching quality?", 
+        options: ["Infrequent surprise visits", "Regular constructive feedback", "Annual evaluation only", "Student complaints"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school faces resource constraints. Which planning approach is MOST sustainable?", 
+        options: ["Waiting for government allocation", "Community resource mobilization", "Reducing educational quality", "Increasing student fees"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which administrative quality is MOST critical for educational leadership?", 
+        options: ["Political connections", "Integrity and vision", "Wealth status", "Family background"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN benefit of decentralized educational administration?", 
+        options: ["Reduced accountability", "Context-responsive decisions", "Weakened standards", "Increased bureaucracy"], 
+        answer: "b" 
+    },
+    { 
+        question: "During inspection, a school falsifies records. What is the appropriate action?", 
+        options: ["Ignoring the issue", "Penalizing the institution", "Commending creativity", "Rewarding innovation"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which planning tool BEST forecasts educational needs?", 
+        options: ["Political manifestos", "Demographic analysis", "Community rumors", "Teacher preferences"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school consistently exceeds performance targets. Which administrative approach recognizes this?", 
+        options: ["Increased scrutiny", "Best practice documentation", "Additional constraints", "Resource reduction"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of educational supervision?", 
+        options: ["Fault-finding", "Quality improvement", "Revenue generation", "Personal advancement"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which factor is MOST critical in infrastructure planning for schools?", 
+        options: ["Architectural awards", "Safety and functionality", "Political symbolism", "Cost minimization"], 
+        answer: "b" 
+    },
+    { 
+        question: "A new policy requires digital integration. Which administrative strategy ensures implementation?", 
+        options: ["Voluntary adoption", "Phased support plan", "Immediate punishment", "Complete avoidance"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN challenge in educational planning in Nigeria?", 
+        options: ["Excessive data", "Inaccurate statistics", "Overfunding", "Surplus teachers"], 
+        answer: "b" 
+    },
+    { 
+        question: "During supervision, a teacher shows exceptional innovation. How should this be handled?", 
+        options: ["Ignoring the innovation", "Sharing best practices", "Punishing deviation", "Increasing monitoring"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which administrative approach BEST promotes teacher motivation?", 
+        options: ["Micromanagement", "Supportive leadership", "Arbitrary decisions", "Favoritism"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY purpose of educational data collection?", 
+        options: ["Filling storage", "Informed decision-making", "International comparison", "Personal research"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school faces declining enrollment. Which planning response is MOST appropriate?", 
+        options: ["Immediate closure", "Demographic analysis", "Teacher reduction", "Program expansion"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which supervision method is MOST effective for remote schools?", 
+        options: ["Annual visits", "Technology-enabled monitoring", "Ignoring remote areas", "Student reports"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the CRITICAL element in educational administration during crises?", 
+        options: ["Rigid adherence to plans", "Adaptive leadership", "Bureaucratic procedures", "External blame"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which planning principle ensures educational relevance?", 
+        options: ["Static curriculum", "Labor market alignment", "Political directives", "International standards"], 
+        answer: "b" 
+    },
+    { 
+        question: "A rural school needs to build additional classrooms but lacks government funding. Which resource mobilization strategy is MOST sustainable?", 
+        options: ["Waiting for federal allocation", "Community fundraising and contributions", "Increasing student fees dramatically", "Seeking foreign loans"], 
+        answer: "b" 
+    },
+    { 
+        question: "A company wants to support education through CSR. Which partnership model would provide LONG-TERM benefits to a school?", 
+        options: ["One-time cash donation", "Infrastructure development and maintenance", "Sponsoring a single event", "Providing temporary staff"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY challenge in education financing in Nigeria?", 
+        options: ["Excessive funding", "Inadequate and unpredictable funding", "Too many donors", "Overqualified financial officers"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school wants to generate internal revenue. Which approach aligns with educational objectives?", 
+        options: ["Commercializing core educational services", "Renting facilities during off-hours", "Selling examination answers", "Charging for mandatory classes"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which financing mechanism is specifically designated for tertiary education development?", 
+        options: ["Universal Basic Education Commission fund", "Tertiary Education Trust Fund", "Local government allocation", "Parent-Teacher Association dues"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the RECOMMENDED percentage of national budget for education according to international benchmarks?", 
+        options: ["5-10%", "15-20%", "25-30%", "35-40%"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school identifies mismanagement of funds. Which oversight mechanism should be strengthened?", 
+        options: ["Teacher recruitment", "Financial accountability systems", "Curriculum development", "Sports activities"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which partnership type offers MUTUAL benefits for schools and businesses?", 
+        options: ["Philanthropic donations", "Work-study programs and talent development", "One-way resource transfer", "Unconditional grants"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN purpose of education trust funds?", 
+        options: ["Personal enrichment", "Sustainable education financing", "Political campaigns", "International travel"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school needs laboratory equipment but lacks funds. Which approach demonstrates effective resource mobilization?", 
+        options: ["Eliminating science classes", "Partnership with technology companies", "Increasing art funding", "Reducing teacher salaries"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which factor is CRITICAL for successful public-private partnerships in education?", 
+        options: ["Complete private control", "Clear roles and mutual accountability", "Eliminating government oversight", "Secret agreements"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY source of education funding in Nigeria?", 
+        options: ["Foreign donors", "Government allocations", "Parent contributions", "Corporate sponsorship"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school wants to attract international partnerships. Which strategy is MOST effective?", 
+        options: ["Exaggerating needs", "Demonstrating accountability and clear plans", "Political connections", "Threatening closures"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which resource mobilization approach is MOST appropriate for special needs education?", 
+        options: ["Ignoring special needs", "Targeted fundraising for assistive technologies", "Reducing overall budget", "Charging extra fees"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN risk of over-reliance on external funding for education?", 
+        options: ["Improved quality", "Sustainability challenges", "Increased local control", "Better infrastructure"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which financing strategy promotes EQUITABLE access to education?", 
+        options: ["Uniform fees for all", "Sliding scale fees based on income", "Elite-only education", "International student focus"], 
+        answer: "b" 
+    },
+    { 
+        question: "A donor offers funds with restrictive conditions. How should schools respond?", 
+        options: ["Accept any conditions", "Evaluate alignment with educational goals", "Reject all conditional funding", "Hide conditions from stakeholders"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY benefit of alumni associations in resource mobilization?", 
+        options: ["Political influence", "Sustainable funding and mentorship", "Social events", "Curriculum changes"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which budgeting approach ensures optimal resource allocation in schools?", 
+        options: ["Spending without planning", "Needs-based participatory budgeting", "Principal-only decisions", "Random allocation"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school receives multiple funding offers. Which criterion should prioritize selection?", 
+        options: ["Largest amount", "Alignment with educational objectives", "Easiest paperwork", "Personal relationships"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN purpose of education levies and taxes?", 
+        options: ["General government revenue", "Dedicated education financing", "Personal enrichment", "International debt payment"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which partnership model BEST addresses technical education needs?", 
+        options: ["Theoretical research only", "Industry apprenticeship programs", "Isolated training", "Foreign curriculum adoption"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the CRITICAL factor for successful grant applications?", 
+        options: ["Exaggerated proposals", "Clear needs assessment and implementation plan", "Political pressure", "Personal connections"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which strategy improves transparency in education financing?", 
+        options: ["Secret accounts", "Regular public financial reporting", "Single-person control", "No record keeping"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school wants to maximize limited resources. Which approach is MOST effective?", 
+        options: ["Focusing on one area", "Strategic prioritization based on impact", "Equal distribution", "Administrative luxury"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY challenge in education public-private partnerships?", 
+        options: ["Excessive profitability", "Balancing commercial and educational interests", "Too much government support", "Overqualified partners"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which financing mechanism supports emergency education in conflict areas?", 
+        options: ["Regular budget allocation", "Humanitarian education funds", "Student loans", "Teacher contributions"], 
+        answer: "b" 
+    },
+    { 
+        question: "A school needs to fund digital transformation. Which partnership approach is MOST sustainable?", 
+        options: ["One-time device donation", "Comprehensive technology integration partnership", "Student fundraising", "Teacher sacrifices"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN purpose of education endowment funds?", 
+        options: ["Short-term spending", "Long-term financial sustainability", "Political donations", "International investments"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which resource mobilization strategy is MOST appropriate for rural schools?", 
+        options: ["Urban fundraising", "Community-based resource mapping", "Foreign dependence", "Government waiting"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the CRITICAL element in education crowdfunding campaigns?", 
+        options: ["Vague proposals", "Compelling story and clear impact", "Anonymous donations", "No follow-up"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which financing approach reduces education inequality?", 
+        options: ["Equal funding for all schools", "Equity-based allocation to disadvantaged areas", "Urban-focused investment", "Private school subsidies"], 
+        answer: "b" 
+    },
+    { 
+        question: "A donor wants to fund scholarships. Which selection method ensures EQUITY?", 
+        options: ["Personal connections", "Merit and need-based criteria", "Geographic favoritism", "Random selection"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the PRIMARY benefit of diversified education funding sources?", 
+        options: ["Increased bureaucracy", "Reduced vulnerability to single source failure", "Favoritism opportunities", "Accounting complexity"], 
+        answer: "b" 
+    },
+    { 
+        question: "Which strategy BEST addresses education funding leakages?", 
+        options: ["Ignoring losses", "Strong financial controls and audits", "Reducing overall budget", "Secret investigations"], 
+        answer: "b" 
+    },
+    { 
+        question: "What is the MAIN challenge in mobilizing local resources for education?", 
+        options: ["Excessive local wealth", "Limited community capacity and poverty", "Too many volunteers", "Overqualified community members"], 
+        answer: "b" 
+    }
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

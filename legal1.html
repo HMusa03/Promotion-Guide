@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="common_services.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Legal 01</h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "A new minister proposes a policy to provide free internet, but it requires collecting citizen data. What is the legal unit's FIRST advisory duty?", options: ["Calculate the policy's cost", "Analyze its consistency with data protection laws and fundamental rights", "Immediately draft the implementing guidelines", "Launch a public awareness campaign"], answer: "b"},
+{question: "A licensing officer is unsure if they can revoke a business license based on a neighbor's complaint. Who should they consult?", options: ["The FCT Minister", "The Public Affairs Unit", "The Legal Unit for interpretation of their delegated authority", "The Head of Service"], answer: "c"},
+{question: "What principle must the legal unit ensure is followed when a public servant is making a decision that affects an individual's rights?", options: ["Principles of natural justice (fair hearing, no bias)", "Principle of maximum revenue generation", "Principle of political expediency", "Principle of administrative convenience"], answer: "a"},
+{question: "The 'Public Health Act' uses the term 'nuisance.' A health officer needs a consistent definition to apply it. Who provides the authoritative interpretation?", options: ["The Police", "The affected community", "The Legal Unit", "A private law firm"], answer: "c"},
+{question: "An operational department asks if they can share patient records with another agency for a research project. What is the key legal consideration?", options: ["The cost of data transfer", "Compliance with data protection and confidentiality laws", "The academic credentials of the researchers", "The potential popularity of the research findings"], answer: "b"},
+{question: "A freedom of information request is received for all internal emails about a failed project. What role does the legal unit play?", options: ["To delete incriminating emails", "To advise on the legal exemptions and proper process for response", "To ignore the request", "To publicly condemn the person making the request"], answer: "b"},
+{question: "The legal unit's advice on a policy is that it is likely unconstitutional. What should the unit do if senior officials want to proceed anyway?", options: ["Drop the issue and let them proceed", "Water down the advice to be more acceptable", "Maintain its independent, objective counsel and document the legal risk", "Leak the advice to the press"], answer: "c"},
+{question: "A daily duty of the legal unit is most likely to involve answering queries on:", options: ["International stock market trends", "Public procurement and employment law", "The minister's personal schedule", "The design of government buildings"], answer: "b"},
+{question: "The primary client of a public service legal unit is:", options: ["The private sector", "The minister's political party", "The public itself, represented by the government", "The highest-paying contractor"], answer: "c"},
+{question: "Success for a legal unit is measured in:", options: ["Revenue generated from lawsuits", "Prevention of legal crises and lawful administration", "The number of policies it initiates", "The size of its library"], answer: "b"},
+{question: "Before a policy is adopted, the legal unit vets it to ensure it is:", options: ["Politically popular", "Consistent with the constitution and existing statutes", "The cheapest option available", "Able to be implemented within one week"], answer: "b"},
+{question: "A public servant is about to hire a close relative. The legal unit would advise on:", options: ["How to hide the relationship", "Conflict-of-interest rules and codes of conduct", "The relative's salary expectations", "The fastest way to process the paperwork"], answer: "b"},
+{question: "The legal unit advises that an administrative decision was 'procedurally improper.' This most likely means it violated:", options: ["Budgetary guidelines", "Principles of natural justice", "Office dress code", "The minister's personal preferences"], answer: "b"},
+{question: "When interpreting a broad law, the legal unit's goal is to ensure:", options: ["Every interpretation benefits the government financially", "A consistent application of the law across the agency", "That each department creates its own unique interpretation", "The law is interpreted to please the most people"], answer: "b"},
+{question: "A citizen claims a decision was 'irrational.' This is a potential ground for:", options: ["A promotion for the decision-maker", "Judicial review", "A public celebration", "Ignoring the citizen"], answer: "b"},
+{question: "The legal unit's role in policy formulation is primarily:", options: ["To set the policy budget", "To analyze legal authority and potential risks", "To implement the policy nationwide", "To design the policy's logo"], answer: "b"},
+{question: "A 'watertight' contract is one that:", options: ["Is physically resistant to water", "Protects the government's interests and allocates risk appropriately", "Is written in very small font", "Has been signed near a body of water"], answer: "b"},
+{question: "The legal unit's advice on a procurement process is crucial to avoid:", options: ["Challenges from disgruntled bidders", "Using blue ink instead of black", "Having too many suppliers", "The minister's schedule being free"], answer: "a"},
+{question: "A 'subsidiary legislation' is:", options: ["A law made by a company", "A less important law", "Regulations or orders created under the authority of an Act of Parliament", "A law from a former colonial power"], answer: "c"},
+{question: "'Intra vires' means an action is:", options: ["Beyond the legal power granted", "Extremely powerful", "Within the legal power granted", "Done in good faith"], answer: "c"},
+{question: "The legal unit's work on drafting regulations ensures they are:", options: ["Vague and flexible", "Long and complicated", "Clear, precise, and intra vires", "Written in Latin"], answer: "c"},
+{question: "When a bill is before parliament, the legal unit:", options: ["Votes on it", "Campaigns for its passage", "Analyzes its impact and prepares briefs for officials", "Ignores it as it's not law yet"], answer: "c"},
+{question: "Law reform initiatives by the legal unit aim to:", options: ["Make laws more complicated", "Reduce the number of laws", "Identify and fix gaps or obsolete provisions", "Please international observers"], answer: "c"},
+{question: "In litigation, the legal unit's role includes:", options: ["Acting as the judge", "Paying the fines directly", "Developing case strategy and instructing external counsel", "Arresting the opposing party"], answer: "c"},
+{question: "The legal unit might advise settling a case if it is:", options: ["Always the easiest option", "What the opposing lawyer wants", "In the public interest, saving cost and time", "Guaranteed to make the news"], answer: "c"},
+{question: "A 'judicial review' challenges the:", options: ["The weather forecast", "The score of a football match", "Legality, rationality, or procedural fairness of a decision", "The price of goods in the market"], answer: "c"},
+{question: "The legal unit initiates enforcement actions to:", options: ["Punish everyone", "Close down all businesses", "Compel compliance with regulatory powers (e.g., collect taxes)", "Generate positive publicity"], answer: "c"},
+{question: "ADR stands for:", options: ["Automated Data Retrieval", "Annual Departmental Review", "Alternative Dispute Resolution", "Advanced Digital Recording"], answer: "c"},
+{question: "Examples of ADR include:", options: ["Litigation and appeals", "Public protests and strikes", "Mediation and arbitration", "Ignoring the problem"], answer: "c"},
+{question: "The legal unit promotes ADR to:", options: ["Increase court fees", "Put lawyers out of work", "Achieve efficient and amicable resolutions", "Make the process more secretive"], answer: "c"},
+{question: "In a Public-Private Partnership (PPP), the legal unit's key role is to:", options: ["Fund the project", "Operate the resulting facility", "Draft and negotiate the contract to protect public interest", "Market the project to investors"], answer: "c"},
+{question: "The legal unit helps manage contractual relationships by:", options: ["Ignoring disputes", "Unilaterally changing contract terms", "Resolving disputes and interpreting clauses", "Taking over the project management"], answer: "c"},
+{question: "A core duty in risk management is to:", options: ["Ignore risks", "Create more risks", "Identify, assess, and mitigate legal risks", "Blame others for risks"], answer: "c"},
+{question: "The legal unit develops internal policies to:", options: ["Make work more difficult", "Replace national laws", "Translate complex laws into clear staff guidelines", "Hide information from staff"], answer: "c"},
+{question: "Training staff on legal obligations is a proactive way to:", options: ["Waste time", "Reduce staff numbers", "Prevent litigation and misconduct", "Make the legal unit seem important"], answer: "c"},
+{question: "The legal unit advises on ethics issues like:", options: ["The best place for lunch", "Office décor", "Whistleblower protections and conflicts of interest", "Personal investment strategies"], answer: "c"},
+{question: "Attorney-client privilege is important to ensure:", options: ["All advice is made public", "The unit gets paid more", "Open and frank communication within the agency", "The unit can sue the agency"], answer: "c"},
+{question: "The legal unit liaises with the Attorney-General to ensure:", options: ["They play golf together", "The AG handles all the work", "The agency is aligned with whole-of-government legal policy", "The agency operates independently of all other bodies"], answer: "c"},
+{question: "A 'sober assessment of the law' means advice must be:", options: ["Given only in the morning", "Always negative", "Impartial and objective, not just telling officials what they want to hear", "Based on guesswork"], answer: "c"},
+{question: "The legal unit's work ultimately helps to build:", options: ["Larger government buildings", "The unit's private practice", "Public trust in government institutions", "Barriers between citizens and government"], answer: "c"},
+{question: "The principle of 'proportionality' means an action should:", options: ["Be done in proportion to one's salary", "Not be taken at all", "Be appropriate and not excessive in relation to the goal", "Be applied equally to everyone regardless of the situation"], answer: "c"},
+{question: "A 'legitimate expectation' might be created if a public body:", options: ["Promises something it cannot legally deliver", "Always follows a certain procedure, leading people to rely on it", "Publishes its internal memos", "Has a nice website"], answer: "b"},
+{question: "The legal unit is the 'institutional conscience' because it:", options: ["Handles religious matters", "Ensures actions are ethical and lawful", "Is the oldest unit", "Judges employees' moral character"], answer: "b"},
+{question: "The value 'accountability' is upheld by the legal unit by:", options: ["Ensuring decisions can be legally justified and defended", "Hiding mistakes", "Blaming other departments", "Taking credit for successful projects"], answer: "a"},
+{question: "A key difference between a public service lawyer and a private lawyer is the:", options: ["Type of law they practice", "Primary client (the public vs. a paying client) and measure of success", "Amount of education required", "Language they speak"], answer: "b"},
+{question: "The most effective way for the legal unit to prevent problems is through:", options: ["Winning all lawsuits", "Proactive training and clear internal policies", "Threatening staff with dismissal", "Hiring more lawyers"], answer: "b"},
+{question: "A ministry is negotiating a complex software licensing agreement. The legal unit's primary focus should be on:", options: ["Ensuring the vendor gets a good price", "Drafting terms that protect government data and ensure service delivery", "Choosing the color scheme for the software interface", "Promising a quick signing process"], answer: "b"},
+{question: "During a contract negotiation, the supplier insists on a liability clause that caps their damages at the contract value. The legal unit should:", options: ["Accept it to close the deal quickly", "Reject any liability for the supplier", "Negotiate a fair allocation of risk that protects the public interest", "Let the procurement officer decide"], answer: "c"},
+{question: "A contractor is consistently delivering services late. The operational department wants to terminate the contract. The legal unit's first step is to:", options: ["Immediately send a termination letter", "Review the contract's termination clauses and required notice procedures", "Publicly shame the contractor", "Ignore the issue until it resolves itself"], answer: "b"},
+{question: "A dispute arises over whether delivered goods meet the technical specifications. The contract includes an arbitration clause. The legal unit should:", options: ["Immediately sue the supplier in court", "Initiate the arbitration process as per the contract", "Cancel the entire procurement process", "Ask the police to intervene"], answer: "b"},
+{question: "What is the main purpose of the legal unit vetting a tender document before it is published?", options: ["To make it longer and more complicated", "To ensure the process is fair, transparent, and legally compliant", "To exclude certain bidders personally disliked", "To add unnecessary technical requirements"], answer: "b"},
+{question: "A bidder who lost a tender claims the evaluation was biased. They threaten judicial review. The legal unit's role is to:", options: ["Destroy the evaluation records", "Review the process to ensure it was lawful and prepare a defense", "Pressure the evaluation team to change the result", "Ignore the threat as it has no merit"], answer: "b"},
+{question: "In a Public-Private Partnership (PPP) for a hospital, a key risk the legal unit must address in the contract is:", options: ["The political affiliation of the private partner", "The allocation of financial risk and ensuring continued public service", "The brand of medical equipment used", "The personal health of the investors"], answer: "b"},
+{question: "A contract manager asks if they can verbally agree to a minor change in the delivery schedule. The legal unit should advise:", options: ["Yes, verbal agreements are always binding", "No, all variations must be in writing as per the contract's amendment clause", "Only if the contractor is a friend", "It depends on the weather"], answer: "b"},
+{question: "The legal unit discovers a clerical error in a signed contract that misstates the price. The appropriate action is to:", options: ["Ignore it", "Draft a formal contract amendment to correct the error, signed by both parties", "Unilaterally change the document", "Sue the other party for fraud"], answer: "b"},
+{question: "A contract is about to expire, but the service is still critically needed. The legal unit should advise on:", options: ["Letting it expire and stopping the service", "Initiating a new procurement process well in advance of the expiry date", "Automatically renewing it forever", "Asking the contractor to work for free"], answer: "b"},
+{question: "A company sues the government, claiming its trademark was infringed by a public awareness campaign. Who manages this litigation?", options: ["The marketing department", "The legal unit", "The company's lawyers directly", "The minister's chief of staff"], answer: "b"},
+{question: "The legal unit is served with court papers naming the ministry as a defendant. Their first step is to:", options: ["Throw them away", "Acknowledge service and begin preparing a defense", "Call the plaintiff to apologize", "Wait for the minister's personal instructions"], answer: "b"},
+{question: "When deciding whether to settle a case or fight it in court, the legal unit's LEAST important consideration is:", options: ["The likely legal costs", "The strength of the government's case", "The potential impact on public funds", "The personal popularity of the opposing lawyer"], answer: "d"},
+{question: "A citizen applies for judicial review of a decision, claiming it was 'Wednesbury unreasonable.' This means the decision was:", options: ["Made on a Wednesday", "So absurd that no reasonable authority could have made it", "Perfectly rational", "Based on incorrect facts"], answer: "b"},
+{question: "The legal unit is on the losing side of a court case. A likely next step is to:", options: ["Ignore the court's judgment", "Advise the agency on how to comply with the court order", "Fire all involved staff", "Appeal to the court of public opinion"], answer: "b"},
+{question: "The legal unit initiates enforcement action against a company for repeatedly violating environmental regulations. This involves:", options: ["Asking them nicely to stop", "Filing a case in the appropriate court or tribunal", "Shutting down their power supply", "Issuing a press release condemning them"], answer: "b"},
+{question: "A court orders the government to release documents. The legal unit discovers some are covered by legal professional privilege. They should:", options: ["Release everything", "Apply to the court to withhold the privileged documents", "Destroy the privileged documents", "Resign"], answer: "b"},
+{question: "The principle of 'sub judice' means the legal unit should avoid:", options: ["Publicly commenting on the details of an ongoing court case", "Filing necessary court documents", "Speaking to their own lawyers", "Preparing witnesses"], answer: "a"},
+{question: "The greatest advantage of Alternative Dispute Resolution (ADR) over litigation is often:", options: ["It is always faster and cheaper", "It is public and sets a precedent", "It allows for more creative, interest-based solutions and preserves relationships", "It guarantees a win for the government"], answer: "c"},
+{question: "A mediation between the agency and a contractor fails. The next step under the contract's dispute clause is likely:", options: ["Giving up", "Proceeding to arbitration", "Asking the president to decide", "Restarting the mediation indefinitely"], answer: "b"},
+{question: "The legal unit's goal in managing litigation is to:", options: ["Win every case at any cost", "Robustly defend lawful actions while protecting the public interest", "Generate billable hours for external counsel", "Always settle to avoid bad publicity"], answer: "b"},
+{question: "An employee is accused of stealing confidential data. The legal unit's role in the internal investigation is to:", options: ["Lead the investigation and act as prosecutor", "Ensure the investigation process is fair and legally compliant", "Publicly defend the employee immediately", "Order the destruction of the evidence"], answer: "b"},
+{question: "The legal unit drafts a code of conduct for staff. Its main purpose is to:", options: ["Create more rules to break", "Promote integrity and prevent conflicts of interest", "Make the human resources department obsolete", "Spy on employees' personal lives"], answer: "b"},
+{question: "A whistleblower reports alleged corruption in a procurement process. The legal unit advises on:", options: ["How to identify and punish the whistleblower", "The legal protections for the whistleblower and how to handle the disclosure", "Ignoring the report to avoid embarrassment", "Closing the investigation immediately"], answer: "b"},
+{question: "A new data protection law is passed. The legal unit's compliance role includes:", options: ["Ensuring the agency's data processing activities adhere to the new law", "Deleting all government databases", "Ignoring the law until someone complains", "Selling citizen data to cover costs"], answer: "a"},
+{question: "The legal unit conducts a 'legal risk audit' of the agency's activities. This is done to:", options: ["Find employees to blame", "Proactively identify and mitigate areas of potential legal exposure", "Increase the agency's insurance premiums", "Create more work for itself"], answer: "b"},
+{question: "A public servant wants to start a private business that supplies goods to the government. The legal unit advises on:", options: ["How to hide the business", "Potential conflicts of interest and the relevant rules", "Giving the business an automatic advantage", "Investing in the business on their behalf"], answer: "b"},
+{question: "The legal unit develops a guideline on accepting gifts. It likely states that staff:", options: ["Can accept any gift under $500", "Must refuse all gifts to avoid any perception of undue influence", "Can accept gifts only from family members", "Should donate all gifts to the legal unit"], answer: "b"},
+{question: "A compliance training session on anti-corruption is mandatory for all staff because:", options: ["It is a good way to waste a morning", "Educated employees are the first line of defense against legal and ethical breaches", "The legal unit is bored", "It looks good on a newsletter"], answer: "b"},
+{question: "The legal unit helps to foster a 'culture of compliance' by:", options: ["Punishing every minor mistake harshly", "Integrating legal and ethical considerations into everyday operations and decision-making", "Operating in secret", "Focusing only on high-level policy"], answer: "b"},
+{question: "A 'legitimate expectation' might be created if an agency:", options: ["Publishes a policy handbook promising a certain procedure", "Whispers a promise in a hallway", "Has never done something before", "Makes a promise it knows it cannot keep"], answer: "a"},
+{question: "The legal unit advises that a decision may be challenged on grounds of 'bias.' This means the decision-maker:", options: ["Made an unpopular choice", "Had a personal interest or pre-judgment that prevented a fair hearing", "Took too long to decide", "Used a computer model to assist the decision"], answer: "b"},
+{question: "The legal principle of 'proportionality' requires that a regulatory penalty should be:", options: ["As high as possible to maximize revenue", "The same for every single offense", "Appropriate to the severity of the violation", "Determined by a lottery"], answer: "c"},
+{question: "The legal unit ensures that delegated legislation is 'intra vires,' meaning it:", options: ["Is written in English", "Is popular with the public", "Is within the power granted by the parent Act", "Has been approved by the United Nations"], answer: "c"},
+{question: "When drafting new regulations, the legal unit must ensure they do not conflict with:", options: ["The minister's personal preferences", "The price of tea", "The national constitution and human rights standards", "Weather patterns"], answer: "c"},
+{question: "The legal unit's role in liaising with the Attorney-General's office ensures:", options: ["The agency operates as a law unto itself", "The AG handles all the work", "Alignment with whole-of-government legal policy and consistency", "The legal unit gets promoted"], answer: "c"},
+{question: "A key difference between the legal unit and an external law firm is the legal unit's:", options: ["Lower hourly rates", "Lack of legal qualifications", "Deeper understanding of the agency's operations and public law context", "Ability to ignore the law"], answer: "c"},
+{question: "The legal unit's advice on a novel legal issue would most likely be based on:", options: ["A coin flip", "The minister's horoscope", "Research into case law, statutes, and legal principles", "Public opinion polls"], answer: "c"},
+{question: "The concept of 'legal professional privilege' protects:", options: ["All government communications from disclosure", "Communications about lunch plans", "Confidential communications between a lawyer and client for legal advice", "Evidence of a crime"], answer: "c"},
+{question: "The legal unit's independence is crucial because it ensures:", options: ["It never has to talk to anyone", "It can charge higher fees", "Its advice is objective and based on law, not on pleasing superiors", "It can avoid all accountability"], answer: "c"},
+{question: "The ultimate purpose of the legal unit's work is to:", options: ["Create obstacles for other departments", "Generate paperwork", "Uphold the rule of law and enable effective, lawful public administration", "Win arguments"], answer: "c"},
+{question: "A public servant receives a notice from an ombudsman. They should:", options: ["Throw it away", "Frame it", "Immediately forward it to the legal unit for handling", "Post it on social media"], answer: "c"},
+{question: "The legal unit is reviewing a proposed MoU with an international body. A key consideration is:", options: ["The catering for the signing ceremony", "The font style", "Whether it creates binding legal obligations or is just a statement of intent", "The travel itinerary for the delegates"], answer: "c"},
+{question: "An employee is being subpoenaed to testify in court about their official work. The legal unit can:", options: ["Forbid them from testifying", "Tell them to lie under oath", "Advise them on their responsibilities and prepare them for testimony", "Pay them a bonus for testifying"], answer: "c"},
+{question: "The legal unit is asked to review a sponsorship agreement from a private company. They should be wary of clauses that:", options: ["Offer free products", "Use the color blue", "Have a long duration", "Compromise the agency's independence or create an obligation to endorse the company"], answer: "d"},
+{question: "A 'without prejudice' communication is one that:", options: ["Is written in invisible ink", "Has no legal effect whatsoever", "Must be stamped by a judge", "Is made in a genuine attempt to settle a dispute and is generally inadmissible in court"], answer: "d"},
+{question: "The legal unit manages the agency's relationship with external counsel by:", options: ["Letting them do whatever they want", "Hiring the cheapest lawyer available regardless of skill", "Hiring the minister's cousin", "Setting clear instructions, budgets, and reviewing their work"], answer: "d"},
+{question: "A 'subject access request' under data protection law is handled by:", options: ["The IT department alone", "The front desk receptionist", , "The legal unit advising on the legal exemptions and process for response", "Being ignored as an inconvenience"], answer: "d"},
+{question: "The legal unit's contribution to a project's risk register likely focuses on:", options: ["Financial cost overruns", "Technical failures", "Employee vacation schedules", "Legal and regulatory risks and their mitigation"], answer: "d"},
+{question: "If an agency fails to follow its own published procedures, the legal unit would anticipate a risk of:", options: ["Increased efficiency", "A promotion for the staff involved", "Winning an award for innovation", "Successful legal challenge on grounds of procedural fairness"], answer: "d"},
+{question: "The legal unit ensures that a consultation process for a new policy is meaningful to avoid challenges based on:", options: ["Lack of colorful brochures", "The time of day it was held", "The brand of coffee served", "Failure to properly consider relevant views"], answer: "d"},
+{question: "A 'standstill letter' from a potential bidder's lawyer is typically sent:", options: ["To congratulate the agency", "After the contract is signed", "To wish them a happy holiday", "Before launching a legal challenge, to allow for a resolution"], answer: "d"},
+{question: "The legal unit advises that a decision has a 'low likelihood of success on appeal.' This means:", options: ["They should definitely appeal", "They will win the appeal", "The judge is biased", "They should carefully consider the costs and benefits before appealing"], answer: "d"},
+{question: "In a mediation, the role of the legal unit is to:", options: ["Act as the neutral mediator", "Make the final binding decision", "Provide counseling to the other party", "Advise and represent the agency's interests in the negotiation"], answer: "d"},
+
+
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

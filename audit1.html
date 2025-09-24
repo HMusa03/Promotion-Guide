@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="common_services.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Audit Policy (100 Qs)</h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "Which audit type is primarily concerned with assessing Economy, Efficiency, and Effectiveness (the 3Es)?", options: ["Financial Audit", "Compliance Audit", "Performance Audit", "Forensic Audit"], answer: "c"},
+            {question: "What is the first step in the audit cycle?", options: ["Risk Assessment", "Fieldwork & Evidence Gathering", "Pre-engagement/Notification", "Understanding the Entity"], answer: "c"},
+            {question: "Which type of audit evidence is generally considered the most reliable?", options: ["Testimonial evidence from interviews", "Internally generated documents", "External confirmations", "Analytical evidence"], answer: "c"},
+            {question: "What is the primary purpose of an exit meeting during an audit?", options: ["To present the final audit report", "To validate facts with management and obtain responses", "To plan the audit procedures", "To gather physical evidence"], answer: "b"},
+            {question: "Which document is essential for ensuring audit working papers are properly documented?", options: ["Risk heat map", "Management letter", "Title–Objective–Procedure–Result–Conclusion–Cross-reference", "Chart of Accounts"], answer: "c"},
+            {question: "When is a forensic audit typically initiated?", options: ["Annually for financial statements", "For programmes with significant spend", "When red flags like fraud or whistle-blowing occur", "For continuous checks on transactions"], answer: "c"},
+            {question: "What is the final phase of the audit cycle?", options: ["Reporting", "Exit Meeting", "Follow-up", "Evaluation & Conclusions"], answer: "c"},
+            {question: "The principle of 'sufficiency and appropriateness' in audit evidence refers to what?", options: ["Quantity of evidence only", "Quality of evidence only", "Enough evidence that is relevant and reliable", "Only evidence from external sources"], answer: "c"},
+            {question: "A management letter produced during a financial audit primarily highlights what?", options: ["The audit opinion", "Control weaknesses", "Fraudulent activities", "Performance indicators"], answer: "b"},
+            {question: "What is the main objective of a compliance audit?", options: ["To assess financial statement accuracy", "To confirm adherence to laws and regulations", "To evaluate economy and efficiency", "To investigate fraud"], answer: "b"},
+            {question: "In the audit cycle, what immediately follows 'Fieldwork & Evidence Gathering'?", options: ["Planning & Audit Programme", "Evaluation & Conclusions", "Reporting", "Follow-up"], answer: "b"},
+            {question: "Triangulating different evidence sources helps to ensure what?", options: ["Faster audit completion", "Increased quantity of evidence", "Greater reliability of findings", "Reduced need for documentation"], answer: "c"},
+            {question: "What does a performance audit report typically include?", options: ["Evidence packs for legal use", "Performance indicators and root-cause analysis", "Opinion on financial statements", "Exception reports only"], answer: "b"},
+            {question: "The '5Cs' reporting structure includes Criteria, Condition, Cause, Effect, and what?", options: ["Conclusion", "Compliance", "Correlation", "Recommendation"], answer: "d"},
+            {question: "What is a key focus during the 'Understanding the Entity' phase?", options: ["Issuing the final report", "Reviewing the organogram and prior audit issues", "Performing physical asset counts", "Tracking implementation of recommendations"], answer: "b"},
+            {question: "Which audit type results in an 'opinion' on financial statements?", options: ["Compliance Audit", "Performance Audit", "Financial Audit", "Investigative Audit"], answer: "c"},
+            {question: "What is the purpose of a risk register in auditing?", options: ["To document the audit fee", "To list all audit team members", "To identify and assess inherent and control risks", "To record management responses"], answer: "c"},
+            {question: "During which audit phase is 'planning materiality' set?", options: ["Pre-engagement", "Risk Assessment & Materiality", "Fieldwork", "Reporting"], answer: "b"},
+            {question: "What is the primary output of a special investigative audit?", options: ["A report with the 3Es", "An evidence pack suitable for disciplinary use", "A management letter", "A bank reconciliation"], answer: "b"},
+            {question: "The principle of professional skepticism dictates that an auditor should:", options: ["Trust management implicitly", "Verify and corroborate management explanations", "Avoid documenting disagreements", "Focus only on financial misstatements"], answer: "b"},
+            {question: "What is the primary objective of the Treasury Single Account (TSA)?", options: ["To create multiple commercial bank accounts for MDAs", "To consolidate all government receipts and payments at the CBN", "To manage payroll for civil servants", "To execute procurement processes"], answer: "b"},
+            {question: "When auditing GIFMIS, what should an auditor verify to ensure proper controls?", options: ["That there are no access controls", "That payments can be made without a budget warrant", "The existence of a 3-way match (LPO/GRN/Invoice) before payment", "That audit trails are regularly deleted"], answer: "c"},
+            {question: "What is a key audit focus when reviewing IPPIS?", options: ["Ensuring duplicate BVNs are allowed", "Reconciling HR records with IPPIS data to flag discrepancies", "Verifying that statutory deductions are not remitted", "Approving payments without authorization documents"], answer: "b"},
+            {question: "Why is the Chart of Accounts critical in government financial management?", options: ["It allows for inconsistent coding of transactions", "It enables meaningful financial reporting and comparisons", "It is only used for budgeting, not accounting", "It eliminates the need for bank reconciliations"], answer: "b"},
+            {question: "An auditor discovers an MDA has an operational commercial bank account. What does this indicate?", options: ["Best practice for cash management", "A potential violation of TSA policy", "Proper use of GIFMIS modules", "Effective revenue collection"], answer: "b"},
+            {question: "What should an auditor test to check the completeness of revenue swept to the TSA?", options: ["Only the bank statements", "Cash receipting points against TSA credits", "Payroll records", "Procurement contracts"], answer: "b"},
+            {question: "Which IPSAS principle is aligned with the disclosure of assets, liabilities, and contingencies?", options: ["Cash Basis accounting", "Accrual Basis accounting", "Modified Cash Basis", "Budgetary Basis"], answer: "b"},
+            {question: "In the context of GIFMIS, what does 'budget control' refer to?", options: ["Preventing any payments from being made", "Ensuring payments do not exceed authorized warrants/releases", "Allowing unlimited spending once a budget is approved", "Ignoring budget variances"], answer: "b"},
+            {question: "What is a crucial step in auditing payroll integrity on IPPIS?", options: ["Ignoring joiners and leavers processes", "Checking for duplicate BVNs and multiple accounts", "Approving all overtime claims without review", "Avoiding reconciliation with HR records"], answer: "b"},
+            {question: "When reviewing bank reconciliations, an auditor should investigate what?", options: ["Only current outstanding items", "Stale cheques and long-outstanding lodgments", "The color of the reconciliation document", "The bank's marketing strategy"], answer: "b"},
+            {question: "What does a proper '3-way match' in the payment process prevent?", options: ["Timely payment to vendors", "Payment for goods not received or not ordered", "The use of the TSA", "Budget execution"], answer: "b"},
+            {question: "An MDA's financial statements show significant variances between budget and actuals. What should the auditor examine?", options: ["Ignore the variances as they are common", "The explanations for the variances", "Only the budget figures", "Only the actual figures"], answer: "b"},
+            {question: "What is the primary purpose of the General Ledger module in GIFMIS?", options: ["To manage employee benefits", "To record all financial transactions for reporting", "To execute procurement", "To conduct staff verification"], answer: "b"},
+            {question: "Auditing 'statutory deductions' from payroll involves verifying what?", options: ["That no deductions are made", "The amounts, timing, and evidence of remittance to appropriate bodies", "That deductions are kept by the MDA", "Only the gross pay of employees"], answer: "b"},
+            {question: "What does 'timely sweeping' in the TSA context refer to?", options: ["Cleaning the office floors", "Prompt transfer of revenues to the consolidated account", "Sweeping issues under the carpet", "Delaying revenue recognition"], answer: "b"},
+            {question: "An auditor finds an unpresented cheque that is 120 days old on a bank reconciliation. This should be classified as what?", options: ["A current asset", "A reconciled item", "A long-outstanding item requiring investigation", "An immaterial amount to be ignored"], answer: "c"},
+            {question: "What is the key benefit of IPSAS-oriented financial reporting?", options: ["It reduces the need for auditing", "It enhances transparency and accountability through better disclosure", "It allows MDAs to hide liabilities", "It simplifies the chart of accounts to one code"], answer: "b"},
+            {question: "When testing IPPIS, what does a 'joiner' control check?", options: ["The process for authorizing new staff additions to the payroll", "The process for firing staff", "The process for paying vendors", "The process for budgeting"], answer: "a"},
+            {question: "What is the audit implication of finding minimal idle balances in MDA sub-accounts?", options: ["It indicates inefficient cash management", "It suggests compliance with TSA objectives of minimizing idle funds", "It shows a lack of revenue", "It is not a matter for audit concern"], answer: "b"},
+            {question: "The 'Payables' module in GIFMIS is primarily used for what?", options: ["Managing staff salaries", "Managing obligations to suppliers", "Recording fixed assets", "Preparing the budget"], answer: "b"},
+            {question: "What is the first step in Risk-Based Auditing (RBA)?", options: ["Performing substantive testing", "Building the risk universe", "Issuing the audit report", "Gathering testimonial evidence"], answer: "b"},
+            {question: "A Risk-Control Matrix (RCM) is used primarily for what?", options: ["Documenting employee salaries", "Listing audit team members", "Mapping controls to specific risks to assess their design", "Writing the management letter"], answer: "c"},
+            {question: "What is the primary purpose of Segregation of Duties (SoD)?", options: ["To increase workload for staff", "To prevent errors and fraud by ensuring no single person controls all aspects of a transaction", "To simplify processes", "To reduce the number of employees needed"], answer: "b"},
+            {question: "Which of the following is a preventive control?", options: ["A monthly reconciliation report", "An alarm system", "A requirement for dual approval on payments above a threshold", "An investigation after a fraud has occurred"], answer: "c"},
+            {question: "What is a key red flag for potential fraud in the procurement process?", options: ["Competitive bidding", "Contract splitting to stay under approval thresholds", "Proper maintenance of store records", "Timely retirement of imprest"], answer: "b"},
+            {question: "An IT General Control related to 'access management' should ensure what?", options: ["That all employees have access to all systems", "That user access is granted based on the principle of least privilege", "That passwords are never changed", "That change management logs are deleted regularly"], answer: "b"},
+            {question: "What does 'operating effectiveness' of a control mean?", options: ["The control is well documented", "The control is designed well on paper", "The control is actually working as intended in practice", "The control is approved by management"], answer: "c"},
+            {question: "A sudden, unexplained spike in overtime payments in a department is best categorized as what?", options: ["A compliance issue", "A fraud indicator in the payroll process", "A sign of increased efficiency", "An immaterial variance"], answer: "b"},
+            {question: "What is the purpose of a 'walkthrough' in auditing?", options: ["To take a physical tour of the building", "To trace a transaction from origin through the entire process to understand controls", "To walk away from a difficult audit", "To finalize the audit opinion"], answer: "b"},
+            {question: "Long-outstanding imprest retirements with photocopied receipts primarily indicate what risk?", options: ["Excellent financial management", "Potential for misuse of funds and weak controls", "Strong compliance with policies", "Efficient procurement processes"], answer: "b"},
+            {question: "Which tool is used to visually represent the significance of different risks?", options: ["A risk heat map", "A payroll register", "A bank statement", "An organizational chart"], answer: "a"},
+            {question: "An application control in an IT system could be what?", options: ["A firewall", "An input validation check that requires a valid date format", "A backup generator", "A physical lock on the server room"], answer: "b"},
+            {question: "What is a 'corrective' control?", options: ["A control that deters an incident from occurring", "A control that identifies an incident after it has occurred", "A control that fixes or reduces the impact of an incident", "A control that is applied randomly"], answer: "c"},
+            {question: "Repetitive awards to the same vendor could indicate what?", options: ["A reliable supplier", "Potential collusion or a lack of competitive bidding", "Strong contract management", "Excellent value for money"], answer: "b"},
+            {question: "Testing the 'design' of a control involves what?", options: ["Observing if the control is operating effectively", "Checking if the control is properly documented and should theoretically work", "Ignoring the control", "Only testing automated controls"], answer: "b"},
+            {question: "What is a common test for the effectiveness of change management controls?", options: ["Reviewing logs of system changes and approvals", "Counting the number of employees", "Reviewing procurement contracts", "Testing physical inventory"], answer: "a"},
+            {question: "The risk of 'ghost workers' is most directly mitigated by which control?", options: ["Regular staff verification and reconciliation of payroll to HR records", "Increasing overtime budgets", "Allowing manual payroll updates without review", "Decreasing the number of vendors"], answer: "a"},
+            {question: "What does a 'detective' control do?", options: ["Prevents an error or fraud", "Discovers an error or fraud after it has occurred", "Corrects an error or fraud", "Ignores an error or fraud"], answer: "b"},
+            {question: "In a risk assessment, 'impact' refers to what?", options: ["The likelihood of a risk occurring", "The potential financial or operational consequence if a risk occurs", "The name of the risk", "The person responsible for the risk"], answer: "b"},
+            {question: "The presence of round-number claims in imprest retirements might suggest what?", options: ["Precise accounting", "Estimations or potential fabrication of expenses", "Strong internal controls", "Use of a calculator"], answer: "b"},
+            {question: "Which international organization provides principles (ISSAI) often used in public-sector auditing?", options: ["IMF (International Monetary Fund)", "INTOSAI (International Organization of Supreme Audit Institutions)", "WTO (World Trade Organization)", "WHO (World Health Organization)"], answer: "b"},
+            {question: "The principle of 'professional skepticism' requires an auditor to:", options: ["Assume management is dishonest", "Trust management implicitly without verification", "Have a questioning mind and critically assess audit evidence", "Avoid using any evidence provided by management"], answer: "c"},
+            {question: "What is a key element of a robust quality management system within an audit office?", options: ["Engagement planning reviews and supervisory controls", "Reducing the number of audits conducted", "Eliminating all working papers", "Allowing auditors to work without review"], answer: "a"},
+            {question: "According to INTOSAI principles, what is fundamental to the audit function?", options: ["Advocacy for the auditee", "Dependence on management", "Independence", "Withholding findings from the public"], answer: "c"},
+            {question: "The IIA's (Institute of Internal Auditors) standards focus on what?", options: ["Only financial statement audits", "Risk, control, and governance", "Marketing internal audit services", "Managing public debt"], answer: "b"},
+            {question: "If an auditor is pressured to suppress a valid finding, what is the best course of action?", options: ["Comply with the pressure to maintain relationships", "Document the instruction and escalate through the proper channel", "Ignore the finding", "Resign immediately without notice"], answer: "b"},
+            {question: "What is the purpose of a 'second-partner review' in sensitive audit engagements?", options: ["To delay the audit report", "To provide an additional layer of quality control and objectivity", "To reduce the audit fee", "To assign blame if something goes wrong"], answer: "b"},
+            {question: "Which of the following is a threat to auditor independence?", options: ["Professional skepticism", "The self-interest threat, such as having a financial interest in the auditee", "Adequate documentation", "Using INTOSAI standards"], answer: "b"},
+            {question: "Confidentiality in auditing means that auditors should:", options: ["Share audit findings with the media immediately", "Share information on a need-to-know basis and secure working papers", "Discuss findings openly with unauthorized personnel", "Ignore confidentiality rules"], answer: "b"},
+            {question: "What is a key safeguard against threats to independence?", options: ["Accepting expensive gifts from auditees", "Rotation of audit personnel on engagements", "Having a close familial relationship with the auditee", "Avoiding documentation"], answer: "b"},
+            {question: "The principle of 'due professional care' implies that an auditor should:", options: ["Perform the audit perfectly with no errors", "Exercise the care and skill expected of a reasonably prudent auditor", "Rush through the audit to meet deadlines", "Delegate all work to junior staff without supervision"], answer: "b"},
+            {question: "Audit standards require that working papers be:", options: ["Destroyed immediately after the audit", "Sufficiently detailed to enable an experienced auditor to understand the work performed", "Written in pencil only", "Kept only by the auditee"], answer: "b"},
+            {question: "What is the primary role of professional judgment in auditing?", options: ["To make arbitrary decisions", "To apply relevant training, knowledge, and experience in making audit decisions", "To always agree with management", "To avoid using evidence"], answer: "b"},
+            {question: "An auditor demonstrating 'professional skepticism' would most likely:", options: ["Accept management's explanations at face value", "Corroborate management's explanations with other evidence", "Assume all management explanations are false", "Skip testing for areas management says are low risk"], answer: "b"},
+            {question: "According to ethical guidelines, an auditor should typically refuse what?", options: ["A glass of water during a meeting", "Gifts or hospitality that could be perceived to influence independence", "Reasonable requests for information", "Access to accounting records"], answer: "b"},
+            {question: "The 'public interest' principle guides auditors to prioritize:", options: ["The interests of the auditee's management", "Their own personal interests", "The interests of the wider public and stakeholders", "The interests of only the legislature"], answer: "c"},
+            {question: "What does 'quality control' at the firm level encompass?", options: ["Only the review of individual engagements", "Policies and procedures for leadership responsibilities, ethics, acceptance of clients, and monitoring", "Only the technical training of staff", "Only the audit report formatting"], answer: "b"},
+            {question: "If an auditor discovers a potential illegal act by an auditee, what should they do?", options: ["Ignore it if it is not material to the financial statements", "Communicate it to the appropriate level of management and consider further action", "Alert the media immediately", "Conceal the act to protect the auditee's reputation"], answer: "b"},
+            {question: "An audit that is performed in accordance with established standards provides what?", options: ["Absolute assurance", "No assurance", "Reasonable assurance", "Guaranteed perfection"], answer: "c"},
+            {question: "The concept of 'materiality' in auditing is important because it:", options: ["Requires auditors to detect all fraud", "Helps auditors focus on matters that could influence the decisions of users", "Is irrelevant in the public sector", "Means all errors must be corrected"], answer: "b"},
+            {question: "When reviewing a Payment Voucher (PV), what is a critical step to prevent fraud?", options: ["Ensuring the voucher is printed on colored paper", "Verifying the 3-way match (LPO, GRN, Invoice)", "Approving payments without supporting documents", "Avoiding beneficiary verification"], answer: "b"},
+            {question: "During a revenue spot check, what is a major red flag?", options: ["Immediate lodgment of cash", "The use of pre-numbered receipts", "Pre-receipting (collecting cash before issuing a receipt)", "Matching receipt counterfoils to bank statements"], answer: "c"},
+            {question: "How should an auditor test a bank reconciliation?", options: ["Accept the reconciliation as presented by management", "Reperform the reconciliation mathematically and investigate old items", "Only look at the current month", "Ignore unexplained bank charges"], answer: "b"},
+            {question: "What is a key procedure during a physical asset verification?", options: ["Rely solely on the asset register", "Perform physical counts to verify existence and condition", "Assume all assets are present", "Skip cut-off testing"], answer: "b"},
+            {question: "In a payroll audit, what test helps detect 'ghost workers'?", options: ["Reviewing only the payroll master data", "Performing a three-way match between HR records, IPPIS, and attendance records", "Approving all salary changes without question", "Ignoring duplicate bank accounts"], answer: "b"},
+            {question: "What is a common finding when auditing imprest and advances?", options: ["Timely retirement with original receipts", "Long-outstanding advances that have not been retired", "Perfect documentation for all claims", "No round-number claims"], answer: "b"},
+            {question: "When tracing a procurement process, an auditor should ensure what?", options: ["That needs assessment was skipped", "That there was compliance with approved thresholds and methods", "That conflict-of-interest declarations are avoided", "That bid opening minutes are not reviewed"], answer: "b"},
+            {question: "A staff verification exercise is most effective when it includes what?", options: ["Assuming the nominal roll is accurate", "Conducting a headcount and reconciling it to payroll and attendance records", "Ignoring staff on study leave", "Avoiding biometric checks"], answer: "b"},
+            {question: "A well-structured audit query based on the '5Cs' must include what?", options: ["Only the condition (what is wrong)", "Criteria, Condition, Cause, Effect, and Recommendation", "Only the recommendation", "Personal opinions about staff"], answer: "b"},
+            {question: "What is the purpose of an 'Issue-Action Tracker'?", options: ["To track the auditor's vacation days", "To monitor the implementation of audit recommendations with owners and deadlines", "To list all auditee employees", "To record the audit fee payments"], answer: "b"},
+            {question: "What should an auditor do if they find a duplicated invoice during a PV review?", options: ["Approve the payment for the second invoice", "Investigate the duplicate and question the payment", "Ignore it as a minor error", "Assume it is a valid recurring payment"], answer: "b"},
+            {question: "For a revenue spot check, what should an auditor compare?", options: ["Receipt counterfoils to lodgment slips and TSA credits", "Only the cashier's word", "The budget to actual revenue", "Procurement records to payroll"], answer: "a"},
+            {question: "A stale cheque on a bank reconciliation is one that is how old?", options: ["1 day old", "30 days old", "Typically over 6 months old and not yet cashed", "A cheque that is still valid"], answer: "c"},
+            {question: "What document is essential for verifying the receipt of goods in a stores audit?", options: ["The Purchase Order (LPO)", "The Goods Received Note (GRN)", "The invoice", "The payment voucher"], answer: "b"},
+            {question: "What analytics test is useful for payroll auditing?", options: ["Looking for duplicate bank account numbers/BVNs", "Checking the office temperature", "Reviewing vendor contracts", "Testing the fire alarm system"], answer: "a"},
+            {question: "When auditing imprest retirement, what is a reasonableness test?", options: ["Checking if the expenses claimed are plausible for the stated purpose", "Ensuring all receipts are photocopies", "Approving any amount claimed", "Ignoring the purpose of the imprest"], answer: "a"},
+            {question: "A key document to review in procurement is the what?", options: ["Staff attendance register", "Bid evaluation report and minutes", "Bank statement", "Payroll change form"], answer: "b"},
+            {question: "During staff verification, a employee listed on the payroll but not physically present and without verified leave status could be a what?", options: ["A model employee", "A potential ghost worker", "On a legitimate field posting", "The auditor's manager"], answer: "b"},
+            {question: "What should the 'tone' of an audit report be?", options: ["Emotional and accusatory", "Factual, neutral, and actionable", "Full of jargon incomprehensible to management", "Written to please the auditee"], answer: "b"},
+            {question: "The 'Follow-up' phase of the audit cycle is crucial for what?", options: ["Closing the audit file forever", "Tracking implementation of recommendations and escalating unresolved issues", "Planning the next audit", "Writing the management letter"], answer: "b"},
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Exam Simulation</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="PSR.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Public Service Rules{PSR} 001 (100 Qs) </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+    { 
+        question: "A newly recruited civil servant discovers their agency follows different HR rules than neighboring states. Which principle does this violate?",
+        options: [
+            "Federal character principle",
+            "Standardization objective of PSR",
+            "Doctrine of necessity",
+            "Zoning arrangement policy"
+        ],
+        answer: "b" 
+    },
+    {
+        question: "When a dispute arises about whether contract staff should follow PSR guidelines, what determines applicability?",
+        options: [
+            "The staff's academic qualifications",
+            "PSR's scope of application",
+            "Directive from National Assembly",
+            "Agency's internal revenue"
+        ],
+        answer: "b"
+    },
+    {
+        question: "A director attempts to bypass PSR procedures citing 'emergency powers.' Which constitutional principle counters this?",
+        options: [
+            "Derivative immunity",
+            "Doctrine of covering the field",
+            "Rule of law",
+            "Subsidiarity principle"
+        ],
+        answer: "c"
+    },
+    { 
+        question: "Which entity holds ultimate authority for interpreting ambiguous PSR provisions?",
+        options: [
+            "Federal Civil Service Commission",
+            "Head of the Civil Service of the Federation",
+            "National Judicial Council",
+            "Code of Conduct Bureau"
+        ],
+        answer: "b" 
+    },
+    {
+        question: "A state government wants to adopt PSR but with modifications for local traditions. Which PSR provision allows this?",
+        options: [
+            "Mandatory compliance clause",
+            "Non-derogation clause",
+            "Adaptation provisions",
+            "Conformity requirements"
+        ],
+        answer: "c"
+    },
+    { 
+        question: "When PSR conflicts with an agency's internal regulations, which takes precedence?",
+        options: [
+            "The more recently issued document",
+            "PSR as the superior framework",
+            "Agency regulations for operational efficiency",
+            "Directive from supervising Minister"
+        ],
+        answer: "b" 
+    },
+    {
+        question: "A public servant faces disciplinary action under both PSR and anti-corruption laws. How should this be resolved?",
+        options: [
+            "PSR takes precedence as specialized law",
+            "Most severe penalty applies",
+            "Parallel proceedings permitted",
+            "Anti-corruption laws supersede"
+        ],
+        answer: "c"
+    },
+    { 
+        question: "Which scenario demonstrates the meritocracy principle in PSR Chapter 1?",
+        options: [
+            "Promotion based on years of service",
+            "Appointment from presidential constituency",
+            "Selection through competitive exams",
+            "Recruitment of minister's relative"
+        ],
+        answer: "c" 
+    },
+    {
+        question: "A public servant objects to a transfer citing unpublished circulars. Which PSR principle supports their position?",
+        options: [
+            "Transparency requirement",
+            "Security of tenure",
+            "Geographical consideration",
+            "Hierarchy of command"
+        ],
+        answer: "a"
+    },
+    { 
+        question: "What is the legal status of PSR in Nigeria's administrative framework?",
+        options: [
+            "Advisory guidelines",
+            "Subsidiary legislation",
+            "Executive orders",
+            "Constitutional provisions"
+        ],
+        answer: "b" 
+    },
+    {
+        question: "Which body is responsible for fundamental PSR reforms?",
+        options: [
+            "National Salaries and Wages Commission",
+            "Federal Civil Service Commission",
+            "Revenue Mobilization Allocation Committee",
+            "Public Service Institute of Nigeria"
+        ],
+        answer: "b"
+    },
+    { 
+        question: "A contract staff demands pension benefits citing PSR. Which provision resolves this?",
+        options: [
+            "PSR's definition of public servants",
+            "Contract law terms",
+            "National Pension Commission Act",
+            "Collective bargaining agreements"
+        ],
+        answer: "a" 
+    },
+    {
+        question: "When does PSR permit deviation from standard procedures?",
+        options: [
+            "During budget shortfalls",
+            "For political appointees",
+            "In national security emergencies",
+            "Never under any circumstances"
+        ],
+        answer: "c"
+    },
+    { 
+        question: "Which principle justifies uniform PSR application across MDAs?",
+        options: [
+            "Equity and fairness",
+            "Financial prudence",
+            "Administrative convenience",
+            "Political expediency"
+        ],
+        answer: "a" 
+    },
+    {
+        question: "A new MDA claims exemption from PSR. What determines applicability?",
+        options: [
+            "Presidential proclamation",
+            "Statutory establishment provisions",
+            "National Assembly resolution",
+            "Judicial precedent"
+        ],
+        answer: "b"
+    },
+    { 
+        question: "How does PSR ensure accountability in public service?",
+        options: [
+            "Mandating asset declaration",
+            "Requiring quarterly press briefings",
+            "Establishing whistleblower rewards",
+            "Defining clear responsibility lines"
+        ],
+        answer: "d" 
+    },
+    {
+        question: "Which document takes precedence when PSR conflicts with collective agreements?",
+        options: [
+            "The more employee-friendly document",
+            "PSR as statutory framework",
+            "The most recently issued",
+            "Collective agreements as negotiated terms"
+        ],
+        answer: "b"
+    },
+    { 
+        question: "What is the primary purpose of PSR's definitions chapter?",
+        options: [
+            "Limit judicial interpretation",
+            "Standardize administrative terminology",
+            "Simplify language for new recruits",
+            "Provide translation glossary"
+        ],
+        answer: "b" 
+    },
+    {
+        question: "A public servant faces dual punishment under PSR and criminal law for same offense. This violates:",
+        options: [
+            "Double jeopardy prohibition",
+            "PSR supremacy clause",
+            "Administrative due process",
+            "Labor rights conventions"
+        ],
+        answer: "a"
+    },
+    { 
+        question: "Which principle prevents arbitrary application of PSR?",
+        options: [
+            "Federal character",
+            "Seniority preference",
+            "Procedural regularity",
+            "Zonal rotation"
+        ],
+        answer: "c" 
+    },
+    {
+        question: "When were the current PSR provisions formally adopted?",
+        options: [
+            "Upon Nigeria's independence",
+            "After 1999 constitution",
+            "Through ongoing administrative updates",
+            "By military decree in 1988"
+        ],
+        answer: "c"
+    },
+    { 
+        question: "A dispute arises about PSR interpretation. Where should resolution begin?",
+        options: [
+            "Industrial Arbitration Panel",
+            "Head of Civil Service",
+            "Federal High Court",
+            "Administrative tribunal"
+        ],
+        answer: "b" 
+    },
+    {
+        question: "Which entity oversees PSR implementation in ministries?",
+        options: [
+            "Independent Corrupt Practices Commission",
+            "Permanent Secretaries",
+            "Public Complaints Commission",
+            "National Assembly committees"
+        ],
+        answer: "b"
+    },
+    { 
+        question: "How does PSR promote efficiency in public service?",
+        options: [
+            "Mandating technology adoption",
+            "Standardizing procedures",
+            "Reducing oversight layers",
+            "Eliminating annual leave"
+        ],
+        answer: "b" 
+    },
+    {
+        question: "A constitutional provision contradicts PSR. Which prevails?",
+        options: [
+            "PSR as specialized document",
+            "Constitution as supreme law",
+            "The more recent provision",
+            "Determined by Attorney-General"
+        ],
+        answer: "b"
+    },
+    { 
+        question: "Which PSR objective addresses ghost workers?",
+        options: [
+            "Standardization",
+            "Accountability",
+            "Efficiency",
+            "Transparency"
+        ],
+        answer: "b" 
+    },
+    {
+        question: "What triggers mandatory PSR review?",
+        options: [
+            "Change of government",
+            "Judicial pronouncements",
+            "Emerging administrative needs",
+            "Annual budget cycle"
+        ],
+        answer: "c"
+    },
+    { 
+        question: "Which principle prevents bias in PSR application?",
+        options: [
+            "Federal character",
+            "Impartiality",
+            "Seniority",
+            "Zoning"
+        ],
+        answer: "b" 
+    },
+    {
+        question: "A public servant challenges PSR provision as discriminatory. Where should they seek redress?",
+        options: [
+            "Civil Service Commission",
+            "National Industrial Court",
+            "Federal High Court",
+            "Public Petitions Committee"
+        ],
+        answer: "c"
+    },
+    { 
+        question: "How does PSR define 'public service' for application?",
+        options: [
+            "All tax-funded entities",
+            "Federal MDAs only",
+            "Executive branch institutions",
+            "Entities specified in Chapter 1"
+        ],
+        answer: "d" 
+    },
+    {
+        question: "Mr. Ade applied for a permanent position but was offered temporary appointment due to budget constraints. After 3 years, he demands conversion. What does PSR stipulate?",
+        options: [
+            "Automatic conversion after 24 months",
+            "Conversion only if position becomes substantively vacant",
+            "Temporary staff cannot be converted",
+            "Conversion after passing proficiency test"
+        ],
+        answer: "b"
+    },
+    {
+        question: "A civil servant submitted resignation via email without hard copy. Three weeks later, they try to withdraw it. What's the status?",
+        options: [
+            "Requires written acceptance to be valid",
+            "Resignation valid without acknowledgment",
+            "Withdrawal permitted within 30 days",
+            "Electronic submission is invalid"
+        ],
+        answer: "a"
+    },
+    {
+        question: "An officer retired at 60 but was recalled. At 65, they claim entitlement to continue. What applies?",
+        options: [
+            "Permitted until 70 if productive",
+            "Mandatory final retirement at 65",
+            "Allowed with ministerial approval",
+            "Prohibited after initial retirement"
+        ],
+        answer: "b"
+    },
+    {
+        question: "A director's contract appointment expires during investigation. Can they be disciplined?",
+        options: [
+            "No, contract termination ends jurisdiction",
+            "Only with presidential approval",
+            "Yes, if misconduct occurred during service",
+            "Only for financial misconduct"
+        ],
+        answer: "c"
+    },
+    {
+        question: "What's required for valid secondment?",
+        options: [
+            "Consent of receiving organization only",
+            "Written agreement between both organizations",
+            "Approval from Head of Service only",
+            "Consent of officer without documentation"
+        ],
+        answer: "b"
+    },
+    {
+        question: "An officer resigned after fraud allegations surfaced. Can pension be withheld?",
+        options: [
+            "Never, resignation clears liabilities",
+            "Only if convicted in court",
+            "If administrative investigation establishes guilt",
+            "Only for serving officers"
+        ],
+        answer: "c"
+    },
+    {
+        question: "A deceased officer's next-of-kin disputes with siblings. Who receives death benefits?",
+        options: [
+            "Equally divided among all children",
+            "Eldest son exclusively",
+            "As per officer's unsigned will",
+            "Officially registered next-of-kin"
+        ],
+        answer: "d"
+    },
+    {
+        question: "An officer on probation fails assessment. What procedure applies?",
+        options: [
+            "Automatic termination without process",
+            "Extension of probation period",
+            "Right to formal hearing before termination",
+            "Demotion instead of termination"
+        ],
+        answer: "c"
+    },
+    {
+        question: "What distinguishes dismissal from termination?",
+        options: [
+            "Termination is for misconduct, dismissal for poor performance",
+            "Dismissal forfeits pension, termination doesn't",
+            "Termination requires notice, dismissal doesn't",
+            "Dismissal is for senior staff only"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Can a retired officer take contract appointment?",
+        options: [
+            "Never, conflict of interest",
+            "Only after 5-year cooling period",
+            "Immediately if needed skills",
+            "Only in different MDAs"
+        ],
+        answer: "c"
+    },
+    {
+        question: "An officer absconded for 90 days. What's proper action?",
+        options: [
+            "Termination after newspaper publication",
+            "Immediate dismissal",
+            "Suspension without pay",
+            "Report to police as missing person"
+        ],
+        answer: "a"
+    },
+    {
+        question: "What voids an appointment?",
+        options: [
+            "Lack of university degree",
+            "Failure to undergo medical examination",
+            "Age discrepancy discovered later",
+            "All of the above"
+        ],
+        answer: "d"
+    },
+    {
+        question: "A director retires voluntarily at 55. Pension benefits will be:",
+        options: [
+            "Full benefits immediately",
+            "Reduced benefits until 60",
+            "No benefits until mandatory age",
+            "Benefits after 10-year wait"
+        ],
+        answer: "b"
+    },
+    {
+        question: "When does resignation become effective?",
+        options: [
+            "Date of submission",
+            "Date of acknowledgment",
+            "Date specified in letter",
+            "After 30 days automatically"
+        ],
+        answer: "c"
+    },
+    {
+        question: "An officer transferred interstate refuses relocation. What applies?",
+        options: [
+            "Deemed resignation",
+            "Disciplinary action for insubordination",
+            "Right to decline without penalty",
+            "Demotion to local position"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Temporary staff completed 5 years. Entitled to:",
+        options: [
+            "Automatic permanent appointment",
+            "Pension contributions",
+            "Priority in next recruitment",
+            "No special entitlements"
+        ],
+        answer: "d"
+    },
+    {
+        question: "Medical grounds retirement requires:",
+        options: [
+            "Medical board certificate",
+            "Officer's application only",
+            "Two doctors' recommendations",
+            "Ministerial approval"
+        ],
+        answer: "a"
+    },
+    {
+        question: "Contract staff terminated before expiry. Entitled to:",
+        options: [
+            "Full contract remuneration",
+            "Three months salary compensation",
+            "Only earned salary",
+            "Notice period or payment in lieu"
+        ],
+        answer: "d"
+    },
+    {
+        question: "An officer dismissed can appeal within:",
+        options: [
+            "7 working days",
+            "30 calendar days",
+            "90 calendar days",
+            "1 year"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Mandatory retirement age can be extended for:",
+        options: [
+            "All directors",
+            "University professors in service",
+            "Specialist medical consultants",
+            "All above level 14"
+        ],
+        answer: "c"
+    },
+    {
+        question: "Death benefits must be processed within:",
+        options: [
+            "14 days of application",
+            "30 days of receiving documents",
+            "90 days of death",
+            "6 months of application"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Appointment letters must contain:",
+        options: [
+            "Salary scale only",
+            "Rank and remuneration details",
+            "Office location and supervisor",
+            "All of the above"
+        ],
+        answer: "b"
+    },
+    {
+        question: "A level 12 officer resigns. Notice period required:",
+        options: [
+            "1 week",
+            "1 month",
+            "3 months",
+            "No notice required"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Secondment period maximum duration:",
+        options: [
+            "1 year renewable once",
+            "2 years non-renewable",
+            "4 years maximum",
+            "No fixed limit"
+        ],
+        answer: "c"
+    },
+    {
+        question: "Probation period for administrative officers:",
+        options: [
+            "3 months",
+            "6 months",
+            "12 months",
+            "24 months"
+        ],
+        answer: "d"
+    },
+    {
+        question: "Gratuity calculation includes:",
+        options: [
+            "Basic salary only",
+            "Basic + housing allowance",
+            "Basic + transport allowance",
+            "Total consolidated salary"
+        ],
+        answer: "a"
+    },
+    {
+        question: "Retirement notice must be submitted:",
+        options: [
+            "1 month before",
+            "3 months before",
+            "6 months before",
+            "1 year before"
+        ],
+        answer: "b"
+    },
+    {
+        question: "An officer on interdiction resigns. Status?",
+        options: [
+            "Must face disciplinary proceedings first",
+            "Resignation accepted immediately",
+            "Forfeits all entitlements",
+            "Entitled to half pension"
+        ],
+        answer: "a"
+    },
+    {
+        question: "Contract staff eligibility for leave:",
+        options: [
+            "Same as permanent staff",
+            "Pro-rated based on duration",
+            "No leave entitlement",
+            "Only sick leave permitted"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Recalled retiree's service period counts for:",
+        options: [
+            "Additional pension benefits",
+            "Seniority in new position",
+            "Neither pension nor seniority",
+            "Both pension and seniority"
+        ],
+        answer: "c"
+    },
+    {
+        question: "An officer received queries for lateness but ignored them. After 6 months, management initiated dismissal. What defense might succeed?",
+        options: [
+            "First offense requires warning",
+            "Sanction prescribed for lateness is suspension",
+            "Statute of limitations expired",
+            "Lateness isn't misconduct"
+        ],
+        answer: "c"
+    },
+    {
+        question: "During investigation, an officer refused to answer questions without lawyer. Is this insubordination?",
+        options: [
+            "Yes, administrative proceedings don't require lawyers",
+            "No, constitutional right applies",
+            "Only if under criminal investigation",
+            "Depends on officer's rank"
+        ],
+        answer: "a"
+    },
+    {
+        question: "An officer leaked classified documents to media. What's maximum penalty?",
+        options: [
+            "Suspension without pay",
+            "Demotion by two steps",
+            "Compulsory retirement",
+            "Dismissal"
+        ],
+        answer: "d"
+    },
+    {
+        question: "A director suspended a junior officer without approval. What's the issue?",
+        options: [
+            "Only Permanent Secretary can suspend",
+            "Suspension requires investigation first",
+            "Suspension must be approved by Civil Service Commission",
+            "Junior officers can't be suspended"
+        ],
+        answer: "c"
+    },
+    {
+        question: "An officer accused of sexual harassment claims misunderstanding. What should investigation prioritize?",
+        options: [
+            "Officer's past performance",
+            "Complainant's dress code",
+            "Evidence and witness accounts",
+            "Potential media fallout"
+        ],
+        answer: "c"
+    },
+    {
+        question: "After dismissal, officer discovered disciplinary committee wasn't properly constituted. Remedy?",
+        options: [
+            "Reinstatement with back pay",
+            "New hearing with proper committee",
+            "Compensation without reinstatement",
+            "No remedy after dismissal"
+        ],
+        answer: "b"
+    },
+    {
+        question: "An officer on suspension traveled abroad without permission. This constitutes:",
+        options: [
+            "Additional misconduct",
+            "Reasonable personal right",
+            "Requires investigation extension",
+            "Automatic dismissal"
+        ],
+        answer: "a"
+    },
+    {
+        question: "What's required before issuing query?",
+        options: [
+            "Preliminary investigation report",
+            "Approval from Head of Service",
+            "Legal advice from Ministry of Justice",
+            "Incident witness statements"
+        ],
+        answer: "a"
+    },
+    {
+        question: "Minor misconduct penalty options exclude:",
+        options: [
+            "Verbal warning",
+            "Withholding promotion",
+            "Suspension without pay",
+            "Written reprimand"
+        ],
+        answer: "c"
+    },
+    {
+        question: "An officer pleaded guilty in query response. Next step?",
+        options: [
+            "Automatic dismissal",
+            "Determine appropriate penalty",
+            "No further action needed",
+            "Mandatory suspension"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Disciplinary committee recommended demotion. Who approves?",
+        options: [
+            "Permanent Secretary",
+            "Federal Civil Service Commission",
+            "Head of Service",
+            "Minister"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Investigation revealed false accusations against officer. What action against accuser?",
+        options: [
+            "Automatic dismissal for false accusation",
+            "Disciplinary proceedings if malicious",
+            "No action - protection for complainants",
+            "Mandatory apology letter"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Maximum suspension period without pay:",
+        options: [
+            "1 month",
+            "3 months",
+            "6 months",
+            "Indefinite"
+        ],
+        answer: "b"
+    },
+    {
+        question: "An officer facing criminal trial should:",
+        options: [
+            "Be suspended automatically",
+            "Continue work until conviction",
+            "Face parallel administrative action",
+            "Resign voluntarily"
+        ],
+        answer: "c"
+    },
+    {
+        question: "Interdiction differs from suspension in that it:",
+        options: [
+            "Requires half-pay",
+            "Prevents office access completely",
+            "Applies only to senior officers",
+            "Requires court order"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Disciplinary committee must include:",
+        options: [
+            "External legal practitioner",
+            "Officers senior to accused",
+            "Representative from ICPC",
+            "Union representative"
+        ],
+        answer: "b"
+    },
+    {
+        question: "An officer refused query receipt. Valid service is by:",
+        options: [
+            "Email only",
+            "Registered mail and office posting",
+            "Hand delivery with witness",
+            "Publication in newspaper"
+        ],
+        answer: "c"
+    },
+    {
+        question: "After dismissal, pension benefits are:",
+        options: [
+            "Forfeited completely",
+            "Paid minus disciplinary deductions",
+            "Deferred for 5 years",
+            "Depends on offense type"
+        ],
+        answer: "d"
+    },
+    {
+        question: "Drunk officer assaulted colleague. What's immediate action?",
+        options: [
+            "Instant dismissal",
+            "Mandatory counseling",
+            "Interdiction pending investigation",
+            "Suspension with half pay"
+        ],
+        answer: "c"
+    },
+    {
+        question: "Minor misconduct hearing must conclude within:",
+        options: [
+            "7 days of complaint",
+            "30 days of query issuance",
+            "60 days of incident",
+            "No statutory timeframe"
+        ],
+        answer: "d"
+    },
+    {
+        question: "An officer on suspension must:",
+        options: [
+            "Report daily to office",
+            "Not take other employment",
+            "Travel abroad freely",
+            "Continue clearance duties"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Disciplinary committee quorum is:",
+        options: [
+            "Simple majority",
+            "Two-thirds majority",
+            "Chairman plus one member",
+            "All members must attend"
+        ],
+        answer: "a"
+    },
+    {
+        question: "False certificate submission penalty starts with:",
+        options: [
+            "Warning",
+            "Suspension",
+            "Demotion",
+            "Dismissal"
+        ],
+        answer: "d"
+    },
+    {
+        question: "Officer appealed dismissal. Status during appeal?",
+        options: [
+            "Reinstated immediately",
+            "Remains dismissed",
+            "Placed on half-pay suspension",
+            "Given temporary assignment"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Whistleblower protection excludes:",
+        options: [
+            "Officers reporting internally",
+            "Anonymous complaints",
+            "Malicious false reports",
+            "Corruption allegations"
+        ],
+        answer: "c"
+    },
+    {
+        question: "Disciplinary proceeding evidence standard is:",
+        options: [
+            "Beyond reasonable doubt",
+            "Balance of probabilities",
+            "Substantial evidence",
+            "Presumption of innocence"
+        ],
+        answer: "b"
+    },
+    {
+        question: "An officer appealed penalty. Who hears appeal?",
+        options: [
+            "Immediate supervisor",
+            "Permanent Secretary",
+            "Civil Service Commission",
+            "Industrial Arbitration Panel"
+        ],
+        answer: "c"
+    },
+    {
+        question: "Conflict of interest violation requires:",
+        options: [
+            "Mandatory dismissal",
+            "Demotion by one step",
+            "Penalty proportionate to gain",
+            "Suspension without pay"
+        ],
+        answer: "c"
+    },
+    {
+        question: "Officer convicted of ₦2m fraud. Administrative action should be:",
+        options: [
+            "Suspension till appeal concluded",
+            "Dismissal effective conviction date",
+            "Demotion after prison term",
+            "Compulsory retirement"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Disciplinary records are retained for:",
+        options: [
+            "3 years after sanction",
+            "5 years after retirement",
+            "Duration of service",
+            "Permanently"
+        ],
+        answer: "d"
+    },
+    {
+        question: "An officer promoted in April expects increment. When should it take effect?",
+        options: [
+            "Immediately upon promotion",
+            "Next financial year",
+            "Following January after promotion",
+            "After 6 months probation"
+        ],
+        answer: "c"
+    },
+    {
+        question: "Officer transferred to hardship area should receive:",
+        options: [
+            "Double basic salary",
+            "Special allowance percentage",
+            "Housing allowance increase",
+            "Transport grant"
+        ],
+        answer: "b"
+    },
+    {
+        question: "An officer's salary was underpaid for 18 months. How should arrears be paid?",
+        options: [
+            "Lump sum immediately",
+            "Installments over 12 months",
+            "Added to pension benefits",
+            "Tax-free compensation"
+        ],
+        answer: "a"
+    },
+    {
+        question: "Which allowance is taxable?",
+        options: [
+            "Transport allowance",
+            "Leave grant",
+            "Utility allowance",
+            "All of the above"
+        ],
+        answer: "d"
+    },
+    {
+        question: "Acting allowance percentage for higher position:",
+        options: [
+            "10% of basic salary",
+            "Difference between salaries",
+            "20% of consolidated pay",
+            "15% of current grade"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Officer retired after 30 years service. Gratuity calculation:",
+        options: [
+            "300% of annual basic",
+            "100% of annual consolidated",
+            "1.5 x annual basic x years",
+            "2.5 x monthly basic x years"
+        ],
+        answer: "a"
+    },
+    {
+        question: "An officer died in service. Death benefit is:",
+        options: [
+            "Equivalent to 3 years salary",
+            "Fixed national rate",
+            "Based on years of service",
+            "Equal to gratuity entitlement"
+        ],
+        answer: "b"
+    },
+    {
+        question: "Mandatory deductions exclude:",
+        options: [
+            "Pension contribution",
+            "National housing fund",
+            "Staff club dues",
+            "Cooperative society"
+        ],
+        answer: "c"
+    },
+    {
+        question: "An officer suspended on half-pay receives:",
+        options: [
+            "Basic salary only",
+            "50% of consolidated pay",
+            "Basic + transport allowance",
+            "No salary during suspension"
+        ],
+        answer: "b"
+    },
+    {
+        question: "When is annual increment forfeited?",
+        options: [
+            "During sick leave exceeding 30 days",
+            "If disciplinary warning issued",
+            "For performance below 65%",
+            "Only during suspension without pay"
+        ],
+        answer: "d"
+    }
+        
+   ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

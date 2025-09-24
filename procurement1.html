@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="common_services.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Procurement 01</h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "What percentage of GDP does public procurement account for in OECD countries on average?", options: ["5.2%", "8.7%", "12.9%", "15.3%"], answer: "c"},
+{question: "Which of the following is NOT a primary objective of public procurement?", options: ["Cost efficiency", "Profit maximization", "Transparency", "Accountability"], answer: "b"},
+{question: "How has the view of public procurement evolved in recent decades?", options: ["From strategic to administrative", "From administrative to strategic", "From regulated to deregulated", "From centralized to decentralized"], answer: "b"},
+{question: "Public procurement professionals are described as custodians of what?", options: ["Government assets", "Public trust", "Supplier relationships", "Budget allocations"], answer: "b"},
+{question: "What dual responsibility makes public service procurement particularly challenging?", options: ["Managing resources while advancing policy objectives", "Reducing costs while increasing quality", "Local sourcing while global competing", "Speed while maintaining compliance"], answer: "a"},
+{question: "Which level of government does NOT typically engage in public procurement?", options: ["Local municipalities", "State governments", "Federal agencies", "Private corporations"], answer: "d"},
+{question: "What distinguishes public procurement from private sector procurement?", options: ["Focus on profit maximization", "Need for transparency and accountability", "Lack of competition requirements", "Exemption from ethical standards"], answer: "b"},
+{question: "Which term best describes the modern understanding of public procurement's role?", options: ["Administrative function", "Strategic tool", "Bureaucratic necessity", "Financial burden"], answer: "b"},
+{question: "What type of projects does public procurement implement?", options: ["Only construction projects", "Only service contracts", "Goods, services and works", "Only technology acquisitions"], answer: "c"},
+{question: "What fundamental mechanism does public procurement represent for governments?", options: ["Revenue generation", "Service delivery", "Policy making", "Public entertainment"], answer: "b"},
+{question: "Which value is LEAST important in public procurement compared to private procurement?", options: ["Transparency", "Profit maximization", "Accountability", "Fair competition"], answer: "b"},
+{question: "What makes public procurement a substantial component of the overall economy?", options: ["Its percentage of GDP", "Number of employees", "Size of government buildings", "Amount of paperwork generated"], answer: "a"},
+{question: "Which objective has become increasingly important in public procurement?", options: ["Advancing socioeconomic inequalities", "Reducing transparency", "Promoting sustainable development", "Limiting competition"], answer: "c"},
+{question: "What must public procurement balance besides cost efficiency?", options: ["Multiple objectives including transparency and accountability", "Only speed and quality", "Supplier preferences and government needs", "Local and international interests"], answer: "a"},
+{question: "From where do public authorities acquire goods, services and works?", options: ["Only internal government departments", "Only large multinational corporations", "External suppliers", "Only local small businesses"], answer: "c"},
+{question: "What has public procurement's strategic importance driven in recent decades?", options: ["Decreased regulation", "Increased innovation", "Reduced paperwork", "Fewer suppliers"], answer: "b"},
+{question: "Which term describes the evolution of procurement from purchasing to strategic function?", options: ["Devolution", "Revolution", "Evolution", "Resolution"], answer: "c"},
+{question: "What type of inequalities can public procurement help address?", options: ["Socioeconomic", "Geographical", "Educational", "All of the above"], answer: "d"},
+{question: "Who funds public procurement activities?", options: ["Private investors", "Taxpayer funds", "International donors", "Supplier contributions"], answer: "b"},
+{question: "What must be upheld in public procurement according to the content?", options: ["Highest ethical standards", "Lowest prices", "Fastest delivery times", "Simplest processes"], answer: "a"},
+{question: "What is the first phase in the public procurement process?", options: ["Solicitation", "Strategic planning and needs assessment", "Contract administration", "Bid evaluation"], answer: "b"},
+{question: "Which activity involves working with government departments to identify requirements?", options: ["Bid management", "Needs assessment", "Contract closeout", "Vendor selection"], answer: "b"},
+{question: "What must procurement professionals analyze during the planning phase?", options: ["Only current resources", "Only future needs", "Current resources, future needs, and budgetary constraints", "Only market conditions"], answer: "c"},
+{question: "Why is market research crucial in the planning phase?", options: ["To develop realistic specifications", "To select vendors quickly", "To avoid stakeholder engagement", "To reduce documentation requirements"], answer: "a"},
+{question: "Which stakeholders are typically engaged during needs assessment?", options: ["Only department users", "Only technical experts", "Department users, technical experts, financial officers, and sometimes the public", "Only financial officers"], answer: "c"},
+{question: "What does investing time in the initial planning phase increase?", options: ["The number of bids received", "The likelihood of successful outcomes", "The budget requirements", "The number of stakeholders"], answer: "b"},
+{question: "Which element of procurement planning ensures alignment with organizational goals?", options: ["Market Research", "Budget Analysis", "Needs Identification", "Risk Assessment"], answer: "c"},
+{question: "What does market research analyze?", options: ["Only pricing structures", "Only supplier capabilities", "Industry trends, pricing structures, technological advancements, and potential suppliers", "Only technological advancements"], answer: "c"},
+{question: "Why is budget analysis important in procurement planning?", options: ["To increase the budget", "To ensure financial viability", "To reduce stakeholder engagement", "To speed up the process"], answer: "b"},
+{question: "What does risk assessment in planning allow for?", options: ["Elimination of all risks", "Development of mitigation strategies", "Avoidance of market research", "Reduction of budgetary constraints"], answer: "b"},
+{question: "Which planning activity creates buy-in and ensures comprehensive requirements?", options: ["Needs Identification", "Stakeholder Engagement", "Market Research", "Budget Analysis"], answer: "b"},
+{question: "What is the primary purpose of needs assessment?", options: ["To complete paperwork", "To define what goods/services are required", "To select vendors", "To create contracts"], answer: "b"},
+{question: "Which factor is NOT typically part of procurement planning?", options: ["Needs Identification", "Market Research", "Vendor Selection", "Risk Assessment"], answer: "c"},
+{question: "What does stakeholder engagement help ensure?", options: ["That requirements reflect all parties' needs", "That the process is kept secret", "That budgets are increased", "That fewer vendors bid"], answer: "a"},
+{question: "What is the outcome of thorough procurement planning?", options: ["Guaranteed success", "Reduced need for compliance", "Increased likelihood of good outcomes", "Elimination of competition"], answer: "c"},
+{question: "Which statement about procurement planning is TRUE?", options: ["It's unnecessary for small purchases", "It can reduce the risk of costly changes later", "It should be done after vendor selection", "It eliminates the need for market research"], answer: "b"},
+{question: "What might procurement officers determine through market analysis?", options: ["Whether requirements are available in the marketplace", "Which vendor to select", "How to avoid competition", "How to reduce transparency"], answer: "a"},
+{question: "What is assessed during needs assessment besides current resources?", options: ["Only past performance", "Only future needs and budgetary constraints", "Only market conditions", "Only stakeholder preferences"], answer: "b"},
+{question: "Why is collaborative approach important in needs assessment?", options: ["To slow down the process", "To ensure requirements accurately reflect needs", "To reduce the number of bids", "To avoid market research"], answer: "b"},
+{question: "What does meticulous analysis during planning involve?", options: ["Only looking at current resources", "Only considering budgetary constraints", "Analyzing current resources, future needs, budgetary constraints, and market conditions", "Only reviewing past purchases"], answer: "c"},
+{question: "What is the relationship between planning time and project success?", options: ["More planning time guarantees success", "Adequate planning increases success likelihood", "Planning time is irrelevant to success", "Less planning time increases success"], answer: "b"},
+{question: "Which is NOT a benefit of thorough procurement planning?", options: ["Reduced risk of disputes", "Increased likelihood of meeting needs", "Higher costs", "Better defined requirements"], answer: "c"},
+{question: "What does needs assessment help avoid?", options: ["Procuring unnecessary items", "All competition", "Market research", "Budget analysis"], answer: "a"},
+{question: "Who do procurement specialists work with during strategic planning?", options: ["Only other procurement staff", "Only vendors", "Various government departments", "Only financial officers"], answer: "c"},
+{question: "What is the foundation for effective acquisition of goods and services?", options: ["Solicitation documents", "Strategic planning and needs assessment", "Bid evaluations", "Contract signing"], answer: "b"},
+{question: "What might market research reveal about potential suppliers?", options: ["Their political connections", "Their capabilities", "Their personal lives", "Their internal conflicts"], answer: "b"},
+{question: "Why is stakeholder engagement important in procurement planning?", options: ["To make the process more complex", "To ensure all perspectives are considered", "To eliminate the need for technical experts", "To reduce the number of requirements"], answer: "b"},
+{question: "What does budget analysis ensure?", options: ["That funds are always increased", "That procurement is financially viable", "That stakeholders get everything they want", "That market research is unnecessary"], answer: "b"},
+{question: "What is the purpose of risk assessment in planning?", options: ["To identify potential challenges", "To eliminate all risks", "To avoid planning", "To select vendors"], answer: "a"},
+{question: "What is the ultimate goal of the planning phase?", options: ["To create paperwork", "To establish a solid foundation for procurement", "To select vendors quickly", "To avoid competition"], answer: "b"},
+{question: "Which of the following is a type of solicitation document used in public procurement?", options: ["Request for Proposals (RFP)", "Invitation for Bids (IFB)", "Request for Quotations (RFQ)", "All of the above"], answer: "d"},
+{question: "What is the primary purpose of solicitation documents?", options: ["To communicate government requirements clearly", "To restrict competition", "To favor local suppliers", "To simplify the evaluation process"], answer: "a"},
+{question: "Which solicitation document is best suited for complex procurements where quality and technical approach are important?", options: ["Request for Quotations (RFQ)", "Invitation for Bids (IFB)", "Request for Proposals (RFP)", "None of the above"], answer: "c"},
+{question: "What must procurement documents balance between detail and flexibility?", options: ["Being detailed enough for compliance while flexible enough for innovation", "Being vague to allow interpretation", "Being rigid to prevent changes", "Being brief to save time"], answer: "a"},
+{question: "What is a key requirement during the bid management phase?", options: ["Ensuring a fair and transparent process", "Limiting the number of bidders", "Excluding international suppliers", "Reducing documentation requirements"], answer: "a"},
+{question: "Which activity is part of bid management?", options: ["Managing bidder conferences", "Selecting the winning bidder", "Executing the contract", "Conducting post-implementation reviews"], answer: "a"},
+{question: "Why do procurement officers issue addenda during the solicitation process?", options: ["To change evaluation criteria after bids are received", "To clarify requirements and answer bidder questions", "To extend the contract period", "To increase the budget"], answer: "b"},
+{question: "How must submitted bids be handled before the designated opening time?", options: ["Shared with all bidders", "Maintained in security", "Immediately evaluated", "Returned to bidders for modifications"], answer: "b"},
+{question: "What approach is required for bid evaluation?", options: ["A systematic approach using predetermined criteria", "An intuitive approach based on experience", "A flexible approach that changes with each bid", "A simple approach focusing only on price"], answer: "a"},
+{question: "Which criteria are typically used in bid evaluation?", options: ["Technical capability, price, quality, and compliance", "Only the lowest price", "Supplier location and size", "Personal relationships with bidders"], answer: "a"},
+{question: "For complex procurements, how are evaluation teams often structured?", options: ["As single evaluator processes", "As multidisciplinary teams", "As external consultant-led teams", "As political appointee committees"], answer: "b"},
+{question: "What must be thoroughly documented during vendor selection?", options: ["The decision-making process and rationale", "Only the final selected vendor", "The personal preferences of evaluators", "The political considerations"], answer: "a"},
+{question: "What are debriefings provided to unsuccessful bidders?", options: ["Explanations of the selection decision and feedback", "Financial compensation", "Promises of future contracts", "Copies of winning proposals"], answer: "a"},
+{question: "What is a benefit of providing debriefings to unsuccessful bidders?", options: ["It helps suppliers improve future submissions", "It guarantees they will win next time", "It eliminates the need for transparency", "It reduces competition in future processes"], answer: "a"},
+{question: "What challenges might procurement specialists face during solicitation?", options: ["Ambiguous requirements and bid protests", "Lack of interest from suppliers", "Too much transparency", "Overly simple requirements"], answer: "a"},
+{question: "How should procurement officials handle attempts to improperly influence outcomes?", options: ["Ignore them to avoid conflict", "Document and report them appropriately", "Accommodate them to maintain relationships", "Share them with other bidders"], answer: "b"},
+{question: "What is the purpose of bidder conferences?", options: ["To socialize with bidders", "To answer questions and ensure common understanding", "To select the preferred bidder", "To negotiate prices"], answer: "b"},
+{question: "What must be maintained until the designated bid opening time?", options: ["The final selection decision", "The contract terms", "The security of submitted bids", "The evaluation scores"], answer: "c"},
+{question: "Why is it important to respond to bidder inquiries during solicitation?", options: ["To favor certain bidders", "To delay the process", "To ensure all bidders have equal understanding", "To reduce the number of bids"], answer: "c"},
+{question: "What does a fair and transparent process provide to potential suppliers?", options: ["Guaranteed contracts", "Special preferences", "Equal opportunity", "Inside information"], answer: "c"},
+{question: "What is the main goal of the solicitation process?", options: ["To select the cheapest option", "To complete the process quickly", "To obtain competitive, compliant bids", "To avoid documentation"], answer: "c"},
+{question: "How can procurement documents encourage innovation?", options: ["By being extremely detailed and specific", "By excluding new approaches", "By being flexible enough to allow value-added solutions", "By favoring traditional methods"], answer: "c"},
+{question: "What might multidisciplinary evaluation teams provide?", options: ["Faster decisions", "Lower costs", "Diverse perspectives and specialized expertise", "Simpler processes"], answer: "c"},
+{question: "Why is documentation important during vendor selection?", options: ["To create paperwork", "To delay the process", "To demonstrate objective decision-making", "To confuse bidders"], answer: "c"},
+{question: "What should be the basis for selection decisions?", options: ["Personal preferences", "Political considerations", "Established criteria and objective assessment", "Supplier relationships"], answer: "c"},
+{question: "How can transparency in the process benefit future competitions?", options: ["By reducing the number of bidders", "By making the process longer", "By enhancing competition in subsequent processes", "By increasing costs"], answer: "c"},
+{question: "What is a common challenge with ambiguous requirements?", options: ["They make evaluation easier", "They reduce the number of bids", "They can lead to misunderstandings and protests", "They simplify the process"], answer: "c"},
+{question: "What must procurement specialists navigate during bid protests?", options: ["Political pressure to ignore protests", "Requests to cancel the procurement", "The formal protest resolution process", "Demands to select different vendors"], answer: "c"},
+{question: "Why is equal opportunity important in public procurement?", options: ["It reduces the number of bids", "It makes evaluation more difficult", "It promotes fairness and competition", "It increases costs"], answer: "c"},
+{question: "What is the value of maintaining comprehensive solicitation documentation?", options: ["It creates unnecessary paperwork", "It slows down the process", "It supports transparency and accountability", "It limits competition"], answer: "c"},
+{question: "What is the primary focus of contract administration in public procurement?", options: ["Selecting new vendors", "Planning future procurements", "Finalizing contract terms and managing the relationship", "Conducting market research"], answer: "c"},
+{question: "Which elements must be clearly defined in a public procurement contract?", options: ["Vendor's internal policies", "Government's political objectives", "Performance expectations and delivery schedules", "Supplier's employee benefits"], answer: "c"},
+{question: "What is essential during the transition from supplier selection to contract execution?", options: ["Rushing to meet deadlines", "Minimizing communication with the contractor", "Careful attention to detail to avoid misunderstandings", "Eliminating performance metrics"], answer: "c"},
+{question: "What does contract management monitoring typically include?", options: ["Ignoring contractor communications", "Avoiding site visits", "Reviewing progress reports and inspecting deliverables", "Eliminating quality checks"], answer: "c"},
+{question: "Why is comprehensive documentation important in contract management?", options: ["To create unnecessary paperwork", "To hide information from auditors", "To maintain records of all contract-related activities", "To complicate the process"], answer: "c"},
+{question: "What skills are needed for effective relationship management in contracts?", options: ["Avoiding all communication", "Always conceding to contractor demands", "Fostering collaboration and resolving disputes constructively", "Ignoring performance issues"], answer: "c"},
+{question: "What does the contract closeout process verify?", options: ["That new contracts can be awarded", "That budgets can be increased", "That all obligations have been fulfilled satisfactorily", "That stakeholders are happy regardless of outcomes"], answer: "c"},
+{question: "What is included in the final inspection during contract closeout?", options: ["Planning for future projects", "Selecting new vendors", "Verification of deliverables and resolution of financial matters", "Avoiding performance reviews"], answer: "c"},
+{question: "What is the purpose of post-implementation reviews?", options: ["To criticize the contractor publicly", "To avoid future procurements", "To assess what worked well and identify improvements", "To reduce documentation requirements"], answer: "c"},
+{question: "What broader outcomes are procurement officials increasingly evaluating?", options: ["Only the final cost", "Only the delivery timeline", "Environmental impact and contribution to local economic development", "Contractor's profit margins"], answer: "c"},
+{question: "Which social objectives might be advanced through contract evaluation?", options: ["Reducing competition", "Increasing bureaucratic hurdles", "Employment opportunities for disadvantaged groups", "Limiting transparency"], answer: "c"},
+{question: "What must procurement specialists process during the contract period?", options: ["Necessary modifications and performance issues", "Personal employee matters", "Political campaigns", "Unrelated budget requests"], answer: "a"},
+{question: "How should invoice verification be handled during contract management?", options: ["As part of regular performance monitoring", "Ignored to save time", "Done only at contract end", "Delegated to the contractor"], answer: "a"},
+{question: "What is returned to the contractor during successful contract closeout?", options: ["Performance securities", "All documentation", "Evaluation criteria", "Stakeholder comments"], answer: "a"},
+{question: "What does formal acceptance of work signify?", options: ["That all contract requirements have been met", "That the relationship is terminated", "That payment is delayed", "That no review is necessary"], answer: "a"},
+{question: "Why is maintaining regular communication with contractors important?", options: ["To address issues promptly and maintain relationships", "To micromanage their operations", "To avoid written documentation", "To reduce transparency"], answer: "a"},
+{question: "What do post-implementation reviews generate for the organization?", options: ["Valuable institutional knowledge", "Additional budgetary requirements", "Legal liabilities", "Unnecessary paperwork"], answer: "a"},
+{question: "How can contract management advance social objectives?", options: ["Through evaluation of employment opportunities for disadvantaged groups", "By ignoring social considerations", "By focusing only on cost", "By limiting contractor diversity"], answer: "a"},
+{question: "What is the relationship between contract management and public trust?", options: ["Proper management demonstrates responsible use of public funds", "It has no relationship to public trust", "It decreases transparency", "It increases bureaucratic waste"], answer: "a"},
+{question: "What broader impact can effective contract management have?", options: ["Positive environmental and community development outcomes", "Only financial savings", "Only faster completion times", "Reduced competition in future procurements"], answer: "a"}
+
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

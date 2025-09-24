@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Exam Simulation</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="FRRs.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Financial Regulations Rules {FRRs} (100 Qs) </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+  { question: "Who is primarily responsible for authorizing public expenditure?", options: ["The Accountant-General", "The Minister of Finance", "The President or Head of Government", "The Auditor-General"], answer: "c" },
+  { question: "What is the role of a public officer regarding financial responsibilities?", options: ["To approve all contracts", "To ensure proper use and accountability of funds", "To collect taxes", "To draft financial legislation"], answer: "b" },
+  { question: "Which document defines the limits of financial authority for officers?", options: ["Financial Regulations Gazette", "Annual Budget Speech", "Public Service Rules", "Tax Code"], answer: "a" },
+  { question: "Delegation of financial authority must be:", options: ["Written and approved", "Oral and informal", "Given to anyone on request", "Permanent and unchangeable"], answer: "a" },
+  { question: "A public officer who misuses funds may be subject to:", options: ["Promotion", "Disciplinary action", "Award of merit", "None of the above"], answer: "b" },
+  { question: "The principle of financial responsibility requires officers to:", options: ["Keep financial records secret", "Be accountable for funds they manage", "Avoid audits", "Delegate all duties"], answer: "b" },
+  { question: "Who has the ultimate authority over public funds?", options: ["Minister of Finance", "The Legislature", "The Executive Head of Government", "Auditor-General"], answer: "c" },
+  { question: "Financial authorities are usually outlined in:", options: ["The Constitution", "Financial Regulations", "Local customs", "Press releases"], answer: "b" },
+  { question: "The delegation of financial authority can be revoked by:", options: ["The officer who delegated it", "The recipient of the delegation", "The competent authority", "The public"], answer: "c" },
+  { question: "Public officers must ensure that funds are used for:", options: ["Personal benefit", "Authorized purposes only", "Political campaigns", "Any urgent need"], answer: "b" },
+  { question: "Which of the following is NOT a financial responsibility of public officers?", options: ["Proper documentation", "Transparent reporting", "Misappropriation of funds", "Compliance with regulations"], answer: "c" },
+  { question: "Financial authorities include the power to:", options: ["Authorize expenditure", "Write laws", "Collect taxes", "Enforce criminal law"], answer: "a" },
+  { question: "Who supervises the application of financial authorities in government departments?", options: ["The Auditor-General", "The Public Relations Officer", "The Departmental Head", "The Civil Service Commission"], answer: "c" },
+  { question: "Failure to comply with financial responsibilities may lead to:", options: ["Training opportunities", "Disciplinary measures", "Higher allowances", "Extended leave"], answer: "b" },
+  { question: "Financial responsibilities must be exercised with:", options: ["Due diligence and care", "Leniency", "Indifference", "Arbitrary decisions"], answer: "a" },
+  { question: "What is the main responsibility of public officers in revenue collection?", options: ["To maximize revenue through any means", "To collect revenue efficiently and account for it accurately", "To set tax rates", "To spend collected revenue immediately"], answer: "b" },
+  { question: "Which document records all revenue collections?", options: ["Revenue Ledger", "Expenditure Voucher", "Cash Book", "Bank Statement"], answer: "a" },
+  { question: "Public officers must issue which document as proof of revenue received?", options: ["Receipt", "Invoice", "Purchase Order", "Budget Report"], answer: "a" },
+  { question: "Revenue collected should be deposited into:", options: ["Personal accounts", "Government revenue accounts", "Suspense accounts", "Petty cash"], answer: "b" },
+  { question: "Who has the authority to write off irrecoverable revenue?", options: ["Any public officer", "Minister of Finance or authorized officer", "Accountant-General", "Auditor-General"], answer: "b" },
+  { question: "Which of the following is NOT a source of government revenue?", options: ["Taxes", "Grants", "Donations", "Personal loans"], answer: "d" },
+  { question: "Revenue accounting involves:", options: ["Recording, reporting and reconciliation of revenue", "Spending government funds", "Hiring auditors", "None of the above"], answer: "a" },
+  { question: "Failure to account properly for revenue may result in:", options: ["Promotion", "Disciplinary action", "Bonuses", "Transfer"], answer: "b" },
+  { question: "Revenue should be deposited into the government account within:", options: ["24 hours", "7 working days", "30 days", "Immediately after collection"], answer: "d" },
+  { question: "The role of the Accountant-General in revenue is to:", options: ["Authorize tax rates", "Collect revenue directly", "Ensure revenue is properly recorded and accounted for", "Write financial legislation"], answer: "c" },
+  { question: "Which officer is responsible for supervising revenue collection in a department?", options: ["Head of Department", "Auditor-General", "Minister of Finance", "Treasurer"], answer: "a" },
+  { question: "Revenue fraud includes:", options: ["Deliberate under-collection or misappropriation of funds", "Proper documentation", "Timely deposit of funds", "Regular reporting"], answer: "a" },
+  { question: "Which system helps in reconciling revenue collected and banked?", options: ["Bank Reconciliation", "Petty Cash System", "Payroll System", "Budgeting"], answer: "a" },
+  { question: "Revenue collected from licenses should be:", options: ["Kept by the collecting officer", "Deposited into government revenue accounts", "Used for office supplies", "Given as bonuses"], answer: "b" },
+  { question: "All revenue collection points must:", options: ["Have proper security and supervision", "Be operated only by junior staff", "Allow unlimited cash withdrawals", "Operate without documentation"], answer: "a" },
+  { question: "Who grants authority for recurrent expenditure in government departments?", options: ["Minister of Finance", "Head of Department", "Accountant-General", "Auditor-General"], answer: "a" },
+  { question: "Capital expenditure refers to spending on:", options: ["Salaries and wages", "Day-to-day office supplies", "Long-term assets like buildings and equipment", "Utilities and maintenance"], answer: "c" },
+  { question: "Recurrent expenditure covers:", options: ["Routine operating costs", "Construction of new infrastructure", "Purchase of land", "Loan repayments"], answer: "a" },
+  { question: "Who approves capital expenditure proposals?", options: ["Minister of Finance", "Head of Department", "Parliament or relevant legislature", "Accountant-General"], answer: "c" },
+  { question: "Which document authorizes expenditure?", options: ["Appropriation Act", "Revenue Ledger", "Receipt", "Purchase Order"], answer: "a" },
+  { question: "Expenditure without proper authority is:", options: ["Allowed if urgent", "Illegal and subject to sanctions", "Common practice", "Encouraged"], answer: "b" },
+  { question: "Recurrent expenditure is usually funded through:", options: ["Annual budget allocations", "Loans", "Donations", "Revenue surpluses"], answer: "a" },
+  { question: "Which officer is responsible for certifying expenditure?", options: ["Accounting Officer", "Head of Department", "Minister of Finance", "Auditor-General"], answer: "a" },
+  { question: "Capital projects require:", options: ["Detailed planning and approval", "Immediate spending without approval", "Only verbal authorization", "No documentation"], answer: "a" },
+  { question: "Proper control of expenditure ensures:", options: ["Efficient use of public funds", "Unlimited spending", "Personal gain", "Ignoring budget limits"], answer: "a" },
+  { question: "Who is accountable for unauthorized expenditure?", options: ["The Accounting Officer", "The Minister of Finance", "The Auditor-General", "The Clerk"], answer: "a" },
+  { question: "Expenditure classification helps in:", options: ["Budgeting and financial reporting", "Tax collection", "Revenue generation", "Payroll processing"], answer: "a" },
+  { question: "Recurrent expenditure includes all EXCEPT:", options: ["Salaries", "Maintenance costs", "Equipment purchase", "Utility bills"], answer: "c" },
+  { question: "Capital expenditure usually results in:", options: ["Creation of fixed assets", "Increased operating costs", "Reduction of staff", "Short-term liabilities"], answer: "a" },
+  { question: "Authority for expenditure is usually given by:", options: ["Budget approval", "Revenue collection", "Procurement process", "Audit report"], answer: "a" },
+  { question: "What is the primary purpose of expenditure classification?", options: ["To ensure proper budgeting and control", "To increase government revenue", "To eliminate expenditures", "To avoid audits"], answer: "a" },
+  { question: "Which of the following is NOT a common expenditure classification?", options: ["Recurrent", "Capital", "Revenue", "Personal"], answer: "d" },
+  { question: "Control of expenditure helps in:", options: ["Preventing unauthorized spending", "Increasing expenditure limits", "Reducing salaries", "Avoiding procurement"], answer: "a" },
+  { question: "What document usually provides guidelines for expenditure classification?", options: ["Financial Regulations", "Invoice", "Receipt", "Audit Report"], answer: "a" },
+  { question: "Expenditure control ensures compliance with:", options: ["Budgetary provisions", "Personal preferences", "Political orders", "Public opinion"], answer: "a" },
+  { question: "Which officer is responsible for expenditure control in a department?", options: ["Accounting Officer", "Clerk", "Minister", "Auditor-General"], answer: "a" },
+  { question: "Classification of expenditure aids in:", options: ["Financial reporting and accountability", "Increasing taxes", "Payroll processing", "Asset disposal"], answer: "a" },
+  { question: "What happens if expenditure exceeds authorized limits?", options: ["It is considered unauthorized and illegal", "It is accepted without question", "It leads to bonuses", "It is ignored"], answer: "a" },
+  { question: "Expenditure control includes all EXCEPT:", options: ["Verification of claims", "Payment approvals", "Unauthorized spending", "Budget monitoring"], answer: "c" },
+  { question: "Which of the following is a tool for expenditure control?", options: ["Budgetary allocation", "Staff recruitment", "Public relations", "Revenue collection"], answer: "a" },
+  { question: "Proper classification of expenditure assists in:", options: ["Transparency and efficiency", "Salary increments", "Political campaigns", "Tax evasion"], answer: "a" },
+  { question: "Expenditure classified under capital is typically:", options: ["Long-term investment", "Daily operational cost", "Salary payment", "Utility bills"], answer: "a" },
+  { question: "Who reviews expenditure reports for compliance?", options: ["Internal auditors", "Tax officers", "Politicians", "Public"], answer: "a" },
+  { question: "Which of the following is a consequence of poor expenditure control?", options: ["Misappropriation of funds", "Increased revenue", "Reduced spending", "Improved services"], answer: "a" },
+  { question: "Expenditure control policies are usually set by:", options: ["Finance Ministry", "Human Resources", "Marketing Department", "Legal Department"], answer: "a" },
+  { question: "What is the primary purpose of expenditure classification?", options: ["To ensure proper budgeting and control", "To increase government revenue", "To eliminate expenditures", "To avoid audits"], answer: "a" },
+  { question: "Which of the following is NOT a common expenditure classification?", options: ["Recurrent", "Capital", "Revenue", "Personal"], answer: "d" },
+  { question: "Control of expenditure helps in:", options: ["Preventing unauthorized spending", "Increasing expenditure limits", "Reducing salaries", "Avoiding procurement"], answer: "a" },
+  { question: "What document usually provides guidelines for expenditure classification?", options: ["Financial Regulations", "Invoice", "Receipt", "Audit Report"], answer: "a" },
+  { question: "Expenditure control ensures compliance with:", options: ["Budgetary provisions", "Personal preferences", "Political orders", "Public opinion"], answer: "a" },
+  { question: "Which officer is responsible for expenditure control in a department?", options: ["Accounting Officer", "Clerk", "Minister", "Auditor-General"], answer: "a" },
+  { question: "Classification of expenditure aids in:", options: ["Financial reporting and accountability", "Increasing taxes", "Payroll processing", "Asset disposal"], answer: "a" },
+  { question: "What happens if expenditure exceeds authorized limits?", options: ["It is considered unauthorized and illegal", "It is accepted without question", "It leads to bonuses", "It is ignored"], answer: "a" },
+  { question: "Expenditure control includes all EXCEPT:", options: ["Verification of claims", "Payment approvals", "Unauthorized spending", "Budget monitoring"], answer: "c" },
+  { question: "Which of the following is a tool for expenditure control?", options: ["Budgetary allocation", "Staff recruitment", "Public relations", "Revenue collection"], answer: "a" },
+  { question: "Proper classification of expenditure assists in:", options: ["Transparency and efficiency", "Salary increments", "Political campaigns", "Tax evasion"], answer: "a" },
+  { question: "Expenditure classified under capital is typically:", options: ["Long-term investment", "Daily operational cost", "Salary payment", "Utility bills"], answer: "a" },
+  { question: "Who reviews expenditure reports for compliance?", options: ["Internal auditors", "Tax officers", "Politicians", "Public"], answer: "a" },
+  { question: "Which of the following is a consequence of poor expenditure control?", options: ["Misappropriation of funds", "Increased revenue", "Reduced spending", "Improved services"], answer: "a" },
+  { question: "Expenditure control policies are usually set by:", options: ["Finance Ministry", "Human Resources", "Marketing Department", "Legal Department"], answer: "a" },
+  { question: "What is the primary objective of payment procedures?", options: ["To ensure authorized and timely payments", "To delay payments indefinitely", "To avoid paying suppliers", "To increase expenditures"], answer: "a" },
+  { question: "Which document must accompany a payment voucher?", options: ["Invoice or supporting documents", "Personal letters", "Political endorsements", "Budget proposals"], answer: "a" },
+  { question: "Who authorizes payments in government departments?", options: ["Accounting Officer", "Minister", "Clerk", "Public"], answer: "a" },
+  { question: "Payments should only be made against:", options: ["Approved and certified claims", "Personal requests", "Political favors", "Oral agreements"], answer: "a" },
+  { question: "What is a payment voucher?", options: ["A document authorizing payment", "A receipt for goods", "A budget proposal", "A salary slip"], answer: "a" },
+  { question: "Which of the following is NOT part of payment procedures?", options: ["Unauthorized payments", "Verification of claims", "Certification by authorized officers", "Proper record keeping"], answer: "a" },
+  { question: "What ensures payments are made within budgetary limits?", options: ["Expenditure control", "Personal discretion", "Political influence", "Public opinion"], answer: "a" },
+  { question: "Payment procedures promote:", options: ["Transparency and accountability", "Corruption and fraud", "Delays and inefficiency", "Unregulated spending"], answer: "a" },
+  { question: "Who is responsible for checking the accuracy of payment details?", options: ["Finance Officer", "Clerk", "Minister", "Supplier"], answer: "a" },
+  { question: "Payments should be supported by:", options: ["Proper documentation", "Verbal agreements", "Political directives", "Public demands"], answer: "a" },
+  { question: "Which payment method is commonly used in government?", options: ["Cheque or electronic transfer", "Cash without records", "Personal bank drafts", "Political donations"], answer: "a" },
+  { question: "What is the consequence of unauthorized payments?", options: ["Disciplinary action and penalties", "Increased funding", "Recognition and awards", "No consequences"], answer: "a" },
+  { question: "Payment procedures require:", options: ["Compliance with Financial Regulations", "Ignoring invoices", "Delaying approvals", "Unilateral decisions"], answer: "a" },
+  { question: "Proper payment procedures help in:", options: ["Preventing fraud and errors", "Increasing errors", "Reducing budgets", "Avoiding audits"], answer: "a" },
+  { question: "The final payment authorization lies with the:", options: ["Accounting Officer", "Supplier", "Minister", "Auditor-General"], answer: "a" },
+  { question: "Who is responsible for opening and operating government bank accounts?", options: ["Accounting Officer", "Minister", "Clerk", "Supplier"], answer: "a" },
+  { question: "Government bank accounts should be operated based on:", options: ["Financial Regulations and proper authorization", "Personal discretion", "Political influence", "Public opinion"], answer: "a" },
+  { question: "What is the purpose of a cheque in government payments?", options: ["To authorize payment from the bank account", "To request funds from the public", "To record cash transactions", "To delay payments"], answer: "a" },
+  { question: "Who is authorized to sign cheques on behalf of government?", options: ["Designated signatories", "Any employee", "Minister’s family", "Suppliers"], answer: "a" },
+  { question: "Cheques must be issued only for:", options: ["Approved and certified payments", "Personal expenses", "Political donations", "Unapproved claims"], answer: "a" },
+  { question: "What should be done with unused cheque books?", options: ["Kept securely and accounted for", "Given away to staff", "Discarded carelessly", "Used for personal purposes"], answer: "a" },
+  { question: "Which document supports the issuance of a cheque?", options: ["Payment voucher", "Personal letter", "Budget proposal", "Political directive"], answer: "a" },
+  { question: "Bank reconciliations should be carried out:", options: ["Monthly", "Annually", "Only on request", "Never"], answer: "a" },
+  { question: "Who is responsible for preparing bank reconciliations?", options: ["Finance Officer", "Minister", "Clerk", "Supplier"], answer: "a" },
+  { question: "Bank accounts should be maintained for:", options: ["All government funds and transactions", "Personal use", "Political activities", "Non-government entities"], answer: "a" },
+  
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

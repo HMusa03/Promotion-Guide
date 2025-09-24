@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="health.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Health 03 (100 Qs) </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "In which settings do public service health workers primarily function?", options: ["Only in hospitals", "Only in administrative offices", "Hospitals, health centers, laboratories, administrative offices, and field programs", "Only in research institutions"], answer: "c"},
+            {question: "What do promotion examinations for health workers typically test beyond technical expertise?", options: ["Only clinical skills", "Knowledge of public service rules, health policies, ethics, and teamwork", "Only foreign languages", "Only computer programming"], answer: "b"},
+            {question: "Which of the following is NOT a core role of health workers in public service?", options: ["Patient Care & Clinical Services", "Preventive & Public Health Services", "Stock market trading", "Research & Training"], answer: "c"},
+            {question: "What is a key component of preventive and public health services?", options: ["Surgical operations", "Immunization, health education, and sanitation", "Dispensing medications", "Managing hospital finances"], answer: "b"},
+            {question: "Administrative roles for health workers may include which of the following?", options: ["Only patient diagnosis", "Supervision, planning, budgeting, and report writing", "Only laboratory testing", "Only drug dispensing"], answer: "b"},
+            {question: "Collaboration for health workers involves working with which entities?", options: ["Only other health workers", "Other MDAs (Ministries, Departments, and Agencies) in line with health policies", "Only international organizations", "Only private companies"], answer: "b"},
+            {question: "Which cadre of health worker provides leadership in diagnosis, treatment, and referral?", options: ["Nurses", "Laboratory Scientists", "Doctors/Medical Officers", "Health Records Officers"], answer: "c"},
+            {question: "What administrative role might a Doctor/Medical Officer serve in?", options: ["Pharmacist", "Medical Director", "Community Health Worker", "Radiographer"], answer: "b"},
+            {question: "Which national health policies must Doctors/Medical Officers ensure compliance with?", options: ["Only international policies", "NHIS, PHC, and the National Health Act", "Only hospital policies", "Only state-level policies"], answer: "b"},
+            {question: "Nurses and Midwives provide which of the following services?", options: ["Only surgical procedures", "Bedside care, health education, and maternal/child health services", "Only laboratory tests", "Only administrative duties"], answer: "b"},
+            {question: "A key role of Nurses and Midwives is to act as what?", options: ["A link between patients, families, and the healthcare team", "The sole decision-maker for all treatments", "The hospital accountant", "The public relations officer"], answer: "a"},
+            {question: "Which health workers are considered the backbone of Primary Health Care in rural areas?", options: ["Pharmacists", "Community Health Extension Workers (CHEWs)", "Health Administrators", "Radiographers"], answer: "b"},
+            {question: "What is a primary function of CHEWs?", options: ["Performing complex surgeries", "Conducting immunization, health outreach, and community mobilization", "Managing hospital budgets", "Dispensing all medications"], answer: "b"},
+            {question: "Laboratory Scientists and Technicians are crucial for what?", options: ["Cooking meals for patients", "Conducting medical tests for diagnosis and treatment monitoring", "Driving ambulances", "Cleaning the hospital"], answer: "b"},
+            {question: "A key responsibility of Laboratory personnel is to ensure what?", options: ["The hospital is painted regularly", "Quality control of laboratory results for accuracy", "All patients are discharged quickly", "The cafeteria menu is diverse"], answer: "b"},
+            {question: "Pharmacists and Pharmacy Technicians manage what?", options: ["The hospital's electrical systems", "The drug supply chain (procurement, storage, dispensing)", "Patient transportation", "Gardening activities"], answer: "b"},
+            {question: "What is a critical role of Pharmacists in promoting patient safety?", options: ["Providing drug counseling and pharmacovigilance", "Performing X-rays", "Administering anesthesia", "Maintaining building security"], answer: "a"},
+            {question: "Health Records & Information Officers are responsible for what?", options: ["Performing surgeries", "Maintaining patients’ medical records and data", "Cooking for staff", "Driving official vehicles"], answer: "b"},
+            {question: "Why is the role of Health Records Officers important for decision-making?", options: ["They support the health information system", "They are the strongest people in the hospital", "They purchase all equipment", "They are the only ones who can talk to patients"], answer: "a"},
+            {question: "Environmental Health Officers promote which of the following?", options: ["Unsafe food practices", "Sanitation, food safety, waste management, and water safety", "Stock market investments", "Vehicle racing"], answer: "b"},
+            {question: "What do Environmental Health Officers conduct?", options: ["Musical performances", "Inspections of markets, abattoirs, and public places", "Surgical operations", "Psychological therapy"], answer: "b"},
+            {question: "Physiotherapists primarily provide what service?", options: ["Rehabilitation and physical therapy", "Pharmaceutical services", "Laboratory testing", "Financial auditing"], answer: "a"},
+            {question: "Radiographers are essential for what?", options: ["Gardening", "Imaging and diagnostic services", "Writing hospital policies", "Managing staff salaries"], answer: "b"},
+            {question: "Health Administrators are involved in what?", options: ["Only clinical care", "Planning, coordination, policy supervision, and personnel management", "Only cleaning services", "Only patient registration"], answer: "b"},
+            {question: "Which of the following is a public service expectation regarding professional ethics?", options: ["Sharing patient details on social media", "Confidentiality, integrity, and impartiality", "Favoring friends and family", "Ignoring rules"], answer: "b"},
+            {question: "Teamwork and interdisciplinary collaboration are expected to achieve what?", options: ["To create conflict", "To provide comprehensive patient care", "To slow down processes", "To increase individual workload"], answer: "b"},
+            {question: "Accountability for health workers includes what?", options: ["Misusing public resources", "Proper use of public resources and transparent reporting", "Hiding information", "Avoiding responsibilities"], answer: "b"},
+            {question: "Continuous learning for health workers involves what?", options: ["Staying with outdated practices", "Keeping updated with latest medical guidelines and policies", "Ignoring new research", "Avoiding training sessions"], answer: "b"},
+            {question: "Customer service in healthcare emphasizes what?", options: ["Ignoring patient complaints", "Patient-centered care and respect for human rights", "Rushing through consultations", "Favoring wealthy patients"], answer: "b"},
+            {question: "Which policy focuses on community-based healthcare and a preventive focus?", options: ["The National Transportation Policy", "The Primary Health Care (PHC) Policy", "The Agricultural Policy", "The Housing Policy"], answer: "b"},
+            {question: "The National Health Insurance Scheme (NHIS) is primarily concerned with what?", options: ["Financing healthcare, access, and equity", "Building new hospitals only", "Training doctors abroad", "Importing all medications"], answer: "a"},
+            {question: "The National Health Act provides guidelines on what?", options: ["Patients’ rights, funding, and regulation of services", "How to drive official vehicles", "Agricultural development", "International trade"], answer: "a"},
+            {question: "Public Service Rules (PSR) govern aspects such as what?", options: ["Discipline, promotion, and leave", "Cooking recipes", "Sports activities", "Television programming"], answer: "a"},
+            {question: "Public Finance Management Rules are important for ensuring what?", options: ["Accountability in handling public funds", "Personal wealth accumulation", "Ignoring budgets", "Hiding financial records"], answer: "a"},
+            {question: "Universal Health Coverage (UHC) represents what?", options: ["Nigeria’s commitment to global health goals for all citizens", "A plan to reduce healthcare access", "A policy for private hospitals only", "A strategy to employ fewer health workers"], answer: "a"},
+            {question: "Which is a common challenge in the public health sector?", options: ["Excessive funding and equipment", "Inadequate funding and equipment", "Too many skilled personnel", "Low workload"], answer: "b"},
+            {question: "What does 'brain drain' refer to in the health sector?", options: ["Migration of health professionals to other countries", "An increase in local training", "Improved retention strategies", "A new disease"], answer: "a"},
+            {question: "Resistance to change in rural communities can hinder what?", options: ["The implementation of health programs", "The construction of roads", "The opening of banks", "The sale of goods"], answer: "a"},
+            {question: "A weak health information system affects what?", options: ["Decision-making and monitoring of health programs", "The price of food", "The weather", "Vehicle maintenance"], answer: "a"},
+            {question: "High workload and burnout can lead to what?", options: ["Improved patient care", "Decreased job performance and staff turnover", "More vacation time", "Higher salaries"], answer: "b"},
+            {question: "A shortage of skilled personnel results in what?", options: ["Overstaffing", "Increased workload for existing staff and reduced service quality", "Too many job applications", "Lower training needs"], answer: "b"},
+            {question: "Which of the following is a veterinary public health concern?", options: ["Human-only diseases", "Zoonotic disease transmission", "Plant diseases", "Weather patterns"], answer: "b"},
+            {question: "Veterinarians in public service play a key role in what?", options: ["Only treating pets", "Food safety inspection and disease surveillance", "Building construction", "Car manufacturing"], answer: "b"},
+            {question: "What is a core function of a public service veterinarian?", options: ["Driving buses", "Preventing and controlling animal diseases that can affect humans", "Selling groceries", "Teaching mathematics"], answer: "b"},
+            {question: "Which activity is part of veterinary public health?", options: ["Meat inspection at abattoirs", "Software development", "Fashion design", "Legal counseling"], answer: "a"},
+            {question: "Veterinarians contribute to One Health by focusing on what?", options: ["The interconnection between human, animal, and environmental health", "Only animal health", "Only human medicine", "Only environmental science"], answer: "a"},
+            {question: "What is a common challenge for veterinarians in public service?", options: ["Lack of animals to treat", "Inadequate diagnostic facilities and vaccines", "Too many assistants", "Excessive funding"], answer: "b"},
+            {question: "Which policy framework is important for veterinarians?", options: ["The National Film Policy", "Animal Disease Control Policies and Zoonoses Regulations", "The Music Industry Policy", "The Textile Policy"], answer: "b"},
+            {question: "Veterinary public health officers often collaborate with whom?", options: ["Only other veterinarians", "Human health workers, environmental officers, and agricultural agencies", "Only farmers", "Only pet owners"], answer: "b"},
+            {question: "What is a key duty in veterinary epidemiology?", options: ["Grooming animals", "Investigating disease outbreaks and tracing sources", "Building animal shelters", "Writing fiction novels"], answer: "b"},
+            {question: "Vaccination campaigns for livestock are important for what?", options: ["Increasing animal weight only", "Preventing economic losses and zoonotic disease spread", "Making animals look better", "Entertainment purposes"], answer: "b"},
+            {question: "Which of these is a zoonotic disease?", options: ["Rabies", "Common cold", "Headache", "Fracture"], answer: "a"},
+            {question: "Public expectation from veterinary officers includes what?", options: ["Ignoring disease outbreaks", "Ensuring food safety and controlling animal diseases", "Only treating wild animals", "Designing animal costumes"], answer: "b"},
+            {question: "A veterinary laboratory technician's role includes what?", options: ["Cooking for animals", "Testing animal samples for diseases", "Driving animal ambulances", "Cleaning zoos"], answer: "b"},
+            {question: "What does ante-mortem inspection involve?", options: ["Inspecting animals before slaughter", "Inspecting meat after cooking", "Inspecting animal feed", "Inspecting veterinary equipment"], answer: "a"},
+            {question: "Post-mortem inspection is crucial for what?", options: ["Determining the cause of death and ensuring meat is fit for consumption", "Writing animal obituaries", "Burying animals", "Selling animal products"], answer: "a"},
+            {question: "The concept of 'herd immunity' is important in veterinary public health for what?", options: ["Protecting the entire animal population from a disease", "Isolating sick animals only", "Increasing animal reproduction", "Reducing animal feed costs"], answer: "a"},
+            {question: "Which tool is essential for disease surveillance in animals?", options: ["A hammer", "A reporting system for notifiable diseases", "A painting brush", "A musical instrument"], answer: "b"},
+            {question: "Veterinarians play a role in antimicrobial resistance (AMR) by promoting what?", options: ["Indiscriminate use of antibiotics", "Prudent use of antibiotics in animals", "Banning all antibiotics", "Using antibiotics for growth promotion only"], answer: "b"},
+            {question: "During a community outreach, you notice a child with a high fever and a rash. The nearest clinic is 20km away. Your most immediate practical action is to:", options: ["Prescribe antibiotics immediately from your kit", "Advise the mother to use traditional herbs and monitor", "Isolate the child, provide supportive care (e.g., paracetamol), and arrange for urgent referral and transport", "Ignore the symptoms as they are likely minor"], answer: "c"},
+            {question: "You are a nurse at a PHC. A patient's relative offers you a cash gift to prioritize their treatment. The most professional response is to:", options: ["Accept the gift quietly to avoid causing a scene", "Politely refuse, explaining the policy of first-come-first-served and clinical urgency", "Accept the gift and share it with your colleagues", "Scold the relative loudly for offering a bribe"], answer: "b"},
+            {question: "While reviewing a patient's file, you notice a colleague has documented a medication dosage that seems dangerously high. Your first practical step should be to:", options: ["Administer the medication as documented to avoid questioning your colleague", "Confront the colleague publicly about the error", "Quietly correct the documentation yourself", "Privately and respectfully clarify the dosage with your colleague before administration"], answer: "d"},
+            {question: "A community health worker (CHEW) is conducting a nutrition demonstration. A practical way to demonstrate the importance of clean water is to:", options: ["Give a 2-hour lecture on waterborne pathogens", "Show how to use a simple cloth filter and solar disinfection (SODIS) method", "Tell mothers to only buy bottled water", "Ignore the topic as it is not related to nutrition"], answer: "b"},
+            {question: "A vial of measles vaccine has been out of the cold chain for 4 hours in a community with no electricity. The most practical and safe action is to:", options: ["Use it immediately for the next child anyway", "Discard it and mark it as unusable", "Put it back in the cooler and use it later", "Take it home to put in your personal fridge"], answer: "d"},
+            {question: "You need to transport a patient with a suspected spinal injury from a rural health post to a general hospital. The most practical way to immobilize the spine with limited equipment is to:", options: ["Tell them to walk carefully to the car", "Log-roll them onto a firm surface like a wooden plank", "Have two people carry them by the arms and legs", "Ask them to sit very still in the passenger seat"], answer: "b"},
+            {question: "During a sudden cholera outbreak, your top practical priority is to:", options: ["Write a detailed research paper on the pathogen", "Immediately focus on preventing dehydration through Oral Rehydration Therapy (ORT) and promoting water sanitation", "Wait for directives from the state ministry before acting", "Only treat patients who can pay for services"], answer: "b"},
+            {question: "A pregnant woman arrives at your facility in active labor but has no money for a delivery kit. Your practical response should be to:", options: ["Turn her away to find a facility she can afford", "Use available sterilized supplies and proceed with the delivery", "Ask her to go home and come back with money", "Delay care until her relatives bring payment"], answer: "b"},
+            {question: "You are a lab scientist and a doctor is pressuring you to release a malaria test result before the required processing time is complete. You should:", options: ["Release a guessed result to please the doctor", "Politely explain the need for the full processing time to ensure accuracy", "Ignore the doctor's request completely", "Alter the test parameters to make it faster"], answer: "b"},
+            {question: "A patient confides in you that they are HIV positive but begs you not to tell their spouse. Your practical and ethical duty is to:", options: ["Promise complete confidentiality and tell no one", "Respect their privacy and provide counseling on the importance of disclosure for their spouse's health", "Immediately inform the spouse without the patient's consent", "Share the information with other staff for gossip"], answer: "b"},
+            {question: "You discover that the stock of a critical antibiotic is about to expire next month. The practical thing to do is:", options: ["Use it until the last day of expiry", "Immediately inform your supervisor to facilitate redistribution or use in line with FIFO (First-In, First-Out) principles", "Hide it so no one knows it was there", "Throw it all away immediately"], answer: "b"},
+            {question: "A mother tells you her infant has not been feeding well and has a cough. On examination, you count a respiratory rate of 68 breaths per minute. Your practical conclusion is that this is:", options: ["Normal for an infant", "A sign of severe pneumonia requiring urgent treatment and referral", "A sign of a simple cold", "Due to the weather being too hot"], answer: "b"},
+            {question: "You are an environmental health officer and find a local restaurant using untreated stream water for cooking. Your most practical enforcement action is to:", options: ["Shut down the restaurant permanently on the spot", "Issue a warning and educate the owner on water treatment methods like boiling or chlorination", "Ignore it because the owner is your friend", "Accept a bribe to overlook the problem"], answer: "b"},
+            {question: "To practically ensure a child completes their full course of antibiotics, a community health worker should:", options: ["Give all the doses to the mother at once", "Use directly observed therapy (DOT) where possible for the critical doses", "Tell the mother to come back only if the child gets worse", "Mix the medicine into a large pot of family soup"], answer: "b"},
+            {question: "A health records officer notices that the monthly report on malaria cases is missing data from the lab. The practical step is to:", options: ["Fabricate the data to make the report complete", "Submit the incomplete report without comment", "Proactively follow up with the lab department to collect the missing data", "Blame the lab staff in the report"], answer: "c"},
+            {question: "You are giving health talk on malaria prevention. The most practical and impactful demonstration is to:", options: ["Show a picture of a mosquito", "Demonstrate how to properly hang and tuck in an insecticide-treated net", "Read from a textbook about mosquito biology", "Tell people to just stay indoors all night"], answer: "b"},
+            {question: "A pharmacist receives a shipment of drugs that were stored in a truck under direct sunlight. The practical action is to:", options: ["Accept the shipment and store them normally", "Check the stability of the drugs and quarantine them pending advice from the superintendent pharmacist", "Sell them at a discount", "Return them to the driver personally"], answer: "b"},
+            {question: "During a immunization campaign, you run out of syringes. Your practical response should be to:", options: ["Wash and reuse syringes from earlier", "Cancel the rest of the day's sessions", "Immediately inform your team lead to request emergency resupply", "Use one syringe for multiple children to save resources"], answer: "c"},
+            {question: "A patient with tuberculosis consistently misses appointments. The most practical way to improve adherence is to:", options: ["Scold them for being irresponsible", "Involve a community volunteer to provide DOT and support closer to their home", "Discharge them from care", "Ignore the missed appointments"], answer: "b"},
+            {question: "You are a midwife and a delivery is progressing, but the shoulder of the baby appears to be stuck. Your immediate practical action is to:", options: ["Pull the baby's head harder", "Call for help and apply suprapubic pressure and McRoberts maneuver", "Ask the mother to stand up and walk around", "Push on the top of the mother's uterus"], answer: "b"},
+            {question: "You are triaging patients in a busy clinic. Which patient should be seen first?", options: ["A man with a chronic knee pain for 2 years", "A child who is lethargic, has a fever, and is breathing rapidly", "A woman requesting a medical certificate for work", "A teenager with a minor cut on the finger"], answer: "b"},
+            {question: "A doctor prescribes a medication that you, as a nurse, know the patient is allergic to. Your most practical action is to:", options: ["Administer the drug as prescribed and monitor closely", "Withhold the drug and immediately notify the doctor of the allergy", "Substitute it with a drug you think is better", "Ask the patient's family what to do"], answer: "b"},
+            {question: "A mother brings a child with diarrhea. The most practical way to assess for dehydration is to:", options: ["Ask the mother if the child is thirsty", "Check the child's weight on a scale", "Pinch the skin on the child's abdomen to see if it retracts slowly", "Look at the color of the child's eyes"], answer: "c"},
+            {question: "During a surgery, you notice the sterile field has been contaminated. The practical response is to:", options: ["Continue quickly to finish the surgery", "Stop immediately, break scrub, and re-establish a sterile field with new equipment", "Ignore it as it probably is fine", "Spray the area with antiseptic and continue"], answer: "b"},
+            {question: "A patient with diabetes tells you they sometimes forget to take their insulin. A practical piece of advice is to:", options: ["Tell them to stop taking it if they can't remember", "Suggest they link taking insulin with a daily routine like a meal", "Scold them for being non-compliant", "Double the dose the next time they remember"], answer: "b"},
+            {question: "You are a health worker in a conflict area. Your primary practical concern when attending to a wounded person is:", options: ["Checking their insurance status", "Ensuring your own safety and the safety of the patient (e.g., moving to a secure location) before treatment", "Taking a perfect medical history", "Asking them who hurt them"], answer: "b"},
+            {question: "An elderly patient cannot read the instructions on their medication bottle. A practical solution is to:", options: ["Tell them to guess the dosage", "Use simple pictures or symbols on the label to explain the regimen", "Assume a family member will always be there to help", "Tell them it's not your problem"], answer: "b"},
+            {question: "You suspect a child is a victim of physical abuse. Your practical and mandatory action is to:", options: ["Confront the parents angrily", "Document your findings accurately and report to your supervisor and the appropriate child protection authorities", "Ignore your suspicions to avoid trouble", "Ask the child to keep it a secret"], answer: "b"},
+            {question: "A patient on inpatient care falls out of bed. Your first practical action is to:", options: ["Immediately help them off the floor and back into bed", "Call for help and do not move the patient until you have assessed them for injury", "Fill out an incident report before checking on them", "Blame the patient for being careless"], answer: "b"},
+            {question: "The electricity goes out during a night shift. Your practical priority for patient safety is to:", options: ["Go home because you can't work", "Check on patients who are on electrical life-support equipment and activate backup power or manual procedures", "Use your phone flashlight to continue paperwork", "Wait for the morning shift to handle it"], answer: "b"},
+            {question: "You need to explain a complex surgical procedure to a patient who speaks a different language. The most practical method is to:", options: ["Speak louder in your own language", "Use a trained medical interpreter or a trusted, vetted translator", "Use hand gestures and hope they understand", "Ask a random visitor to translate"], answer: "b"},
+            {question: "You are preparing an injection for a patient. The practical way to ensure you have the right patient is to:", options: ["Call out their name from the door", "Check their wristband and ask them to state their full name and date of birth", "Assume the person in the bed is the correct patient", "Ask the patient in the next bed if they know them"], answer: "b"},
+            {question: "A family member demands to know the test results of a patient who has not yet been informed. You should:", options: ["Give them the results to avoid an argument", "Politely explain you must discuss the results with the patient first, with their permission you can share with family", "Hand them the patient's file", "Tell them you don't have the results"], answer: "b"},
+            {question: "You make a medication error but the patient seems fine. The practical and ethical action is to:", options: ["Say nothing and hope no one notices", "Report the error immediately to your supervisor and monitor the patient closely", "Blame another colleague", " Alter the documentation to hide the mistake"], answer: "b"},
+            {question: "A community health meeting is dominated by a few loud men, while the women are silent. To practically gather everyone's input, you should:", options: ["Thank the men and end the meeting early", "Hold separate focus group discussions for women to voice their concerns freely", "Ignore the women since they are not speaking", "Ask the men to speak for the women"], answer: "b"},
+            {question: "You are a radiographer and a pregnant woman needs an X-ray for a possible broken arm. Your practical action is to:", options: ["Refuse to do the X-ray under any circumstance", "Perform the X-ray but use a lead apron to shield her abdomen", "Do the X-ray without any shielding", "Tell her to come back after she delivers"], answer: "b"},
+            {question: "A patient with a highly contagious disease needs to be isolated but all isolation rooms are full. The best practical alternative is to:", options: ["Place them in the general ward", "Place their bed at least 1 meter away from others, use a curtain, and ensure staff use PPE", "Send them home immediately", "Put a mask only on the patient"], answer: "b"},
+            {question: "You are a physiotherapist. A patient is not doing their prescribed home exercises. A practical strategy is to:", options: ["Discharge them for non-compliance", "Simplify the exercise regimen and have them demonstrate it back to you to ensure understanding", "Give them a pamphlet to read", "Ignore it"], answer: "b"},
+            {question: "A health administrator notices a recurring stock-out of essential drugs every December. A practical preventive measure is to:", options: ["Blame the procurement officer each time it happens", "Analyze usage patterns and initiate early procurement before the holiday season", "Tell patients to buy their own drugs", "Nothing, it's inevitable"], answer: "b"},
+            {question: "A Medical Officer at a PHC sees a patient with severe abdominal pain and signs of shock. The most practical immediate action is to:", options: ["Prescribe painkillers and ask them to return tomorrow", "Stabilize the patient (e.g., start an IV line) and arrange immediate emergency referral", "Search online for a diagnosis", "Refer them to a traditional healer"], answer: "b"},
+            {question: "A nurse is providing postnatal care. A practical way to assess for postpartum hemorrhage is to:", options: ["Ask the mother if she feels fine", "Check her pad for excessive soaking and monitor vital signs like pulse and blood pressure", "Wait for her to complain of dizziness", "Only check once when she is discharged"], answer: "b"},
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

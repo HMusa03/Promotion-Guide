@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="agric.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Agric 01</h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "What is the primary reason the agricultural sector is considered a cornerstone of national prosperity?", options: ["It is the largest employer of labor", "It ensures food security, economic development, and environmental sustainability", "It requires minimal government investment", "It focuses solely on crop production"], answer: "b"},
+{question: "Agricultural staff in the public service are best described as:", options: ["Private farm consultants", "Unsung architects of policy and guardians of food supply", "Exclusively research scientists in labs", "Individuals who only work on government-owned farms"], answer: "b"},
+{question: "Which level of government typically does NOT employ public service agricultural staff?", options: ["Federal", "State", "Local", "There is no agricultural public service at any level"], answer: "d"},
+{question: "An Agricultural Economist in the public service would most likely be involved in:", options: ["Milking cows on a government farm", "Drafting policies on input subsidies and credit facilities", "Driving tractors for land preparation", "Selling produce at a local market"], answer: "b"},
+{question: "The 'critical link' between research institutions and farmers is the:", options: ["Policy Analyst", "Extension Officer", "Quarantine Officer", "Administrative Staff"], answer: "b"},
+{question: "A primary national security objective directly supported by agricultural staff is:", options: ["Manufacturing military equipment", "Ensuring a stable and adequate food supply", "Conducting diplomatic missions", "Managing the national stock exchange"], answer: "b"},
+{question: "Which professional would be MOST concerned with preventing the outbreak of avian flu?", options: ["Soil Scientist", "Agricultural Economist", "Veterinarian", "Agronomist"], answer: "c"},
+{question: "The main goal of an extension officer demonstrating a new seed variety on a plot is to:", options: ["Sell the seeds directly to farmers for profit", "Show the efficacy and benefits of the new technology", "Keep the research a secret from competitors", "Take over the farmer's land"], answer: "b"},
+{question: "A regulatory function of agricultural staff is to:", options: ["Give away free fertilizers without any checks", "Certify and monitor the quality of seeds and pesticides", "Allow all imported agricultural products without inspection", "Ignore food safety standards"], answer: "b"},
+{question: "Sustainable resource management by agricultural staff includes promoting:", options: ["Deforestation for more farmland", "Indiscriminate use of groundwater for irrigation", "Practices like no-till farming to prevent soil erosion", "The use of banned pesticides for higher yields"], answer: "c"},
+{question: "Applied research in public institutions focuses on:", options: ["Theoretical physics concepts", "Solving immediate, practical problems faced by farmers", "Studying ancient agricultural texts", "Designing urban architecture"], answer: "b"},
+{question: "Which task is a key administrative responsibility of agricultural staff?", options: ["Irrigating a 100-hectare farm single-handedly", "Designing, implementing, and monitoring government agricultural projects", "Harvesting crops for farmers", "Providing personal loans to farmers from their salary"], answer: "b"},
+{question: "In a disaster like a flood, agricultural staff are pivotal in:", options: ["Ignoring the farmers' plight", "Assessing damage and distributing relief materials like seeds", "Increasing the price of fertilizers", "Closing down all markets"], answer: "b"},
+{question: "Collaboration for agricultural staff does NOT typically include working with:", options: ["Farmers' Associations", "Private Agribusiness Companies", "Extraterrestrial agencies", "International Development Partners like the FAO"], answer: "c"},
+{question: "The feedback provided by extension officers to policy makers is crucial because it:", options: ["Is based on rumors and gossip", "Offers invaluable grassroots insight into policy effectiveness", "Is always negative and critical", "Is only about the weather"], answer: "b"},
+{question: "A plant protection officer's main duty is to:", options: ["Water plants in government offices", "Enforce measures to prevent the entry of foreign pests and diseases", "Design floral arrangements for events", "Prune hedges at the ministry"], answer: "b"},
+{question: "Investing in a capable public agricultural service is a strategic investment in:", options: ["Bureaucratic expansion", "National security, economic prosperity, and sustainable development", "Importing more food from abroad", "Reducing the number of farmers"], answer: "b"},
+{question: "Which professional is MOST likely to study soil composition to develop fertilization strategies?", options: ["Veterinarian", "Soil Scientist", "Policy Analyst", "Administrative Officer"], answer: "b"},
+{question: "The 'quintessential public good' referred to in the conclusion is:", options: ["A private farm", "The work of public service agricultural staff", "A bag of fertilizer", "A single research paper"], answer: "b"},
+{question: "Which task is part of technology transfer?", options: ["Organizing field days to show new irrigation techniques", "Writing a novel about farming", "Designing a new social media app", "Trading stocks on the exchange"], answer: "a"},
+{question: "Managing strategic grain reserves helps to buffer against:", options: ["An oversupply of government staff", "Seasonal shortages, price spikes, and natural disasters", "Too much sunshine", "A decrease in foreign aid"], answer: "b"},
+{question: "The framework for a stable agricultural industry is primarily provided by the:", options: ["Private sector alone", "Public sector", "Foreign governments", "Individual consumers"], answer: "b"},
+{question: "A key challenge that agricultural staff help farmers adapt to is:", options: ["The price of mobile phones", "Climate change", "Traffic congestion in cities", "Internet connectivity issues"], answer: "b"},
+{question: "The work of public agricultural staff ensures that the solitary farmer has access to:", options: ["Free luxury housing", "Knowledge and inputs", "International travel tickets", "A government pension on day one"], answer: "b"},
+{question: "Enforcing Sanitary and Phytosanitary (SPS) measures is critical for:", options: ["Protecting consumer health and meeting international export requirements", "Increasing local food prices", "Making it harder for farmers to export", "Promoting the use of harmful chemicals"], answer: "a"},
+{question: "Capacity building for farmers involves:", options: ["Building physical structures for them", "Providing education and training on modern practices", "Taking over their farms", "Writing their business plans for them"], answer: "b"},
+{question: "Long-term strategic research may involve work on:", options: ["Crop varieties that can withstand higher temperatures", "Fashion trends for the next decade", "The history of ancient art", "Designing faster cars"], answer: "a"},
+{question: "Data collection by agricultural staff is fundamental for:", options: ["Filling up filing cabinets", "Informing policy and market predictions", "Selling to private companies", "Writing personal blogs"], answer: "b"},
+{question: "The ecosystem of public support encompasses the entire:", options: ["Rainforest", "Agricultural value chain, from seed to shelf", "Oceanic food chain", "Solar system"], answer: "b"},
+{question: "Senior agricultural staff in policy roles are heavily involved in:", options: ["Daily livestock feeding", "Data-Driven Decision Making", "Driving extension officers to fields", "Ploughing fields"], answer: "b"},
+{question: "The image of a government job in agriculture transcends being just an office job because it involves:", options: ["No work at all", "Being a bridge between research and practice", "Only writing reports that nobody reads", "Attending endless meetings"], answer: "b"},
+{question: "A core duty in regulatory functions is to protect:", options: ["The interests of only large corporations", "Farmers from counterfeit products and consumers from unsafe food", "The government from farmers", "The price of fuel"], answer: "b"},
+{question: "The success of a national food security strategy ultimately relies on the effectiveness of the:", options: ["Military", "Entertainment industry", "Public service agricultural staff", "Telecommunication networks"], answer: "c"},
+{question: "What is the primary role of agricultural economists and policy advisors in the public service?", options: ["Directly managing farms", "Distributing seeds to farmers", "Researching, drafting, and analyzing agricultural policies", "Driving tractors for land preparation"], answer: "c"},
+{question: "Which of the following is a key activity in policy development?", options: ["Irrigating fields", "Harvesting crops", "Collecting and interpreting data on production and prices", "Milking cows"], answer: "c"},
+{question: "What is the main purpose of conducting an impact assessment on a proposed policy?", options: ["To increase paperwork", "To reduce the number of farmers", "To forecast potential economic, social, and environmental consequences", "To promote imported foods"], answer: "c"},
+{question: "National food security planning primarily aims to:", options: ["Increase food imports", "Close down local markets", "Ensure a stable and adequate food supply for the population", "Support only large-scale commercial farms"], answer: "c"},
+{question: "What is a strategic grain reserve used for?", options: ["To feed government staff only", "To export for maximum profit", "To buffer against seasonal shortages and natural disasters", "To store equipment"], answer: "c"},
+{question: "An early warning system managed by agricultural staff monitors for:", options: ["New fashion trends", "Stock market prices for tech companies", "Drought, pests, and global market fluctuations", "Traffic patterns in cities"], answer: "c"},
+{question: "Within government, agricultural departments advocate for budgetary allocations to:", options: ["Fund personal vacations", "Build new government palaces", "Support intervention programs for farmers", "Buy luxury vehicles for officials"], answer: "c"},
+{question: "A white paper in agriculture is most likely a:", options: ["A type of fertilizer", "A brand of paper used in offices", "A policy document outlining government plans and proposals", "A certification for organic produce"], answer: "c"},
+{question: "The main goal of a policy on input subsidies is to:", options: ["Make inputs more expensive for farmers", "Ban the use of fertilizers", "Reduce the cost of seeds and fertilizers for farmers", "Import all inputs from abroad"], answer: "c"},
+{question: "Data on farmer demographics helps policy makers to:", options: ["Plan social events", "Assign blame for poor harvests", "Identify trends and target support effectively", "Create voter registration lists"], answer: "c"},
+{question: "A key challenge in policy formulation is:", options: ["Having too much data", "Ignoring farmer needs completely", "Ensuring policies are beneficial and sustainable based on evidence", "Writing policies in foreign languages"], answer: "c"},
+{question: "Which entity would agricultural staff lobby for funding?", options: ["Foreign embassies", "Local grocery stores", "National treasury and planning departments", "Private banks"], answer: "c"},
+{question: "The success of a food security strategy is measured by its ability to:", options: ["Increase bureaucracy", "Promote food wastage", "Achieve self-sufficiency in staple crops and stabilize food supply", "Close down all food processing plants"], answer: "c"},
+{question: "A policy analyst uses data to:", options: ["Predict the weather", "Design new farming tools", "Identify challenges and opportunities in the agricultural sector", "Drive a tractor"], answer: "c"},
+{question: "What is a primary objective of market liberalization policies?", options: ["To create government-controlled monopolies", "To fix all prices arbitrarily", "To encourage private investment and competition in agricultural markets", "To ban all agricultural exports"], answer: "c"},
+{question: "Designing a credit facility program for smallholder farmers falls under:", options: ["Extension work", "Veterinary services", "Strategic policy development", "Soil testing"], answer: "c"},
+{question: "The term 'land tenure' in policy refers to:", options: ["The length of a farming season", "The temperature of the soil", "The legal framework governing land ownership and use", "The rental cost of tractors"], answer: "c"},
+{question: "Advocating for agriculture within government is necessary because:", options: ["It is the only important sector", "Farmers are the only voters", "It must compete for funding with other national priorities", "No one else understands money"], answer: "c"},
+{question: "A well-crafted agricultural policy can help to:", options: ["Reduce national debt instantly", "Guarantee rain every season", "Attract youth to farming and boost rural economies", "Eliminate the need for farmers"], answer: "c"},
+{question: "Which tool is crucial for a policy advisor making a case for funding?", options: ["A tractor", "A loudspeaker", "Evidence-based reports and economic data", "A sample of soil"], answer: "c"},
+{question: "The ultimate aim of national food security is to:", options: ["Make the country dependent on imports", "Protect the population from hunger and malnutrition", "Export all food produced", "Stop all food production"], answer: "b"},
+{question: "Policies on insurance schemes are designed to:", options: ["Increase farmer risk", "Protect farmers against losses from drought or pests", "Insure government buildings only", "Provide health insurance for pets"], answer: "b"},
+{question: "When drafting legislation, agricultural staff must ensure it is:", options: ["Complex and unreadable", "Practical, enforceable, and aligned with national goals", "Beneficial only to policy makers", "Written in ancient Latin"], answer: "b"},
+{question: "A major input subsidy program might focus on:", options: ["Subsidizing car purchases", "Making fertilizers and improved seeds affordable", "Giving free fuel to everyone", "Paying for internet subscriptions"], answer: "b"},
+{question: "The feedback used to inform policy changes often comes from:", options: ["Social media influencers", "Extension officers and farmers in the field", "Foreign governments", "Astrological forecasts"], answer: "b"},
+{question: "A key economic indicator monitored for policy is:", options: ["The number of social media likes", "Commodity price trends and inflation rates", "Football league standings", "Music chart rankings"], answer: "b"},
+{question: "Resource allocation in agriculture prioritizes:", options: ["Urban nightlife", "Programs that maximize impact on productivity and farmer welfare", "Personal gifts to staff", "Unnecessary infrastructure"], answer: "b"},
+{question: "The concept of 'self-sufficiency' in a food security context means:", options: ["Producing enough food to meet domestic needs", "Importing all food items", "Growing only cash crops for export", "Closing borders to all food trade"], answer: "a"},
+{question: "A policy aimed at 'market liberalization' would likely involve:", options: ["Increasing government control of prices", "Removing unnecessary barriers to trade and private sector participation", "Nationalizing all farms", "Setting fixed prices for all goods"], answer: "b"},
+{question: "The main audience for a policy white paper is:", options: ["Farm animals", "Other government departments, legislators, and stakeholders", "Primary school children", "Tourists"], answer: "b"},
+{question: "Budgetary advocacy is important because without funding, policies:", options: ["Write themselves", "Remain as ideas without the means for implementation", "Are automatically implemented", "Become law immediately"], answer: "b"},
+{question: "A 'targeted intervention program' is designed for:", options: ["The entire population equally", "A specific group, such as smallholder farmers or women's cooperatives", "Government officials only", "Foreign investors"], answer: "b"},
+{question: "The primary source of data for policy analysis is from:", options: ["Guesswork", "Agricultural censuses, surveys, and production reports", "Ancient texts", "Dreams"], answer: "b"},
+{question: "What is the primary function of the agricultural extension system?", options: ["To enforce government laws on farmers", "To act as the vehicle for transferring knowledge and technology to farmers", "To manage the national budget for agriculture", "To conduct laboratory-based plant research"], answer: "b"},
+{question: "An extension officer demonstrating a new irrigation technique on a plot is engaging in:", options: ["Technology transfer", "Policy formulation", "Financial auditing", "Livestock surgery"], answer: "a"},
+{question: "The main goal of a 'field day' organized by an extension officer is to:", options: ["Provide a day off for farmers", "Show the practical benefits of new farming methods to farmers", "Sell government-owned equipment", "Collect taxes"], answer: "b"},
+{question: "Capacity building for farmers, led by extension staff, primarily involves:", options: ["Building physical storage facilities", "Providing education and training on modern practices", "Giving cash handouts", "Taking over farm management"], answer: "b"},
+{question: "Personalized advice to a farmer on soil preparation and planting schedules is part of:", options: ["Advisory services", "Legislative drafting", "International diplomacy", "Corporate accounting"], answer: "a"},
+{question: "A key role of an extension officer is to advise on livestock management, including:", options: ["Animal nutrition and disease prevention", "Stock market investments", "Car engine repair", "Fashion trends"], answer: "a"},
+{question: "Extension officers serve as a crucial feedback loop to policy makers by providing:", options: ["Grassroots insight on policy effectiveness and farmer challenges", "Weather reports only", "Personal opinions on politics", "Details about farmer's personal lives"], answer: "a"},
+{question: "What is the most valuable information an extension officer can report back to the ministry?", options: ["Gossip from the community", "Emerging challenges like new pests or input shortages", "Football scores", "The price of goods in the market"], answer: "b"},
+{question: "The term 'Integrated Pest Management (IPM)' demonstrated by extension officers refers to:", options: ["Using only the strongest pesticides", "Ignoring pest problems", "Importing all pest solutions", "A sustainable approach combining biological, cultural, and chemical tools"], answer: "d"},
+{question: "An extension officer helping a farmer's cooperative access better markets is contributing to:", options: ["Increased bureaucracy", "Higher taxes", "Government control of prices", "Improved profitability and resilience for farmers"], answer: "d"},
+{question: "Which tool is essential for an extension officer's advisory role?", options: ["A judicial gavel", "A blueprint for building skyscrapers", "A passport for international travel", "Practical knowledge of local conditions and farmer needs"], answer: "d"},
+{question: "A major challenge faced by extension officers is:", options: ["Having too many resources", "Not having any farmers to help", "Working only in air-conditioned offices", "Reaching remote farmers and overcoming language or literacy barriers"], answer: "d"},
+{question: "The demonstration plot method is effective because it:", options: ["Is cheap to set up", "Requires no effort from the officer", "Is a form of entertainment", "Allows farmers to see results firsthand, building trust and adoption"], answer: "d"},
+{question: "Training on record-keeping for farmers helps them with:", options: ["Becoming government accountants", "Writing novels", "Filling out complex tax forms for corporations", "Tracking expenses, income, and improving financial decisions"], answer: "d"},
+{question: "Beyond crop production, extension officers might also advise on:", options: ["Post-harvest handling and storage to reduce losses", "The best schools for children", "How to repair mobile phones", "Real estate investment in cities"], answer: "a"},
+{question: "The success of an extension officer is ultimately measured by:", options: ["The improvement in productivity and livelihoods of the farmers they serve", "The number of reports written", "The cost of their vehicle", "How many meetings they attend"], answer: "a"},
+{question: "'Farmer Field Schools' are an extension approach that emphasizes:", options: ["Experiential, hands-on learning in the farmers' own environment", "Theoretical learning in a classroom far from the field", "Online courses only", "Sending farmers abroad for education"], answer: "a"},
+{question: "An extension officer promoting soil conservation practices like cover cropping is addressing:", options: ["Long-term environmental sustainability and soil health", "Short-term yield increase only", "Immediate pest control", "Water pollution in oceans"], answer: "d"},
+{question: "When a new government subsidy is launched, the extension officer's role is to:", options: ["Inform farmers about it and help them understand how to access it", "Keep it a secret", "Decide who gets the money", "Use the funds for themselves"], answer: "a"},
+{question: "The relationship between an extension officer and a farmer should be built on:", options: ["Trust and mutual respect", "Authority and fear", "Financial dependency", "Ignoring each other"], answer: "a"},
+{question: "An extension officer noticing a widespread crop failure in their district should first:", options: ["Report it to policy makers as critical feedback for support interventions", "Ignore it", "Blame the farmers", "Move to a new district"], answer: "a"},
+{question: "Which skill is LEAST critical for an extension officer?", options: ["Deep technical knowledge of agriculture", "Excellent communication and teaching abilities", "Expertise in astrophysics", "Understanding of socio-economic conditions of farmers"], answer: "c"},
+{question: "The 'T' in 'IPM' demonstrated by extension officers stands for:", options: ["Management", "Technology", "Training", "Testing"], answer: "a"},
+{question: "A core principle of effective extension work is:", options: ["Participatory approaches that involve farmers in finding solutions", "Top-down commands", "Doing everything for the farmer", "Using complex technical jargon"], answer: "a"},
+{question: "An extension officer working with women's cooperatives is specifically contributing to:", options: ["Empowering a key demographic in agriculture and improving household food security", "Increasing gender inequality", "Reducing the workforce", "Creating conflict"], answer: "a"},
+{question: "The primary mode of transportation for an extension officer is likely to be:", options: ["A motorcycle or vehicle to reach scattered rural communities", "A private jet", "A boat in the desert", "A helicopter"], answer: "a"},
+{question: "Disseminating information about a new drought-resistant seed variety is an example of:", options: ["Technology transfer and climate adaptation support", "Market manipulation", "Financial fraud", "Entertainment news"], answer: "a"},
+{question: "An extension officer's advice on resource management would cover:", options: ["Efficient use of water and credit", "How to spend a lottery win", "Managing a stock portfolio", "Planning a wedding"], answer: "a"},
+{question: "The feedback from extension officers helps make policies more:", options: ["Complex and distant", "Responsive and relevant to on-ground realities", "Expensive", "Theoretical"], answer: "b"},
+{question: "A key difference between an extension officer and a research scientist is that the extension officer:", options: ["Works only in a lab", "Takes research findings and adapts them for practical farmer use", "Ignores scientific discoveries", "Focuses only on writing research papers"], answer: "b"},
+{question: "Organizing farmers into groups can help extension officers by:", options: ["Creating more work", "Enabling more efficient training and collective action", "Spreading rumors", "Increasing isolation"], answer: "b"},
+{question: "When introducing a new technology, an extension officer must consider its:", options: ["Cost and complexity to ensure it is appropriate for the target farmers", "Color and design", "Popularity in other countries", "Brand name"], answer: "a"},
+{question: "The 'eyes and ears' of the ministry in rural areas are the:", options: ["Policy makers", "Extension officers", "International donors", "Urban traders"], answer: "b"},
+{question: "The ultimate aim of advisory services is to:", options: ["Create dependent farmers", "Build the knowledge and capacity of farmers to make informed decisions", "Increase the officer's popularity", "Generate more paperwork"], answer: "b"}
+
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

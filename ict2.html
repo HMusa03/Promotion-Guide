@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="common_services.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Administrative Policy (100 Qs)</h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "What remains a substantial obstacle to inclusive e-governance, particularly in developing countries?", options: ["Lack of political will", "The digital divide", "Excessive funding", "Overstaffing"], answer: "b"},
+{question: "Which population group often faces additional barriers in accessing digital public services?", options: ["Young adults", "Elderly populations and persons with disabilities", "Government employees", "Urban professionals"], answer: "b"},
+{question: "What is a common infrastructure limitation in rural and remote areas?", options: ["Excessive bandwidth", "Inconsistent electricity supply", "Too many service providers", "Overqualified staff"], answer: "b"},
+{question: "Which initiative aims to connect all gram panchayats with high-speed broadband in India?", options: ["Digital India", "BharatNet project", "Aadhaar scheme", "UMANG program"], answer: "b"},
+{question: "What has intensified as more government services move online?", options: ["Citizen satisfaction", "Concerns about data security and privacy breaches", "Funding availability", "Technical staff recruitment"], answer: "b"},
+{question: "What do centralized storage systems like India's Aadhaar create for hackers?", options: ["Uninteresting targets", "Attractive targets", "Easy-to-secure systems", "Low-value databases"], answer: "b"},
+{question: "Which strategy helps address digital divide challenges?", options: ["Reducing digital literacy programs", "Establishing Common Service Centers (CSCs)", "Limiting mobile access", "Decreasing internet bandwidth"], answer: "b"},
+{question: "What type of disparities in internet access limit the reach of digital public services?", options: ["Urban-urban disparities", "Rural-urban disparities", "International disparities", "Age-only disparities"], answer: "b"},
+{question: "Which program is India's digital literacy initiative?", options: ["BharatNet", "Pradhan Mantri Gramin Digital Saksharta Abhiyan (PMGDISHA)", "Aadhaar", "IRIS system"], answer: "b"},
+{question: "What restricts the ability of ICT units to invest in modern technologies?", options: ["Excessive profits", "Budget constraints", "Too many staff", "Overqualification"], answer: "b"},
+{question: "Building public trust in digital systems requires robust security measures and:", options: ["Complex procedures", "Transparent data governance frameworks", "Limited access", "High costs"], answer: "b"},
+{question: "Which of the following is a gender-related barrier in technology usage?", options: ["Equal access", "Gender gaps in technology usage", "Female-dominated tech fields", "Equal digital literacy"], answer: "b"},
+{question: "What is often insufficient to handle large transaction volumes in many public ICT systems?", options: ["Political support", "Server capacity", "User interest", "Manual processes"], answer: "b"},
+{question: "In developing countries, competing priorities for public funds may disadvantage:", options: ["Military spending", "ICT investments despite their long-term benefits", "Healthcare programs", "Education systems"], answer: "b"},
+{question: "ICT units must balance digital service convenience with the imperative to:", options: ["Increase bureaucratic processes", "Protect sensitive citizen information", "Reduce service hours", "Limit access"], answer: "b"},
+{question: "What do variations in digital literacy across socioeconomic groups create?", options: ["Equal opportunities", "Barriers to digital service access", "Homogeneous user base", "Standardized needs"], answer: "b"},
+{question: "Which of the following is a significant challenge in rural areas?", options: ["Excessive digital literacy", "Limited broadband connectivity", "Too many internet providers", "Overqualified technical staff"], answer: "b"},
+{question: "What raises legitimate privacy concerns among citizens regarding digital systems?", options: ["Manual processing", "Centralized storage of personal data", "Decentralized systems", "Paper-based records"], answer: "b"},
+{question: "The situation of inadequate digital infrastructure is particularly pronounced in:", options: ["Developed countries", "Developing countries", "Wealthy urban areas", "Government offices"], answer: "b"},
+{question: "What must ICT units implement while simultaneously developing transparent data governance policies?", options: ["Complex access procedures", "Comprehensive security protocols", "Limited services", "Higher charges"], answer: "b"},
+{question: "What type of technologies need to be designed to accommodate users with varying literacy levels?", options: ["Complex technologies", "Inclusive technologies", "Expensive technologies", "Western technologies"], answer: "b"},
+{question: "Which of the following is a common electrical infrastructure problem in rural areas?", options: ["Constant power supply", "Inconsistent electricity supply", "Excessive voltage", "Too many power plants"], answer: "b"},
+{question: "What do initiatives like India's BharatNet project attempt to address?", options: ["Political issues", "Infrastructure gaps", "Employee satisfaction", "International relations"], answer: "b"},
+{question: "Public service ICT units must implement comprehensive security protocols to address:", options: ["Employee turnover", "Increasingly sophisticated cyber threats", "Budget increases", "Staff training needs"], answer: "b"},
+{question: "What do assisted access services at the village level help overcome?", options: ["Excessive digital literacy", "Digital access barriers", "Urban advantage", "Government resistance"], answer: "b"},
+{question: "Which technology is poised to enhance public service delivery through chatbots and virtual assistants?", options: ["Blockchain", "Internet of Things", "Artificial Intelligence", "Traditional phone systems"], answer: "c"},
+{question: "What is a primary application of AI in public service delivery systems?", options: ["Physical infrastructure management", "Paper-based record keeping", "Predictive analytics for service demand forecasting", "Manual data entry"], answer: "c"},
+{question: "Blockchain technology in public service primarily enhances which aspects of government transactions?", options: ["Speed only", "Cost reduction only", "Transparency, security, and trust", "Employee satisfaction"], answer: "c"},
+{question: "Which IoT application enables efficient traffic management and waste disposal in cities?", options: ["Blockchain networks", "AI algorithms", "Smart city infrastructure", "Traditional bureaucracy"], answer: "c"},
+{question: "What important question do AI-powered decision systems raise in welfare eligibility determination?", options: ["Cost efficiency", "Speed of processing", "Algorithmic transparency and fairness", "Employee reduction"], answer: "c"},
+{question: "Which technology can create immutable property ownership records to reduce land disputes?", options: ["Artificial Intelligence", "Internet of Things", "Blockchain", "Traditional paper systems"], answer: "c"},
+{question: "What do IoT networks of connected devices and sensors enable in public services?", options: ["More bureaucratic processes", "Less citizen engagement", "Responsive and data-driven services", "Manual monitoring systems"], answer: "c"},
+{question: "Which emerging technology offers promising solutions for identity management processes?", options: ["Traditional paperwork", "Manual verification", "Blockchain", "In-person services"], answer: "c"},
+{question: "What must ICT units address through governance frameworks for AI applications?", options: ["Technical specifications only", "Cost reduction", "Algorithmic transparency and fairness", "Employee training"], answer: "c"},
+{question: "Which technology enables remote monitoring of water quality and air pollution in real-time?", options: ["Artificial Intelligence", "Blockchain", "Internet of Things", "Traditional methods"], answer: "c"},
+{question: "Which technology enables real-time environmental parameter monitoring?", options: ["Blockchain", "Artificial Intelligence", "Internet of Things", "Traditional methods"], answer: "c"},
+{question: "What can blockchain-based systems create for secure voting mechanisms?", options: ["Paper-based ballots", "Manual counting processes", "Tamper-proof voting systems", "Traditional polling stations"], answer: "c"},
+{question: "Which technology enables personalized service delivery based on behavioral patterns?", options: ["Blockchain", "Internet of Things", "Artificial Intelligence", "Traditional bureaucracy"], answer: "c"},
+{question: "What type of medical services can IoT devices enable in rural areas?", options: ["In-hospital only services", "Traditional healing methods", "Remote diagnostics and telemedicine", "Manual record keeping"], answer: "c"},
+{question: "Which technology helps in supply chain monitoring for essential commodities?", options: ["Artificial Intelligence", "Internet of Things", "Blockchain", "Paper-based tracking"], answer: "c"},
+{question: "What does the massive data generated by IoT devices require from ICT units?", options: ["Reduced storage capacity", "Less security measures", "Advanced analytics capabilities", "Manual processing"], answer: "c"},
+{question: "Which technology can streamline verification of academic credentials without intermediaries?", options: ["Traditional diplomas", "Artificial Intelligence", "Blockchain", "Manual verification"], answer: "c"},
+{question: "What is a potential application of AI in public welfare programs?", options: ["Increasing paperwork", "Reducing transparency", "Identifying potential fraud", "Limiting access"], answer: "c"},
+{question: "What must blockchain applications in public service address despite their benefits?", options: ["Technical complexity only", "Employee resistance", "Energy consumption and implementation challenges", "Cost increases"], answer: "c"},
+{question: "Which technology supports predictive modeling for resource optimization?", options: ["Blockchain", "Internet of Things", "Artificial Intelligence", "Traditional forecasting"], answer: "c"},
+{question: "What do connected medical devices in IoT help facilitate for rural patients?", options: ["In-person hospital visits", "Traditional healing", "Remote diagnostics and healthcare access", "Manual record keeping"], answer: "c"},
+{question: "Which technology can create tamper-proof voting mechanisms?", options: ["Artificial Intelligence", "Internet of Things", "Blockchain", "Paper ballots"], answer: "c"},
+{question: "What type of infrastructure do IoT applications enable for cities?", options: ["Traditional infrastructure", "Basic infrastructure", "Smart city infrastructure", "Limited infrastructure"], answer: "c"},
+{question: "Which technology helps in fraud detection in public welfare programs?", options: ["Blockchain", "Internet of Things", "Artificial Intelligence", "Manual audits"], answer: "c"},
+{question: "What do AI algorithms need to ensure in automated decision-making processes?", options: ["Speed only", "Cost reduction", "Fairness and absence of bias", "Complexity"], answer: "c"},
+{question: "Which country has implemented one of the world's largest biometric identification programs?", options: ["United States", "China", "India", "Brazil"], answer: "c"},
+{question: "What is the name of India's biometric identification system?", options: ["Digital India", "UMANG", "Aadhaar", "BharatNet"], answer: "c"},
+{question: "What does UMANG stand for in India's digital governance initiative?", options: ["Unified Mobile Application for New-age Governance", "United Management of Government Networks", "Universal Mobile Access for National Governance", "Unified Ministry of Administrative Governance"], answer: "a"},
+{question: "Which Indian platform has enhanced transparency in public procurement?", options: ["Aadhaar", "Digital India", "Government e-Marketplace (GeM)", "BharatNet"], answer: "c"},
+{question: "How does Venice's IRIS system process citizen reports?", options: ["Manually through paper forms", "Through automated AI systems", "Via dedicated operators in IRIS rooms", "Through external contractors"], answer: "c"},
+{question: "Which Indian initiative provides access to over 1,200 government services through a single app?", options: ["Digital India", "Aadhaar", "UMANG", "BharatNet"], answer: "c"},
+{question: "Which Indian project aims to connect rural areas with high-speed broadband?", options: ["Digital India", "Aadhaar", "UMANG", "BharatNet"], answer: "d"},
+{question: "Venice's IRIS system is primarily used for:", options: ["Reporting maintenance problems through crowdsourcing", "Tourist management", "Water level monitoring", "Historical preservation"], answer: "a"},
+{question: "What dedicated spaces did Venice create for processing IRIS reports?", options: ["IRIS rooms", "Digital hubs", "Citizen centers", "Maintenance units"], answer: "a"},
+{question: "India's Aadhaar system has enabled direct benefit transfers to:", options: ["Millions of citizens", "Government employees only", "Urban populations only", "Private corporations"], answer: "a"},
+{question: "The IRIS system introduced a new layer of:", options: ["Bureaucratic coordination", "Political management", "Tourist services", "Financial management"], answer: "a"},
+{question: "What makes India's Aadhaar system the world's largest of its kind?", options: ["Number of enrolled citizens", "Geographical coverage", "Technical complexity", "Age of the system"], answer: "a"},
+{question: "The IRIS case study demonstrates how ICT can enhance:", options: ["Bureaucratic coordination rather than reducing bureaucracy", "Tourist experiences", "Political campaigns", "Financial profits"], answer: "a"},
+{question: "What problem has India's Aadhaar system helped reduce in welfare programs?", options: ["Corruption and leakage", "Citizen participation", "Digital literacy", "Urban migration"], answer: "a"},
+{question: "Cordella's study of Venice's IRIS system describes it as an example of:", options: ["E-bureaucracy", "Traditional bureaucracy", "Digital isolation", "Political management"], answer: "a"},
+{question: "India's digital governance ecosystem demonstrates how ICT units can create:", options: ["Integrated digital infrastructure", "Isolated technical systems", "Departmental competition", "Manual processes"], answer: "a"},
+{question: "What type of reporting does Venice's IRIS system use?", options: ["Web-based crowdsourcing", "Paper-based reporting", "Telephone hotlines", "In-person only reporting"], answer: "a"},
+{question: "The IRIS system assigns reports to competent organizational units and:", options: ["Monitors their resolution", "Forgets about them", "Charges citizens for services", "Prints paper records"], answer: "a"},
+{question: "India's coordinated ICT units across government levels have helped create:", options: ["Integrated digital infrastructure", "Departmental silos", "Manual backup systems", "Traditional bureaucratic layers"], answer: "a"},
+{question: "What does the IRIS case study suggest about ICT and bureaucracy?", options: ["ICT enhances bureaucratic coordination", "ICT eliminates bureaucracy", "ICT complicates bureaucracy", "ICT replaces all human operators"], answer: "a"},
+{question: "India's Aadhaar system uses what technology for identity verification?", options: ["Biometric", "Password-based", "Paper-based", "Smart card only"], answer: "a"},
+{question: "Venice's IRIS system follows what kind of procedural logic?", options: ["Bureaucratic procedural logic", "Political logic", "Financial logic", "Informal logic"], answer: "a"},
+{question: "What has been a significant impact of India's digital governance initiatives?", options: ["Reduced corruption in welfare programs", "Increased paperwork", "Decreased citizen participation", "More bureaucratic layers"], answer: "a"},
+{question: "The IRIS system maintains procedural efficiency through:", options: ["Using ICTs to sustain procedural efficiency", "Eliminating procedures", "Reducing citizen access", "Automating all decisions"], answer: "a"},
+{question: "India's digital initiatives demonstrate how ICT units can work across:", options: ["Different government levels", "Single departments", "Only federal level", "Only state level"], answer: "a"},
+{question: "What approach should governments prioritize in digital service development according to the recommendations?", options: ["Citizen-centered design", "Technology-first design", "Cost-driven design", "Department-focused design"], answer: "a"},
+{question: "Which initiatives are recommended to ensure digital services benefit marginalized communities?", options: ["Digital inclusion initiatives", "Reduced service offerings", "Higher access fees", "Complex interfaces"], answer: "a"},
+{question: "What should ICT governance frameworks balance according to the recommendations?", options: ["Tradition and innovation", "Cost and quality", "Speed and accuracy", "Innovation with risk management"], answer: "d"},
+{question: "Which ecosystems are recommended to address complex public problems?", options: ["Competitive ecosystems", "Departmental ecosystems", "Collaborative ecosystems", "Isolated ecosystems"], answer: "d"},
+{question: "What cultures should public institutions build according to the conclusions?", options: ["Traditional cultures", "Hierarchical cultures", "Informal cultures", "Data-driven cultures"], answer: "d"},
+{question: "ICT units must remain agile and adaptive while anticipating:", options: ["Political changes", "Budget reductions", "Staff turnover", "Technological trends"], answer: "d"},
+{question: "What should digital solutions address rather than implementing technology for its own sake?", options: ["Departmental requirements", "Technical specifications", "Political agendas", "Genuine citizen requirements"], answer: "d"},
+{question: "Which communities should particularly benefit from digital inclusion initiatives?", options: ["Urban communities", "Wealthy communities", "Government employees", "Marginalized and vulnerable communities"], answer: "d"},
+{question: "What should governance frameworks allow ICT units to do with emerging technologies?", options: ["Avoid emerging technologies", "Implement without testing", "Limit citizen access", "Experiment while maintaining security"], answer: "d"},
+{question: "Who should be brought together to co-create digital solutions according to the recommendations?", options: ["Government agencies only", "Technical staff only", "International partners only", "Multiple stakeholders including private sector and civil society"], answer: "d"},
+{question: "What should public institutions value to support evidence-based decision making?", options: ["Traditional methods", "Intuitive approaches", "Political considerations", "Data-driven decision making"], answer: "d"},
+{question: "What is the fundamental mission of ICT units in public service?", options: ["Implement latest technologies", "Reduce government staff", "Increase technical complexity", "Leverage technology to create effective, efficient, and equitable public services"], answer: "d"},
+{question: "What type of design approaches should prioritize user needs and experiences?", options: ["Technology-centered design", "Department-centered design", "Cost-centered design", "Citizen-centered design"], answer: "d"},
+{question: "What should digital inclusion initiatives specifically address?", options: ["Technical specifications", "Political barriers", "Financial profits", "Accessibility barriers"], answer: "d"},
+{question: "What should flexible governance frameworks maintain while allowing innovation?", options: ["Traditional methods", "Rigid procedures", "Departmental silos", "Appropriate security and privacy protections"], answer: "d"},
+{question: "Which organizations should collaborate in creating digital solutions?", options: ["Government agencies only", "International bodies only", "Technical teams only", "Academic institutions, private sector, and civil society organizations"], answer: "d"},
+{question: "What capabilities should institutions continuously develop to derive insights from data?", options: ["Political capabilities", "Traditional capabilities", "Manual processing capabilities", "Analytical capabilities"], answer: "d"},
+{question: "ICT units must remain focused on their mission while maintaining:", options: ["Technical complexity", "Rigid structures", "Isolated operations", "Agility and adaptability"], answer: "d"},
+{question: "What should be prioritized in digital service development?", options: ["Technical excellence", "Departmental preferences", "Cost reduction", "User needs and experiences"], answer: "d"},
+{question: "Digital inclusion initiatives should ensure services benefit:", options: ["Urban populations only", "Wealthy citizens", "Government employees", "All segments of society"], answer: "d"},
+{question: "Governance frameworks should allow experimentation while maintaining:", options: ["Traditional approaches", "Departmental boundaries", "Manual processes", "Risk management protections"], answer: "d"},
+{question: "Collaborative ecosystems should address:", options: ["Simple technical problems", "Departmental issues", "Political challenges", "Complex public problems"], answer: "d"},
+{question: "Public institutions should build cultures that value:", options: ["Traditional knowledge", "Intuitive approaches", "Political considerations", "Evidence-based decision making"], answer: "d"},
+{question: "The fundamental mission of ICT units focuses on creating services that are:", options: ["Technologically advanced", "Costly and exclusive", "Complex and specialized", "Effective, efficient, and equitable"], answer: "d"},
+{question: "ICT units must anticipate technological trends while maintaining focus on:", options: ["Technical specifications", "Departmental requirements", "Political agendas", "Their fundamental mission of public service"], answer: "d"},
+
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

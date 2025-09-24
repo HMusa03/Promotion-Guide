@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Exam Simulation</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="general_paper.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>General Papers (100 Qs) </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+  {
+    question: "Which country is the largest producer of crude oil in Africa?",
+    options: [
+       "Angola",
+       "Nigeria",
+       "Libya",
+       "Algeria"
+    ],
+    answer: "b"
+  },
+    {
+    question: "Which organization is responsible for setting and regulating interest rates in Nigeria?",
+    options: [
+       "Nigerian Stock Exchange",
+       "Central Bank of Nigeria",
+       "Ministry of Finance",
+       "Federal Inland Revenue Service"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which of these is NOT a renewable energy source?",
+    options: [
+       "Solar energy",
+       "Wind energy",
+       "Coal",
+       "Hydropower"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which is the most spoken language in the world?",
+    options: [
+       "English",
+       "Mandarin Chinese",
+       "Spanish",
+       "Hindi"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which state is the largest in Nigeria by landmass?",
+    options: [
+       "Borno",
+       "Kaduna",
+       "Kano",
+       "Niger"
+    ],
+    answer: "d"
+  },
+  {
+    question: "What is the full meaning of IMF?",
+    options: [
+       "International Monetary Fund",
+       "International Money Federation",
+       "Intercontinental Market Fund",
+       "Internal Market Fund"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which country is known as the ‘Land of the Rising Sun’?",
+    options: [
+       "China",
+       "Japan",
+       "South Korea",
+       "Vietnam"
+    ],
+    answer: "b"
+  },
+  {
+    question: "What is the name of Nigeria’s upper legislative house?",
+    options: [
+       "House of Representatives",
+       "Senate",
+       "National Assembly",
+       "House of Chiefs"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Who is regarded as the father of the Nigerian nation?",
+    options: [
+       "Ahmadu Bello",
+       "Nnamdi Azikiwe",
+       "Tafawa Balewa",
+       "Obafemi Awolowo"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which of these organizations is responsible for combating drug trafficking in Nigeria?",
+    options: [
+       "EFCC",
+       "DSS",
+       "NDLEA",
+       "NIS"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which country is the largest producer of cocoa in the world?",
+    options: [
+       "Ghana",
+       "Brazil",
+       "Ivory Coast",
+       "Nigeria"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which Nigerian state is known as the 'Food Basket of the Nation'?",
+    options: [
+       "Kano",
+       "Benue",
+       "Kaduna",
+       "Nasarawa"
+    ],
+    answer: "b"
+  },
+  {
+    question: "What is the function of the World Bank?",
+    options: [
+       "Providing loans and grants for development",
+       "Setting global oil prices",
+       "Regulating stock markets",
+       "Controlling inflation"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which country recently became the newest member of BRICS?",
+    options: [
+       "Argentina",
+       "Saudi Arabia",
+       "Iran",
+       "South Korea"
+    ],
+    answer: "c"
+  },
+  {
+    question: "What is the capital of the European Union?",
+    options: [
+       "Brussels",
+       "Paris",
+       "Berlin",
+       "London"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which agency is responsible for space research in Nigeria?",
+    options: [
+       "NASRDA",
+       "NERSDA",
+       "NASA",
+       "NIMASA"
+    ],
+    answer: "a"
+  },
+  {
+    question: "The Economic and Financial Crimes Commission (EFCC) was established in which year?",
+    options: [
+       "2003",
+       "2001",
+       "1999",
+       "2007"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which Nigerian leader introduced the Structural Adjustment Programme (SAP)?",
+    options: [
+       "Olusegun Obasanjo",
+       "Yakubu Gowon",
+       "Ibrahim Babangida",
+       "Sani Abacha"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Who is regarded as the first female Vice-Chancellor in Nigeria?",
+    options: [
+       "Dora Akunyili",
+       "Prof. Grace Alele-Williams",
+       "Ngozi Okonjo-Iweala",
+       "Amina Mohammed"
+    ],
+    answer: "b"
+  },
+  {
+    question: "What does the acronym GDP stand for?",
+    options: [
+       "Gross Domestic Product",
+       "General Development Plan",
+       "Global Domestic Production",
+       "Government Development Policy"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which Nigerian state has the highest number of local government areas?",
+    options: [
+       "Lagos",
+       "Kano",
+       "Ogun",
+       "Kaduna"
+    ],
+    answer: "b"
+  },
+  {
+    question: "What is the name of Nigeria’s national stadium in Abuja?",
+    options: [
+       "National Stadium Complex",
+       "MKO Abiola National Stadium",
+       "Teslim Balogun Stadium",
+       "Ahmadu Bello Stadium"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which body is responsible for regulating universities in Nigeria?",
+    options: [
+       "JAMB",
+       "NBTE",
+       "NUC",
+       "WAEC"
+    ],
+    answer: "c"
+  },
+  {
+    question: "What is the primary function of the Nigerian Deposit Insurance Corporation (NDIC)?",
+    options: [
+       "Issuing bank licenses",
+       "Insuring bank deposits",
+       "Regulating tax payments",
+       "Monitoring foreign exchange"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which agency is responsible for issuing driver's licenses in Nigeria?",
+    options: [
+       "FRSC",
+       "VIO",
+       "NIMC",
+       "NRC"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which year did Nigeria switch from right-hand drive to left-hand drive?",
+    options: [
+       "1973",
+       "1972",
+       "1971",
+       "1975"
+    ],
+    answer: "b"
+  },
+  {
+    question: "The Nigerian flag was designed by?",
+    options: [
+       "Tafawa Balewa",
+       "Michael Taiwo Akinkunmi",
+       "Nnamdi Azikiwe",
+       "Ahmadu Bello"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which agency is responsible for enforcing financial regulations in Nigeria?",
+    options: [
+       "ICPC",
+       "NDLEA",
+       "EFCC",
+       "FRSC"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which Nigerian state is known as the ‘Land of Promise’?",
+    options: [
+       "Akwa Ibom",
+       "Cross River",
+       "Edo",
+       "Delta"
+    ],
+    answer: "a"
+  },
+  {
+    question: "What is the full meaning of the acronym NAFDAC?",
+    options: [
+       "National Agency for Food and Drug Control",
+       "National Agency for Food and Drug Administration and Control",
+       "National Association for Food and Drug Analysis and Control",
+       "Nigerian Agency for Food and Drug Certification"
+    ],
+    answer: "b"
+  },
+  {
+    question: "What is the capital city of the Republic of Ghana?",
+    options: [
+       "Accra",
+       "Lagos",
+       "Kumasi",
+       "Abidjan"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which of these is NOT an international financial institution?",
+    options: [
+       "World Bank",
+       "IMF",
+       "UNICEF",
+       "African Development Bank"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which country hosted the 2022 FIFA World Cup?",
+    options: [
+       "Brazil",
+       "Qatar",
+       "Russia",
+       "USA"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which African leader was overthrown in Niger's 2023 military coup?",
+    options: [
+       "Mahamadou Issoufou",
+       "Muhammadu Buhari",
+       "Mohamed Bazoum",
+       "Paul Biya"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which is the largest continent by land area?",
+    options: [
+       "Africa",
+       "Europe",
+       "Asia",
+       "North America"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which Nigerian state is known as the 'Centre of Excellence'?",
+    options: [
+       "Lagos",
+       "Abuja",
+       "Kaduna",
+       "Kano"
+    ],
+    answer: "a"
+  },
+  {
+    question: "What is the full meaning of PVC in Nigeria’s electoral process?",
+    options: [
+       "Permanent Voting Card",
+       "Personal Voter Card",
+       "Permanent Voter Card",
+       "Public Voting Certificate"
+    ],
+    answer: "c"
+  },
+  {
+    question: "What is the capital of the African Union?",
+    options: [
+       "Lagos",
+       "Addis Ababa",
+       "Pretoria",
+       "Nairobi"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which river is the longest in Nigeria?",
+    options: [
+       "River Niger",
+       "River Benue",
+       "River Ogun",
+       "River Kaduna"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which country is the most populous in Africa?",
+    options: [
+       "Egypt",
+       "South Africa",
+       "Nigeria",
+       "Ethiopia"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which Nigerian currency denomination has the image of Alvan Ikoku?",
+    options: [
+       "₦50",
+       "₦10",
+       "₦5",
+       "₦20"
+    ],
+    answer: "d"
+  },
+  {
+    question: "Who was Nigeria’s first military head of state?",
+    options: [
+       "Yakubu Gowon",
+       "Olusegun Obasanjo",
+       "Aguiyi Ironsi",
+       "Muhammadu Buhari"
+    ],
+    answer: "c"
+  },
+  {
+    question: "What is Nigeria’s highest academic institution for military training?",
+    options: [
+       "Nigerian Defence Academy",
+       "Nigerian Army University",
+       "Command and Staff College",
+       "Air Force Institute"
+    ],
+    answer: "a"
+  },
+  {
+    question: "What is the official language of Nigeria?",
+    options: [
+       "Yoruba",
+       "Hausa",
+       "English",
+       "Igbo"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Who discovered River Niger?",
+    options: [
+       "Mungo Park",
+       "Lord Lugard",
+       "Flora Shaw",
+       "John Speke"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which Nigerian leader handed over power to a civilian government in 1979?",
+    options: [
+       "Olusegun Obasanjo",
+       "Yakubu Gowon",
+       "Murtala Mohammed",
+       "Ibrahim Babangida"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which is the largest ocean on Earth?",
+    options: [
+       "Indian Ocean",
+       "Atlantic Ocean",
+       "Pacific Ocean",
+       "Arctic Ocean"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Who is the current President of the African Development Bank?",
+    options: [
+       "Ngozi Okonjo-Iweala",
+       "Akinwumi Adesina",
+       "Jim Yong Kim",
+       "Donald Kaberuka"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which year did Nigeria gain independence?",
+    options: [
+       "1963",
+       "1960",
+       "1957",
+       "1970"
+    ],
+    answer: "b"
+  },
+  {
+    question: "What does the acronym IMF stand for?",
+    options: [
+       "International Money Fund",
+       "International Monetary Foundation",
+       "International Monetary Fund",
+       "International Market Forum"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Who wrote the Nigerian national anthem?",
+    options: [
+       "Ben Odiase",
+       "Wole Soyinka",
+       "Chinua Achebe",
+       "Fela Kuti"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which Nigerian state is referred to as the 'Food Basket of the Nation'?",
+    options: [
+       "Kaduna",
+       "Benue",
+       "Kano",
+       "Niger"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Who is the current President of Nigeria?",
+    options: [
+       "Muhammadu Buhari",
+       "Goodluck Jonathan",
+       "Bola Ahmed Tinubu",
+       "Atiku Abubakar"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which country recently became the 31st member of NATO?",
+    options: [
+       "Sweden",
+       "Finland",
+       "Ukraine",
+       "Georgia"
+    ],
+    answer: "b"
+  },
+  {
+    question: "What is the official currency of Nigeria?",
+    options: [
+       "Dollar",
+       "Pound",
+       "Naira",
+       "Cedi"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which country has the highest population in the world?",
+    options: [
+       "USA",
+       "India",
+       "China",
+       "Indonesia"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Who was the first civilian President of Nigeria?",
+    options: [
+       "Shehu Shagari",
+       "Olusegun Obasanjo",
+       "Nnamdi Azikiwe",
+       "Tafawa Balewa"
+    ],
+    answer: "a"
+  },
+  {
+    question: "What does UNESCO stand for?",
+    options: [
+       "United Nations Economic, Social, and Cultural Organization",
+       "United Nations Education, Science, and Culture Organization",
+       "United Nations Educational, Scientific, and Cultural Organization",
+       "United Nations Environmental Science and Culture Organization"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which country recently launched the Artemis moon mission?",
+    options: [
+       "Russia",
+       "China",
+       "USA",
+       "India"
+    ],
+    answer: "c"
+  },
+    {
+    question: "What is the capital of Canada?",
+    options: [
+      "Toronto",
+      "Vancouver",
+      "Ottawa",
+      "Montreal"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Who is the richest man in the world as of 2025?",
+    options: [
+      "Elon Musk",
+      "Bernard Arnault",
+      "Jeff Bezos",
+      "Bill Gates"
+    ],
+    answer: "a"
+  },
+  {
+    question: "What is the name of Nigeria's intelligence agency?",
+    options: [
+      "EFCC",
+      "NIA",
+      "DSS",
+      "SSS"
+    ],
+    answer: "c"
+  },
+  {
+    question: "What year did the COVID-19 pandemic begin?",
+    options: [
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Who was the first woman to contest for the presidency in Nigeria?",
+    options: [
+      "Sarah Jibril",
+      "Ngozi Okonjo-Iweala",
+      "Remi Sonaiya",
+      "Oby Ezekwesili"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which African country was never colonized?",
+    options: [
+      "South Africa",
+      "Ghana",
+      "Liberia",
+      "Ethiopia"
+    ],
+    answer: "d"
+  },
+  {
+    question: "What is the capital of South Africa?",
+    options: [
+      "Johannesburg",
+      "Cape Town",
+      "Pretoria",
+      "Durban"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which Nigerian agency oversees elections?",
+    options: [
+      "EFCC",
+      "INEC",
+      "NDLEA",
+      "NCDC"
+    ],
+    answer: "b"
+  },
+  {
+    question: "What is the most consumed staple food in Nigeria?",
+    options: [
+      "Rice",
+      "Yam",
+      "Cassava",
+      "Beans"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which body is responsible for making laws in Nigeria?",
+    options: [
+      "Judiciary",
+      "Executive",
+      "National Assembly",
+      "Civil Service"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which country hosted the 2022 FIFA World Cup?",
+    options: [
+      "Brazil",
+      "Qatar",
+      "Russia",
+      "USA"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which African country has the highest GDP?",
+    options: [
+      "Nigeria",
+      "South Africa",
+      "Egypt",
+      "Kenya"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Who was Nigeria’s first military Head of State?",
+    options: [
+      "Yakubu Gowon",
+      "Aguiyi Ironsi",
+      "Murtala Mohammed",
+      "Olusegun Obasanjo"
+    ],
+    answer: "b"
+  },
+  {
+    question: "What is the largest ocean in the world?",
+    options: [
+      "Atlantic Ocean",
+      "Indian Ocean",
+      "Pacific Ocean",
+      "Arctic Ocean"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which year did Nigeria gain independence?",
+    options: [
+      "1957",
+      "1960",
+      "1963",
+      "1970"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which continent has the largest number of countries?",
+    options: [
+      "Asia",
+      "Europe",
+      "Africa",
+      "North America"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which Nigerian leader declared the ‘War Against Indiscipline’?",
+    options: [
+      "Olusegun Obasanjo",
+      "Muhammadu Buhari",
+      "Sani Abacha",
+      "Ibrahim Babangida"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which Nigerian state is known as the 'Gateway State'?",
+    options: [
+      "Ogun",
+      "Ondo",
+      "Osun",
+      "Ekiti"
+    ],
+    answer: "a"
+  },
+  {
+    question: "What is the capital of Australia?",
+    options: [
+      "Sydney",
+      "Melbourne",
+      "Canberra",
+      "Brisbane"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Who was the first female Prime Minister of Britain?",
+    options: [
+      "Margaret Thatcher",
+      "Theresa May",
+      "Queen Elizabeth II",
+      "Angela Merkel"
+    ],
+    answer: "a"
+  },
+  {
+    question: "What is the capital of India?",
+    options: [
+      "Mumbai",
+      "New Delhi",
+      "Kolkata",
+      "Bangalore"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which organ of the United Nations is responsible for world peace?",
+    options: [
+      "General Assembly",
+      "UNESCO",
+      "Security Council",
+      "WHO"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which Nigerian city is home to the first university in Nigeria?",
+    options: [
+      "Ibadan",
+      "Nsukka",
+      "Zaria",
+      "Abeokuta"
+    ],
+    answer: "a"
+  },
+  {
+    question: "What is the largest desert in the world?",
+    options: [
+      "Sahara",
+      "Arabian",
+      "Gobi",
+      "Antarctic"
+    ],
+    answer: "d"
+  },
+  {
+    question: "Which Nigerian state is the largest oil producer?",
+    options: [
+      "Lagos",
+      "Rivers",
+      "Bayelsa",
+      "Akwa Ibom"
+    ],
+    answer: "d"
+  },
+  {
+    question: "Which international organization is responsible for global monetary policies?",
+    options: [
+      "World Bank",
+      "International Monetary Fund (IMF)",
+      "African Development Bank",
+      "World Trade Organization"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which Nigerian state has the largest population?",
+    options: [
+      "Lagos",
+      "Kano",
+      "Ogun",
+      "Kaduna"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which Nigerian agency is responsible for tax collection?",
+    options: [
+      "EFCC",
+      "NDLEA",
+      "FIRS",
+      "FRSC"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which is the highest mountain in the world?",
+    options: [
+      "Kilimanjaro",
+      "Mount Everest",
+      "Mount McKinley",
+      "Mount Elbrus"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Who discovered electricity?",
+    options: [
+      "Albert Einstein",
+      "Benjamin Franklin",
+      "Isaac Newton",
+      "Nikola Tesla"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which currency is used in Japan?",
+    options: [
+      "Yuan",
+      "Won",
+      "Yen",
+      "Dollar"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Which planet is closest to the sun?",
+    options: [
+      "Mars",
+      "Venus",
+      "Mercury",
+      "Jupiter"
+    ],
+    answer: "c"
+  },
+  {
+    question: "What is the main function of the judiciary?",
+    options: [
+      "Making laws",
+      "Implementing policies",
+      "Interpreting laws",
+      "Managing finances"
+    ],
+    answer: "c"
+  },
+  {
+    question: "Who is regarded as the father of modern physics?",
+    options: [
+      "Isaac Newton",
+      "Albert Einstein",
+      "Galileo Galilei",
+      "Stephen Hawking"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which Nigerian city is known as the 'Coal City'?",
+    options: [
+      "Lagos",
+      "Enugu",
+      "Kano",
+      "Port Harcourt"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which organ of government is responsible for implementing laws?",
+    options: [
+      "Legislative",
+      "Executive",
+      "Judiciary",
+      "Police"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which planet is known as the Red Planet?",
+    options: [
+      "Earth",
+      "Mars",
+      "Jupiter",
+      "Saturn"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which organ of government makes laws?",
+    options: [
+      "Executive",
+      "Legislature",
+      "Judiciary",
+      "Police"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which is the smallest country in the world?",
+    options: [
+      "Monaco",
+      "Vatican City",
+      "Malta",
+      "San Marino"
+    ],
+    answer: "b"
+  },
+  {
+    question: "Which is the most widely spoken language in Africa?",
+    options: [
+      "Swahili",
+      "Hausa",
+      "Yoruba",
+      "Zulu"
+    ],
+    answer: "a"
+  },
+  {
+    question: "Which of the following lines is the opening of Nigeria's new national anthem adopted in 2024",
+    options: [
+      "Arise, O Compatriots, Nigeria's call obey",
+      "Nigeria, we hail thee, our own dear native land",
+      "God bless our homeland, Nigeria we love",
+      "lift every voice and sing of Nigeria's pride"
+    ],
+    answer: "b"
+  }
+  
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="health.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Health 01 (100 Qs) </h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "On your first day at a new Primary Health Centre (PHC), what is the most practical first step to understand your role?", options: ["Start treating patients immediately", "Introduce yourself to the officer-in-charge and request a briefing on the facility's protocols, priorities, and your specific duties", "Go through patient files without permission", "Inspect the stock of drugs without supervision"], answer: "b"},
+            {question: "You are a new community health worker. To gain the trust of a community, a practical action is to:", options: ["Criticize their existing health practices", "Start by listening to community leaders and members to understand their needs and perceptions", "Impose new rules immediately", "Work only from the health clinic and avoid home visits"], answer: "b"},
+            {question: "A patient refers to you as \"Doctor\" but you are a nurse. The most professional response is to:", options: ["Accept the title to gain their trust", "Politely correct them by stating your correct title and role to manage expectations", "Ignore it as it doesn't matter", "Scold them for not knowing"], answer: "b"},
+            {question: "You notice a senior colleague using a treatment method that is outdated and not in the national guidelines. A practical first step is to:", options: ["Report them to the Ministry of Health immediately", "Privately and respectfully discuss the current guidelines and ask for their perspective", "Confront them in front of patients", "Adopt the outdated method yourself"], answer: "b"},
+            {question: "During a health outreach, you have limited supplies. A practical way to prioritize care is to focus on:", options: ["The wealthiest individuals first", "Conditions that are life-threatening or have high potential for spread (triage)", "The youngest children only", "Those who complain the loudest"], answer: "b"},
+            {question: "You need to explain a complex medical condition to a patient with low literacy. A practical method is to:", options: ["Use complex medical terminology to be precise", "Use simple language, diagrams, or everyday analogies to ensure understanding", "Give them a textbook to read", "Avoid explaining it to save time"], answer: "b"},
+            {question: "A patient's family is interfering constantly with your care. A practical way to manage this is to:", options: ["Ask security to remove them", "Schedule a family meeting to clearly explain the treatment plan and set respectful boundaries", "Ignore the family and the patient", "Let the family direct all care"], answer: "b"},
+            {question: "You are feeling unwell and suspect you might be contagious. The most responsible action is to:", options: ["Take strong painkillers and continue working", "Inform your supervisor and avoid direct patient care to prevent spreading illness", "Wear a double mask and continue working", "Only treat patients who are also sick"], answer: "b"},
+            {question: "You are offered a research opportunity that could benefit your community but would require time off from your clinical duties. You should first:", options: ["Accept immediately without telling anyone", "Discuss it with your supervisor to see if coverage can be arranged and the project is supported", "Reject it outright as it is not clinical work", "Go on leave and do the research secretly"], answer: "b"},
+            {question: "A colleague confides in you that they are struggling with burnout. A supportive and practical response is to:", options: ["Tell them to toughen up", "Listen empathetically and encourage them to speak with a supervisor or access mental health support", "Promise not to tell anyone and ignore the issue", "Spread the news to other colleagues"], answer: "b"},
+            {question: "You discover a patient has been using a traditional herbal concoction alongside prescribed drugs. Your practical response should be to:", options: ["Confiscate the herbs immediately", "Non-judgmentally ask about it and assess for potential drug interactions, educating the patient on risks", "Stop all prescribed medication", "Endorse the herbal treatment"], answer: "b"},
+            {question: "A mother brings a child for immunization but is hesitant due of side effects she read about online. You should:", options: ["Dismiss her concerns as ignorance", "Acknowledge her concern, provide clear information on benefits and real risks, and address her specific questions", "Threaten to report her for child neglect", "Immunize the child without her consent"], answer: "b"},
+            {question: "You are asked to perform a procedure you are not fully trained for. The safest action is to:", options: ["Attempt it after reading a manual", "Politely decline and immediately seek assistance from a trained colleague", "Try it on a practice model first without supervision", "Refer the patient to another facility without explanation"], answer: "b"},
+            {question: "A violent argument breaks out between two patients in the waiting area. Your immediate practical priority is to:", options: ["Jump in to break up the fight physically", "Call for security/help and focus on moving other patients and staff to safety", "Continue seeing your scheduled patients", "Record the event on your phone"], answer: "b"},
+            {question: "You consistently finish your work later than your colleagues. A practical step to improve efficiency is to:", options: [" Rush through patient consultations", "Observe a efficient colleague or ask your supervisor for tips on time management", "Blame the administration for your workload", "See fewer patients"], answer: "b"},
+            {question: "A patient gives you a handwritten thank-you note. This is:", options: ["A bribe that must be reported", "A kind gesture that can be accepted, as it has no monetary value", "Against public service rules", "Something you must declare to the anti-corruption agency"], answer: "b"},
+            {question: "You are tasked with mentoring a new junior staff member who is struggling. A practical approach is to:", options: ["Do their work for them", "Provide clear, constructive feedback and demonstrate tasks patiently", "Complain about them to others", "Ignore them until they improve on their own"], answer: "b"},
+            {question: "You witness a patient stealing supplies from a storage room. You should:", options: ["Confront the patient and retrieve the items", "Report the incident to your supervisor or security personnel", "Ignore it to avoid confrontation", "Help the patient steal more"], answer: "b"},
+            {question: "You need to refuse a request from a patient because it is against policy. To avoid seeming dismissive, you should:", options: ["Say 'No' and turn away", "Explain the reason for the policy and, if possible, offer a legal alternative", "Blame your supervisor for the rule", "Pretend to agree and then not do it"], answer: "b"},
+            {question: "Your supervisor asks for your opinion on improving a clinic process. A constructive way to respond is to:", options: ["Say everything is fine to avoid extra work", "Provide a thoughtful suggestion based on your front-line experience", "Complain about other staff members", "Suggest something unrealistic and expensive"], answer: "b"},
+            {question: "A visitor asks for directions to a patient's ward. Before giving the information, you must first:", options: ["Give them the quickest route", "Verify the visitor's identity and ensure the patient is willing to receive visitors", "Refuse all visitor requests", "Ask the visitor for a gift"], answer: "b"},
+            {question: "You are conducting a home visit and sense you are in an unsafe situation. The practical action is to:", options: ["Ignore your feeling and continue the visit", "Politely cut the visit short and leave, reporting the concern to your supervisor", "Confront the household about your feelings", "Call the police immediately from inside the house"], answer: "b"},
+            {question: "You receive a directive from management that you believe will negatively impact patient care. You should:", options: ["Openly disobey the directive", "Seek clarification on the rationale and voice your concerns through proper channels", "Passively resist by not implementing it", "Complain to patients about management"], answer: "b"},
+            {question: "A patient insists on a specific brand-name drug when a cheaper generic is available. Your role is to:", options: ["Prescribe the brand-name to make them happy", "Explain the equivalence of generics and advocate for cost-effective care, as per the Essential Drug List", "Refuse to prescribe anything", "Prescribe the generic but label it as the brand-name"], answer: "b"},
+            {question: "You are asked to represent your facility at a community meeting. Your practical preparation should include:", options: ["Winging it with your general knowledge", "Reviewing relevant health data for your community and preparing key messages on priority issues", "Criticizing your facility's shortcomings", "Promising resources you cannot deliver"], answer: "b"},
+            {question: "You find a significant error in a report you submitted last week. The corrective action is to:", options: ["Hope no one notices it", "Blame a junior colleague", "Immediately inform the recipient of the error and provide a corrected version", "Destroy all copies of the old report"], answer: "c"},
+            {question: "A fellow health worker is consistently late, increasing your workload. A constructive first step is to:", options: ["Publicly shame them during a staff meeting", "Be late yourself in protest", "Speak to them privately to understand if there is an issue and express your concern", "Report them to management without speaking to them"], answer: "c"},
+            {question: "You have a strong personal disagreement with a colleague. To ensure professional teamwork, you should:", options: ["Avoid them at all costs", "Sabotage their work", "Keep interactions focused on patient care and professional duties", "Try to get them fired"], answer: "c"},
+            {question: "The most practical way to stay updated on clinical best practices is to:", options: ["Rely only on what you learned in school", "Only listen to drug representatives", "Regularly attend continuing education sessions and review new guidelines", "Ignore new research"], answer: "c"},
+            {question: "A patient arrives at the clinic demanding to see a doctor, but the triage nurse assesses their case as non-urgent. The nurse's most practical action is to:", options: ["Let the patient jump the queue to avoid conflict", "Tell the patient to go home and come back another day", "Politely explain the triage process and the estimated waiting time, ensuring they are comfortable", "Argue with the patient about their symptoms"], answer: "c"},
+            {question: "During a ward round, a patient reveals they haven't been taking their prescribed medication due to side effects. The clinician's practical response should be to:", options: ["Scold the patient for non-compliance", "Discharge the patient for disobedience", "Assess the side effects, explore alternative medications or dosages, and reaffirm the importance of treatment", "Ignore the revelation and continue the current prescription"], answer: "c"},
+            {question: "A health educator is planning a session on malaria prevention for a community with low literacy. The most practical tool to use is:", options: ["A detailed written pamphlet", "A scientific journal article", "A flip chart with simple pictures and diagrams for interactive discussion", "A lecture in English"], answer: "c"},
+            {question: "A lab technician receives a poorly labelled sample. The safe and practical procedure is to:", options: ["Guess the patient's identity and process it", "Process it but don't release the result", "Reject the sample and request a new, properly labelled one to prevent diagnostic errors", "Call all patients to ask who it belongs to"], answer: "c"},
+            {question: "A pharmacist suspects a prescription is a forgery. The most appropriate action is to:", options: ["Dispense the drugs to avoid confrontation", "Call the police immediately", "Politely decline to fill it and verify directly with the prescribing doctor", "Dispense a weaker drug instead"], answer: "c"},
+            {question: "A health records officer notices a patient's file contains mixed-up results from another patient. The immediate practical action is to:", options: ["Delete the incorrect information", "Ignore it as it will sort itself out", "Quarantine the file, report the error to a supervisor, and assist in correcting the record", "Give the file to the patient"], answer: "c"},
+            {question: "An environmental health officer finds a public well located next to a pit latrine. The primary practical concern is:", options: ["The well's appearance", "The lack of a bucket", "Fecal contamination of the groundwater and the risk of waterborne diseases", "The owner of the well"], answer: "c"},
+            {question: "A physiotherapist's patient is not showing progress. A practical step is to:", options: ["Discharge the patient", "Blame the patient for not trying", "Re-assess the patient's condition and review the treatment plan for suitability", "Increase the intensity of exercises drastically"], answer: "c"},
+            {question: "A radiographer is about to perform an X-ray on a potentially pregnant woman. The practical protocol is to:", options: ["Proceed without asking", "Refuse the X-ray entirely", "Politely inquire about the possibility of pregnancy and follow the facility's policy (e.g., use shielding or postpone)", "Perform the X-ray but not tell her"], answer: "c"},
+            {question: "A health administrator needs to allocate a limited budget. The most equitable practical approach is to:", options: ["Fund the department that complains the most", "Give equal amounts to every department", "Use data on patient volume, disease burden, and impact to prioritize funding", "Save all the money"], answer: "c"},
+            {question: "During a sudden influx of patients, the core practical role of every health worker is to:", options: ["Work only on their assigned specific tasks", "Go on break until it calms down", "Operate within their scope of practice while flexibly supporting the team to ensure patient safety", "Only treat patients from their own ethnic group"], answer: "c"},
+            {question: "A community health worker (CHEW) is the first to arrive at a scene of a motorcycle accident. The practical priority is to:", options: ["Move the victim off the road immediately", "Search the victim's pockets for ID", "Ensure the scene is safe, check for responsiveness, and control severe bleeding while calling for emergency help", "Direct traffic around the accident"], answer: "c"},
+            {question: "A nurse is providing discharge planning for an elderly patient living alone. A practical step is to:", options: ["Assume the family will manage everything", "Give the patient a complex written plan", "Assess the patient's home environment and support system and facilitate referrals to community services if needed", "Delay discharge until a perfect solution is found"], answer: "c"},
+            {question: "A doctor is faced with a patient who has a condition beyond the facility's capacity. The core role is to:", options: ["Try to manage it anyway with available resources", "Send the patient away with no instructions", "Stabilize the patient and arrange a coordinated referral to a higher-level facility", "Tell the patient to find a specialist themselves"], answer: "c"},
+            {question: "A laboratory scientist identifies a notifiable disease from a sample. Their critical role is to:", options: ["Keep the result confidential", "File the result and forget about it", "Ensure the result is promptly communicated to the clinician and reported to the disease surveillance officer", "Post it on social media to raise awareness"], answer: "c"},
+            {question: "A pharmacist's role in promoting rational drug use includes:", options: ["Dispensing whatever a patient requests", "Stocking only the most expensive drugs", "Counseling patients on proper use and discouraging antibiotic demand for viral infections", "Hiding drug information from patients"], answer: "c"},
+            {question: "The core role of a health records officer in improving care is to ensure:", options: ["Files are kept locked away", "All records are written in pen", "Data is accurate, complete, and accessible to authorized providers for decision-making", "No one can access the records"], answer: "c"},
+            {question: "An environmental health officer's role in disease prevention is best achieved by:", options: ["Working only in the office", "Treating sick individuals", "Conducting inspections and community education on sanitation and hygiene practices", "Focusing only on air pollution"], answer: "c"},
+            {question: "A health administrator's core function in supporting clinical staff is to:", options: ["Micromanage all clinical decisions", "See patients themselves", "Provide the necessary resources, policies, and logistical support for staff to perform their duties effectively", "Cut budgets to save money"], answer: "c"},
+            {question: "A midwife's role extends beyond delivery to include:", options: ["Only counting babies delivered", "Handing the baby to the doctor", "Providing antenatal education, postnatal support, and family planning counseling", "Leaving immediately after the birth"], answer: "c"},
+            {question: "During an immunization campaign, a core role of all health workers is to:", options: ["Administer vaccines only", "Ignore questions from parents", "Maintain the cold chain, manage waste, record data, and educate caregivers", "Give extra vaccines to friends"], answer: "c"},
+            {question: "A clinical role in health research involves:", options: ["Systematically collecting data to evaluate and improve care practices", "Experimenting on patients without consent", "Keeping all findings secret", "Only publishing positive results"], answer: "a"},
+            {question: "A practical example of interdisciplinary collaboration is a:", options: ["Team meeting between a doctor, nurse, physio, and social worker to plan a patient's discharge", "Doctor working alone on a complex case", "Pharmacist refusing to talk to doctors", "Lab scientist withholding results"], answer: "a"},
+            {question: "The core role of a health worker in health promotion is to:", options: ["Empower individuals and communities to take control of their health through education", "Wait for patients to get sick", "Sell health products", "Promote only traditional medicine"], answer: "a"},
+            {question: "A practical way a health worker can advocate for patients is by:", options: ["Identifying barriers to care (e.g., cost, transport) and bringing them to the attention of management", "Keeping quiet about system failures", "Blaming patients for their problems", "Advocating only for wealthy patients"], answer: "a"},
+            {question: "In resource-limited settings, a core role is to:", options: ["Innovate and adapt protocols safely to provide the best possible care with available means", "Always refer patients elsewhere", "Give up on providing care", "Use expired equipment"], answer: "a"},
+            {question: "The role of a health worker in safeguarding vulnerable patients (e.g., children, the elderly) includes:", options: ["Being vigilant for signs of abuse or neglect and knowing the reporting procedure", "Ignoring signs of abuse", "Assuming all injuries are accidental", "Deciding not to get involved"], answer: "a"},
+            {question: "A practical way to fulfill the role of a mentor to students is to:", options: ["Provide constructive feedback and create safe learning opportunities", "Let them observe silently", "Have them do all the tedious work", "Criticize them in public"], answer: "a"},
+            {question: "A core ethical role for every health worker is to:", options: ["Maintain patient confidentiality at all times", "Share patient stories for entertainment", "Decide treatment based on a patient's tribe", "Charge unofficial fees"], answer: "a"},
+            {question: "The practical role of a health worker in infection prevention includes:", options: ["Strictly adhering to hand hygiene and sterile techniques for every patient interaction", "Washing hands only when they look dirty", "Reusing gloves between patients", "Wearing PPE only for known infectious cases"], answer: "a"},
+            {question: "A health worker's role in maintaining accurate financial records for a facility involves:", options: ["Ensuring transparency and accountability for all transactions involving public funds", "Creating fake receipts for personal gain", "Letting the administrator handle everything", "Not asking questions about finances"], answer: "a"},
+            {question: "A practical way to demonstrate the core value of empathy is to:", options: ["Actively listen to a patient's concerns and acknowledge their feelings", "Rush through patient consultations", "Pretend to be busy", "Tell patients you know how they feel without listening"], answer: "a"},
+            {question: "The role of a health worker in upholding public trust is to:", options: ["Act with integrity and transparency in all professional dealings", "Engage in corrupt practices", "Spread misinformation", "Show favoritism"], answer: "a"},
+            {question: "A practical example of a health worker's duty to report is:", options: ["Notifying authorities about a suspected case of a notifiable disease or child abuse", "Reporting a colleague's personal lifestyle choices", "Gossiping about a patient's diagnosis", "Keeping a disease outbreak secret"], answer: "a"},
+            {question: "The role of a health worker in a disaster response team is primarily to:", options: ["Provide triage and life-saving medical care in accordance with emergency protocols", "Take photographs for the news", "Wait for instructions from abroad", "Help only those who can pay"], answer: "a"},
+            {question: "A health worker's role in ensuring continuity of care is demonstrated by:", options: ["Writing clear referral letters and ensuring patients understand follow-up instructions", "Destroying old patient records", "Discharging patients without plans", "Assuming another facility will figure it out"], answer: "a"},
+            {question: "A practical way to respect a patient's autonomy is to:", options: ["Explain treatment options clearly and obtain their informed consent before proceeding", "Force treatment on them", "Make decisions for them because they are uneducated", "Bribe them to accept treatment"], answer: "a"},
+            {question: "The role of a health worker in managing scarce resources (like blood) involves:", options: ["Adhering to strict protocols for prioritization based on clinical urgency", "Using it for friends and family first", "Selling it on the black market", "Wasting it through poor storage"], answer: "a"},
+            {question: "A Medical Officer at a PHC sees a child with a high fever and convulsions. The most practical initial action is to:", options: ["Administer rectal diazepam to stop the seizures and then stabilize for referral", "Refer them immediately without treatment", "Give paracetamol and send home", "Wait for the convulsions to stop on their own"], answer: "a"},
+            {question: "A nurse is monitoring a post-operative patient whose breathing has become shallow and rapid. A practical assessment is to:", options: ["Check their oxygen saturation, airway patency, and pain level", "Assume they are in pain and give analgesia", "Cover them with more blankets", "Wake them up and tell them to breathe deeper"], answer: "a"},
+            {question: "A CHEW is managing a case of uncomplicated malaria in a child. A practical sign that the treatment is working is:", options: ["The child's fever reduces and they are able to drink fluids", "The child becomes unconscious", "The child vomits once", "The child's skin turns yellow"], answer: "a"},
+            {question: "A Laboratory Scientist is processing a sputum sample for TB. A practical step to ensure safety is to:", options: ["Perform all procedures inside a certified Biosafety Cabinet", "Open the container outside to air it out", "Smell the sample to check it", "Process it on the main lab bench"], answer: "a"},
+            {question: "A Pharmacist notices a patient is on multiple drugs from different doctors that may interact. A practical action is to:", options: ["Politely discuss the potential interaction with the patient and contact the prescribers for review", "Dispense all the drugs without comment", "Withhold one of the drugs arbitrarily", "Tell the patient to choose one doctor"], answer: "a"},
+            {question: "A Health Records Officer is asked for a patient's file by a researcher. They must ensure:", options: ["The researcher has obtained proper ethical approval and patient consent for access", "The researcher gets the file immediately", "The file is given without a name on it", "The file is photocopied for the researcher"], answer: "a"},
+            {question: "An Environmental Health Officer investigates a typhoid fever outbreak. The most practical environmental target is to:", options: ["Inspect the community's water source and sanitation facilities", "Spray mosquitoes", "Arrest food vendors", "Distribute antibiotics door-to-door"], answer: "a"},
+            {question: "A Physiotherapist is designing a home exercise program for a farmer with a back injury. The program should be:", options: ["Tailored to include practical, graded exercises relevant to their farming tasks", "Identical to a program for an office worker", "Very complex to ensure recovery", "Done only at the clinic"], answer: "a"},
+            {question: "A Radiographer is asked to X-ray a pregnant woman's ankle. The practical way to minimize radiation exposure is to:", options: ["Refuse the X-ray entirely", "Perform a CT scan instead", "X-ray the other ankle for comparison", "Use a lead apron to shield her abdomen and pelvis"], answer: "d"},
+            {question: "A Health Administrator needs to reduce hospital-acquired infections. A practical, low-cost initiative is to:", options: ["Launch a hand hygiene compliance campaign with clear posters and accessible alcohol rub", "Buy a new expensive ventilation system", "Hire more doctors", "Ignore the data"], answer: "a"},
+            {question: "A midwife is teaching a new mother how to bathe her newborn. A practical safety tip is to:", options: ["Use very hot water to kill germs", "Leave the baby alone in the bath for a moment", "Use adult soap on the baby", "Check the water temperature with your elbow before placing the baby in it"], answer: "d"},
+            {question: "A doctor is breaking bad news to a patient. A practical communication technique is to:", options: ["Use complex medical jargon", "Blame the patient's lifestyle", "Rush through the conversation", "Use simple, clear language and frequently check for understanding"], answer: "d"},
+            {question: "A nurse is inserting an IV line and fails on the first attempt. The practical action is to:", options: ["Keep trying in the same spot", "Blame the patient's veins", "Let a student try next", "Apologize, withdraw the needle, and attempt with a new needle in a different site"], answer: "d"},
+            {question: "A CHEW is assessing a malnourished child. A practical tool to use is:", options: ["A bathroom scale", "A ruler", "A thermometer", "A MUAC (Mid-Upper Arm Circumference) tape"], answer: "d"},
+            {question: "A Laboratory Technician is using a microscope that won't focus. A practical troubleshooting step is to:", options: ["Hit the microscope", "Use it anyway", "Blame the last user", "Check that the objective lens is clicked into place and the slide is positioned correctly"], answer: "d"},
+            {question: "A Pharmacist is storing newly delivered insulin. The practical requirement is to:", options: ["Leave it in the sun", "Store it in a cupboard", "Freeze it", "Immediately place it in a refrigerator at 2-8°C"], answer: "d"},
+            {question: "A Health Records Officer is inputting data and sees a blank field for \"HIV status\" on a form for a TB patient. They should:", options: ["Assume the patient is negative and enter 'No'", "Leave it blank", "Make up a status", "Follow up with the clinician to obtain the missing information"], answer: "d"},
+            {question: "An Environmental Health Officer is educating a community on preventing cholera. The most critical practical message is:", options: ["Boil your water or treat it with chlorine and practice handwashing", "Avoid eating peppers", "Stay indoors during the rain", "Take antibiotics daily"], answer: "a"},
+            {question: "A Physiotherapist is treating an elderly patient at risk of falls. A practical home safety advice is to:", options: ["Recommend installing grab bars in the bathroom and removing loose rugs", "Tell them to move to a new house", "Suggest they stop walking altogether", "Give them a walking frame that is too tall"], answer: "a"},
+            {question: "A Radiographer is preparing a anxious child for an X-ray. A practical way to gain cooperation is to:", options: ["Threaten the child", "Restrain the child forcefully", "Sedate the child without consent", "Use a doll or toy to demonstrate the procedure in a non-threatening way"], answer: "d"},
+            {question: "A Health Administrator is reviewing monthly reports. A practical Key Performance Indicator (KPI) to track is:", options: ["The color of the walls", "The number of staff parties held", "The administrator's mood", "The percentage of children under one fully immunized"], answer: "d"},
+            {question: "A Medical Officer is managing a diabetic patient with a foot ulcer. A practical action to prevent amputation is to:", options: ["Tell the patient to walk more on it", "Apply a tight bandage", "Soak the foot in hot water", "Refer urgently to a podiatrist or specialized nurse for debridement and off-loading"], answer: "d"},
+            {question: "A nurse is caring for a patient with highly contagious tuberculosis. The practical sequence for removing PPE is to:", options: ["Remove the mask first", "Take everything off at once", "Reuse the gown for the next patient", "Remove gloves first, perform hand hygiene, then remove gown, then remove mask"], answer: "d"},
+            {question: "A CHEW is promoting family planning in a community with cultural resistance. A practical approach is to:", options: ["Distribute condoms door-to-door loudly", "Ignore the community's beliefs", "Call the resistant people backward", "Engage privately with men and women separately with trusted community leaders to address concerns"], answer: "d"},
+            {question: "A Laboratory Scientist gets a critical \"panic value\" result. The practical protocol is to:", options: ["File the result for the next day", "Send a text message to the patient", "Repeat the test 10 times", "Immediately call the ordering clinician to verbally report the result"], answer: "d"},
+            {question: "A Pharmacist suspects a patient is selling their prescribed opioids. They should:", options: ["Continue dispensing to avoid conflict", "Confront the patient aggressively", "Dispense a higher dose", "Refill the prescription and report the suspicion to the prescribing doctor and authorities"], answer: "d"},
+            {question: "A Health Records Officer is archiving old files. A practical consideration for confidentiality is to:", options: ["Burn them in an open pit", "Sell them to a recycling company", "Take them home for personal use", "Shred them using a cross-cut shredder or use a secure disposal service"], answer: "d"},
+            {question: "An Environmental Health Officer is inspecting a market. A practical test for meat freshness is to:", options: ["Ask the seller if it is fresh", "Taste a small piece", "Check the price", "Check the color, smell, and texture; and demand to see inspection stamps"], answer: "d"},
+            {question: "A Physiotherapist is assessing a patient's walking (gait). A practical method is to:", options: ["Ask them to describe their walk", "Look only at their feet", "Have them run a marathon", "Observe them walking back and forth in a corridor"], answer: "d"},
+            {question: "A Radiographer is processing an X-ray film that comes out too light. A practical adjustment is to:", options: ["Increase the development time", "Use a brighter viewbox", "Tell the patient they are too thin", "Increase the exposure factors (kVp or mAs) for the next shot"], answer: "d"},
+            {question: "A Health Administrator is dealing with a staff shortage. A practical short-term solution is to:", options: ["Close the clinic", "Force staff to work double shifts indefinitely", "Ignore the problem", "Explore flexible scheduling or reassign tasks among available staff based on competency"], answer: "d"},
+            {question: "A midwife is managing the third stage of labour. A practical intervention to prevent postpartum hemorrhage is to:", options: ["Pull on the umbilical cord", "Massage the fundus aggressively before placental delivery", "Apply fundal pressure", "Administer uterotonic drugs like oxytocin after the baby is delivered"], answer: "d"},
+            {question: "A doctor is obtaining informed consent for a procedure. A practical way to ensure it is informed is to:", options: ["Hand the patient a form to sign quickly", "Have a relative sign for them", "Skip the process to save time", "Use simple language to explain the risks, benefits, and alternatives, and ask if they have questions"], answer: "d"},
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

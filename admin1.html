@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotion Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3c7fc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #004080;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative; 
+        }
+
+        header img {
+            height: 100px;            
+        }
+        .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 20px;
+        gap: 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        margin-bottom: 5px;
+    }
+
+    .user-info {
+        color: #fff;
+        text-align: center;
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    nav h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 30px;
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        nav {
+            display: flex;
+            justify-content: left;
+            background-color: #003366;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background-color: #005bb5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #004080;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .navigation-buttons button:hover {
+            background-color: #003366;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #ffffff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+        }
+
+        #timer {
+            font-size: 18px;
+            color: white;
+        }
+
+        /* Score Pop-up Styles */
+        .score-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: #f0faff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            text-align: center;
+            border: 3px solid #004080;
+            animation: popIn 0.3s ease-out;
+        }
+
+        .score-popup h2 {
+            color: #004080;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-popup p {
+            font-size: 20px;
+            margin: 15px 0;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .score-popup .percentage {
+            font-size: 42px;
+            font-weight: 800;
+            color: #004080;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .score-popup .result-message {
+            font-size: 22px;
+            font-weight: 700;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .pass {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+
+        .fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 2px solid #c62828;
+        }
+
+        #close-popup {
+            background: #004080;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #close-popup:hover {
+            background: #003366;
+            transform: scale(1.05);
+        }
+
+        /* Animation */
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+      .failed-questions {
+            margin: 20px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .failed-questions h3 {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        #failed-questions-list {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        #failed-questions-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #ffebee;
+            border-left: 4px solid #c62828;
+            list-style-type: none;
+            font-size: 14px;
+        }
+
+        #failed-questions-list li:nth-child(even) {
+            background-color: #fce4ec;
+        }
+
+        .no-failed {
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        /* Question Navigation Panel */
+        .question-nav-panel {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            position: sticky;
+            top: 0;
+        }
+
+        .question-nav-panel h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #004080;
+        }
+
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+        }
+
+        .question-btn {
+            width: 100%;
+            padding: 8px 0;
+            background-color: #004080; /* Blue for unanswered */
+            color: white;
+            border: 1px solid #003366;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .question-btn:hover {
+            background-color: #005bb5;
+            transform: scale(1.05);
+        }
+
+        .question-btn.current {
+            background-color: #004080;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #004080;
+        }
+
+        .question-btn.answered-correct {
+            background-color: #4CAF50; /* Green for correct */
+            border-color: #388E3C;
+        }
+
+        .question-btn.answered-wrong {
+            background-color: #f44336; /* Red for wrong */
+            border-color: #d32f2f;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .container {
+                width: 90%;
+            }
+            .question-nav-panel {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                order: -1;
+            }
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+      <div class="profile-container">
+        <img src="images/profile.jpeg" alt="Profile Picture" class="profile-pic">
+        <div class="user-info">Mr. Promotion Exam<br>ID: FCT/12345</div>
+    </div>
+    <nav><a href="common_services.html">Home</a> </nav> 
+    </header>
+    
+    <nav>
+        <h1>Administrative Policy (100 Qs)</h1>
+        <h3 id="timer">Time Remaining: 34:00</h3>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+        <a href=""></a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div id="question-container" class="question">
+                <p id="question-text"></p>
+                <div id="options-container"></div>
+            </div>
+        
+            <div class="navigation-buttons">
+                <button id="previous-button" onclick="previousQuestion()"><strong>Previous</strong></button>
+                <button id="next-button" onclick="nextQuestion()"><strong>Next</strong></button>
+                <button id="submit-button" onclick="submitExam()"><strong>Submit Exam</strong></button>
+            </div>
+        
+            <div id="result" style="display: none; margin-top: 20px; font-size: 20px; color: green;"></div>
+        </div>
+        
+        <!-- Question Navigation Panel -->
+        <div class="question-nav-panel">
+            <h3>Questions</h3>
+            <div class="question-buttons" id="question-buttons">
+                <!-- Question buttons will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" style="display: none;"></div>
+    <div class="score-popup" id="score-popup" style="display: none;">
+        <h2>Exam Results</h2>
+        <p>Total Questions: <span id="total-questions"></span></p>
+        <p>Total Scores: <span id="correct-answers"></span></p>
+        <div class="percentage" id="percentage"></div>
+        <div class="result-message" id="result-message"></div>
+        <!-- Add Failed Questions Section -->
+        <div class="failed-questions">
+            <h3>Failed Questions:</h3>
+            <ul id="failed-questions-list"></ul>
+        </div>
+        <button id="close-popup">Close</button>
+    </div>
+
+<footer>
+    <p>&copy; 2024 HM Solutions & Co. | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Add this shuffle function at the beginning of your script
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+    const questions = [
+            {question: "What is the primary 'bottom line' for public service administrative staff?", options: ["Generating public value and accountability", "Maximizing shareholder profit", "Increasing market share", "Reducing operational costs"], answer: "a"},
+            {question: "Administrative staff are best described as the __________ of government operations.", options: ["public face", "strategic leaders", "unsung engine", "political core"], answer: "c"},
+            {question: "Why is the work of administrative staff considered essential for continuity in government?", options: ["They are elected officials", "They ensure operations continue despite political changes", "They are the highest paid", "They are immune to political shifts"], answer: "b"},
+            {question: "Which of the following is NOT a typical title for public service administrative staff?", options: ["Office Manager", "Policy Director", "Executive Assistant", "Records Clerk"], answer: "b"},
+            {question: "The effectiveness of public policy is ultimately dependent on:", options: ["The ruling political party", "Media coverage", "Administrative capacity for implementation", "International approval"], answer: "c"},
+            {question: "What directly shapes the public's perception of a government agency?", options: ["The Minister's speeches", "The administrative staff's demeanor as the first point of contact", "The agency's annual budget", "Press releases"], answer: "b"},
+            {question: "Investing in administrative staff is a strategic imperative for:", options: ["Reducing the number of managers", "Achieving responsive and effective governance", "Winning the next election", "Simplifying policy documents"], answer: "b"},
+            {question: "Administrative staff provide the __________ that enables agencies to fulfill their mandates.", options: ["political influence", "operational and logistical support", "legal authority", "campaign funding"], answer: "b"},
+            {question: "What is a key difference between public and private sector administrative roles?", options: ["Public sector requires no specific skills", "Public sector's ultimate goal is public value, not profit", "Public sector's goal is profit, private's is service", "Private sector has no administrative staff"], answer: "b"},
+            {question: "What binds policy vision to tangible public outcomes?", options: ["Elected officials", "Administrative staff", "Journalists", "Lobbyists"], answer: "b"},
+            {question: "Administrative staff serve as the essential __________ that connects government operations.", options: ["political party", "connective tissue", "financial resource", "international liaison"], answer: "b"},
+            {question: "The work of administrative staff is often conducted:", options: ["In the public spotlight", "Behind the scenes", "In political campaigns", "In international negotiations"], answer: "b"},
+            {question: "What remains stable regardless of political shifts in government?", options: ["Elected officials", "Administrative operations", "Political policies", "Campaign promises"], answer: "b"},
+            {question: "What is the fundamental purpose of administrative staff in public service?", options: ["To win elections", "To enable smooth, efficient and lawful government functioning", "To create new policies", "To manage political campaigns"], answer: "b"},
+            {question: "Which term best describes the range of positions in public service administrative staff?", options: ["Limited and specialized", "Wide and varied", "Politically appointed", "Temporary and contractual"], answer: "b"},
+            {question: "The collective purpose of administrative staff is to provide:", options: ["Political leadership", "Operational, logistical and procedural support", "Policy development", "International diplomacy"], answer: "b"},
+            {question: "Unlike private-sector counterparts, public service administrative staff focus on:", options: ["Profit maximization", "Public value and equitable service delivery", "Market competition", "Shareholder value"], answer: "b"},
+            {question: "What makes administrative staff indispensable to effective governance?", options: ["Their political connections", "Their ability to ensure continuity, stability and integrity of operations", "Their budget control", "Their media influence"], answer: "b"},
+            {question: "The reputation of government operations is significantly maintained by:", options: ["Political leaders only", "Administrative staff's commitment to integrity", "External consultants", "International organizations"], answer: "b"},
+            {question: "What is the ultimate measure of success for public service administrative staff?", options: ["Profit margins", "Public trust and effective service delivery", "Political popularity", "Media coverage"], answer: "b"}, 
+            {question: "What is the primary risk of administrative staff failing to manage communication effectively within a government agency?", options: ["Increased paper usage", "Information silos and departmental miscommunication", "Higher travel costs", "Fewer meetings being scheduled"], answer: "b"},
+            {question: "A citizen calls with a complex query that falls outside your direct knowledge. What is the most professional first step?", options: ["Hang up immediately to avoid giving wrong information", "Take a message and promise a callback you may not be able to make", "Direct the caller to the correct department or a more knowledgeable colleague", "Provide your best guess to be helpful in the moment"], answer: "c"},
+            {question: "When drafting an official government memo, which factor is most critical?", options: ["Using colorful and engaging language", "Adhering to strict governmental templates and standards", "Completing the task as quickly as possible", "Keeping the content secret from other colleagues"], answer: "b"},
+            {question: "Accurate data entry into a citizen database is a critical duty primarily because it is:", options: ["A task for interns to practice on", "Crucial for government transparency and accurate service delivery", "A method to use up the agency's annual budget", "Designed to make the database appear comprehensive"], answer: "b"},
+            {question: "Which type of legislation must administrative staff be most vigilant about complying with regarding personal data?", options: ["International trade agreements", "Data protection and privacy acts", "Local traffic laws", "Building code regulations"], answer: "b"},
+            {question: "You are scheduling a high-priority meeting for a senior official. What is the most important consideration?", options: ["Anticipating and proactively resolving potential scheduling conflicts", "Scheduling it for the last slot on a Friday afternoon", "Ensuring the meeting room has no windows", "Guaranteeing the meeting lasts for several hours"], answer: "a"},
+            {question: "What is a primary purpose of taking and distributing detailed minutes during an official meeting?", options: ["To track action items and ensure accountability and follow-through", "To create a record of who spoke the most", "To share unofficial gossip with absent colleagues", "To fulfill a perceived bureaucratic requirement"], answer: "a"},
+            {question: "When booking official travel for a colleague, what is your paramount obligation?", options: ["Ensuring compliance with government travel policies and budgetary constraints", "Booking the most expensive travel options available", "Seeking personal approval from the Head of State", "Avoiding the process of submitting expense claims later"], answer: "a"},
+            {question: "What is the most significant risk associated with poor records management?", options: [ "An inability to retrieve crucial documents for transparency or Freedom of Information requests", "The office will require more filing cabinets", "Printers will experience more frequent breakdowns", "Staff will be forced to communicate with each other more often"], answer: "a"},
+            {question: "Which behavior is most important when managing external inquiries from the public?", options: ["Directing all calls to a generic voicemail system", "Using technical jargon to sound impressive and authoritative", "Providing exceptional customer service and knowledgeable direction", "Instructing citizens to submit all queries via formal letter"], answer: "c"},
+            {question: "What is the main benefit of administrative staff continuously identifying inefficiencies in office processes?", options: ["It enhances overall workflow and organizational productivity", "It creates more work for the IT department", "It annoys colleagues and disrupts routines", "It guarantees a promotion for the person identifying them"], answer: "a"},
+            {question: "As an office manager, ensuring the office is fully stocked with necessary supplies is crucial for:", options: ["Maintaining overall operational functioning and staff productivity", "Hoarding resources for your own department's use", "Personal use at home", "Decorating the office for seasonal holidays"], answer: "a"},
+            {question: "Submitting an expense claim without verifying all receipts against purchases would be a direct breach of:", options: ["Financial regulations and fiduciary responsibility", "Personal taste and preferences", "Office gossip and confidentiality protocols", "The traveling official's right to privacy"], answer: "a"},
+            {question: "Which of the following is a core duty related to financial administration?", options: ["Monitoring departmental expenditures against the budget", "Drafting new tax legislation", "Setting national interest rates", "Auditing private corporations"], answer: "a"},
+            {question: "What is the first step in processing a procurement request for new office software?", options: ["Initiate the request through the official government procurement portal", "Buying it immediately on a personal credit card", "Asking the vendor for a personal discount", "Installing a free trial version permanently"], answer: "a"},
+            {question: "An official returns from a conference and gives you a pile of receipts. What is your first action?", options: ["Prepare and submit their travel and expense claim, verifying each receipt", "Throw them away to simplify the process", "Give them back and tell the official to handle it", "File them without review for long-term storage"], answer: "a"},
+            {question: "A department is close to exceeding its quarterly budget for office supplies. What should you do?", options: ["Ignore it, as the budget resets next year", "Continue ordering as usual", "Alert the manager and suggest cost-saving measures", "Order enough supplies to last for two years before the budget is cut"], answer: "c"},
+            {question: "Which task is specifically associated with records management?", options: ["Maintaining physical and electronic filing systems", "Writing press releases", "Booking international flights", "Designing the agency's website"], answer: "a"},
+            {question: "What is the key to effective calendar management for a busy official?", options: ["Proactively orchestrating their schedule to balance meetings, focus time, and public engagements", "Leaving large blocks of time empty in case of emergencies", "Scheduling all meetings for Mondays only", "Delegating calendar control to an intern"], answer: "a"},
+            {question: "The term 'liaising with IT departments' most likely involves:", options: ["Serving as the first line of support for basic issues and escalating complex problems", "Repairing broken hardware yourself", "Writing code for new software", "Managing the IT department's budget"], answer: "a"},
+            {question: "What is the most ethical response if a vendor offers you a gift for prioritizing their invoice?", options: ["Politely refuse and report the incident to a supervisor", "Accept it as a kind gesture", "Ask for a more expensive gift", "Accept it but do not prioritize their invoice"], answer: "a"},
+            {question: "You notice a recurring mistake in a monthly report you compile. What should you do?", options: ["Identify the source of the error and correct the process to prevent it", "Ignore it; it's not a big deal", "Blame a colleague for the error", "Wait for your manager to notice and point it out"], answer: "a"},
+            {question: "A citizen is visibly upset and angry at the front desk. How should you respond?", options: ["Listen patiently, show empathy, and provide calm, knowledgeable assistance", "Signal immediately for security", "Tell them to calm down or leave", "Direct them to a different department without explanation"], answer: "a"},
+            {question: "You are taking minutes in a meeting that becomes contentious. How should you record the discussion?", options: ["Record actions, decisions, and key points objectively and neutrally", "Record every single word said verbatim", "Skip the contentious parts to maintain harmony in the minutes", "Add your own editorial opinion on which side was right"], answer: "a"},
+            {question: "Your manager asks you to draft a letter that contains factual inaccuracies. What do you do?", options: ["Politely point out the inaccuracies and provide the correct information for review", "Draft it exactly as requested", "Tell other colleagues about the manager's error", "Refuse to do the task without explanation"], answer: "a"},
+            {question: "A colleague consistently submits travel claims late, causing accounting issues. What is the best approach?", options: ["Send a passive-aggressive email to the entire department", "Confront them angrily in the open office", "Politely remind them of the policy and offer help organizing their receipts sooner", "Do their expense claims for them to avoid conflict"], answer: "c"},
+            {question: "What is the most important characteristic of a well-managed government filing system?", options: ["It allows for the easy and accurate retrieval of any document", "It is housed in the most expensive cabinets", "It is organized by the color of the folders", "It is kept locked away where no one can access it"], answer: "a"},
+            {question: "Which of these is a logistical duty rather than a communication duty?", options: ["Booking a conference venue and arranging catering", "Drafting a press release", "Answering a general inquiry phone line", "Formatting a report"], answer: "a"},
+            {question: "The phrase 'procedural support' most closely refers to:", options: ["Ensuring established processes and rules are followed correctly", "Making policy decisions", "Campaigning for political candidates", "Designing the organizational chart"], answer: "a"},
+            {question: "What is the primary goal of managing internal dissemination of information?", options: ["To guarantee information flows efficiently from leadership to all relevant staff", "To ensure only managers receive information", "To create confusion among departments", "To reduce the number of emails sent"], answer: "a"},
+            {question: "Why is it important to verify information before directing a citizen to another department?", options: ["To waste time", "To make your job seem more difficult", "To ensure they are sent to the correct place and not inconvenienced further", "To avoid talking to other departments"], answer: "c"},
+            {question: "What does 'managing the information life-cycle' entail?", options: ["Deleting all old emails automatically", "Writing new information policies alone", "Stewarding information from creation to archival or disposal according to policy", "Keeping all information forever"], answer: "c"},
+            {question: "An official needs to visit three cities in one week. What is your first step in planning?", options: ["Book the first flights you see", "Tell them it's too complicated", "Check the travel policy for rules and budget, then propose an efficient itinerary", "Ask them to drive instead"], answer: "c"},
+            {question: "What is the best way to handle a high-volume phone line while also managing other tasks?", options: ["Let all calls go to voicemail", "Answer and immediately place everyone on permanent hold", "Provide efficient, polite service to each caller while prioritizing urgent matters", "Disconnect the phone"], answer: "c"},
+            {question: "A requested document is 'confidential'. What does this mean for your handling of it?", options: ["You should shred it immediately", "You should post it on the public noticeboard", "You must ensure it is secured and only accessed by authorized personnel", "You can take it home to read"], answer: "c"},
+            {question: "What is the key difference between 'vertical' and 'horizontal' coordination?", options: ["Vertical is with external partners, horizontal is internal", "There is no difference", "Vertical is between hierarchy levels, horizontal is across departments", "Horizontal is with superiors, vertical is with subordinates"], answer: "c"},
+            {question: "What is the most critical action when processing a large order of office supplies?", options: ["Ordering from the vendor who offers the best personal gift", "Choosing the most expensive items available", "Following official procurement rules to ensure transparency and value for money", "Ordering only enough for your personal use"], answer: "c"},
+            {question: "You find a discrepancy between a receipt and an expense claim. What do you do?", options: ["Ignore it to avoid conflict", "Approve the claim to get it processed faster", "Politely ask the official to clarify or correct the discrepancy", "Report the official for fraud immediately"], answer: "c"},
+            {question: "What is the primary purpose of an agenda for a meeting?", options: ["To take up space at the top of the minutes", "To discourage people from attending", "To provide structure and ensure all topics are covered efficiently", "To be created after the meeting is over"], answer: "c"},
+            {question: "A new directive is issued. What is your role in relation to this directive?", options: ["Publicly criticize it", "Ignore it unless your manager asks twice", "Ensure it is properly communicated and understood by those who need to know", "Start a petition against it"], answer: "c"},
+            {question: "What does 'fiduciary responsibility' mean in the context of processing expenses?", options: ["Being faithful to your boss", "Finding hidden funds in the budget", "A legal obligation to manage public money honestly and responsibly", "Maximizing your own reimbursement"], answer: "c"},
+            {question: "Why is it important to maintain an organized and tidy shared workspace?", options: ["To impress visitors", "To have more space for personal photos", "To promote efficiency, safety, and a professional image", "To make the cleaner's job easier"], answer: "c"},
+            {question: "What is the best way to learn about a new software platform the office is adopting?", options: ["Complain about it and refuse to learn", "Wait for someone else to learn it and then ask them for help constantly", "Engage in training and proactively practice using it", "Pretend the old system still works"], answer: "c"},
+            {question: "A deadline is approaching for a report, and a citizen needs immediate help. What do you do?", options: ["Tell the citizen you're too busy", "Rush through the citizen's request inaccurately", "Acknowledge the citizen, explain the time constraint, and schedule a specific time to give them your full attention", "Ignore the citizen until they leave"], answer: "c"}, 
+            {question: "What is the primary function of an administrative staff acting as a 'coordinator'?", options: ["To perform all tasks personally", "To avoid communication with other units", "To serve as the organizational linchpin between hierarchy levels and departments", "To focus solely on external partners"], answer: "c"},
+            {question: "How does an administrative staffer most effectively serve as 'institutional memory'?", options: ["By remembering all colleagues' birthdays", "By knowing the building's security codes", "By understanding the history and context of projects and policies", "By recalling the exact dates of all public holidays"], answer: "c"},
+            {question: "What is the key purpose of 'horizontal coordination'?", options: ["Reporting only to direct superiors", "Working exclusively with external stakeholders", "Ensuring different departments work in concert towards common goals", "Lying flat on the job during breaks"], answer: "c"},
+            {question: "What is a critical function of the 'gatekeeper' role?", options: ["Locking all office doors at night", "Granting building access to all visitors", "Filtering urgent matters from routine ones to protect officials' focus", "Keeping all information secret"], answer: "c"},
+            {question: "By embodying values like fairness and respect, administrative staff directly impact what?", options: ["Their personal social media popularity", "Public trust and confidence in the government agency", "The number of meetings scheduled", "Public trust and confidence in the government agency", "The agency's annual budget size"], answer: "c"},
+            {question: "Acting as a 'compliance officer' primarily involves ensuring operations are what?", options: ["Conducted as quickly as possible", "Kept hidden from the public", "Conducted with transparency and accountability to safeguard the institution", "Approved by personal friends"], answer: "c"},
+            {question: "What is the most significant risk of poor coordination between departments?", options: ["Increased coffee consumption", "Having shorter meetings", "Creating organizational silos and miscommunication", "Employees becoming too familiar with each other"], answer: "c"},
+            {question: "Why is the 'representative' role so significant for administrative staff?", options: ["It comes with a higher salary", "They appear on television frequently", "Their interaction is often the public's direct experience with government", "They are the highest-ranking official in most agencies"], answer: "c"},
+            {question: "What does being an 'information hub' primarily entail?", options: ["Hoarding information for personal power", "Deleting all old emails automatically", "Controlling and filtering the flow of information to the right people", "Sharing all information on social media"], answer: "c"},
+            {question: "What is 'vertical coordination'?", options: ["Working with international partners", "Standing up straight at your desk", "Coordinating between different levels of the organizational hierarchy", "Communicating only with external vendors"], answer: "c"},
+            {question: "A key part of the gatekeeper role is to?", options: ["Allow all visitors immediate access to senior officials", "Keep a physical gate at the office entrance", "Protect the time and focus of senior officials by managing access", "Ensure all calls are redirected to voicemail"], answer: "c"},
+            {question: "How does acting as a coordinator prevent organizational problems?", options: ["By doing all the work yourself", "By eliminating all meetings", "By working only with external partners", "By preventing silos and ensuring different parts work together"], answer: "d"},
+            {question: "What is the most important aspect of serving as institutional memory?", options: ["Remembering what everyone had for lunch", "Knowing the exact number of employees", "Recalling the weather on important dates", "Understanding project history and context to inform current decisions"], answer: "d"},
+            {question: "When acting as a representative, administrative staff embody what?", options: ["Their personal political views", "The interests of external vendors", "Their department's budget concerns", "The core values of the public service in citizen interactions"], answer: "d"},
+            {question: "What does the compliance officer role help safeguard the institution against?", options: ["Employee birthdays", "Too much transparency", "Internal social events", "Legal and ethical breaches through proper processes"], answer: "d"},
+            {question: "The information hub role requires staff to?", options: ["Delete information regularly", "Share all information equally with everyone", "Avoid using digital communication tools", "Control information flow to ensure it reaches appropriate parties"], answer: "d"},
+            {question: "Horizontal coordination is essential for?", options: ["Avoiding communication with superiors", "Working only on vertical projects", "Focusing solely on internal matters", "Ensuring different departments don't develop conflicting approaches"], answer: "d"},
+            {question: "The gatekeeper function is particularly important for?", options: ["Increasing the number of meetings", "Keeping all office supplies locked away", "Restricting all external communication", "Ensuring senior officials can focus on priority matters"], answer: "d"},
+            {question: "As a representative, the administrative staff's demeanor affects?", options: ["Only their personal job satisfaction","The temperature in the office", "The cost of office supplies", "The public's perception of the entire government agency"], answer: "d"},
+            {question: "The compliance officer role ensures adherence to?", options: ["Personal preferences", "The fastest way to complete tasks", "Informal office traditions", "Laws, regulations and ethical guidelines governing public service"], answer: "d"},
+            {question: "What is a key challenge in the coordinator role?", options: ["Finding enough meetings to attend", "Avoiding all communication between units", "Working only during business hours", "Balancing the needs of different departments and hierarchy levels"], answer: "d"},
+            {question: "Institutional memory is particularly valuable during?", options: ["Office parties", "Budget cuts", "System upgrades", "Leadership transitions to provide continuity"], answer: "d"},
+            {question: "The information hub role requires staff to be?", options: ["Selective in sharing information", "Completely transparent with all information", "Focused only on digital information", "Knowledgeable about where information should be directed"], answer: "d"},
+            {question: "Effective horizontal coordination helps prevent?", options: ["Employees from taking vacations", "Any external communication", "The use of shared resources", "Departments from working at cross-purposes"], answer: "d"},
+            {question: "The gatekeeper role requires particularly good?", options: ["Physical strength", "Knowledge of building security", "Ability to work overnight", "Judgment in prioritizing matters and requests"], answer: "d"},
+            {question: "As a representative, administrative staff must ensure?", options: ["They always agree with citizens", "They refer all questions to supervisors", "They avoid eye contact with visitors", "They maintain professionalism even with difficult citizens"], answer: "d"},
+            {question: "The compliance officer role is increasingly important due to?", options: ["Decreasing regulations", "Reducing paperwork requirements", "Fewer ethical concerns in government", "Growing complexity of laws and demand for accountability"], answer: "d"},
+            {question: "What is a key benefit of effective coordination?", options: ["More individual work gets done", "Each department can work completely independently", "External partners take on more responsibility", "The organization works as a cohesive whole toward common goals"], answer: "d"},
+            {question: "Institutional memory helps prevent?", options: ["Employees from retiring", "Any changes to procedures", "The use of new technologies", "Repeating past mistakes and reinventing solutions"], answer: "d"},
+            {question: "The information hub role has become more complex due to?", options: ["Less information being created", "Reduced need for communication", "Fewer departments in organizations", "The increasing volume and variety of information"], answer: "d"},
+            {question: "Horizontal coordination typically involves working with?", options: ["Only the highest levels of management", "External vendors exclusively", "Only one other department", "Peers in different departments or units"], answer: "d"},
+            {question: "The gatekeeper role requires balancing?", options: ["The office budget", "Multiple personal social media accounts", "Work and personal life during meetings", "Access needs with protection from unnecessary interruptions"], answer: "d"},
+            {question: "As a representative, administrative staff must be particularly skilled in?", options: ["Technical jargon", "Avoiding conversations", "Working with spreadsheets", "Customer service and communication"], answer: "d"},
+            {question: "The compliance officer role helps ensure the organization?", options: ["Avoids all risks", "Never changes its procedures", "Keeps all information secret", "Operates within legal and ethical boundaries"], answer: "d"},
+            {question: "What is a key aspect of vertical coordination?", options: ["Working only with external partners", "Avoiding communication with superiors", "Focusing only on entry-level staff", "Ensuring communication flows effectively up and down the hierarchy"], answer: "d"},
+            {question: "Institutional memory is particularly useful for?", options: ["Planning office parties", "Remembering everyone's coffee preferences", "Knowing all the building's exit routes", "Understanding why previous decisions were made"], answer: "d"},
+
+        ]; 
+
+    shuffleArray(questions);
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeRemaining = 2000;
+let answers = new Array(questions.length).fill(null);
+
+function displayQuestion(index) {
+    currentQuestion = index;
+    const questionText = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    
+    questionText.textContent = `Question ${index + 1}: ${questions[index].question}`;
+    optionsContainer.innerHTML = "";
+    
+    questions[index].options.forEach((option, i) => {
+        const value = String.fromCharCode(97 + i);
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "answer";
+        input.value = value;
+        input.id = `option${i + 1}`;
+        
+        // Check if this answer was previously selected
+        if (answers[index] === value) {
+            input.checked = true;
+        }
+        
+        const label = document.createElement("label");
+        label.htmlFor = `option${i + 1}`;
+        label.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+        
+        optionsContainer.appendChild(input);
+        optionsContainer.appendChild(label);
+        optionsContainer.appendChild(document.createElement("br"));
+    });
+
+    // Update the question buttons to highlight the current question
+    updateQuestionButtons();
+}
+
+function createQuestionButtons() {
+    const buttonsContainer = document.getElementById('question-buttons');
+    buttonsContainer.innerHTML = '';
+    
+    questions.forEach((_, index) => {
+        const button = document.createElement('button');
+        button.className = 'question-btn';
+        button.textContent = index + 1;
+        button.onclick = () => navigateToQuestion(index);
+        buttonsContainer.appendChild(button);
+    });
+    
+    updateQuestionButtons();
+}
+
+function updateQuestionButtons() {
+        const buttons = document.querySelectorAll('.question-btn');
+        
+        buttons.forEach((button, index) => {
+            // Reset all button classes
+            button.className = 'question-btn';
+            
+            // Highlight current question
+            if (index === currentQuestion) {
+                button.classList.add('current');
+            }
+            
+            // Mark answered questions
+            if (answers[index] !== null) {
+                if (answers[index] === questions[index].answer) {
+                    button.classList.add('answered-correct');
+                } else {
+                    button.classList.add('answered-wrong');
+                }
+            }
+        });
+    }
+
+function navigateToQuestion(index) {
+    checkAnswer();
+    displayQuestion(index);
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const seconds = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById("timer").textContent = `Time Remaining: ${minutes}:${seconds}`;
+        } else {
+            clearInterval(timer);
+            submitExam();
+        }
+    }, 1000);
+}
+
+function nextQuestion() {
+    checkAnswer();
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the last question.");
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        displayQuestion(currentQuestion);
+    } else {
+        alert("You are on the first question.");
+    }
+}
+
+function checkAnswer() {
+    const selectedOption = document.querySelector("input[name='answer']:checked");
+    if (selectedOption) {
+        answers[currentQuestion] = selectedOption.value;
+        score = answers.reduce((total, answer, idx) => {
+            return answer === questions[idx].answer ? total + 1 : total;
+        }, 0);
+        
+        // Update the question buttons to reflect the answered question
+        updateQuestionButtons();
+    }
+}
+
+function submitExam() {
+    clearInterval(timer);
+    checkAnswer();
+    
+    const percentage = ((score / questions.length) * 100).toFixed(1);
+    const popup = document.getElementById("score-popup");
+    const overlay = document.getElementById("overlay");
+    
+    document.getElementById("total-questions").textContent = questions.length;
+    document.getElementById("correct-answers").textContent = score;
+    document.getElementById("percentage").textContent = `${percentage}%`;
+    
+    const resultMessage = document.getElementById("result-message");
+    resultMessage.className = percentage >= 70 ? "result-message pass" : "result-message fail";
+    resultMessage.textContent = percentage >= 70 ? 
+        "🎉 Congratulations! You passed!" : 
+        "❌ You need more practice. Try again!";
+
+        const failedList = document.getElementById('failed-questions-list');
+            failedList.innerHTML = '';
+            
+            const failedQuestions = answers.reduce((acc, answer, index) => {
+                if (answer !== questions[index].answer) {
+                    acc.push({
+                        question: questions[index].question,
+                        number: index + 1,
+                        correctAnswer: questions[index].answer.toUpperCase()
+                    });
+                }
+                return acc;
+            }, []);
+
+            if (failedQuestions.length > 0) {
+                failedQuestions.forEach(q => {
+                    const li = document.createElement('li');
+                    li.textContent = `Question ${q.number}: ${q.question} (Correct Answer: ${q.correctAnswer})`;
+                    failedList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'All questions answered correctly!';
+                li.classList.add('no-failed');
+                failedList.appendChild(li);
+            }
+    
+    popup.style.display = "block";
+    overlay.style.display = "block";
+    
+    // Close pop-up handler
+    document.getElementById("close-popup").onclick = function() {
+        popup.style.display = "none";
+        overlay.style.display = "none";
+    };
+};
+
+window.onload = function() {
+    createQuestionButtons();
+    displayQuestion(currentQuestion);
+    startTimer();
+};
+</script>
+
+</body>
+</html>

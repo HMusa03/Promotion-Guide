@@ -1,0 +1,3395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Regulation Rules - Comprehensive Guide</title>
+    <link rel="icon" type="image/png" href="images/COA.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c6e49;
+            --secondary: #4c956c;
+            --accent: #fefee3;
+            --light: #f9f9f9;
+            --dark: #1d3557;
+            --text: #333333;
+            --gold: #d4af37;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 0;
+            margin: 0;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--gold);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,0 100,100" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        header img {
+            height: 60px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 40px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary);
+            position: relative;
+        }
+        
+        .intro h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .intro h2 i {
+            margin-right: 15px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .chapters-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .toc {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        
+        .toc h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .toc h3 i {
+            margin-right: 10px;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 20px;
+            transition: var(--transition);
+        }
+        
+        .toc li:before {
+            content: "•";
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-size: 1.4rem;
+            top: -5px;
+        }
+        
+        .toc a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: var(--transition);
+            display: block;
+            padding: 8px 0;
+            border-radius: 4px;
+            padding-left: 10px;
+        }
+        
+        .toc a:hover {
+            color: var(--primary);
+            background-color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .toc a.active {
+            color: var(--primary);
+            background-color: var(--accent);
+            font-weight: 600;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .chapter {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--secondary);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .chapter:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .chapter h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .chapter-number {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .file-container a {
+            display: inline-block;
+            background-color: white;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .file-container a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 8px;
+            background: var(--light);
+            position: relative;
+        }
+        
+        .section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .section h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h3 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .content-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .content-box h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .content-box h4 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        ul {
+            padding-left: 30px;
+            margin: 15px 0;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        li strong {
+            color: var(--primary);
+        }
+
+        strong {
+            color: var(--primary);
+        }
+        
+        .note {
+            background-color: var(--accent);
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 3px solid var(--gold);
+        }
+        
+        .highlight {
+            background-color: var(--accent);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .conclusion-section {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 50px;
+            border-radius: 10px;
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .conclusion-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,100 100,0 100,100" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+            z-index: 0;
+        }
+        
+        .conclusion-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .conclusion-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+        }
+        
+        footer {
+            background-color: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: auto; /* Push the footer to the bottom */
+        }
+        footer .container {
+            margin-bottom: 10px;
+        }
+        footer a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+        }
+        footer a:hover {
+            color: #4CAF50;
+        }
+        footer p {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+        }
+        footer p:hover {
+            color: #4CAF50;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 900px) {
+            .chapters-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .toc {
+                position: static;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .intro, .chapter {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Nigerian Financial Regulations Rules</h1>
+            <p class="subtitle">Comprehensive Guide for Public Servants</p>
+            <img src="images/COA.png" alt="Header Icon" style="height: 70px;" onclick="goToHome()">
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="intro">
+            <h2><i class="fas fa-landmark"></i>Introduction to Financial Regulations Rules</h2>
+            <h3>i. Purpose of Financial Regulations</h3>
+            <p>
+                The Financial Regulations (FR) of the Federal Government of Nigeria serve as the primary <span class="highlight">legal framework</span> guiding financial management and control in public service institutions. It is a compilation of <span class="highlight">rules, procedures, and responsibilities</span> designed to promote <span class="highlight">accountability, transparency, efficiency, and discipline</span> in the handling of public resources.
+            </p>
+            <p>This comprehensive guide covers <span class="highlight"> Chapters 7 to 32 of the Nigerian Financial Regulations</span>, which provide detailed guidelines for the management of public funds, assets, and financial operations across all government ministries, departments, and agencies.</p>
+            
+            <div class="content-box">
+                <h4><i class="fas fa-info-circle"></i> Overview of Key Areas Covered:</h4>
+                <ul>
+                    <li><strong>Financial Operations:</strong> Bank accounts, cash management, and payment procedures</li>
+                    <li><strong>Asset Management:</strong> Stores, vehicles, and government property</li>
+                    <li><strong>Personnel Finance:</strong> Salaries, pensions, and advances</li>
+                    <li><strong>Controls & Safeguards:</strong> Internal audit, stock verification, and loss prevention</li>
+                    <li><strong>Procurement & Contracts:</strong> Public procurement processes and contract management</li>
+                    <li><strong>Compliance & Enforcement:</strong> Offences, sanctions, and regulatory compliance</li>
+                </ul>
+            </div>
+            <h3>ii. Legal Backing</h3>
+
+            <div class="section">
+                <h3><i class="fas fa-globe-africa"></i>Legal Backing</h3>
+                <p>The Financial Regulations derive their authority from the <strong>Constitution of the Federal Republic of Nigeria, the Finance (Control and Management) Act</strong>, and other related financial laws and circulars.</p>
+                
+            </div>
+            <h3>iii. Scope</h3>
+            <div class="section">
+                <h3><i class="fas fa-balance-scale"></i>Scope</h3>
+                <p>The Public Service Rules are founded on several key principles:</p>
+            <ul>
+                    <li>The Regulations apply to: All <strong>ministries, departments, and agencies (MDAs)</strong>.</li>
+                    <li>Officers involved in <strong>revenue collection, expenditure management, and accounting</strong>.</li>
+                    <li>Parastatals operating under government financial supervision.</li>
+            </ul>
+            </div>
+            <h3>iv. Importance of the Financial Regulations</h3>
+            <div class="section">
+                <h3><i class="fas fa-sync-alt"></i>Importance of the Financial Regulations</h3>
+                <ul>
+                    <li>Ensures <strong>proper documentation</strong> and management of public funds.</li>
+                <li>Prevents financial misconduct and <strong>misappropriation</strong>.</li>
+                <li>Strengthens <strong>internal control</strong> and <strong>audit processes</strong>.</li>
+                <li>Guides public officers in maintaining <strong>fiscal discipline</strong>.</li>
+                </ul>
+            </div>
+            <h3>v. Structure</h3>
+            <div class="section">
+                <h3><i class="fas fa-sync-alt"></i>Structure</h3>
+                <p>The Gazette is divided into <strong>32 chapters</strong>, each addressing a core area of financial administration such as:</p>
+                <ul>
+                <li>Revenue collection</li>
+                <li>Payment procedures</li>
+                <li>Bank operations</li>
+                <li>Procurement and stores management</li>
+                <li>Salaries and pensions</li>
+                <li>Public audit and survey processes</li>
+                <li>Codification of offences and penalties</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="chapters-container">
+            <div class="toc">
+                <h3><i class="fas fa-bookmark"></i>Table of Contents</h3>
+                <ul>
+                    <li><a href="#chapter1" class="active">Chapter 1: Financial Authorities and Responsibilities of Public Officers</a></li>
+                    <li><a href="#chapter2">Chapter 2: Revenue Collection and Accounting</a></li>
+                    <li><a href="#chapter3">Chapter 3: Expenditure: Authorities for Recurrent and Capital Expenditures</a></li>
+                    <li><a href="#chapter4">Chapter 4: Expenditure: Classification and Control</a></li>
+                    <li><a href="#chapter5">Chapter 5: Standardization and Accounting Procedures</a></li>
+                    <li><a href="#chapter6">Chapter 6: Payment Procedures</a></li>
+                    <li><a href="#chapter7">Chapter 7: Bank Accounts & Cheques</a></li>
+                    <li><a href="#chapter8">Chapter 8: Cash Book & Monthly Accounts</a></li>
+                    <li><a href="#chapter9">Chapter 9: Adjustments</a></li>
+                    <li><a href="#chapter10">Chapter 10: Imprest</a></li>
+                    <li><a href="#chapter11">Chapter 11: Custody of Public Funds</a></li>
+                    <li><a href="#chapter12">Chapter 12: Receipt & Licence Books</a></li>
+                    <li><a href="#chapter13">Chapter 13: Deposits</a></li>
+                    <li><a href="#chapter14">Chapter 14: Advances</a></li>
+                    <li><a href="#chapter15">Chapter 15: Salaries & Payroll</a></li>
+                    <li><a href="#chapter16">Chapter 16: Self-Accounting Status</a></li>
+                    <li><a href="#chapter17">Chapter 17: Internal Audit</a></li>
+                    <li><a href="#chapter18">Chapter 18: Board of Survey</a></li>
+                    <li><a href="#chapter19">Chapter 19: Pension Scheme</a></li>
+                    <li><a href="#chapter20">Chapter 20: Government Vehicles</a></li>
+                    <li><a href="#chapter21">Chapter 21: Stores Accounting</a></li>
+                    <li><a href="#chapter22">Chapter 22: Allocation of Stores</a></li>
+                    <li><a href="#chapter23">Chapter 23: Acquisition of Stores</a></li>
+                    <li><a href="#chapter24">Chapter 24: Handling of Stores</a></li>
+                    <li><a href="#chapter25">Chapter 25: Loss of Government Funds</a></li>
+                    <li><a href="#chapter26">Chapter 26: Loss of Stores</a></li>
+                    <li><a href="#chapter27">Chapter 27: Stores Inspection</a></li>
+                    <li><a href="#chapter28">Chapter 28: Stock Verification</a></li>
+                    <li><a href="#chapter29">Chapter 29: Procurement Contracts</a></li>
+                    <li><a href="#chapter30">Chapter 30: Miscellaneous Matters</a></li>
+                    <li><a href="#chapter31">Chapter 31: Offences & Sanctions</a></li>
+                    <li><a href="#chapter32">Chapter 32: Parastatals Guidelines</a></li>
+                </ul>
+            </div>
+
+            <div class="chapters">
+                <!-- Chapter 1 -->
+                <div id="chapter1" class="chapter">
+                    <h2><span class="chapter-number">1</span>Financial Authorities and Responsibilities of Public Officers</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-info-circle"></i>Overview</h3>
+                        <p>This chapter outlines the various financial roles and responsibilities of public officers in the Federal Government. It sets the tone for accountability by clearly stating who is responsible for what in the financial ecosystem of government institutions.</p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-key"></i>Key Points</h3>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-key"></i>i. Accounting Officers</h3>
+                
+                <ul>
+                    <li>Permanent Secretaries or Heads of Extra-Ministerial Departments are designated as Accounting Officers.</li>
+                    <li>They are responsible for the control and management of public funds and must ensure that financial regulations are observed.</li>
+                </ul>
+                    <h3><i class="fas fa-key"></i>ii. Responsibilities of Accounting Officers</h3>
+                    <ul>
+                        <li>Ensure all expenditure is properly authorized and budgeted.</li>
+                        <li>Maintain accurate accounting records.</li>
+                        <li>Safeguard government assets and resources.</li>
+                        <li>Establish and maintain internal control systems.</li>
+                    </ul>
+                    <h3><i class="fas fa-key"></i>iii. Delegation of Authority</h3>
+                    <ul>
+                        <li>While responsibilities may be delegated, the accountability remains with the Accounting Officer.</li>
+                        <li>Delegated duties must be accompanied by clear written instructions.</li>
+                    </ul>
+                    <h3><i class="fas fa-key"></i>iv. Financial Duties of Other Officers</h3>
+                    <ul>
+                        <li>Heads of units, departmental finance officers, and storekeepers also have specific duties assigned to them.</li>
+                        <li>They are responsible for accurate reporting, safe custody of funds and items, and compliance with rules.</li>
+                    </ul>
+                    <h3><i class="fas fa-key"></i>v. Sanctions for Financial Misconduct</h3>
+                    <ul>
+                        <li>Public officers who mismanage funds or violate financial rules are liable to disciplinary action, including surcharge, demotion, dismissal, or prosecution.</li>
+                    </ul>
+                    </div>
+                    <div class="note">
+                        <p><strong>Important Note:</strong> The rules in this chapter establish the legal basis for all subsequent provisions and should be read in conjunction with the Constitution of the Federal Republic of Nigeria and other relevant statutes governing public service administration.</p>
+                    </div>
+                </div>
+
+                <!-- Chapter 2 -->
+                <div id="chapter2" class="chapter">
+                    <h2><span class="chapter-number">2</span>Revenue Collection and Accounting</h2>
+                   <div class="section">
+                        <h3><i class="fas fa-info-circle"></i>Overview</h3>
+                        <p>This chapter outlines the procedures and controls governing how government revenue is to be collected, recorded, and accounted for. It emphasizes transparency, proper documentation, and accountability in revenue processes across Ministries, Departments, and Agencies (MDAs).</p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-user-plus"></i>Key Points</h3>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-user-plus"></i>i. Revenue Officers</h3>
+                    <ul>
+                        <li>Officers authorized to collect government revenue must be formally designated.</li>
+                        <li>They are responsible for safe custody, prompt lodgement, and accurate accounting of revenue.</li>
+                    </ul>
+                        <h3><i class="fas fa-clipboard-list"></i>ii. Use of Government Treasury Receipt (GTR)</h3>
+                    <ul>
+                        <li>Every revenue collection must be receipted using Treasury-printed and numbered GTRs.</li>
+                        <li>Duplicate copies are retained and submitted for accounting.</li>
+                    </ul>
+                        <h3><i class="fas fa-user-minus"></i>iii. Revenue Head Codes</h3>
+                    <ul>
+                        <li>Each type of revenue must be assigned to its correct subhead or code.</li>
+                        <li>Misclassification is considered a violation of the regulations.</li>
+                    </ul>
+                    <h3><i class="fas fa-user-minus"></i>iv. Timely Lodgement</h3>
+                    <ul>
+                        <li>All revenue collected must be lodged into designated government accounts not later than the next working day.</li>
+                        <li>Failure to lodge promptly is regarded as fraudulent conduct.</li>
+                    </ul>
+                    <h3><i class="fas fa-user-minus"></i>iv. Remittance Procedures</h3>
+                    <ul>
+                        <li>MDAs without bank branches nearby must follow special remittance instructions from the Office of the Accountant-General.</li>
+                    </ul>
+                    <h3><i class="fas fa-user-minus"></i>iv. Revenue Books and Registers</h3>
+                    <ul>
+                        <li>Proper Revenue Cash Books and Revenue Registers must be maintained.</li>
+                        <li>Revenue entries must be updated daily, showing GTR number, amount, payer, and date.</li>
+                    </ul>
+                    <h3><i class="fas fa-user-minus"></i>iv. Reconciliation and Reporting</h3>
+                    <ul>
+                        <li>Periodic bank reconciliation and monthly revenue returns must be rendered to appropriate authorities.</li>
+                    </ul>
+                    <h3><i class="fas fa-user-minus"></i>iv. Sanctions for Revenue Violations</h3>
+                    <ul>
+                        <li>Officers who divert revenue, delay lodgement, or fail to issue GTRs are subject to disciplinary action, including suspension, surcharge, or dismissal.</li>
+                    </ul>
+                    </div>
+                    </div>
+
+                <!-- Chapter 3 -->
+                <div id="chapter3" class="chapter">
+                    <h2><span class="chapter-number">3</span>Expenditure: Authorities for Recurrent and Capital Expenditures</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>Overview</h3>
+                    <p>
+                        This chapter provides the rules and limits governing the authorization of government spending, distinguishing between recurrent (routine) and capital (developmental) expenditures. It ensures that all spending is in line with budgetary provisions and backed by proper approvals.
+                    </p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>i. Definition of Expenditures</h3>
+                <ul>
+                    <li><strong>Recurrent Expenditure:</strong> Routine operational costs like salaries, utilities, and supplies.</li>
+                    <li><strong>Capital Expenditure:</strong> Investments in assets such as buildings, roads, and equipment.</li>
+                </ul>
+                <h3><i class="fas fa-gavel"></i>ii. Expenditure Must Be Authorized</h3>
+                <ul>
+                    <li>All spending must be approved via Annual Appropriation Acts, Supplementary Appropriations, or Virement Warrants.</li>
+                    <li>No officer may incur any expenditure unless there is a legal appropriation and authority to do so.</li>
+                </ul>
+                <h3><i class="fas fa-gavel"></i>iii. Vote Book Maintenance</h3>
+                <ul>
+                    <li>MDAs must maintain a Vote Book to track spending against budgetary allocations.</li>
+                    <li>Entries must be up-to-date and reflect actual commitments and balances available.</li>
+                </ul>
+                <h3><i class="fas fa-gavel"></i>iv. Expenditure Limits</h3>
+                <ul>
+                    <li>Certain categories of officers have financial limits they must not exceed without special approval.</li>
+                    <li>Exceeding these limits is a serious offence.</li>
+                </ul>
+                <h3><i class="fas fa-gavel"></i>v. Control of Excess Votes</h3>
+                <ul>
+                    <li>No expenditure should be incurred if it will result in an excess vote.</li>
+                    <li>Supplementary approval must be obtained before any excess is incurred.</li>
+                </ul>
+                <h3><i class="fas fa-gavel"></i>vi. Use of Warrants</h3>
+                <ul>
+                    <li>Recurrent and capital expenditures are authorized through specific warrants issued by the Ministry of Finance.</li>
+                    <li>These include General, Supplementary, Virement, and Advance Warrants.</li>
+                </ul>
+                <h3><i class="fas fa-gavel"></i>vii. Role of the Budget Office</h3>
+                <ul>
+                    <li>The Budget Office must monitor compliance, track vote usage, and report anomalies.</li>
+                    <li>It also issues Release Warrants to MDAs.</li>
+                </ul>
+                <h3><i class="fas fa-gavel"></i>viii. Sanctions for Unauthorized Expenditures</h3>
+                <ul>
+                    <li>Spending without approval, incurring excess votes, or misapplying funds may lead to disciplinary action, surcharge, or criminal prosecution.</li>
+                </ul>
+                </div>
+                </div>
+
+                <!-- Chapter 4 -->
+                <div id="chapter4" class="chapter">
+                    <h2><span class="chapter-number">4</span>Expenditure: Classification and Control</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-money-bill-wave"></i>Overview</h3>
+                        <p>
+                            This chapter explains the proper classification of public expenditure and the internal controls that must be in place to ensure budget discipline, transparency, and the lawful use of public funds. It emphasizes the need to match each expense to its appropriate category and budget line.
+                        </p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-money-bill-wave"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-money-bill-wave"></i>i. Expenditure Classification</h3>
+                        <ul>
+                            <li>Expenditure must be classified into Recurrent or Capital, and further into Personal Emoluments (PE), Overheads, or Capital Projects.</li>
+                            <li>Each expenditure must be linked to the correct vote subhead and code to avoid misapplication.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-line"></i>ii. Budgetary Control</h3>
+                        <ul>
+                            <li>Ministries, Departments, and Agencies (MDAs) must strictly adhere to the limits provided in the budget.</li>
+                            <li>Every approving officer must verify the availability of funds before approving any payment.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-piggy-bank"></i>iii. Commitment Control</h3>
+                        <ul>
+                            <li>MDAs must establish Commitment Control Registers to track financial obligations as they arise.</li>
+                            <li>No commitment should be made without prior approval or availability of funds.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-piggy-bank"></i>iv. Use of Vote Book</h3>
+                        <ul>
+                            <li>A properly maintained Vote Book is essential for tracking spending. <br>It shows:</li>
+                            <ul>
+                                <li>Approved amount</li>
+                                <li>Actual commitment</li>
+                                <li>Balance remaining</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-piggy-bank"></i>v. Internal Control Mechanisms</h3>
+                        <ul>
+                            <li>MDAs must establish and follow internal control systems for financial operations, including:
+                            <ul>
+                                <li>Segregation of duties (e.g., between approval and payment)</li>
+                                <li>Regular reconciliations</li>
+                                <li>Supervisory checks</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-piggy-bank"></i>vi. Role of the Head of Accounts</h3>
+                        <ul>
+                            <li>Responsible for ensuring:</li>
+                            <ul>
+                                <li>That expenditure aligns with budgetary classifications.</li>
+                                <li>That proper authorization procedures are followed.</li>
+                                <li>That records are accurate and up to date.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-piggy-bank"></i>vii. Unauthorised Transfers Between Votes</h3>
+                        <ul>
+                            <li>Transferring funds between subheads without due approval is prohibited.</li>
+                            <li>All virement must be backed by formal approval from the appropriate authority.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-piggy-bank"></i>viii. Sanctions for Misclassification or Control Failure</h3>
+                        <ul>
+                            <li>Errors in classification or failure to implement controls can result in:</li>
+                            <ul>
+                                <li>Query</li>
+                                <li>Surcharge</li>
+                                <li>Disciplinary action including dismissal or prosecution</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 5 -->
+                <div id="chapter5" class="chapter">
+                    <h2><span class="chapter-number">5</span>Standardization and Accounting Procedures</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-money-bill-wave"></i>Overview</h3>
+                        <p>
+                            This chapter outlines the standard accounting procedures to be followed by all Ministries, Departments, and Agencies (MDAs) to ensure uniformity, accuracy, and transparency in public financial management. It also sets the framework for the preparation and presentation of government financial statements.
+                        </p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-money-bill-wave"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-umbrella-beach"></i>i. Uniform Accounting Standards</h3>
+                        <ul>
+                            <li>All public financial records must follow standard formats prescribed by the Office of the Accountant-General of the Federation (OAGF).</li>
+                            <li>These standards ensure consistency across all MDAs</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-signature"></i>ii. Chart of Accounts</h3>
+                        <ul>
+                            <li>MDAs must use the approved chart of accounts to classify income and expenditure items.</li>
+                            <li>This helps in aggregation and national reporting.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-signature"></i>iii. Accrual and Cash Basis</h3>
+                        <ul>
+                            <li>Nigeria predominantly uses cash basis accounting, but select aspects of accrual basis (like commitments) are incorporated for improved tracking.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-signature"></i>iv. Source Documents</h3>
+                        <ul>
+                            <li>Every accounting entry must be backed by a source document, e.g.:</li>
+                            <ul>Payment voucher
+                                <li>Receipt</li>
+                                <li>Invoice</li>
+                                <li>Contract agreement</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-signature"></i>v. Daily and Monthly Records</h3>
+                        <ul>
+                            <li>Cash books, ledgers, and registers must be:
+                            <ul>
+                                <li>Updated daily</li>
+                                <li>Balanced and reconciled monthly</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-signature"></i>vi. Reconciliation</h3>
+                        <ul>
+                            <li>Bank reconciliation statements must be prepared monthly.</li>
+                            <li>Differences between bank statements and books must be investigated promptly.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-signature"></i>vii. Audit Trail and Security</h3>
+                        <ul>
+                            <li>All accounting records must provide a clear audit trail.</li>
+                            <li>Records must be kept secure and accessible for audit and verification.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-signature"></i>viii. Automation of Records</h3>
+                        <ul>
+                            <li>Government encourages the use of automated accounting systems where possible, e.g., GIFMIS (Government Integrated Financial Management Information System).</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-signature"></i>ix. Retention of Records</h3>
+                        <ul>
+                            <li>Financial records must be retained for a minimum of 6 years, unless specified otherwise by law or regulation.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-signature"></i>x. Sanctions for Non-Compliance</h3>
+                        <ul>
+                            <li>Any failure to follow accounting procedures, or falsification of records, attracts penalties including:</li>
+                            <ul>
+                                <li>Disciplinary action</li>
+                                <li>Surcharge</li>
+                                <li>Prosecution</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 6 -->
+                <div id="chapter6" class="chapter">
+                    <h2><span class="chapter-number">6</span>Payment Procedures</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-car"></i>Overview</h3>
+                        <p>
+                            Chapter 6 outlines the official procedures for processing payments within the public service. It ensures that all government disbursements are lawful, verified, approved, and properly documented, maintaining accountability and reducing the risk of financial misconduct.
+                        </p>
+                        </div>
+                        <div class="section">
+                        <h3><i class="fas fa-car"></i>Key Points</h3>
+                        </div>
+                        <div class="section">
+                        <h3><i class="fas fa-car"></i>i. Payment Authorization</h3>
+                        <ul>
+                            <li>No payment shall be made without:</li>
+                            <ul>
+                                <li>A duly authorized payment voucher (PV)</li>
+                                <li>Approval by a competent officer</li>
+                                <li>Budgetary provision and cash backing</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i>ii. Supporting Documentation</h3>
+                        <ul>
+                            <li>Every PV must be supported by original documents such as:</li>
+                            <ul>
+                                <li>Invoice</li>
+                                <li>Receipt</li>
+                                <li>Delivery note</li>
+                                <li>Certificate of completion (for projects)</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i>iii. Preparation of Payment Vouchers</h3>
+                        <ul>
+                            <li>PVs must:</li>
+                            <ul>
+                                <li>Be serially numbered</li>
+                                <li>State the vote (budget) head</li>
+                                <li>Clearly describe the service</li>
+                                <li>Bear the signature of the authorized officer</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i>iv. Payment Methods</h3>
+                        <ul>
+                            <li>Payments may be made via:</li>
+                            <ul>
+                                <li>E-payment systems (preferable for transparency)</li>
+                                <li>Cheques (in special circumstances)</li>
+                                <li>Cash (only in limited and approved situations)</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i>v. Cheque Payments</h3>
+                        <ul>
+                            <li>Cheques must:</li>
+                            <ul>
+                                <li>Be signed by two authorized signatories</li>
+                                <li>Be recorded in a cheque register</li>
+                                <li>Be accompanied by PV and supporting docs</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i>vi. E-Payment Adoption</h3>
+                        <ul>
+                            <li>MDAs are encouraged to process payments via the GIFMIS platform or other government-approved electronic payment platforms to:</li>
+                            <ul>
+                                <li>Reduce fraud</li>
+                                <li>Increase traceability</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i>vii. Personal Responsibility of Certifying Officers</h3>
+                        <ul>
+                            <li>Officers who certify payments are personally liable for any loss resulting from wrongful payment.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i>viii. Prompt Payment</h3>
+                        <ul>
+                            <li>Payments must be made within a reasonable time after goods/services are delivered and verified.</li>
+                            <li>Delays must be justified and documented.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i>ix. Duplicate and Over-payment</h3>
+                        <ul>
+                            <li>Duplicate or over-payment must be reported immediately.</li>
+                            <li>Recovery processes must be initiated without delay.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i>x. Sanctions</h3>
+                        <ul>
+                            <li>Irregular or unauthorized payments may lead to:</li>
+                            <ul>
+                                <li>Recovery (surcharge)</li>
+                                <li>Query or disciplinary action</li>
+                                <li>Prosecution, depending on severity</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 7 -->
+                <div id="chapter7" class="chapter">
+                    <h2><span class="chapter-number">7</span>Bank Accounts and Cheques</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-heartbeat"></i>Overview</h3>
+                    <P>
+                        This chapter focuses on the management of government bank accounts and the use of cheques. It outlines procedures to ensure transparency, proper control, and accountability in the handling of public funds deposited in banks.
+                    </P>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-heartbeat"></i>Key Points</h3>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-heartbeat"></i>i. Opening of Bank Accounts</h3>
+                        <ul>
+                            <li>Only the Accountant-General of the Federation (AGF) can authorize the opening of official government bank accounts.</li>
+                            <li>MDAs must not open or operate bank accounts without AGF’s approval.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-medical"></i>ii. Types of Bank Accounts</h3>
+                        <ul>
+                            <li>Main Treasury Accounts (for central government transactions)</li>
+                            <li>Project Accounts (for specific funded projects)</li>
+                            <li>Revenue Collection Accounts</li>
+                            <li>Imprest Accounts (for petty expenses)</li>
+                        </ul>
+                        <div class="note">
+                            <h4><i class="fas fa-coins"></i>Attention</h4>
+                            <p>All accounts must serve clearly defined purposes.</p>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-medical"></i>iii. Bank Signatories</h3>
+                        <ul>
+                        <li>Government accounts must have at least two signatories.</li>
+                        <li>Signatories must be approved officers, and combinations must be defined for signing authority.</li>
+                    </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-medical"></i>iv. Bank Mandate Forms</h3>
+                        <ul>
+                            <li>Each account must have a duly completed bank mandate specifying:</li>
+                            <ul>
+                                <li>Account purpose</li>
+                                <li>Signatories and their specimen signatures</li>
+                                <li>Limits for each officer’s approval</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-medical"></i>v. Cheque Books</h3>
+                        <ul>
+                            <li>Must be securely stored and controlled.</li>
+                            <li>Each cheque used must be recorded in a cheque register.</li>
+                            <li>Cheques should be serially numbered and used in order.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-medical"></i>vi. Preparation and Signing of Cheques</h3>
+                        <ul>
+                            <li>Cheques must only be issued against duly authorized Payment Vouchers (PVs).</li>
+                            <li>No blank cheques or post-dated cheques are allowed.</li>
+                            <li>Cheques must be:</li>
+                            <ul>
+                                <li>Correctly written</li>
+                                <li>Properly signed</li>
+                                <li>Accompanied by complete documentation</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-medical"></i>vii. Reconciliation</h3>
+                        <ul>
+                            <li>Monthly bank reconciliation must be performed by MDAs.</li>
+                            <li>Discrepancies must be reported and resolved promptly.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-medical"></i>viii. Use of E-Banking</h3>
+                        <ul>
+                            <li>While cheques are still valid, MDAs are encouraged to use e-payment systems for improved efficiency and audit trail.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-medical"></i>ix. Closure of Bank Accounts</h3>
+                        <ul>
+                            <li>If an account is no longer required, it must be closed with AGF's approval.</li>
+                            <li>Final balances must be transferred to a designated account, and unused cheques canceled and returned.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-medical"></i>x. Sanctions</h3>
+                        <ul>
+                            <li>Unauthorized bank account operations, improper use of cheques, or failure to reconcile accounts may lead to:</li>
+                            <ul>
+                                <li>oSurcharge</li>
+                                <li>Disciplinary measures</li>
+                                <li>Criminal prosecution</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 8 -->
+                <div id="chapter8" class="chapter">
+                    <h2><span class="chapter-number">8</span>Cash Book and Monthly Accounts</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-hospital-user"></i>Overview</h3>
+                        <p>
+                            This chapter provides the rules for maintaining Cash Books and preparing Monthly Accounts in MDAs (Ministries, Departments, and Agencies). It ensures all cash transactions are accurately recorded, balanced, and reported in a timely and transparent manner.
+                        </p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-hospital-user"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-hospital-user"></i>Cash Book Maintenance</h3>
+                        <ul>
+                            <li>Each MDA must keep a Cash Book to record:</li>
+                            <ul>
+                                <li>All receipts (revenue and other inflows)</li>
+                                <li>All payments (authorized expenditures)</li>
+                                <li>Entries must be made daily and be chronologically ordered.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Structure of the Cash Book</h3>
+                        <ul>
+                            <li>Separate columns for:</li>
+                            <ul>
+                                <li>Date</li>
+                                <li>Particulars (description)</li>
+                                <li>Receipt number</li>
+                                <li>Payment voucher number</li>
+                                <li>Amount (debit/credit)</li>
+                                <li>Balance</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Accuracy and Timeliness</h3>
+                        <ul>
+                        <li>Transactions must be entered:</li>
+                        <ul>
+                            <li>On the day they occur</li>
+                            <li>Using approved formats and ink</li>
+                            <li>Alterations must not be made with correction fluid—cancel by drawing a line and initialing.</li>
+                        </ul>
+                    </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Balancing the Cash Book</h3>
+                        <ul>
+                            <li>The Cash Book must be balanced daily.</li>
+                            <li>The closing balance must agree with the actual cash on hand or bank balance.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Cash Book Certification</h3>
+                        <ul>
+                            <li>Must be certified by the Head of Accounts or designated officer monthly.</li>
+                            <li>Certification includes:</li>
+                            <ul>
+                                <li>Checking entries for accuracy</li>
+                                <li>Verifying supporting documents</li>
+                                <li>Ensuring correct balances</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Monthly Returns</h3>
+                        <ul>
+                            <li>Monthly accounting returns must be:</li>
+                            <ul>
+                                <li>Prepared at the end of each month</li>
+                                <li>Submitted to the Office of the Accountant-General</li>
+                                <li>Include summaries of revenue, expenditure, and cash positions</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Subsidiary Registers</h3>
+                        <ul>
+                            <li>Where applicable, maintain subsidiary records such as:</li>
+                            <ul>
+                                <li>Revenue registers</li>
+                                <li>Expenditure ledgers</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Vote books</h3>
+                        <ul>
+                            <li>These must reconcile with the Cash Book monthly.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Verification and Audit</h3>
+                        <ul>
+                            <li>Internal and external auditors will verify Cash Book entries.
+                            <li>Discrepancies must be addressed and corrected immediately.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Security and Retention</h3>
+                        <ul>
+                            <li>Cash Books must be kept securely.
+                            <li>Retention period is usually at least 7 years, as per records management regulations.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-id-card"></i>Sanctions</h3>
+                        <ul>
+                            <li>Failure to maintain or reconcile the Cash Book may result in:</li>
+                            <ul>
+                                <li>Queries</li>
+                                <li>Surcharges</li>
+                                <li>Disciplinary action</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 9 -->
+                <div id="chapter9" class="chapter">
+                    <h2><span class="chapter-number">9</span>Adjustments</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-briefcase-medical"></i>Overview</h3>
+                        <p>
+                            This chapter addresses the procedures for adjustments in government accounts. Adjustments are necessary to correct errors, reclassify expenditures or revenues, and ensure the accuracy and integrity of financial records.
+                        </p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-briefcase-medical"></i>Definition of Adjustment:</h3>
+                            An adjustment refers to any correction made in financial records to ensure proper classification and reporting of transactions.<br>
+                            <strong>These include:</strong>
+                        <ul>
+                            <li>Transfers between accounts</li>
+                            <li>Correction of erroneous postings</li>
+                            <li>Reallocation of expenditures or revenues</li>
+                        </ul> 
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-briefcase-medical"></i>Key Points</h3>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-briefcase-medical"></i>i. Authority for Adjustment</h3>
+                        <ul>
+                        <li>No adjustment should be made without the written approval of the Head of Accounts or a duly authorized officer.</li>
+                            <li>All adjustments must be supported with valid documentation.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-shield-virus"></i>Adjustment Journal Voucher (AJV)</h3>
+                        <ul>
+                            <li>Adjustments must be recorded using a specific form called the Adjustment Journal Voucher.</li>
+                            <li>The AJV must include:</li>
+                            <ul>
+                                <li>Reference to the original entry</li>
+                                <li>Nature and reason for the adjustment</li>
+                                <li>Amount involved</li>
+                                <li>Authorizing officer's signature</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-shield-virus"></i>Timing for Adjustments</h3>
+                        <ul>
+                            <li>Adjustments must be made in the same accounting period where the error was discovered.</li>
+                            <li>Delays can distort monthly or annual financial statements.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-shield-virus"></i>Types of Common Adjustments</h3>
+                        <ul>
+                            <li>oReposting of expenditure to correct vote head</li>
+                            <li>Correction of duplicated entries</li>
+                            <li>Rectification of over- or under-stated balances</li>
+                            <li>Adjustments arising from audit findings</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-shield-virus"></i>Impact on Financial Reports</h3>
+                        <ul>
+                            <li>Adjustments must be accurately reflected in:</li>
+                            <ul>
+                                <li>Cash Book</li>
+                                <li>Trial Balance</li>
+                                <li>Monthly and Annual Financial Statements</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-shield-virus"></i>Adjustment Register</h3>
+                        <ul>
+                            <li>All adjustments must be entered into an Adjustment Register for audit trail and future reference.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-shield-virus"></i>Monitoring and Controls</h3>
+                        <ul>
+                            <li>Frequent or large adjustments are subject to investigation.</li>
+                            <li>Pattern of errors may indicate poor internal control or fraud.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-shield-virus"></i>Audit Review</h3>
+                        <ul>
+                            <li>Adjustment records are reviewed during internal and external audits.</li>
+                            <li>Unsupported or unauthorized adjustments can lead to sanctions.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-shield-virus"></i>Sanctions</h3>
+                        <ul>
+                            <li>Adjustments without proper authority or documentation attract penalties such as:</li>
+                            <ul>
+                                <li>Queries</li>
+                                <li>Surcharges</li>
+                                <li>Disciplinary actions</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 10 -->
+                <div id="chapter10" class="chapter">
+                    <h2><span class="chapter-number">10</span>Imprest</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-file-contract"></i>Overview</h3>
+                        <p>
+                            This chapter outlines the rules and procedures for the issuance, utilization, retirement, and control of imprests in government financial operations. Imprests are advance funds given to public officers to meet urgent or minor official expenses.
+                        </p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-contract"></i>Key Points</h3>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-contract"></i>i. Definition of Imprest</h3>
+                        <ul>
+                            <li>An imprest is a temporary advance of funds provided to officers for specific purposes.</li>
+                            <li>It is meant for routine, petty, or emergency expenses which cannot be handled through normal payment procedures.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>ii. Types of Imprest</h3>
+                        <ul>
+                            <li><strong>Standing Imprest:</strong> Given for recurring official needs (e.g., transport, postage).</li>
+                            <li>Special/Ad hoc Imprest: Issued for one-off events or assignments (e.g., field trips, workshops).</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>iii. Approval and Authorization</h3>
+                        <ul>
+                            <li>Imprest must be approved by the Accounting Officer or Head of Accounts.</li>
+                            <li>Limits and thresholds are set depending on the nature of the activity and the officer's designation.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>iv. Utilization Rules</h3>
+                        <ul>
+                            <li>Must only be used for official expenses.</li>
+                            <li>Personal or unauthorized use is strictly prohibited.</li>
+                            <li>Receipts and vouchers must be collected for every expenditure.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>v. Retirement of Imprest</h3>
+                        <ul>
+                            <li>Retirement means the settlement or accounting of the imprest.</li>
+                            <li>Must be done immediately after the assignment or within the prescribed timeframe (usually 7 to 14 days).</li>
+                            <li>Submit:</li>
+                            <ul>
+                                <li>Detailed statement of expenditure</li>
+                                <li>Original receipts and vouchers</li>
+                                <li>Balance of unspent funds (if any)</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>vi. Unretired Imprest</h3>
+                        <ul>
+                            <li>Officers who fail to retire imprests on time:</li>
+                            <ul>
+                                <li>Will be denied new imprests</li>
+                                <li>May face salary deductions</li>
+                                <li>Are liable to disciplinary action</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>vii. Control Measures</h3>
+                        <ul>
+                            <li>Imprests should be minimized and used only when necessary.</li>
+                            <li>Maintain an Imprest Register showing:</li>
+                            <ul>
+                                <li>Date of issue</li>
+                                <li>Amount</li>
+                                <li>Purpose</li>
+                                <li>Officer’s name</li>
+                                <li>Retirement date</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>viii. Audit Trail</h3>
+                        <ul>
+                            <li>All imprests and retirement documents must be available for audit.</li>
+                            <li>Missing documents or misuse can lead to surcharges or criminal liability.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>ix. Accountability</h3>
+                        <ul>
+                            <li>The officer collecting the imprest is personally accountable for the funds.</li>
+                            <li>Transfers to third parties without authorization are not allowed.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-gavel"></i>Sanctions</h3>
+                        <ul>
+                            <li>Non-retirement or misuse of imprest attracts:</li>
+                            <ul>
+                                <li>Queries</li>
+                                <li>Surcharge</li>
+                                <li>Suspension of further advances</li>
+                                <li>Dismissal in severe cases</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 11 -->
+                <div id="chapter11" class="chapter">
+                    <h2><span class="chapter-number">11</span>Custody of Public Moneys, Stamps, Security Books and Documents</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-medal"></i>Overview</h3>
+                        <p>
+                            Chapter 11 deals with the proper custody and protection of public funds, revenue stamps, and sensitive government documents. It emphasizes security, accountability, and preventing losses or fraud in handling these assets.
+                        </p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-medal"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-medal"></i>i. Custody of Public Funds</h3>
+                        <ul>
+                            <li>Public funds must be kept securely in government-approved safes or strong rooms.</li>
+                            <li>Only authorized officers should have access.</li>
+                            <li>Cash must not be left unattended or held in private homes.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-check"></i>ii. Segregation of Duties</h3>
+                        <ul>
+                            <li>Officers responsible for receiving, holding, and disbursing public funds should not perform accounting or recording duties simultaneously.</li>
+                            <li>This ensures internal control and reduces the risk of fraud.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-check"></i>iii. Revenue Stamps and Stamp Duties</h3>
+                        <ul>
+                            <li>Treated as cash equivalents.</li>
+                            <li>Must be stored securely and recorded in a Stamp Register.</li>
+                            <li>Daily reconciliation of stamp stock is mandatory.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-check"></i>iv. Security Books and Receipts</h3>
+                        <ul>
+                            <li>Includes cheque books, receipt books, licenses, permits, and other accountable documents.</li>
+                            <li>These must be locked away and issued under strict control.</li>
+                            <li>Spoiled or cancelled documents must be preserved for audit purposes.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-check"></i>v. Register of Security Documents</h3>
+                        <ul>
+                            <li>Must record all serial-numbered security books issued and returned.</li>
+                            <li>Unauthorized printing or reproduction of such documents is prohibited and punishable.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-check"></i>vi. Monthly Checks and Balancing</h3>
+                        <ul>
+                            <li>Heads of Departments must conduct monthly checks on cash, stamps, and books in custody.</li>
+                            <li>Reports of these checks should be documented and signed.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-check"></i>vii. Cash Limits</h3>
+                        <ul>
+                            <li>Officers must not hold cash beyond approved limits.</li>
+                            <li>Excess cash must be deposited into government bank accounts promptly.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-check"></i>viii. Loss or Theft</h3>
+                        <ul>
+                            <li>Any loss, theft, or suspected fraud involving funds, stamps, or documents must be reported immediately.</li>
+                            <li>A Board of Inquiry or Police investigation may be instituted.</li>
+                            <li>Officers found negligent will be surcharged and may face disciplinary action.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-check"></i>ix. Safety and Insurance</h3>
+                        <ul>
+                            <li>Government premises must be equipped with safes, locks, and where necessary, insurance against burglary or fire.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-clipboard-check"></i>x. Sanctions</h3>
+                        <ul>
+                            <li>Failure to comply with custody rules can lead to:</li>
+                            <ul>
+                                <li>Queries</li>
+                                <li>Suspensions</li>
+                                <li>Criminal prosecution</li>
+                                <li>Recovery of lost funds from the officer’s salary</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 12 -->
+                <div id="chapter12" class="chapter">
+                    <h2><span class="chapter-number">12</span>Receipt and Licence Books</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-graduation-cap"></i>Overview</h3>
+                        <p>
+                            Chapter 12 provides clear guidelines on the issuance, control, and accountability of receipt books and licence books, which are crucial instruments in government revenue collection. The chapter ensures these tools are securely handled, properly documented, and auditable at all times.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-graduation-cap"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-graduation-cap"></i>i. Issue and Control</h3>
+                        <ul>
+                            <li>Receipt and licence books are classified as security documents.</li>
+                            <li>Their issue is managed by designated officers and must be recorded in a Register of Security Documents.</li>
+                            <li>Each book must be serially numbered.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-tasks"></i>ii. Proper Custody</h3>
+                        <ul>
+                            <li>Must be locked and secured when not in use.</li>
+                            <li>Access limited to authorized officers only.</li>
+                            <li>Unused and completed books are kept under tight control.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-tasks"></i>iii. Use of Official Receipts Only</h3>
+                        <ul>
+                            <li>Only government-approved receipt and licence books are valid for official use.</li>
+                            <li>All monies received must be acknowledged with official numbered receipts issued from the authorized book.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-tasks"></i>iv. Recording and Balancing</h3>
+                        <ul>
+                            <li>Officers must balance their receipt books daily and account for all transactions.</li>
+                            <li>Duplicates/counterfoils must be retained for audit purposes.</li>
+                            <li>No receipts should be issued on loose sheets or unofficial papers.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-tasks"></i>v. Spoilt or Cancelled Receipts</h3>
+                        <ul>
+                            <li>Spoiled or cancelled receipts must not be destroyed.</li>
+                            <li>They are to be crossed out, marked as "Cancelled", and preserved intact in the book.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-tasks"></i>vi. Return of Used Books</h3>
+                        <ul>
+                            <li>Used-up books must be returned to the issuing authority and registered as "Returned".</li>
+                            <li>Departments must maintain records of books in use, books returned, and stock balance.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-tasks"></i>vii. Stock Verification</h3>
+                        <ul>
+                            <li>Periodic checks on receipt and licence books must be conducted by Heads of Departments or internal auditors.</li>
+                            <li>Any discrepancies are to be investigated immediately.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-tasks"></i>viii. Loss of Receipt or Licence Book</h3>
+                        <ul>
+                            <li>Loss must be reported immediately.</li>
+                            <li>May result in a Board of Inquiry or disciplinary action.</li>
+                            <li>Officer responsible may be held liable for revenue unaccounted for due to the loss.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-tasks"></i>ix. Unauthorised Printing Prohibited</h3>
+                        <ul>
+                            <li>It is a serious offence to print, order, or use receipt or licence books outside official channels.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-tasks"></i>x. Sanctions</h3>
+                        <ul>
+                            <li>Violations of these rules may lead to:</li>
+                            <ul>
+                                <li>Query</li>
+                                <li>Surcharge</li>
+                                <li>Suspension</li>
+                                <li>Dismissal</li>
+                                <li>Criminal prosecution depending on the gravity of the offence</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 13 -->
+                <div id="chapter13" class="chapter">
+                    <h2><span class="chapter-number">13</span>Deposits</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-file-alt"></i>Professional Examinations</h3>
+                        <p>
+                            This chapter outlines the procedures, control, and accountability related to deposits made into government accounts. Deposits refer to monies temporarily held by the government, which may be refundable or meant for specific services. This chapter ensures deposits are accurately recorded, properly authorized, and regularly reviewed to avoid misuse or loss.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-alt"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-file-alt"></i>i. Deposits</h3>
+                        <ul>
+                            <li>Deposits include:</li>
+                            <ul>
+                                <li>Earnest money from contractors</li>
+                                <li>Security deposits</li>
+                                <li>Caution fees</li>
+                                <li>Court deposits</li>
+                                <li>Unclaimed salaries or pensions</li>
+                                <li>Other temporary funds held by MDAs</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>ii. Deposit Register</h3>
+                        <ul>
+                            <li>Each MDA (Ministry, Department, or Agency) must maintain a Deposit Register showing:</li>
+                            <ul>
+                                <li>Name of depositor</li>
+                                <li>Date</li>
+                                <li>Amount</li>
+                                <li>Purpose</li>
+                                <li>Date of refund or transfer</li>
+                            </ul>
+                        </ul>
+                    <div class="note">
+                        <h4><i class="fas fa-file-signature"></i>Please Note:</h4>
+                        <p>Entries must be sequential and up-to-date.</p>
+                    </div>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>iii. Proper Classification</h3>
+                        <ul>
+                            <li>Deposits must be correctly classified and coded under the right deposit accounts in the chart of accounts.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>iv. Receipt and Acknowledgement</h3>
+                        <ul>
+                            <li>An official receipt must be issued for every deposit.</li>
+                            <li>Receipts must include details of the deposit purpose.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>v. Accounting for Deposits</h3>
+                        <ul>
+                            <li>Deposits are not treated as revenue.</li>
+                            <li>They are liabilities and must be shown as such in the accounts.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>vi. Withdrawal and Refund</h3>
+                        <ul>
+                            <li>Refunds can only be made with proper authority and documentation.</li>
+                            <li>Unclaimed deposits should be transferred to revenue after six years if not claimed, in line with Financial Regulations.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>vii. Transfer and Adjustments</h3>
+                        <ul>
+                            <li>Deposits can be transferred between accounts only with proper approval.</li>
+                            <li>Any adjustment must be supported by written evidence.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>viii. Custody and Security</h3>
+                        <ul>
+                            <li>Deposit records and instruments (e.g., bonds, bank guarantees) must be securely stored.</li>
+                            <li>Only authorized officers should access or handle deposit matters.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>ix. Reconciliation and Verification</h3>
+                        <ul>
+                            <li>Periodic reconciliation of deposit balances must be carried out.</li>
+                            <li>Internal audit units must verify deposit balances and usage regularly.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>x. Reporting and Oversight</h3>
+                        <ul>
+                            <li>Heads of Accounts and Directors of Finance must review deposits monthly.</li>
+                            <li>Any irregularities must be promptly investigated and resolved.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-bar"></i>xi. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Misappropriation or mismanagement of deposits can lead to:</li>
+                            <ul>
+                                <li>Surcharge</li>
+                                <li>Disciplinary actions</li>
+                                <li>Criminal prosecution</li>
+                                <li>Officers failing to maintain deposit records properly may be liable for any losses.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 14 -->
+                <div id="chapter14" class="chapter">
+                    <h2><span class="chapter-number">14</span>Advances</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-folder"></i>Overview</h3>
+                        <p>
+                            This chapter deals with the guidelines for granting, recording, controlling, and recovering advances in government financial management. Advances refer to temporary financial assistance provided to public officers or government establishments for approved purposes, such as personal, motor vehicle, or housing loans, as well as operational advances for official duties.
+                        </p>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-folder"></i>Key Points</h3>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-folder"></i>i. Conditions for Granting Advances</h3>
+                        <ul>
+                            <li>Advances must be duly authorized by the Accounting Officer or designated authority.</li>
+                            <li>Applicants must be confirmed staff (for personal loans) and must provide collateral or guarantors where required.</li>
+                            <li>A written request and a clear purpose must accompany all applications.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-pie"></i>ii. Repayment Terms</h3>
+                        <ul>
+                            <li>Repayment must be scheduled through monthly deductions from salaries or other entitlements.</li>
+                            <li>Period for repayment must not exceed the tenure of service or contract.</li>
+                            <li>Early repayment is allowed and encouraged.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-pie"></i>iii. Advance Ledger and Records</h3>
+                        <ul>
+                            <li>A personal advance ledger must be maintained for each officer granted an advance.</li>
+                            <li>The ledger should detail:</li>
+                            <ul>
+                                <li>Date of advance</li>
+                                <li>Purpose</li>
+                                <li>Amount</li>
+                                <li>Repayment schedule</li>
+                                <li>Balance outstanding</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-pie"></i>iv. Responsibility of the Accountant</h3>
+                        <ul>
+                            <li>Must ensure timely deductions and accurate records.</li>
+                            <li>Must issue reminders for overdue advances.</li>
+                            <li>Must reconcile advance ledgers monthly.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-pie"></i>v. Recovery from Emoluments</h3>
+                        <ul>
+                            <li>In the event of transfer, retirement, or resignation, any outstanding advances must be recovered in full from final entitlements.</li>
+                            <li>Unrecovered amounts become surchargeable to the responsible officer.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-pie"></i>v. Interest on Advances</h3>
+                        <ul>
+                            <li>Certain advances (e.g., vehicle or housing loans) may attract interest as prescribed by government policy.</li>
+                            <li>Interest rates must be clearly stated in the approval letter.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-pie"></i>vi. Advances Not to Be Treated as Expenditure</h3>
+                        <ul>
+                            <li>Advances are assets, not expenditures, and must be treated as receivables in the accounts.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-pie"></i>vii. Default and Sanctions</h3>
+                        <ul>
+                            <li>Delays in repayment or misuse of advances attract disciplinary action, including recovery from guarantors or surcharging.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-chart-pie"></i>viii. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Misuse, non-repayment, or unauthorized granting of advances may result in:</li>
+                            <ul>
+                                <li>Surcharge</li>
+                                <li>Disciplinary action</li>
+                                <li>Dismissal or legal action (in serious cases)</li>
+                                <li>Withholding of final entitlements</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 15 -->
+                <div id="chapter15" class="chapter">
+                    <h2><span class="chapter-number">15</span>Salaries: General and Payroll Preparation and Control</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-handshake"></i>Overview</h3>
+                        <p>
+                            Chapter 15 focuses on the regulation, preparation, control, and auditing of salaries for public officers. It outlines responsibilities for maintaining accurate payroll records, processing payments, preventing fraud, and ensuring that all salary transactions are lawful, approved, and backed by proper documentation.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-handshake"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-handshake"></i>i. Authority to Pay Salaries</h3>
+                        <ul>
+                            <li>Salaries shall only be paid to duly appointed and approved officers.</li>
+                            <li>Payments must be based on approved personnel budgets and establishment positions.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-scale-balanced"></i>ii. Payroll Preparation</h3>
+                        <ul>
+                            <li>A nominal roll must be maintained and updated regularly.</li>
+                            <li>Payroll must include:</li>
+                            <ul>
+                                <li>Employee name and number</li>
+                                <li>Grade level and step</li>
+                                <li>Salary structure and allowances</li>
+                                <li>Deductions (e.g., tax, pension, loans)</li>
+                                <li>Net pay</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-scale-balanced"></i>iii. Verification and Certification</h3>
+                        <ul>
+                            <li>Every payroll must be verified monthly by the Head of Accounts.</li>
+                            <li>It must be certified by the Accounting Officer or delegated authority before payment is made.</li>
+                            <li>Ghost workers must be identified and removed.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-scale-balanced"></i>iv. Payment Method</h3>
+                        <ul>
+                            <li>Salaries are to be paid by direct bank transfer or through e-payment platforms.</li>
+                            <li>Manual cash payment is discouraged and must be minimized or eliminated.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-scale-balanced"></i>v. Deductions</h3>
+                        <ul>
+                            <li>Only authorized deductions are permitted, including:</li>
+                            <ul>
+                                <li>PAYE (Tax)</li>
+                                <li>Pension</li>
+                                <li>NHF</li>
+                                <li>Loan repayments</li>
+                                <li>Union dues (with consent)</li>
+                                <li>All deductions must be remitted promptly to the relevant bodies.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-scale-balanced"></i>vi. Changes in Salary</h3>
+                        <ul>
+                            <li>All changes (e.g., promotion, demotion, transfer, retirement) affecting pay must be:</li>
+                            <ul>
+                                <li>Documented</li>
+                                <li>Approved by the appropriate authority</li>
+                                <li>Reflected immediately in the payroll</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-scale-balanced"></i>vii. Payroll Records and Security</h3>
+                        <ul>
+                            <li>Payroll records must be:</li>
+                            <ul>
+                                <li>Secured against unauthorized access</li>
+                                <li>Backed up regularly</li>
+                                <li>Archived for audit and reference</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-scale-balanced"></i>viii. Audit and Oversight</h3>
+                        <ul>
+                            <li>Internal Audit must regularly review the payroll system to:</li>
+                            <ul>
+                                <li>Detect irregularities</li>
+                                <li>Verify authenticity of staff</li>
+                                <li>Ensure compliance with regulations</li>
+                                <li>External auditors may be invited to inspect payrolls as part of routine checks.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-scale-balanced"></i>ix. Unclaimed Salaries</h3>
+                        <ul>
+                            <li>Any unclaimed salary must be reported and recorded.</li>
+                            <li>Such funds should be returned to government revenue after a reasonable period.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-scale-balanced"></i>x. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Inclusion of ghost workers or salary overpayments can lead to:</li>
+                            <ul>
+                                <li>Surcharge of the responsible officer</li>
+                                <li>Suspension or dismissal</li>
+                                <li>Criminal prosecution</li>
+                                <li>Mandatory refund of overpaid amounts</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 16 -->
+                <div id="chapter16" class="chapter">
+                    <h2><span class="chapter-number">16</span>Self-Accounting Status</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-exclamation-circle"></i>Overview</h3>
+                        <p>
+                            Chapter 16 defines Self-Accounting Status as the administrative and financial autonomy granted to Ministries, Departments, or Agencies (MDAs) to manage their finances independently, within the framework of national financial regulations. This autonomy includes budget implementation, revenue generation, expenditure control, and financial reporting, under minimal external control from the central government.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-exclamation-circle"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-exclamation-circle"></i>i. Definition and Purpose</h3>
+                        <ul>
+                            <li>A self-accounting agency operates with delegated authority to manage its own finances.</li>
+                            <li>It aims to enhance efficiency, accountability, and timely decision-making in financial matters.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-cogs"></i>ii. Approval of Status</h3>
+                        <ul>
+                            <li>Self-accounting status is granted by the President or authorized authority.</li>
+                            <li>Only agencies with the capacity for financial management and established internal controls may qualify.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-cogs"></i>iii. Financial Responsibilities</h3>
+                        <ul>
+                            <li>Self-accounting MDAs must:</li>
+                            <ul>
+                                <li>Prepare their annual budgets.</li>
+                                <li>Maintain accurate accounting records.</li>
+                                <li>Implement revenue and expenditure plans.</li>
+                                <li>Submit monthly and annual financial returns to oversight bodies.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-cogs"></i>iv. Internal Control Mechanisms</h3>
+                        <ul>
+                            <li>Must have an active Internal Audit Unit.</li>
+                            <li>Should maintain:</li>
+                            <ul>
+                                <li>Budget performance reports</li>
+                                <li>Expenditure control measures</li>
+                                <li>Audit trails</li>
+                                <li>Internal controls must meet the standard guidelines set by the Federal Ministry of Finance and the Office of the Accountant-General.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-cogs"></i>v. Banking and Fund Management</h3>
+                        <ul>
+                            <li>Self-accounting bodies operate designated bank accounts under treasury approval.</li>
+                            <li>Responsible for cash flow management, disbursement, and revenue remittance.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-cogs"></i>vi. Oversight and Compliance</h3>
+                        <ul>
+                            <li>Although self-accounting, MDAs must:</li>
+                            <ul>
+                                <li>Submit to periodic audits (internal and external).</li>
+                                <li>Comply with Financial Regulations, Treasury Circulars, and Audit Acts.</li>
+                                <li>Respond to audit queries and implement audit recommendations.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-cogs"></i>vii. Reporting Obligations</h3>
+                        <ul>
+                            <li>Monthly reports must be sent to:</li>
+                            <ul>
+                                <li>Federal Ministry of Finance</li>
+                                <li>Office of the Accountant-General</li>
+                                <li>National Assembly (for appropriation tracking)</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-cogs"></i>viii. Limitations</h3>
+                        <ul>
+                            <li>Autonomy does not give liberty to misuse funds or disregard financial laws.</li>
+                            <li>Major decisions (e.g., foreign contracts, large capital projects) still require external approval.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-cogs"></i>ix. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Misuse of self-accounting privileges can lead to:</li>
+                            <ul>
+                                <li>Withdrawal of status</li>
+                                <li>Administrative sanctions</li>
+                                <li>Prosecution</li>
+                                <li>Repayment of misused funds</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 17 -->
+                <div id="chapter17" class="chapter">
+                    <h2><span class="chapter-number">17</span>Internal Audit</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter deals with Internal Audit, emphasizing the importance of continuous internal checks and controls to promote transparency, accountability, and efficient financial management in public service institutions.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Definition and Purpose</h3>
+                        <ul>
+                            <li>Internal Audit is an independent, objective assurance and consulting activity designed to improve an organization’s operations.</li>
+                            <li>It helps the organization accomplish its objectives by bringing a systematic, disciplined approach to evaluate and improve the effectiveness of risk management, control, and governance processes.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Establishment</h3>
+                        <ul>
+                            <li>Every Ministry, Department, and Agency (MDA) must establish an Internal Audit Unit.</li>
+                            <li>It must be adequately staffed and well-equipped.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Functions of Internal Audit Units are:</h3>
+                        <ul>
+                            <li>Conduct periodic and unscheduled audits of:</li>
+                            <ul>
+                                <li>Revenue</li>
+                                <li>Expenditure</li>
+                                <li>Stores</li>
+                                <li>Assets</li>
+                                <li>Projects</li>
+                            </ul>
+                            <li>Evaluate:</li>
+                            <ul>
+                                <li>Adherence to financial rules and regulations</li>
+                                <li>Accuracy of financial records</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Effectiveness of internal controls</h3>
+                        <ul>
+                            <li>Ensure compliance with budgetary provisions.</li>
+                            <li>Verify procurement processes and contract execution.</li>
+                            <li>Report on cases of fraud, irregularities, or inefficiencies.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Audit Program and Schedule</h3>
+                        <ul>
+                            <li>Internal audits must follow a pre-approved audit plan.</li>
+                            <li>However, the Head of Unit has the right to conduct spot checks or special investigations without prior notice.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Reporting Procedures</h3>
+                        <ul>
+                            <li>Internal auditors report directly to the Chief Executive Officer (CEO) of the MDA.</li>
+                            <li>Copies of audit reports should also be sent to:</li>
+                            <ul>
+                                <li>Accountant-General of the Federation</li>
+                                <li>Auditor-General for the Federation</li>
+                                <li>Relevant oversight bodies</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Audit Queries</h3>
+                        <ul>
+                            <li>Any irregularities must be issued as audit queries to the responsible officers.</li>
+                            <li>Responses must be made within 14 days.</li>
+                            <li>Non-response or unsatisfactory answers can trigger disciplinary measures.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>viii. Documentation</h3>
+                        <ul>
+                            <li>Internal Audit Units must maintain proper records of:</li>
+                            <ul>
+                                <li>Audit plans</li>
+                                <li>Working papers</li>
+                                <li>Reports</li>
+                                <li>Follow-up actions</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ix. Relationship with External Audit</h3>
+                        <ul>
+                            <li>Internal Audit does not replace external audit.</li>
+                            <li>It complements external audit by providing ongoing assurance throughout the year.</li>
+                            <li>Findings are helpful during statutory audits.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>x. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Failure to maintain an effective Internal Audit Unit or neglecting audit responsibilities can lead to:</li>
+                            <ul>
+                                <li>Loss of public funds</li>
+                                <li>Sanctions on Accounting Officers</li>
+                                <li>Administrative or disciplinary actions</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 18 -->
+                <div id="chapter18" class="chapter">
+                    <h2><span class="chapter-number">18</span>Board of Survey: Cash and Stamps</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            Chapter 18 focuses on the role and procedures of the Board of Survey concerning the inspection and verification of cash, stamps, and other government properties. This process is crucial for ensuring accountability, preventing loss, and safeguarding public assets.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Purpose of the Board of Survey</h3>
+                        <ul>
+                            <li>To inspect, verify, and report on the existence, condition, and custody of cash, stamps, and government property.</li>
+                            <li>To detect any shortages, losses, or damages.</li>
+                            <li>To recommend actions for recovery or disposal of unserviceable items.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Composition</h3>
+                        <ul>
+                            <li>The Board usually consists of at least three members appointed by the Head of the Ministry, Department, or Agency.</li>
+                            <li>Members should be independent and knowledgeable about financial and asset management.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Frequency of survey</h3>
+                        <ul>
+                            <li>Boards of Survey must be constituted at least once a year.</li>
+                            <li>Special surveys may be conducted when:</li>
+                            <ul>
+                                <li>There is a change of accounting officers.</li>
+                                <li>In response to audit queries or suspected losses.</li>
+                                <li>For transfers or disposal of assets.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Scope of Survey</h3>
+                        <ul>
+                            <li>The Board inspects:</li>
+                            <ul>
+                                <li>Cash balances and petty cash</li>
+                                <li>Revenue stamps and official stamps</li>
+                                <li>Stationery and consumables related to cash handling</li>
+                                <li>Other government stores under their custody</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Procedure</h3>
+                        <ul>
+                            <li>Verification of physical existence against records.</li>
+                            <li>Examination of custody arrangements and security measures.</li>
+                            <li>Identification of discrepancies and noting them in the report.</li>
+                            <li>Certification of assets and cash in the survey report.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Recommendations for action or recovery</h3>
+                        <ul>
+                            <li>Copies are sent to:</li>
+                            <ul>
+                                <li>Accounting Officer</li>
+                                <li>Internal Audit Unit</li>
+                                <li>Office of the Accountant-General</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Action on Survey Reports</h3>
+                        <ul>
+                            <li>Accounting Officers must act promptly on the Board’s recommendations.</li>
+                            <li>In cases of loss or shortage, recovery actions must be initiated.</li>
+                            <li>Failure to comply may result in disciplinary measures.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>viii. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Losses due to negligence can lead to:</li>
+                            <ul>
+                                <li>Recovery of amounts from responsible officers.</li>
+                                <li>Disciplinary action or prosecution in cases of fraud.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 19 -->
+                <div id="chapter19" class="chapter">
+                    <h2><span class="chapter-number">19</span>Pension Scheme in the Federal Public Service: General Administration and Accounting Procedure</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter outlines the administration and accounting procedures governing the pension scheme for federal public service employees. It ensures proper management of pension funds, timely payment of benefits, and adherence to regulations protecting pensioners' rights.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Scope of Pension Scheme</h3>
+                        <ul>
+                            <li>Applies to all eligible federal public service employees upon retirement, resignation, or death.</li>
+                            <li>Covers retirement pensions, gratuities, and other terminal benefits.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Administration</h3>
+                        <ul>
+                            <li>The Pension Department or designated office manages the scheme.</li>
+                            <li>Responsible for:</li>
+                            <ul>
+                                <li>Maintaining accurate pension records.</li>
+                                <li>Processing pension claims and payments.</li>
+                                <li>Ensuring compliance with rules and regulations.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Eligibility and Entitlement</h3>
+                        <ul>
+                            <li>Eligibility based on years of service and retirement conditions.</li>
+                            <li>Pension amounts calculated according to approved formulae reflecting salary scale and length of service.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Pension Fund Management</h3>
+                        <ul>
+                            <li>Funds are drawn from the Consolidated Revenue Fund and other designated sources.</li>
+                            <li>Proper accounting and reconciliation of pension payments are mandatory.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Accounting Procedure</h3>
+                        <ul>
+                            <li>Monthly returns and pension payment schedules must be prepared.</li>
+                            <li>Pension payments must be supported by proper documentation.</li>
+                            <li>Internal controls must ensure no fraudulent or duplicate payments.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Audit and Verification</h3>
+                        <ul>
+                            <li>Pension records and payments are subject to internal and external audit.</li>
+                            <li>Discrepancies or irregularities must be promptly investigated.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Gratuities and our Benefits</h3>
+                        <ul>
+                            <li>Procedures for the payment of gratuities and terminal benefits on retirement or death are clearly defined.</li>
+                            <li>Documentation and authorization processes must be strictly followed.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>viii. Updates and Amendments</h3>
+                        <ul>
+                            <li>Pension regulations are subject to periodic review and updates.</li>
+                            <li>Changes must be communicated promptly to all relevant departments.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ix. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Mismanagement or fraudulent payment of pension benefits may lead to:</li>
+                            <ul>
+                                <li>Recovery of funds.</li>
+                                <li>Disciplinary or legal actions against responsible officers.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 20 -->
+                <div id="chapter20" class="chapter">
+                    <h2><span class="chapter-number">20</span>Government Vehicles: Uses and Proper Control, Accounting Procedure</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter details the policies and procedures for the management, use, control, and accounting of government vehicles to ensure efficient utilization and prevent misuse or loss.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Purpose and Scope</h3>
+                        <ul>
+                            <li>To regulate the use and control of government-owned vehicles.</li>
+                            <li>Applies to all government departments, agencies, and officials using official vehicles.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Authorized Use</h3>
+                        <ul>
+                            <li>Vehicles are to be used strictly for official duties.</li>
+                            <li>Personal use is generally prohibited unless specifically authorized.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Vehicle Assignment and Custody</h3>
+                        <ul>
+                            <li>Vehicles are assigned to departments or officials based on official needs.</li>
+                            <li>A designated vehicle custodian or officer is responsible for the care and custody of each vehicle.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Maintenance and Repairs</h3>
+                        <ul>
+                            <li>Regular maintenance schedules must be observed.</li>
+                            <li>Repairs must be authorized and documented.</li>
+                            <li>Expenses should be properly accounted for.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Fuel and Log Book</h3>
+                        <ul>
+                            <li>Accurate log books must be maintained showing mileage, destinations, and fuel consumption.</li>
+                            <li>Fuel purchases must be supported with receipts.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Security and control</h3>
+                        <ul>
+                            <li>Vehicles must be securely parked and safeguarded against theft or damage.</li>
+                            <li>Procedures for reporting accidents or damage are clearly outlined.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Disposal of Vehicle</h3>
+                        <ul>
+                            <li>Unserviceable or obsolete vehicles should be disposed of following proper procedures.</li>
+                            <li>Disposal requires authorization and documentation.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>viii. Accounting Procedure</h3>
+                        <ul>
+                            <li>All expenses related to vehicles including fuel, repairs, and maintenance must be properly recorded.</li>
+                            <li>Regular reconciliation and audit of vehicle accounts are mandatory.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ix. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Unauthorized use or mismanagement of government vehicles can lead to:</li>
+                            <ul>
+                                <li>Recovery of costs.</li>
+                                <li>Disciplinary or legal actions.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 21 -->
+                <div id="chapter21" class="chapter">
+                    <h2><span class="chapter-number">21</span>Stores Accounting and Custody</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter outlines the policies and procedures for the accounting, custody, and management of government stores and supplies to ensure proper control, accountability, and efficient utilization of resources.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Definition of Stores</h3>
+                        <ul>
+                            <li>Includes all materials, supplies, equipment, and goods purchased or received for official use.</li>
+                        </ul>
+                        <li>Stores Accounting</li>
+                        <ul>
+                            <li>Accurate and up-to-date records must be maintained for all stores transactions.</li>
+                            <li>Records include:</li>
+                            <ul>
+                                <li>Receipts</li>
+                                <li>Issues</li>
+                                <li>Balances</li>
+                                <li>Stock movement</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Stores Custody</h3>
+                        <ul>
+                            <li>Custody of stores is assigned to responsible officers.</li>
+                            <li>Officers must ensure stores are secured, safeguarded, and properly stored.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Receipts and Inspection</h3>
+                        <ul>
+                            <li>All stores received must be inspected for quality and quantity.</li>
+                            <li>Discrepancies or damages should be reported immediately.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Issuance of Stores</h3>
+                        <ul>
+                            <li>Stores are issued based on approved requisitions and authorizations.</li>
+                            <li>Proper documentation must accompany all issues.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Stocktaking and Verification</h3>
+                        <ul>
+                            <li>Regular stocktaking exercises are conducted to verify physical stores against records.</li>
+                            <li>Variances must be investigated and reported.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Control Measures</h3>
+                        <ul>
+                            <li>Procedures to prevent theft, loss, or wastage of stores.</li>
+                            <li>Security measures such as locked stores and access controls.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Disposal of Stores</h3>
+                        <ul>
+                            <li>Unserviceable or obsolete stores are disposed of following established procedures.</li>
+                            <li>Disposal must be authorized and documented.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>viii. Reporting</h3>
+                        <ul>
+                            <li>Periodic reports on stores status, usage, and stock levels must be submitted to management.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ix. Relationship with External Audit</h3>
+                        <ul>
+                            <li>Periodic reports on stores status, usage, and stock levels must be submitted to management.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>x. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Mismanagement or loss of stores may lead to recovery of losses and disciplinary action.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 22 -->
+                <div id="chapter22" class="chapter">
+                    <h2><span class="chapter-number">22</span>Allocation and Unallocated Stores</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter defines the procedures for the allocation, management, and control of allocated and unallocated stores within government departments to ensure proper distribution, accountability, and usage.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Allocated Stores</h3>
+                        <ul>
+                            <li>Stores that are assigned or issued to a specific department, unit, or officer.</li>
+                            <li>These stores are under the direct control and responsibility of the receiving unit.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Unallocated Stores</h3>
+                        <ul>
+                            <li>Stores that are held in a general stores or warehouse and not yet assigned to any particular unit.</li>
+                            <li>Managed centrally until officially allocated.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Control of Allocated Stores</h3>
+                        <ul>
+                            <li>The receiving unit must keep detailed records of allocated stores.</li>
+                            <li>Responsible for safekeeping and proper utilization.</li>
+                            <li>Regular stock checks are required.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Management of Unallocated Stores</h3>
+                        <ul>
+                    <li>The stores department maintains records and ensures proper storage and security.</li>
+                    <li>Issuance of unallocated stores requires official requisition and approval.</li>
+                </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Transfers Between Units</h3>
+                        <ul>
+                            <li>Transfers of stores between units must be authorized and properly documented.</li>
+                            <li>Records must be updated to reflect changes in custody.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Accountability</h3>
+                        <ul>
+                            <li>Both allocated and unallocated stores are subject to inventory checks and audits.</li>
+                            <li>Any discrepancies must be reported and investigated.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Reporting</h3>
+                        <ul>
+                            <li>Periodic reports on allocated and unallocated stores must be submitted to relevant authorities.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>viii. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Mismanagement of allocated or unallocated stores may result in:</li>
+                            <ul>
+                                <li>Recovery of losses.</li>
+                                <li>Disciplinary measures against responsible officers.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 23 -->
+                <div id="chapter23" class="chapter">
+                    <h2><span class="chapter-number">23</span>Acquisition of Stores: Local Purchase and Indents</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter outlines the procedures and guidelines for the acquisition of stores through local purchase and indents, ensuring transparency, accountability, and compliance with procurement regulations.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Local Purchase</h3>
+                        <ul>
+                            <li>Refers to the direct purchase of goods and services from local suppliers.</li>
+                            <li>Generally used for small-scale or urgent purchases.</li>
+                            <li>Must comply with approved procurement procedures and financial limits.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Indents</h3>
+                        <ul>
+                            <li>A formal written request or requisition for stores or materials.</li>
+                            <li>Submitted by departments or units to the stores or procurement section for acquisition.</li>
+                            <li>Should specify quantity, description, and required delivery time.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Approval Process</h3>
+                        <ul>
+                            <li>Indents and local purchases require authorization by designated officers.</li>
+                            <li>Approval ensures budget availability and compliance with regulations.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Procurement Procedures</h3>
+                        <ul>
+                            <li>Must follow established guidelines including:</li>
+                            <ul>
+                                <li>Competitive bidding (where applicable)</li>
+                                <li>Evaluation of suppliers</li>
+                                <li>Verification of quality and price</li>
+                                <li>Documentation of all procurement activities is mandatory.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Receipt and Inspection</h3>
+                        <ul>
+                            <li>Goods received must be inspected against the indent or purchase order.</li>
+                            <li>Any discrepancies or defects must be reported and resolved.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Payment</h3>
+                        <ul>
+                            <li>Payments are processed only after confirmation of receipt and acceptance.</li>
+                            <li>Proper documentation including invoices and receipts must be maintained.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>viii. Record Keeping</h3>
+                        <ul>
+                            <li>All purchase orders, indents, receipts, and related documents should be filed for audit purposes.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>x. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Non-compliance with acquisition procedures can lead to:</li>
+                            <ul>
+                                <li>Financial loss recovery.</li>
+                                <li>Disciplinary action or legal consequences.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 24 -->
+                <div id="chapter24" class="chapter">
+                    <h2><span class="chapter-number">24</span>Handling of Stores</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter details the proper procedures and responsibilities for the handling, storage, and maintenance of government stores to ensure their preservation, safety, and efficient use.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Receipt of Stores</h3>
+                        <ul>
+                            <li>Stores must be received by authorized personnel.</li>
+                            <li>Inspected for quantity and quality before acceptance.</li>
+                            <li>Any defects or discrepancies should be reported immediately.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Storage Conditions</h3>
+                        <ul>
+                            <li>Stores must be kept in appropriate conditions to prevent damage, deterioration, or loss.</li>
+                            <li>Storage facilities should be clean, secure, and organized.</li>
+                            <li>Special care must be taken for perishable, fragile, or hazardous items.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Handling Procedures</h3>
+                        <ul>
+                            <li>Proper handling techniques should be observed to avoid damage.</li>
+                            <li>Use of equipment (e.g., trolleys, forklifts) must be done safely.</li>
+                            <li>Only trained personnel should handle certain types of stores.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Security</h3>
+                        <ul>
+                            <li>Stores should be stored in secure locations with restricted access.</li>
+                            <li>Locks, alarms, and surveillance may be used to safeguard stores.</li>
+                            <li>Records of access and handling should be maintained.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Issuance of Stores</h3>
+                        <ul>
+                            <li>Stores should be issued only against proper requisition and documentation.</li>
+                            <li>Care must be taken to ensure accurate quantities are issued.</li>
+                            <li>Records of issuance must be maintained.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Maintenance</h3>
+                        <ul>
+                            <li>Regular inspections and maintenance should be conducted.</li>
+                            <li>Damaged or obsolete stores should be identified for repair or disposal.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Training</h3>
+                        <ul>
+                            <li>Personnel involved in store handling should be adequately trained on procedures and safety.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>x. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Negligence in handling stores that results in loss or damage may lead to disciplinary action or recovery of losses.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 25 -->
+                <div id="chapter25" class="chapter">
+                    <h2><span class="chapter-number">25</span>Loss or Shortage of Government Funds</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter focuses on the procedures, responsibilities, and consequences related to the loss or shortage of government funds, ensuring accountability and prompt action to safeguard public money.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Definition of Loss or Shortage</h3>
+                        <ul>
+                            <li>Loss or shortage refers to any unexplained or unauthorized deficit of government funds during custody, handling, or accounting</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Detection and Reporting</h3>
+                        <ul>
+                            <li>Any suspected or actual loss must be immediately reported to the appropriate authorities.</li>
+                            <li>Officers in charge of cash or funds must notify their supervisors promptly.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Investigation Procedures</h3>
+                        <ul>
+                            <li>An official inquiry or investigation is conducted to determine the cause and responsible parties.</li>
+                            <li>The investigating team collects evidence, examines records, and interviews relevant personnel.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Responsibility and Accountability</h3>
+                        <ul>
+                            <li>The officer(s) responsible for the custody or handling of the funds at the time of loss are presumed accountable unless proven otherwise.</li>
+                            <li>Accountability may involve recovery of lost funds or disciplinary actions.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Recovery of Losses</h3>
+                        <ul>
+                            <li>Efforts must be made to recover lost or misappropriated funds.</li>
+                            <li>Where recovery is not possible, losses may be charged to the responsible officer’s salary or other assets, subject to due process.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Preventive Measures</h3>
+                        <ul>
+                            <li>Proper controls and checks must be in place to prevent losses, such as segregation of duties, regular audits, and reconciliations.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>x. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Officers found responsible may face:</li>
+                            <ul>
+                                <li>Financial penalties or recovery orders.</li>
+                                <li>Disciplinary measures including suspension or dismissal.</li>
+                                <li>Legal prosecution in cases of fraud or embezzlement.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 26 -->
+                <div id="chapter26" class="chapter">
+                    <h2><span class="chapter-number">26</span>Loss of Stores and Unserviceable Stores</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter outlines the procedures and responsibilities for handling the loss of government stores and the management of unserviceable (damaged or obsolete) stores, ensuring proper accountability and disposal.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Loss of Stores</h3>
+                        <ul>
+                            <li>Loss refers to the disappearance, theft, damage, or destruction of government stores while under custody.</li>
+                            <li>Loss must be immediately reported to the appropriate authorities.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Investigation</h3>
+                        <ul>
+                            <li>A thorough inquiry must be conducted to establish the cause and identify responsible parties.</li>
+                            <li>Evidence such as inventory records, delivery receipts, and witness statements are collected.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Accountability</h3>
+                        <lu>
+                            <li>Custodians of the stores at the time of loss are held accountable unless proven otherwise.</li>
+                            <li>Recovery of the value of lost stores from responsible officers is pursued.</li>
+                        </lu>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Unserviceable store/h3>
+                        <ul>
+                            <li>Stores that are damaged, obsolete, or no longer fit for use are classified as unserviceable.</li>
+                            <li>Such stores must be identified and documented promptly.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Disposal of Unserviceable Stores</h3>
+                        <ul>
+                            <li>Disposal must follow approved procedures, including:</li>
+                            <ul>
+                                <li>Board of Survey evaluation.</li>
+                                <li>Authorization from competent authority.</li>
+                                <li>Sale, donation, or destruction as deemed appropriate.</li>
+                            </ul>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Record Keeping</h3>
+                        <ul>
+                            <li>Proper documentation for both lost and unserviceable stores is essential.</li>
+                            <li>Records facilitate audits and ensure transparency.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Preventive Control</h3>
+                        <ul>
+                            <li>Adequate storage, security, and handling procedures help minimize loss and damage.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>x. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Failure to report or negligence leading to loss or damage may result in disciplinary action or financial recovery.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 27 -->
+                <div id="chapter27" class="chapter">
+                    <h2><span class="chapter-number">27</span>Stores Inspection by Board of Survey and Stock Verifiers</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter covers the roles, responsibilities, and procedures of the Board of Survey and Stock Verifiers in inspecting government stores to ensure accurate records, proper custody, and to identify losses or discrepancies.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Board of Survey</h3>
+                        <ul>
+                            <li>A Board of Survey is appointed periodically to physically inspect government stores.</li>
+                            <li>It verifies the existence, condition, and quantity of stores held in custody.</li>
+                            <li>The Board reports any shortages, damages, or obsolete items.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Stock Verifiers</h3>
+                        <ul>
+                            <li>Stock Verifiers conduct routine checks between Boards of Survey.</li>
+                            <li>Their role is to maintain continuous oversight on store conditions and records.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Inspection Process</h3>
+                        <ul>
+                            <li>The Board and Verifiers review inventory records and physically count the stores.</li>
+                            <li>They assess store conditions, check for damages, and verify proper storage.</li>
+                            <li>Discrepancies are noted and reported.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Reporting</h3>
+                        <ul>
+                            <li>Inspection findings are documented in official reports.</li>
+                            <li>Reports highlight shortages, excesses, damages, and recommendations for action.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Action on Findings</h3>
+                        <ul>
+                            <li>Losses or discrepancies identified by the Board require investigation.</li>
+                            <li>Appropriate corrective actions, including recovery or disposal, are initiated.</li>
+                            <li>Officers responsible for custody may be held accountable.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Frequency</h3>
+                        <ul>
+                            <li>Boards of Survey are usually constituted annually or as prescribed.</li>
+                            <li>Stock Verifiers perform inspections more frequently for ongoing control.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Compliance</h3>
+                        <ul>
+                            <li>Government agencies must comply with inspection schedules and cooperate fully with Boards and Verifiers.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>x. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Non-compliance with inspection procedures or attempts to conceal discrepancies can result in disciplinary or legal actions.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 28 -->
+                <div id="chapter28" class="chapter">
+                    <h2><span class="chapter-number">28</span>Stock Verification Unit</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter outlines the establishment, functions, and responsibilities of the Stock Verification Unit within government departments to maintain accurate stock records and ensure proper custody of stores.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Purpose of the Stock Verification Unit</h3>
+                        <ul>
+                            <li>To ensure continuous and systematic verification of government stores.</li>
+                            <li>To assist in maintaining accurate stock records and prevent loss or misappropriation.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Composition</h3>
+                        <ul>
+                            <li>The unit typically comprises trained personnel appointed by the department.</li>
+                            <li>Members should be independent of those directly responsible for stores custody.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Functions</h3>
+                        <ul>
+                            <li>Conduct regular stock checks and reconcile physical stocks with records.</li>
+                            <li>Identify discrepancies and report them promptly.</li>
+                            <li>Assist the Board of Survey during official inspections.</li>
+                            <li>Recommend improvements in stock control procedures.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Reporting</h3>
+                        <ul>
+                            <li>The unit submits periodic reports on stock status to management.</li>
+                            <li>Reports include findings on shortages, damages, and other anomalies.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Accountability</h3>
+                        <ul>
+                            <li>The Stock Verification Unit supports accountability by ensuring transparency in stock management.</li>
+                            <li>Their work helps management take timely corrective actions.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Coordination</h3>
+                        <ul>
+                            <li>Works closely with store custodians, auditors, and the Board of Survey.</li>
+                            <li>Ensures compliance with government financial regulations.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Preventive Role</h3>
+                        <ul>
+                            <li>Helps prevent stock losses through early detection of irregularities.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>viii. Importance</h3>
+                        <ul>
+                            <li>The Stock Verification Unit is a critical control mechanism to uphold the integrity of government stores and resources.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 29 -->
+                <div id="chapter29" class="chapter">
+                    <h2><span class="chapter-number">29</span>Public Procurement Contracts</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            Chapter 29 addresses the principles, procedures, and regulations governing public procurement contracts to ensure transparency, fairness, and value for money in the acquisition of goods, works, and services by government entities.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Procurement Principles</h3>
+                        <ul>
+                            <li>Procurement must be conducted transparently, fairly, and competitively.</li>
+                            <li>The process aims to achieve the best value for public funds.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Types of Procurement Contracts</h3>
+                        <ul>
+                            <li>Contracts for goods, works, and services.</li>
+                            <li>May include open tendering, restricted tendering, direct procurement, and others as regulated.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Procurement Process</h3>
+                        <ul>
+                            <li>Needs assessment and planning.</li>
+                            <li>Preparation and approval of procurement documents.</li>
+                            <li>Invitation to tender or bid.</li>
+                            <li>Evaluation of bids based on predefined criteria.</li>
+                            <li>Award of contract to the most responsive and responsible bidder.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Contract Management</h3>
+                        <ul>
+                            <li>Monitoring of contract execution to ensure compliance with terms.</li>
+                            <li>Timely payment and performance review.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Regulatory Compliance</h3>
+                        <ul>
+                            <li>All procurement activities must comply with relevant laws and guidelines.</li>
+                            <li>Procurement officers are accountable for adherence to procedures.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Conflict of interest</h3>
+                        <ul>
+                            <li>Officials involved in procurement must avoid conflicts of interest.</li>
+                            <li>Disclosure of any interest is mandatory.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Importance</h3>
+                        <ul>
+                            <li>Effective procurement ensures efficient use of public resources and reduces risks of fraud and corruption.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>x. Sanctions for Non-Compliance</h3>
+                        <ul>
+                            <li>Violations of procurement rules may lead to penalties, cancellation of contracts, and disciplinary actions.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 30 -->
+                <div id="chapter30" class="chapter">
+                    <h2><span class="chapter-number">30</span>Miscellaneous Matters</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            Chapter 30 covers various miscellaneous provisions related to financial management, accountability, and administrative procedures that do not fall under previous specific chapters but are important for the overall governance of public funds.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. General Provisions</h3>
+                        <ul>
+                            <li>Covers special cases and exceptions not explicitly addressed elsewhere.</li>
+                            <li>Provides guidelines for unique or unforeseen financial situations.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Administrative Procedures</h3>
+                        <ul>
+                            <li>Instructions on documentation, record keeping, and reporting requirements.</li>
+                            <li>Emphasizes the importance of maintaining proper financial records.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Financial Accountability</h3>
+                        <ul>
+                            <li>Reinforces the principles of responsibility and transparency in public finance.</li>
+                            <li>Details on handling irregularities and taking corrective measures.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Delegation of Authority</h3>
+                        <ul>
+                            <li>Guidelines on delegation of financial powers within government agencies.</li>
+                            <li>Ensures that delegated powers are exercised within set limits.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Miscellaneous Controls</h3>
+                        <ul>
+                            <li>Includes controls on petty cash, imprest accounts, and other financial instruments.</li>
+                            <li>Procedures for handling advances, recoveries, and adjustments.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Disciplinary Actions</h3>
+                        <ul>
+                            <li>Outlines actions to be taken in cases of financial misconduct or negligence.</li>
+                            <li>Encourages adherence to established rules and ethical standards.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Interpretation of Financial Regulations</h3>
+                        <ul>
+                            <li>Provides clarifications on interpretation and application of the financial rules.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>viii. Importance</h3>
+                        <ul>
+                            <li>This chapter acts as a catch-all for important financial governance matters ensuring no gaps in regulatory control.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 31 -->
+                <div id="chapter31" class="chapter">
+                    <h2><span class="chapter-number">31</span>Codification of Offences and Sanctions</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter details the specific offences related to financial mismanagement, fraud, and breaches of financial regulations within the public service, along with the sanctions and disciplinary measures applicable to offenders.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Types of Offences</h3>
+                        <ul>
+                            <li>Unauthorized use or misappropriation of public funds.</li>
+                            <li>Negligence or failure to follow financial procedures.</li>
+                            <li>Fraudulent activities including falsification of records.</li>
+                            <li>Non-compliance with procurement rules.</li>
+                            <li>Abuse of delegated financial authority.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Investigation and Reporting</h3>
+                        <ul>
+                            <li>Procedures for investigation of alleged offences.</li>
+                            <li>Reporting mechanisms to relevant authorities and disciplinary bodies.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Preventive Measures</h3>
+                        <ul>
+                            <li>Emphasis on internal controls to deter offences.</li>
+                            <li>Regular audits and monitoring.</li>
+                            <li>Training and sensitization on financial regulations.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Rights of the Accused</h3>
+                        <ul>
+                            <li>Provision for fair hearing and due process before sanctions.</li>
+                            <li>Right to appeal decisions.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Importance</h3>
+                        <ul>
+                            <li>Establishes a clear legal and administrative framework to enforce financial discipline and accountability in the public sector.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>x. Sanctions and Penalties</h3>
+                        <ul>
+                            <li>Suspension or dismissal from public service.</li>
+                            <li>Recovery of misappropriated funds.</li>
+                            <li>Legal prosecution where applicable.</li>
+                            <li>Other disciplinary measures as deemed appropriate.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chapter 32 -->
+                <div id="chapter32" class="chapter">
+                    <h2><span class="chapter-number">32</span>Financial Guidelines for the Operations of Parastatals</h2>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Overview</h3>
+                        <p>
+                            This chapter provides financial management guidelines specifically tailored for parastatals—government-owned corporations or agencies—ensuring their operations comply with public financial regulations while maintaining operational efficiency and accountability.
+                        </p>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>Key Points</h3>
+                        </div>
+                    <div class="section">
+                        <h3><i class="fas fa-book"></i>i. Definition and Scope</h3>
+                        <ul>
+                            <li>Parastatals are autonomous or semi-autonomous government entities with commercial or administrative functions.</li>
+                            <li>Financial guidelines apply to their budgeting, accounting, and reporting processes.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ii. Budgeting and Appropriation</h3>
+                        <ul>
+                            <li>Parastatals must prepare annual budgets aligned with government policies.</li>
+                            <li>Expenditure should be within approved budgets and subject to regular review.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iii. Revenue Generation and Management</h3>
+                        <ul>
+                            <li>Guidelines on managing internally generated revenue.</li>
+                            <li>Proper accounting and reporting of all income streams.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>iv. Expenditure Controls</h3>
+                        <ul>
+                            <li>Controls to ensure funds are spent for authorized purposes.</li>
+                            <li>Procurement and payment procedures consistent with public service standards.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>v. Accounting and Reporting</h3>
+                        <ul>
+                            <li>Maintenance of accurate financial records.</li>
+                            <li>Regular submission of financial statements and audit reports to oversight bodies.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vi. Audit and Oversight</h3>
+                        <ul>
+                            <li>Parastatals are subject to internal and external audits.</li>
+                            <li>Compliance with audit recommendations is mandatory.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>vii. Financial Accountability</h3>
+                        <ul>
+                            <li>Officers in charge are responsible for proper use of resources.</li>
+                            <li>Sanctions apply for misuse or mismanagement of funds.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>viii. Coordination with Government Authorities</h3>
+                        <ul>
+                            <li>Parastatals coordinate with Ministry of Finance and other regulatory agencies.</li>
+                            <li>Adherence to government financial policies is required.</li>
+                        </ul>
+                    </div>
+                    <div class="section">
+                        <h3><i class="fas fa-balance-scale"></i>ix. Importance</h3>
+                        <ul>
+                            <li>These guidelines help ensure that parastatals operate transparently, responsibly, and in line with national financial policies.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                <div class="content-section">
+                    <div class="file-container">
+                        <a href="FRRs.html"><strong>Simulate CBT</strong></a>
+                    </div>
+                </div>
+
+        <!-- Conclusion Section -->
+        <div class="conclusion-section">
+            <div class="conclusion-content">
+                <h2>Conclusion</h2>
+                <p>The Nigerian Public Service Rules represent a comprehensive framework designed to ensure the effective and efficient operation of the civil service. By providing clear guidelines on all aspects of public service administration, the rules help maintain order, discipline, and professionalism in the service.</p>
+                
+                <p>These rules balance the rights of public servants with their responsibilities to the nation. They establish mechanisms for fair treatment, due process, and professional development while demanding high standards of integrity and performance.</p>
+                
+                <p>All public servants are expected to familiarize themselves with these rules and adhere to their provisions in the discharge of their official duties. The successful implementation of these rules requires commitment from both leadership and staff at all levels to uphold the principles of service, integrity, and national development.</p>
+                
+                <p>As Nigeria continues to develop and face new governance challenges, these rules provide a stable foundation for public administration while allowing for necessary adaptations through established amendment procedures.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 HM Solutions & Co. All rights reserved.</p>
+        </div>
+        <div>
+            <a href="https://web.facebook.com/HMTelecoms" target="_blank">Facebook</a>
+            <a href="https://x.com/HMusa3" target="_blank">Twitter</a>
+            <a href="https://www.instagram.com/hmtelecoms0/" target="_blank">Instagram</a>
+            <a href="https://wa.me/+2348053579779" target="_blank">WhatsApp</a>
+            <a href="https://www.linkedin.com/in/hussaini-musa-68614283/" target="_blank">LinkedIn</a>
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <script>
+        function goToHome() {
+    window.location.href = "cbtexam.html"; // Redirect to the home page
+}
+        // Smooth scrolling for TOC links
+        document.querySelectorAll('.toc a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                // Remove active class from all TOC links
+                document.querySelectorAll('.toc a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Scroll to target
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+                
+                // Update URL
+                history.pushState(null, null, targetId);
+            });
+        });
+
+        // Highlight current chapter in TOC while scrolling
+        window.addEventListener('scroll', function() {
+            const chapters = document.querySelectorAll('.chapter');
+            const tocLinks = document.querySelectorAll('.toc a');
+            let currentChapter = '';
+            
+            chapters.forEach(chapter => {
+                const chapterTop = chapter.offsetTop;
+                const chapterHeight = chapter.clientHeight;
+                
+                if (window.scrollY >= (chapterTop - 150) && 
+                    window.scrollY < (chapterTop + chapterHeight - 150)) {
+                    currentChapter = '#' + chapter.getAttribute('id');
+                }
+            });
+            
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === currentChapter) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Show/hide back to top button
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 500) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        // Set active TOC link based on URL hash on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash) {
+                const activeLink = document.querySelector(`.toc a[href="${window.location.hash}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+            
+            // Back to top functionality
+            document.querySelector('.back-to-top').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
